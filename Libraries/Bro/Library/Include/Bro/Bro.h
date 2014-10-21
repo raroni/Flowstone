@@ -11,5 +11,6 @@ void broTerminate();
 void broRequestTermination();
 void broSwapBuffers();
 bool broIsVisible();
+uint64_t broGetTime();
 
 #endif

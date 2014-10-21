@@ -1,3 +1,4 @@
+#include <sys/time.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <AppKit/AppKit.h>
 #include "Bro/OSX/Application.h"
@@ -79,6 +80,10 @@ void broInitialize() {
   bro.autoreleasePool = [[NSAutoreleasePool alloc] init];
 
   CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
+  if(openglFramework == NULL) {
+    printf("Could not load Apple OpenGL.\n");
+    exit(1);
+  }
 
   [BroApplication sharedApplication];
   [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
@@ -142,4 +147,10 @@ void broRequestTermination() {
 
 bool broIsVisible() {
   return bro.window.isVisible;
+}
+
+uint64_t broGetTime() {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return (tv.tv_sec*1000000+tv.tv_usec);
 }
