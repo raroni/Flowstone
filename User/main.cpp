@@ -9,7 +9,6 @@
 
 double targetFrameRate = 1.0/60; // TODO: Flyt dette til mere fornuftigt sted
 
-static MainFlow::Manager flowManager; // TODO: Remove this guy?
 static double lastTime;
 static MainFlow::Manager flow;
 
