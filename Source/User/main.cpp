@@ -4,8 +4,7 @@
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
 #include "MainFlow/SinglePlayerState.h"
-
-double targetFrameRate = 1.0/60; // TODO: Flyt dette til mere fornuftigt sted
+#include "Config.h"
 
 static double lastTime;
 static MainFlow::Manager flow;
@@ -25,7 +24,7 @@ int main() {
     flow.update(startTime-lastTime);
     broSwapBuffers();
     double duration = broGetTime()-startTime;
-    double budgetRest = targetFrameRate-duration;
+    double budgetRest = Config::targetFrameDuration-duration;
     usleep(Math::max(budgetRest*1000000.0, 0.0));
     lastTime = startTime;
   }
