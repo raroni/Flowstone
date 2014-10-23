@@ -1,10 +1,10 @@
 #include <unistd.h>
-#include <OpenGL/gl.h>
 #include "Core/Math/Math.h"
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
 #include "MainFlow/SinglePlayerState.h"
 #include "Config.h"
+#include "BaseGraphics.h"
 
 static double lastTime;
 static MainFlow::Manager flow;
@@ -13,14 +13,11 @@ int main() {
   //broSetEventCallback(handleEvent);
   broInitialize();
   lastTime = broGetTime();
+  baseGraphicsInit();
   while(!broShouldTerminate()) {
     double startTime = broGetTime();
     broPollEvents();
-
-    // TODO: Move this code to general graphicsPrepare() eller lign.
-    glClearColor(1, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    baseGraphicsClear();
     flow.update(startTime-lastTime);
     broSwapBuffers();
     double duration = broGetTime()-startTime;

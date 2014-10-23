@@ -1,6 +1,7 @@
 #ifndef MAIN_FLOW_SINGLE_PLAYER_H
 #define MAIN_FLOW_SINGLE_PLAYER_H
 
+#include <OpenGL/gl.h>
 #include "MainFlow/State.h"
 
 namespace MainFlow {
