@@ -1,3 +1,6 @@
+#ifndef MAIN_FLOW_SINGLE_PLAYER_H
+#define MAIN_FLOW_SINGLE_PLAYER_H
+
 #include "MainFlow/State.h"
 
 namespace MainFlow {
@@ -6,11 +9,7 @@ namespace MainFlow {
   class SinglePlayerState : public State {
     float x = 0;
   public:
-    SinglePlayerState(Manager &manager) : State(manager) { }
     void update(float deltaTime) {
-      glClearColor(1, 0, 0, 1);
-      glClear(GL_COLOR_BUFFER_BIT);
-
       x += 0.1*deltaTime;
       glColor3f(1, .85, .35);
       glBegin(GL_TRIANGLES);
@@ -21,5 +20,10 @@ namespace MainFlow {
       }
       glEnd();
     }
+    State* checkTransition() {
+      return nullptr;
+    }
   };
 }
+
+#endif

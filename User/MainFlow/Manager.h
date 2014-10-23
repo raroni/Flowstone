@@ -1,33 +1,32 @@
+#include "Mainflow/SinglePlayerState.h"
 #include "Mainflow/State.h"
 
 namespace MainFlow {
   class Manager {
-    State *currentState = nullptr;
-    State *pendingState = nullptr;
+    State *state = nullptr;
   public:
-    void changeState(State *state) {
-      pendingState = state;
+    Manager() {
+      state = new SinglePlayerState();
     }
-    void update() {
-      if(pendingState != nullptr) {
-        if(currentState != nullptr) {
-          currentState->exit();
-          delete currentState;
-        }
-        currentState = pendingState;
-        pendingState = nullptr;
-        currentState->enter();
+    void update(float timeDelta) {
+      State* newState = state->checkTransition();
+      if(newState != nullptr) {
+        changeState(newState);
       }
+      state->update(timeDelta);
     }
-    State* getState() {
-      return currentState;
+    void changeState(State *newState) {
+      if(state != nullptr) {
+        state->exit();
+      }
+      state = newState;
+      state->enter();
     }
     ~Manager() {
-      if(currentState != nullptr) {
-        currentState->exit();
-        delete currentState;
+      if(state != nullptr) {
+        state->exit();
+        delete state;
       }
-      delete pendingState;
     }
   };
 }
