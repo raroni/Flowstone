@@ -1,6 +1,7 @@
 #include <sys/time.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <AppKit/AppKit.h>
+#include <stdlib.h>
 #include "Bro/OSX/Application.h"
 #include "Bro/OSX/AppDelegate.h"
 #include "Bro/Bro.h"
@@ -17,6 +18,10 @@ struct Bro {
 };
 
 static struct Bro bro;
+
+void handleSigint(int signum) {
+  broRequestTermination();
+}
 
 static void setupMenu() {
   NSMenu *menu = [[NSMenu alloc] init];
@@ -84,6 +89,8 @@ void broInitialize() {
     printf("Could not load Apple OpenGL.\n");
     exit(1);
   }
+
+  signal(SIGINT, handleSigint);
 
   [BroApplication sharedApplication];
   [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];

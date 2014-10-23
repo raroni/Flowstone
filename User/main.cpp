@@ -2,24 +2,17 @@
 #include <algorithm>
 #include <stdio.h>
 #include <OpenGL/gl.h>
-#include <stdlib.h>
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
 #include "MainFlow/SinglePlayerState.h"
 
 uint64_t targetFrameRate = (1.0/60.0)*1000000; // TODO: Flyt dette til mere fornuftigt sted
 
-// TODO: flyt denne til "bro" hvis user OGSÅ kan lave signal()
-void handleSigint(int signum) {
-  broRequestTermination();
-}
-
 static MainFlow::Manager flowManager;
 static uint64_t lastTime;
 static MainFlow::Manager flow;
 
 int main() {
-  signal(SIGINT, handleSigint);
   //broSetEventCallback(handleEvent);
   broInitialize();
   lastTime = broGetTime();
