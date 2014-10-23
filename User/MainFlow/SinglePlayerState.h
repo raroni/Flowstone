@@ -9,7 +9,7 @@ namespace MainFlow {
   class SinglePlayerState : public State {
     float x = 0;
   public:
-    void update(float deltaTime) {
+    void update(double deltaTime) {
       x += 0.1*deltaTime;
       glColor3f(1, .85, .35);
       glBegin(GL_TRIANGLES);

@@ -15,12 +15,24 @@ struct Bro {
   BroEventCallback eventCallback;
   bool shouldTerminate;
   NSOpenGLContext *context;
+  uint64_t startTime;
 };
 
 static struct Bro bro;
 
 void handleSigint(int signum) {
   broRequestTermination();
+}
+
+static uint64_t getSystemTime() {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return (tv.tv_sec*1000000+tv.tv_usec);
+}
+
+double broGetTime() {
+  uint64_t elapsed = getSystemTime()-bro.startTime;
+  return elapsed*0.000001;
 }
 
 static void setupMenu() {
@@ -83,6 +95,8 @@ static void createWindow() {
 void broInitialize() {
   bro.shouldTerminate = false;
   bro.autoreleasePool = [[NSAutoreleasePool alloc] init];
+
+  bro.startTime = getSystemTime();
 
   CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
   if(openglFramework == NULL) {
@@ -154,10 +168,4 @@ void broRequestTermination() {
 
 bool broIsVisible() {
   return bro.window.isVisible;
-}
-
-uint64_t broGetTime() {
-  struct timeval tv;
-  gettimeofday(&tv, NULL);
-  return (tv.tv_sec*1000000+tv.tv_usec);
 }

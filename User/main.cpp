@@ -1,15 +1,16 @@
 #include <unistd.h>
-#include <algorithm>
-#include <stdio.h>
 #include <OpenGL/gl.h>
+#include "../Core/Math/Math.h"
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
 #include "MainFlow/SinglePlayerState.h"
 
-uint64_t targetFrameRate = (1.0/60.0)*1000000; // TODO: Flyt dette til mere fornuftigt sted
+// TODO: Flyt alt kode til Source eller lign. så du kan inkludere således Core/Math.h
 
-static MainFlow::Manager flowManager;
-static uint64_t lastTime;
+double targetFrameRate = 1.0/60; // TODO: Flyt dette til mere fornuftigt sted
+
+static MainFlow::Manager flowManager; // TODO: Remove this guy?
+static double lastTime;
 static MainFlow::Manager flow;
 
 int main() {
@@ -17,18 +18,19 @@ int main() {
   broInitialize();
   lastTime = broGetTime();
   while(!broShouldTerminate()) {
+    double startTime = broGetTime();
     broPollEvents();
-    uint64_t start = broGetTime();
 
     // TODO: Move this code to general graphicsPrepare() eller lign.
     glClearColor(1, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    flow.update(0.016); // TODO: do proper timeDelta calc
+    flow.update(startTime-lastTime);
     broSwapBuffers();
-    uint64_t duration = broGetTime()-start;
-    int budgetRest = (int)(targetFrameRate-duration);
-    usleep(std::max(budgetRest, 0));
+    double duration = broGetTime()-startTime;
+    double budgetRest = targetFrameRate-duration;
+    usleep(Math::max(budgetRest*1000000.0, 0.0));
+    lastTime = startTime;
   }
   broTerminate();
 }
