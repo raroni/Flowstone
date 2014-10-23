@@ -1,15 +1,15 @@
 SRC =\
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
 	Libraries/Bro/Library/Source/OSX/View.mm\
-	User/main.cpp
+	Source/User/main.cpp
 	
 FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 
-USER_HEADER_DIRS = -ILibraries/Bro/Library/Include -IUser
+USER_HEADER_DIRS = -ILibraries/Bro/Library/Include -ISource -ISource/User
 
 NAME = Flowstone
 
-OUTPUT_DIR = $(NAME).app/Contents/MacOS
+OUTPUT_DIR = Build/$(NAME).app/Contents/MacOS
 
 OUTPUT = $(OUTPUT_DIR)/$(NAME)
 
