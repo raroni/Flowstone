@@ -5,7 +5,8 @@ SRC =\
 	Libraries/Bro/Library/Source/OSX/View.mm\
 	Libraries/Cabi/Library/Source/OSX/Cabi.mm\
 	Source/User/main.cpp\
-	Source/User/Timing.cpp
+	Source/User/Timing.cpp\
+	Source/User/WorldRendering/Renderer.cpp
 	
 FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 

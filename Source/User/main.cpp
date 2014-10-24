@@ -6,8 +6,8 @@
 #include "BaseGraphics.h"
 #include "Timing.h"
 
-static MainFlow::Manager flow;
 ShaderRegistry shaderRegistry;
+static MainFlow::Manager flow;
 
 int main() {
   //broSetEventCallback(handleEvent);
@@ -15,6 +15,7 @@ int main() {
   timingInitialize();
   loadShaders(shaderRegistry);
   baseGraphicsInit();
+  flow.initialize(shaderRegistry);
   while(!broShouldTerminate()) {
     timingStartFrame();
     broPollEvents();

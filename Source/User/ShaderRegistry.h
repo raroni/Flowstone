@@ -1,4 +1,8 @@
+#ifndef SHADER_REGISTRY_H
+#define SHADER_REGISTRY_H
+
 #include <stdint.h>
+#include <OpenGL/Gl.h>
 #include "Conrad/Array.h"
 
 typedef size_t ShaderHandle;
@@ -23,3 +27,5 @@ public:
     return handles[offset];
   }
 };
+
+#endif

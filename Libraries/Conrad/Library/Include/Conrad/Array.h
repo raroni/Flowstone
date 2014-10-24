@@ -1,3 +1,6 @@
+#ifndef CONRAD_ARRAY_H
+#define CONRAD_ARRAY_H
+
 #include <assert.h>
 
 template<typename T, size_t SIZE>
@@ -14,3 +17,5 @@ public:
 private:
   T data[SIZE];
 };
+
+#endif

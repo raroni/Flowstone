@@ -5,8 +5,9 @@ namespace MainFlow {
   class Manager {
     State *state = nullptr;
   public:
-    Manager() {
-      state = new SinglePlayerState();
+    void initialize(ShaderRegistry &registry) {
+      State* state = new SinglePlayerState(registry);
+      changeState(state);
     }
     void update(float timeDelta) {
       State* newState = state->checkTransition();
