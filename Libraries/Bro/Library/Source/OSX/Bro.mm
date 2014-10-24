@@ -20,8 +20,13 @@ struct Bro {
 
 static struct Bro bro;
 
-void handleSigint(int signum) {
+static void handleSigint(int signum) {
   broRequestTermination();
+}
+
+static void fatalError(const char *message) {
+  printf("Bro error:\n%s\n", message);
+  exit(1);
 }
 
 static uint64_t getSystemTime() {
@@ -55,8 +60,7 @@ static void createContext() {
   };
   NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
   if(pixelFormat == nil) {
-    NSLog(@"Could not create pixel format.");
-    exit(1);
+    fatalError("Could not create pixel format.");
   }
 
   bro.context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
@@ -75,8 +79,7 @@ static void createWindow() {
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
   if(bro.window == nil) {
-    NSLog(@"Could not create window.");
-    exit(1);
+    fatalError("Could not create window.");
   }
 
   bro.window.title = [NSString stringWithUTF8String:"Hi"];
@@ -100,8 +103,7 @@ void broInitialize() {
 
   CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
   if(openglFramework == NULL) {
-    printf("Could not load Apple OpenGL.\n");
-    exit(1);
+    fatalError("Could not load Apple OpenGL.");
   }
 
   signal(SIGINT, handleSigint);

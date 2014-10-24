@@ -3,6 +3,11 @@
 
 static char pathBuffer[512];
 
+static void fatalError(const char *message) {
+  printf("Cabi error:\n%s\n", message);
+  exit(1);
+}
+
 void readResourcesPath(char *buffer) {
   NSString *path = [[NSBundle mainBundle] resourcePath];
   strcpy(buffer, [path UTF8String]);
@@ -15,8 +20,7 @@ void cabiReadFile(const char *name, char *buffer, size_t bufferLength) {
 
   FILE *file = fopen(pathBuffer, "r");
   if(file == NULL) {
-    printf("Could not read file.");
-    exit(1);
+    fatalError("Could not read file.");
   }
   fread(buffer, 1, bufferLength, file);
   fclose(file);

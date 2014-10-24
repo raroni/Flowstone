@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "Cabi/Cabi.h"
+#include "Core/Error.h"
 #include "ShaderRegistry.h"
 
 static void link(GLuint programHandle, GLuint vertexHandle, GLuint fragmentHandle) {
@@ -11,28 +12,23 @@ static void link(GLuint programHandle, GLuint vertexHandle, GLuint fragmentHandl
     GLint linkSuccess;
     glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
     if(linkSuccess == GL_FALSE) {
-      printf("GL program linking failed.");
-      exit(1);
+      fatalError("GL program linking failed.");
     }
 }
 
-static GLuint compileShader(GLuint handle, const char *source, GLenum type) {
+void compileShader(GLuint handle, const char *source, GLenum type) {
     glShaderSource(handle, 1, &source, NULL);
     glCompileShader(handle);
 
     GLint compileSuccess;
     glGetShaderiv(handle, GL_COMPILE_STATUS, &compileSuccess);
-    if(compileSuccess == GL_TRUE) {
-      return handle;
-    } else {
-        GLint logLength;
-        glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &logLength);
-        GLchar *log = new GLchar[logLength+1];
-        glGetShaderInfoLog(handle, logLength, NULL, log);
-        printf("Shader compilation error:\n");
-        printf("%s\n", log);
-        delete[] log;
-        exit(1);
+    if(compileSuccess == GL_FALSE) {
+      GLint logLength;
+      glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &logLength);
+      GLchar *log = new GLchar[logLength+1];
+      glGetShaderInfoLog(handle, logLength, NULL, log);
+      fatalError(log);
+      delete[] log;
     }
 }
 
