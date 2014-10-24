@@ -4,7 +4,8 @@ SRC =\
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
 	Libraries/Bro/Library/Source/OSX/View.mm\
 	Libraries/Cabi/Library/Source/OSX/Cabi.mm\
-	Source/User/main.cpp
+	Source/User/main.cpp\
+	Source/User/Timing.cpp
 	
 FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 

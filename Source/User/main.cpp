@@ -1,32 +1,27 @@
-#include <unistd.h>
-#include "Core/Math/Math.h"
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
 #include "MainFlow/SinglePlayerState.h"
 #include "Config.h"
 #include "ShaderLoading.h"
 #include "BaseGraphics.h"
+#include "Timing.h"
 
-static double lastTime;
 static MainFlow::Manager flow;
 ShaderRegistry shaderRegistry;
 
 int main() {
   //broSetEventCallback(handleEvent);
   broInitialize();
-  lastTime = broGetTime();
+  timingInitialize();
   loadShaders(shaderRegistry);
   baseGraphicsInit();
   while(!broShouldTerminate()) {
-    double startTime = broGetTime();
+    timingStartFrame();
     broPollEvents();
     baseGraphicsClear();
-    flow.update(startTime-lastTime);
+    flow.update(timingGetDelta());
     broSwapBuffers();
-    double duration = broGetTime()-startTime;
-    double budgetRest = Config::targetFrameDuration-duration;
-    usleep(Math::max(budgetRest*1000000.0, 0.0));
-    lastTime = startTime;
+    timingWaitForNextFrame();
   }
   broTerminate();
 }
