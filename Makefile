@@ -13,6 +13,7 @@ USER_HEADER_DIRS =\
 	-ILibraries/Bro/Library/Include\
 	-ILibraries/Cabi/Library/Include\
 	-ILibraries/Conrad/Library/Include\
+	-ILibraries/Euler/Library/Include\
 	-ISource\
 	-ISource/User\
 
