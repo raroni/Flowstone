@@ -11,6 +11,7 @@ FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -
 USER_HEADER_DIRS =\
 	-ILibraries/Bro/Library/Include\
 	-ILibraries/Cabi/Library/Include\
+	-ILibraries/Conrad/Library/Include\
 	-ISource\
 	-ISource/User\
 
@@ -21,4 +22,5 @@ BINARY_PATH = $(BINARY_DIR)/$(NAME)
 all:
 	mkdir -p $(BINARY_DIR)
 	clang++ -Wall -std=gnu++11 -stdlib=libc++ $(USER_HEADER_DIRS) $(FRAMEWORKS) $(SRC) -o $(BINARY_PATH)
+	rm -rf $(OUTPUT_DIR)/Resources
 	cp -r Resources $(OUTPUT_DIR)/.

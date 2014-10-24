@@ -1,3 +1,4 @@
+
 #include <OpenGL/gl.h>
 
 void baseGraphicsInit() {

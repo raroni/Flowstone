@@ -4,15 +4,18 @@
 #include "MainFlow/Manager.h"
 #include "MainFlow/SinglePlayerState.h"
 #include "Config.h"
+#include "ShaderLoading.h"
 #include "BaseGraphics.h"
 
 static double lastTime;
 static MainFlow::Manager flow;
+ShaderRegistry shaderRegistry;
 
 int main() {
   //broSetEventCallback(handleEvent);
   broInitialize();
   lastTime = broGetTime();
+  loadShaders(shaderRegistry);
   baseGraphicsInit();
   while(!broShouldTerminate()) {
     double startTime = broGetTime();
