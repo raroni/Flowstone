@@ -5,6 +5,8 @@ SRC =\
 	Libraries/Bro/Library/Source/OSX/View.mm\
 	Libraries/Cabi/Library/Source/OSX/Cabi.mm\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
+	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
+	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
 	Source/User/Rendering/Renderer.cpp\

@@ -13,7 +13,7 @@ namespace Rendering {
     size_t indexBufferHandle;
     float x;
   };
-  
+
   class WorldRenderer {
   public:
     WorldRenderer(ShaderRegistry &registry);
@@ -23,7 +23,9 @@ namespace Rendering {
     size_t createComponent(size_t vertexOffset, size_t indexOffset, float x);
     void draw();
     Component* getComponent(size_t index);
+    void updateWorldViewTransformation();
   private:
+    GLint worldViewTransformationUniformHandle;
     GLint positionAttributeHandle;
     Component components[512];
     uint16_t componentsCount = 0;

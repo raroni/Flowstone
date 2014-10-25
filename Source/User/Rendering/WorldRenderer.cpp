@@ -13,13 +13,13 @@ namespace Rendering {
 
   void WorldRenderer::initialize() {
     GLint handle = shaderRegistry.getHandle(Rendering::ShaderName::Test);
+    glUseProgram(handle);
 
     positionAttributeHandle = glGetAttribLocation(handle, "position");
     if(positionAttributeHandle == -1) {
       fatalError("Could not find position attribute handle.");
     }
 
-    glUseProgram(handle);
     GLint viewClipTransformationUniformHandle = glGetUniformLocation(handle, "viewClipTransformation");
     if(viewClipTransformationUniformHandle == -1) {
       fatalError("Could not find view clip transformation uniform handle.");
@@ -27,9 +27,15 @@ namespace Rendering {
     BroResolution resolution = broGetResolution();
     float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
     float fieldOfView = M_PI/3.0f;
-
     Quanta::Matrix4 viewClipTransformation = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 0.1, 50);
     glUniformMatrix4fv(viewClipTransformationUniformHandle, 1, GL_FALSE, viewClipTransformation.components);
+
+    worldViewTransformationUniformHandle = glGetUniformLocation(handle, "worldViewTransformation");
+    if(worldViewTransformationUniformHandle == -1) {
+      fatalError("Could not find world view transformation uniform handle.");
+    }
+
+    glUseProgram(0);
   }
 
   size_t WorldRenderer::createVertexBuffer(const Vertex *vertices, const size_t length) {
@@ -71,8 +77,19 @@ namespace Rendering {
     return componentsCount-1;
   }
 
+  void WorldRenderer::updateWorldViewTransformation() {
+    GLfloat x[16] = {
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    };
+    glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, x);
+  }
+
   void WorldRenderer::draw() {
     glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
+    updateWorldViewTransformation();
     glEnableVertexAttribArray(positionAttributeHandle);
     for(int i=0; componentsCount>i; i++) {
       glBindBuffer(GL_ARRAY_BUFFER, components[i].vertexBufferHandle);
