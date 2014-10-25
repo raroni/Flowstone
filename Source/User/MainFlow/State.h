@@ -1,5 +1,5 @@
-#ifndef MAINFLOW_STATE
-#define MAINFLOW_STATE
+#ifndef MAIN_FLOW_STATE
+#define MAIN_FLOW_STATE
 
 namespace MainFlow {
   class State {

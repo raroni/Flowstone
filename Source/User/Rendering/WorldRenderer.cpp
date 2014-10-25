@@ -1,18 +1,20 @@
 #include "Core/Error.h"
-#include "ShaderRegistry.h"
-#include "WorldRendering/Renderer.h"
+#include "Rendering/ShaderRegistry.h"
+#include "Rendering/WorldRenderer.h"
 
-namespace WorldRendering {
-  Renderer::Renderer(ShaderRegistry &registry) : shaderRegistry(registry) { }
+namespace Rendering {
+  WorldRenderer::WorldRenderer(::Rendering::ShaderRegistry &registry) : shaderRegistry(registry) { }
   
-  void Renderer::initialize() {
+  void WorldRenderer::initialize() {
+    glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
     glGetUniformLocation(positionAttributeHandle, "modelPosition");
     if(positionAttributeHandle == -1) {
       fatalError("Could not find position attribute handle.");
     }
+    glUseProgram(0);
   }
 
-  size_t Renderer::createVertexBuffer(const Vertex *vertices, const size_t length) {
+  size_t WorldRenderer::createVertexBuffer(const Vertex *vertices, const size_t length) {
     GLfloat data[length*3];
     for(int i=0; length>i; i++) {
       int offset = i*3;
@@ -30,7 +32,7 @@ namespace WorldRendering {
     return vertexBufferHandleCount++;
   }
 
-  size_t Renderer::createIndexBuffer(uint16_t *indices, size_t length) {
+  size_t WorldRenderer::createIndexBuffer(uint16_t *indices, size_t length) {
     GLushort data[length];
     for(int i=0; length>i; i++) {
       data[i] = indices[i];
@@ -45,14 +47,14 @@ namespace WorldRendering {
     return indexBufferHandleCount++;
   }
 
-  size_t Renderer::createComponent(size_t vertexOffset, size_t indexOffset, float x) {
+  size_t WorldRenderer::createComponent(size_t vertexOffset, size_t indexOffset, float x) {
     Component component = { vertexBufferHandles[vertexOffset], indexBufferHandles[indexOffset], x };
     components[componentsCount++] = component;
     return componentsCount-1;
   }
 
-  void Renderer::draw() {
-    glUseProgram(shaderRegistry.getHandle(ShaderName::Test));
+  void WorldRenderer::draw() {
+    glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
     glEnableVertexAttribArray(positionAttributeHandle);
     for(int i=0; componentsCount>i; i++) {
       glBindBuffer(GL_ARRAY_BUFFER, components[i].vertexBufferHandle);
@@ -66,7 +68,7 @@ namespace WorldRendering {
     glUseProgram(0);
   }
 
-  Component* Renderer::getComponent(size_t index) {
+  Component* WorldRenderer::getComponent(size_t index) {
     return &components[index];
   }
 }

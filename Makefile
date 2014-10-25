@@ -6,7 +6,10 @@ SRC =\
 	Libraries/Cabi/Library/Source/OSX/Cabi.mm\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
-	Source/User/WorldRendering/Renderer.cpp
+	Source/User/Rendering/Renderer.cpp\
+	Source/User/Rendering/ShaderRegistry.cpp\
+	Source/User/Rendering/WorldRenderer.cpp\
+	Source/User/Mainflow/SinglePlayerState.cpp
 	
 FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 
