@@ -7,6 +7,9 @@ SRC =\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
+	Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
+	Libraries/Quanta/Library/Source/Geometry/TransformationFactory3D.cpp\
+Libraries/Quanta/Library/Source/Geometry/Point3D.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
 	Source/User/Rendering/Renderer.cpp\

@@ -6,8 +6,6 @@
 #include "Rendering/ShaderRegistry.h"
 #include "Rendering/WorldRenderer.h"
 
-#include <stdio.h>
-
 namespace Rendering {
   WorldRenderer::WorldRenderer(::Rendering::ShaderRegistry &registry) : shaderRegistry(registry) { }
 
@@ -77,19 +75,9 @@ namespace Rendering {
     return componentsCount-1;
   }
 
-  void WorldRenderer::updateWorldViewTransformation() {
-    GLfloat x[16] = {
-      1, 0, 0, 0,
-      0, 1, 0, 0,
-      0, 0, 1, 0,
-      0, 0, 0, 1
-    };
-    glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, x);
-  }
-
   void WorldRenderer::draw() {
     glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
-    updateWorldViewTransformation();
+    glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, cameraTransform.getInverseMatrix().components);
     glEnableVertexAttribArray(positionAttributeHandle);
     for(int i=0; componentsCount>i; i++) {
       glBindBuffer(GL_ARRAY_BUFFER, components[i].vertexBufferHandle);

@@ -22,6 +22,8 @@ namespace MainFlow {
   }
 
   void SinglePlayerState::update(double deltaTime) {
+    Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
+    worldRenderer.cameraTransform.position[0] += deltaTime;
   }
 
   State* SinglePlayerState::checkTransition() {

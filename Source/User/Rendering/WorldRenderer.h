@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <OpenGL/gl.h>
+#include "Quanta/Geometry/Transform.h"
 #include "Rendering/Vertex.h"
 
 namespace Rendering {
@@ -23,7 +24,7 @@ namespace Rendering {
     size_t createComponent(size_t vertexOffset, size_t indexOffset, float x);
     void draw();
     Component* getComponent(size_t index);
-    void updateWorldViewTransformation();
+    Quanta::Transform cameraTransform;
   private:
     GLint worldViewTransformationUniformHandle;
     GLint positionAttributeHandle;
