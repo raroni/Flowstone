@@ -1,17 +1,35 @@
+#include <math.h>
+#include "Bro/Bro.h"
+#include "Quanta/Math/Matrix4.h"
+#include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
 #include "Rendering/ShaderRegistry.h"
 #include "Rendering/WorldRenderer.h"
 
+#include <stdio.h>
+
 namespace Rendering {
   WorldRenderer::WorldRenderer(::Rendering::ShaderRegistry &registry) : shaderRegistry(registry) { }
-  
+
   void WorldRenderer::initialize() {
-    glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
-    glGetUniformLocation(positionAttributeHandle, "modelPosition");
+    GLint handle = shaderRegistry.getHandle(Rendering::ShaderName::Test);
+
+    positionAttributeHandle = glGetAttribLocation(handle, "position");
     if(positionAttributeHandle == -1) {
       fatalError("Could not find position attribute handle.");
     }
-    glUseProgram(0);
+
+    glUseProgram(handle);
+    GLint viewClipTransformationUniformHandle = glGetUniformLocation(handle, "viewClipTransformation");
+    if(viewClipTransformationUniformHandle == -1) {
+      fatalError("Could not find view clip transformation uniform handle.");
+    }
+    BroResolution resolution = broGetResolution();
+    float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
+    float fieldOfView = M_PI/3.0f;
+
+    Quanta::Matrix4 viewClipTransformation = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 0.1, 50);
+    glUniformMatrix4fv(viewClipTransformationUniformHandle, 1, GL_FALSE, viewClipTransformation.components);
   }
 
   size_t WorldRenderer::createVertexBuffer(const Vertex *vertices, const size_t length) {

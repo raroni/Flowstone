@@ -6,6 +6,7 @@ namespace Rendering {
   void Renderer::initialize() {
     loadShaders(registry);
     glClearColor(1, 0, 0, 1);
+    worldRenderer.initialize();
   }
 
   WorldRenderer& Renderer::getWorldRenderer() {

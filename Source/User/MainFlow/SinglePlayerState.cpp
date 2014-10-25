@@ -7,10 +7,10 @@ namespace MainFlow {
   void SinglePlayerState::enter() {
     unsigned int vertexCount = 4;
     Rendering::Vertex vertexData[vertexCount];
-    vertexData[0] = { -0.5, 0.5, 0 };
-    vertexData[1] = { 0.5, 0.5, 0 };
-    vertexData[2] = { -0.5, -0.5, 0 };
-    vertexData[3] = { 0.5, -0.5, 0 };
+    vertexData[0] = { -0.5, 0.5, 3 };
+    vertexData[1] = { 0.5, 0.5, 3 };
+    vertexData[2] = { -0.5, -0.5, 3 };
+    vertexData[3] = { 0.5, -0.5, 3 };
 
     uint16_t indexData[] = { 0, 2, 1, 1, 2, 3 };
 

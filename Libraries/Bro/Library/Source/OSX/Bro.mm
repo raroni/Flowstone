@@ -171,3 +171,11 @@ void broRequestTermination() {
 bool broIsVisible() {
   return bro.window.isVisible;
 }
+
+BroResolution broGetResolution() {
+  struct BroResolution resolution;
+  CGSize size = bro.window.frame.size;
+  resolution.width = size.width;
+  resolution.height = size.height;
+  return resolution;
+}

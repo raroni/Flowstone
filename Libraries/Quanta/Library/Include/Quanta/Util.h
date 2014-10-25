@@ -1,4 +1,4 @@
-namespace Math {
+namespace Quanta {
   template<typename T> T max(T x, T y) {
     if(x > y) {
       return x;

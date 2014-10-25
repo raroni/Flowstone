@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "Euler/Math.h"
+#include "Quanta/Util.h"
 #include "Bro/Bro.h"
 #include "Config.h"
 #include "Timing.h"
@@ -18,7 +18,7 @@ void timingStartFrame() {
 void timingWaitForNextFrame() {
   double duration = broGetTime()-startTime;
   double rest = Config::targetFrameDuration-duration;
-  usleep(Math::max(rest*1000000.0, 0.0));
+  usleep(Quanta::max(rest*1000000.0, 0.0));
   lastTime = startTime;
 }
 

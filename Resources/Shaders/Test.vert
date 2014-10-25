@@ -1,5 +1,7 @@
-attribute vec3 modelPosition;
+attribute vec3 position;
+
+uniform mat4 viewClipTransformation;
 
 void main() {
-    gl_Position = vec4(modelPosition, 1);
+  gl_Position = viewClipTransformation*vec4(position, 1);
 }

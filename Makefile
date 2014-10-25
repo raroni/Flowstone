@@ -4,20 +4,21 @@ SRC =\
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
 	Libraries/Bro/Library/Source/OSX/View.mm\
 	Libraries/Cabi/Library/Source/OSX/Cabi.mm\
+	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
 	Source/User/Rendering/Renderer.cpp\
 	Source/User/Rendering/ShaderRegistry.cpp\
 	Source/User/Rendering/WorldRenderer.cpp\
 	Source/User/Mainflow/SinglePlayerState.cpp
-	
+
 FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 
 USER_HEADER_DIRS =\
 	-ILibraries/Bro/Library/Include\
 	-ILibraries/Cabi/Library/Include\
 	-ILibraries/Conrad/Library/Include\
-	-ILibraries/Euler/Library/Include\
+	-ILibraries/Quanta/Library/Include\
 	-ISource\
 	-ISource/User\
 
