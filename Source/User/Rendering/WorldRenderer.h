@@ -10,9 +10,9 @@ namespace Rendering {
   class ShaderRegistry;
 
   struct Component {
+    Quanta::Transform transform;
     size_t vertexBufferHandle;
     size_t indexBufferHandle;
-    float x;
   };
 
   class WorldRenderer {
@@ -27,6 +27,7 @@ namespace Rendering {
     Quanta::Transform cameraTransform;
   private:
     GLint worldViewTransformationUniformHandle;
+    GLint modelWorldTransformationUniformHandle;
     GLint positionAttributeHandle;
     Component components[512];
     uint16_t componentsCount = 0;

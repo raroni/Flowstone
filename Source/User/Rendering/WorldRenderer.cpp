@@ -33,6 +33,11 @@ namespace Rendering {
       fatalError("Could not find world view transformation uniform handle.");
     }
 
+    modelWorldTransformationUniformHandle = glGetUniformLocation(handle, "modelWorldTransformation");
+    if(modelWorldTransformationUniformHandle == -1) {
+      fatalError("Could not find model world transformation uniform handle.");
+    }
+
     glUseProgram(0);
   }
 
@@ -70,7 +75,7 @@ namespace Rendering {
   }
 
   size_t WorldRenderer::createComponent(size_t vertexOffset, size_t indexOffset, float x) {
-    Component component = { vertexBufferHandles[vertexOffset], indexBufferHandles[indexOffset], x };
+    Component component = { Quanta::Transform(), vertexBufferHandles[vertexOffset], indexBufferHandles[indexOffset] };
     components[componentsCount++] = component;
     return componentsCount-1;
   }
@@ -80,6 +85,7 @@ namespace Rendering {
     glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, cameraTransform.getInverseMatrix().components);
     glEnableVertexAttribArray(positionAttributeHandle);
     for(int i=0; componentsCount>i; i++) {
+      glUniformMatrix4fv(modelWorldTransformationUniformHandle, 1, GL_FALSE, components[i].transform.getMatrix().components);
       glBindBuffer(GL_ARRAY_BUFFER, components[i].vertexBufferHandle);
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, components[i].indexBufferHandle);
       glVertexAttribPointer(positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, 0, 0);
