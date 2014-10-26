@@ -71,11 +71,13 @@ namespace Rendering {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+    indexBufferLengths[indexBufferHandleCount] = length;
+
     return indexBufferHandleCount++;
   }
 
-  size_t WorldRenderer::createComponent(size_t vertexOffset, size_t indexOffset, float x) {
-    Component component = { Quanta::Transform(), vertexBufferHandles[vertexOffset], indexBufferHandles[indexOffset] };
+  size_t WorldRenderer::createComponent(size_t vertexOffset, size_t indexOffset) {
+    Component component = { Quanta::Transform(), vertexBufferHandles[vertexOffset], indexBufferHandles[indexOffset], indexBufferLengths[indexOffset] };
     components[componentsCount++] = component;
     return componentsCount-1;
   }
@@ -89,7 +91,7 @@ namespace Rendering {
       glBindBuffer(GL_ARRAY_BUFFER, components[i].vertexBufferHandle);
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, components[i].indexBufferHandle);
       glVertexAttribPointer(positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, 0, 0);
-      glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+      glDrawElements(GL_TRIANGLES, components[i].indexBufferLength, GL_UNSIGNED_SHORT, 0);
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
