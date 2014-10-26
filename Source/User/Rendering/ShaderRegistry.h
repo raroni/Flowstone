@@ -2,7 +2,7 @@
 #define RENDERING_SHADER_REGISTRY_H
 
 #include <stdint.h>
-#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
 #include "Conrad/Array.h"
 
 namespace Rendering {

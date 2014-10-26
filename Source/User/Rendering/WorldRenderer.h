@@ -2,7 +2,7 @@
 #define WORLD_RENDERING_RENDERER_H
 
 #include <stddef.h>
-#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/Vertex.h"
 

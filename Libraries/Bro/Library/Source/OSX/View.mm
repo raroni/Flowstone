@@ -1,4 +1,4 @@
-#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
 #include "Bro/OSX/View.h"
 
 @class NSOpenGLPixelFormat;

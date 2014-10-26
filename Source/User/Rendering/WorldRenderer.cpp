@@ -10,6 +10,11 @@ namespace Rendering {
   WorldRenderer::WorldRenderer(::Rendering::ShaderRegistry &registry) : shaderRegistry(registry) { }
 
   void WorldRenderer::initialize() {
+    // TODO: Refactor so that each draw use its own VAO. For now we're cheating and using one global VAO.
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
     GLint handle = shaderRegistry.getHandle(Rendering::ShaderName::Test);
     glUseProgram(handle);
 

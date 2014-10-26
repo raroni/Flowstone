@@ -56,6 +56,8 @@ static void setupMenu() {
 static void createContext() {
   NSOpenGLPixelFormatAttribute attributes[] = {
     NSOpenGLPFADoubleBuffer,
+    NSOpenGLPFAOpenGLProfile,
+    NSOpenGLProfileVersion3_2Core,
     0
   };
   NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];

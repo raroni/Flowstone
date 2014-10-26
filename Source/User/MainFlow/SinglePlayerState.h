@@ -2,7 +2,7 @@
 #define MAIN_FLOW_SINGLE_PLAYER_H
 
 #include <stddef.h>
-#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
 #include "MainFlow/State.h"
 
 namespace Rendering {

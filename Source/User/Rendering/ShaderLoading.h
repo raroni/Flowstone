@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
 #include "Cabi/Cabi.h"
 #include "Core/Error.h"
 #include "Rendering/ShaderRegistry.h"
