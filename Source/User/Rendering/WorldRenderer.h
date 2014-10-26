@@ -11,18 +11,16 @@ namespace Rendering {
 
   struct Component {
     Quanta::Transform transform;
-    size_t vertexBufferHandle;
-    size_t indexBufferHandle;
-    uint16_t indexBufferLength;
+    size_t vaoHandle;
+    uint16_t indexCount;
   };
 
   class WorldRenderer {
   public:
     WorldRenderer(ShaderRegistry &registry);
     void initialize();
-    size_t createVertexBuffer(const Vertex *vertices, const size_t length);
-    size_t createIndexBuffer(uint16_t *indices, size_t length);
-    size_t createComponent(size_t vertexOffset, size_t indexOffset);
+    size_t createMesh(const Vertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength);
+    size_t createComponent(size_t vaoOffset);
     void draw();
     Component* getComponent(size_t index);
     Quanta::Transform cameraTransform;
@@ -32,11 +30,9 @@ namespace Rendering {
     GLint positionAttributeHandle;
     Component components[512];
     uint16_t componentsCount = 0;
-    GLuint vertexBufferHandles[512];
-    uint16_t vertexBufferHandleCount = 0;
-    GLuint indexBufferHandles[512];
-    uint16_t indexBufferLengths[512];
-    uint16_t indexBufferHandleCount = 0;
+    GLuint vaoHandles[512];
+    uint16_t vaoCount;
+    uint16_t indexCounts[512];
     Rendering::ShaderRegistry &shaderRegistry;
   };
 }

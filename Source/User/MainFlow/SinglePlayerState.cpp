@@ -28,9 +28,13 @@ namespace MainFlow {
     };
 
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    size_t vertexOffset = worldRenderer.createVertexBuffer(vertexData, sizeof(vertexData)/sizeof(Rendering::Vertex));
-    size_t indexOffset = worldRenderer.createIndexBuffer(indexData, sizeof(indexData)/sizeof(uint16_t));
-    worldRenderer.createComponent(vertexOffset, indexOffset);
+    size_t vaoOffset = worldRenderer.createMesh(
+      vertexData,
+      sizeof(vertexData)/sizeof(Rendering::Vertex),
+      indexData,
+      sizeof(indexData)/sizeof(uint16_t)
+    );
+    worldRenderer.createComponent(vaoOffset);
     //worldRenderer.createComponent(vertexOffset, indexOffset);
 
     worldRenderer.cameraTransform.position[2] = -5;

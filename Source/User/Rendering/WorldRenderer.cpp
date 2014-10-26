@@ -10,11 +10,6 @@ namespace Rendering {
   WorldRenderer::WorldRenderer(::Rendering::ShaderRegistry &registry) : shaderRegistry(registry) { }
 
   void WorldRenderer::initialize() {
-    // TODO: Refactor so that each draw use its own VAO. For now we're cheating and using one global VAO.
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
     GLint handle = shaderRegistry.getHandle(Rendering::ShaderName::Test);
     glUseProgram(handle);
 
@@ -46,43 +41,43 @@ namespace Rendering {
     glUseProgram(0);
   }
 
-  size_t WorldRenderer::createVertexBuffer(const Vertex *vertices, const size_t length) {
-    GLfloat data[length*3];
-    for(int i=0; length>i; i++) {
+  size_t WorldRenderer::createMesh(const Vertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength) {
+    GLuint vaoHandle;
+    glGenVertexArrays(1, &vaoHandle);
+    glBindVertexArray(vaoHandle);
+
+    glEnableVertexAttribArray(positionAttributeHandle);
+
+    GLfloat vertexData[verticesLength*3];
+    for(int i=0; verticesLength>i; i++) {
       int offset = i*3;
-      data[offset] = vertices[i].x;
-      data[offset+1] = vertices[i].y;
-      data[offset+2] = vertices[i].z;
+      vertexData[offset] = vertices[i].x;
+      vertexData[offset+1] = vertices[i].y;
+      vertexData[offset+2] = vertices[i].z;
     }
+    GLuint vertexBufferHandle;
+    glGenBuffers(1, &vertexBufferHandle);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferHandle);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
-    glGenBuffers(1, &vertexBufferHandles[vertexBufferHandleCount]);
-    GLuint handle = vertexBufferHandles[vertexBufferHandleCount];
-    glBindBuffer(GL_ARRAY_BUFFER, handle);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GLushort indexData[indicesLength];
+    for(int i=0; indicesLength>i; i++) {
+      indexData[i] = indices[i];
+    }
+    GLuint indexBufferHandle;
+    glGenBuffers(1, &indexBufferHandle);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferHandle);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData, GL_STATIC_DRAW);
 
-    return vertexBufferHandleCount++;
+    glVertexAttribPointer(positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    indexCounts[vaoCount] = indicesLength;
+    vaoHandles[vaoCount] = vaoHandle;
+    return vaoCount++;
   }
 
-  size_t WorldRenderer::createIndexBuffer(uint16_t *indices, size_t length) {
-    GLushort data[length];
-    for(int i=0; length>i; i++) {
-      data[i] = indices[i];
-    }
-
-    glGenBuffers(1, &indexBufferHandles[indexBufferHandleCount]);
-    GLuint handle = indexBufferHandles[indexBufferHandleCount];
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    indexBufferLengths[indexBufferHandleCount] = length;
-
-    return indexBufferHandleCount++;
-  }
-
-  size_t WorldRenderer::createComponent(size_t vertexOffset, size_t indexOffset) {
-    Component component = { Quanta::Transform(), vertexBufferHandles[vertexOffset], indexBufferHandles[indexOffset], indexBufferLengths[indexOffset] };
+  size_t WorldRenderer::createComponent(size_t vaoOffset) {
+    Component component = { Quanta::Transform(), vaoHandles[vaoOffset], indexCounts[vaoOffset] };
     components[componentsCount++] = component;
     return componentsCount-1;
   }
@@ -90,17 +85,14 @@ namespace Rendering {
   void WorldRenderer::draw() {
     glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
     glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, cameraTransform.getInverseMatrix().components);
-    glEnableVertexAttribArray(positionAttributeHandle);
+
     for(int i=0; componentsCount>i; i++) {
       glUniformMatrix4fv(modelWorldTransformationUniformHandle, 1, GL_FALSE, components[i].transform.getMatrix().components);
-      glBindBuffer(GL_ARRAY_BUFFER, components[i].vertexBufferHandle);
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, components[i].indexBufferHandle);
-      glVertexAttribPointer(positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, 0, 0);
-      glDrawElements(GL_TRIANGLES, components[i].indexBufferLength, GL_UNSIGNED_SHORT, 0);
+      glBindVertexArray(components[i].vaoHandle);
+      glDrawElements(GL_TRIANGLES, components[i].indexCount, GL_UNSIGNED_SHORT, 0);
     }
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glDisableVertexAttribArray(positionAttributeHandle);
+
+    glBindVertexArray(0);
     glUseProgram(0);
   }
 
