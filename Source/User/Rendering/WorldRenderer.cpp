@@ -7,6 +7,13 @@
 #include "Rendering/WorldRenderer.h"
 
 namespace Rendering {
+  struct GLAnimatedVertex {
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
+    GLushort jointIndex;
+  };
+
   WorldRenderer::WorldRenderer(::Rendering::ShaderRegistry &registry) : shaderRegistry(registry) { }
 
   void WorldRenderer::initialize() {
@@ -16,6 +23,11 @@ namespace Rendering {
     positionAttributeHandle = glGetAttribLocation(handle, "position");
     if(positionAttributeHandle == -1) {
       fatalError("Could not find position attribute handle.");
+    }
+
+    jointIndexAttributeHandle = glGetAttribLocation(handle, "jointIndex");
+    if(jointIndexAttributeHandle == -1) {
+      fatalError("Could not find joint attribute handle.");
     }
 
     GLint viewClipTransformationUniformHandle = glGetUniformLocation(handle, "viewClipTransformation");
@@ -33,32 +45,43 @@ namespace Rendering {
       fatalError("Could not find world view transformation uniform handle.");
     }
 
-    modelWorldTransformationUniformHandle = glGetUniformLocation(handle, "modelWorldTransformation");
-    if(modelWorldTransformationUniformHandle == -1) {
-      fatalError("Could not find model world transformation uniform handle.");
+    jointWorldTransformationUniformHandle = glGetUniformLocation(handle, "jointWorldTransformation");
+    if(jointWorldTransformationUniformHandle == -1) {
+      fatalError("Could not find joint world transformation uniform handle.");
+    }
+
+    modelJointTransformationsUniformHandle = glGetUniformLocation(handle, "modelJointTransformations");
+    if(modelJointTransformationsUniformHandle == -1) {
+      fatalError("Could not find model joint transformations uniform handle.");
     }
 
     glUseProgram(0);
   }
 
-  size_t WorldRenderer::createMesh(const Vertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength) {
+  size_t WorldRenderer::createAnimatedMesh(const AnimatedVertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength) {
     GLuint vaoHandle;
     glGenVertexArrays(1, &vaoHandle);
     glBindVertexArray(vaoHandle);
 
     glEnableVertexAttribArray(positionAttributeHandle);
+    glEnableVertexAttribArray(jointIndexAttributeHandle);
 
-    GLfloat vertexData[verticesLength*3];
+    GLAnimatedVertex oglData[verticesLength];
     for(int i=0; verticesLength>i; i++) {
-      int offset = i*3;
-      vertexData[offset] = vertices[i].x;
-      vertexData[offset+1] = vertices[i].y;
-      vertexData[offset+2] = vertices[i].z;
+      GLAnimatedVertex *oglVertex = &oglData[i];
+      const AnimatedVertex *inputData = &vertices[i];
+      oglVertex->x = inputData->x;
+      oglVertex->y = inputData->y;
+      oglVertex->z = inputData->z;
+      oglVertex->jointIndex = inputData->jointIndex;
     }
     GLuint vertexBufferHandle;
     glGenBuffers(1, &vertexBufferHandle);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferHandle);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(oglData), oglData, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, sizeof(GLAnimatedVertex), 0);
+    glVertexAttribIPointer(jointIndexAttributeHandle, 1, GL_UNSIGNED_SHORT, sizeof(GLAnimatedVertex), reinterpret_cast<const GLvoid*>(sizeof(GLfloat)*3));
 
     GLushort indexData[indicesLength];
     for(int i=0; indicesLength>i; i++) {
@@ -69,34 +92,37 @@ namespace Rendering {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferHandle);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(positionAttributeHandle, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
     indexCounts[vaoCount] = indicesLength;
     vaoHandles[vaoCount] = vaoHandle;
     return vaoCount++;
   }
 
-  size_t WorldRenderer::createComponent(size_t vaoOffset) {
-    Component component = { Quanta::Transform(), vaoHandles[vaoOffset], indexCounts[vaoOffset] };
-    components[componentsCount++] = component;
-    return componentsCount-1;
+  size_t WorldRenderer::createAnimatedMeshInstance(size_t vaoOffset, uint8_t skeletonInstanceID) {
+    AnimatedMeshInstance instance = { Quanta::Transform(), vaoHandles[vaoOffset], indexCounts[vaoOffset], skeletonInstanceID };
+    animatedMeshInstances[animatedMeshInstanceCount++] = instance;
+    return animatedMeshInstanceCount-1;
   }
 
-  void WorldRenderer::draw() {
+  void WorldRenderer::draw(const Quanta::Matrix4 *animationTranformations) {
     glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
     glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, cameraTransform.getInverseMatrix().components);
 
-    for(int i=0; componentsCount>i; i++) {
-      glUniformMatrix4fv(modelWorldTransformationUniformHandle, 1, GL_FALSE, components[i].transform.getMatrix().components);
-      glBindVertexArray(components[i].vaoHandle);
-      glDrawElements(GL_TRIANGLES, components[i].indexCount, GL_UNSIGNED_SHORT, 0);
+    for(int i=0; animatedMeshInstanceCount>i; i++) {
+      glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, animatedMeshInstances[i].transform.getMatrix().components);
+
+      // TODO: This works ONLY because we only have one instance
+      const Quanta::Matrix4 *myAnimationTranformation = &animationTranformations[animatedMeshInstances[i].skeletonInstanceID];
+
+      glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, myAnimationTranformation->components);
+      glBindVertexArray(animatedMeshInstances[i].vaoHandle);
+      glDrawElements(GL_TRIANGLES, animatedMeshInstances[i].indexCount, GL_UNSIGNED_SHORT, 0);
     }
 
     glBindVertexArray(0);
     glUseProgram(0);
   }
 
-  Component* WorldRenderer::getComponent(size_t index) {
-    return &components[index];
+  AnimatedMeshInstance* WorldRenderer::getAnimatedMeshInstance(size_t index) {
+    return &animatedMeshInstances[index];
   }
 }

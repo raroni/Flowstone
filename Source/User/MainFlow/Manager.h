@@ -8,11 +8,11 @@ namespace MainFlow {
   class Manager {
     State *state = nullptr;
   public:
-    void initialize(Rendering::Renderer &renderer) {
-      State* state = new SinglePlayerState(renderer);
+    void initialize(Animation::Animator &animator, Rendering::Renderer &renderer) {
+      State *state = new SinglePlayerState(animator, renderer);
       changeState(state);
     }
-    void update(float timeDelta) {
+    void update(double timeDelta) {
       State* newState = state->checkTransition();
       if(newState != nullptr) {
         changeState(newState);

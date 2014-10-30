@@ -5,6 +5,10 @@
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/UIRenderer.h"
 
+namespace Quanta {
+  class Matrix4;
+}
+
 namespace Rendering {
   class Renderer {
     ShaderRegistry registry;
@@ -14,7 +18,7 @@ namespace Rendering {
     Renderer();
     void initialize();
     WorldRenderer& getWorldRenderer();
-    void draw();
+    void draw(const Quanta::Matrix4 *worldPoses);
   };
 }
 

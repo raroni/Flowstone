@@ -14,9 +14,9 @@ namespace Rendering {
     return worldRenderer;
   }
 
-  void Renderer::draw() {
+  void Renderer::draw(const Quanta::Matrix4* worldPoses) {
     glClear(GL_COLOR_BUFFER_BIT);
-    worldRenderer.draw();
+    worldRenderer.draw(worldPoses);
     uiRenderer.draw();
   }
 }

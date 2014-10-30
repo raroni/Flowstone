@@ -1,7 +1,8 @@
 namespace Rendering {
-  struct Vertex {
+  struct AnimatedVertex {
     float x;
     float y;
     float z;
+    uint8_t jointIndex;
   };
 }

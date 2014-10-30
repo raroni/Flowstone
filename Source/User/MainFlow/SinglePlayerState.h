@@ -9,13 +9,18 @@ namespace Rendering {
   class Renderer;
 }
 
+namespace Animation {
+  class Animator;
+}
+
 namespace MainFlow {
   class Manager;
 
   class SinglePlayerState : public State {
+    Animation::Animator &animator;
     Rendering::Renderer &renderer;
   public:
-    SinglePlayerState(Rendering::Renderer &renderer);
+    SinglePlayerState(Animation::Animator &animator, Rendering::Renderer &renderer);
     void enter();
     void update(double deltaTime);
     State* checkTransition();

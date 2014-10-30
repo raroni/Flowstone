@@ -1,43 +1,162 @@
 #include "Rendering/Renderer.h"
+#include "Animation/Animator.h"
+#include "Animation/JointConfig.h"
 #include "MainFlow/SinglePlayerState.h"
 
 namespace MainFlow {
-  SinglePlayerState::SinglePlayerState(Rendering::Renderer &renderer) : renderer(renderer) { }
+  SinglePlayerState::SinglePlayerState(Animation::Animator &animator, Rendering::Renderer &renderer) :
+  animator(animator),
+  renderer(renderer) { }
 
   void SinglePlayerState::enter() {
-    Rendering::Vertex vertexData[] = {
-      // front
-      { -0.5, 0.5, -0.5 },
-      { 0.5, 0.5, -0.5 },
-      { -0.5, -0.5, -0.5 },
-      { 0.5, -0.5, -0.5 },
+    uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
-      { -0.5, 0.5, 0.5 },
-      { 0.5, 0.5, 0.5 },
-      { -0.5, -0.5, 0.5 },
-      { 0.5, -0.5, 0.5 },
+    float animationDurations[] = { 180.0f };
+    uint8_t animationKeyCounts[] = { 2 };
+
+    float keyTimes[] = { 0, 60.0f };
+
+    Animation::JointConfig keyJointConfigs[] = {
+      // standard
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+
+      // body a bit lowered, arms should follow
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, -2.0, 0, 1, 0, 0, 0 },
+      { -2.0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 }
     };
 
+    uint8_t skeletonID = animator.createSkeleton(
+      jointParentIndices,
+      sizeof(jointParentIndices)/sizeof(uint8_t),
+      animationDurations,
+      animationKeyCounts,
+      sizeof(animationDurations)/sizeof(float),
+      keyTimes,
+      keyJointConfigs
+    );
+
+    Rendering::AnimatedVertex vertexData[] = {
+      // body, front
+      { -0.5, 0.5, -0.5, 1 }, // the 1 is the joint number this vertex will follow
+      { 0.5, 0.5, -0.5, 1 },
+      { -0.5, -0.5, -0.5, 1 },
+      { 0.5, -0.5, -0.5, 1 },
+      // body, back
+      { -0.5, 0.5, 0.5, 1 },
+      { 0.5, 0.5, 0.5, 1 },
+      { -0.5, -0.5, 0.5, 1 },
+      { 0.5, -0.5, 0.5, 1 },
+
+      // left hand, front
+      { -1, 0.2, -0.2, 2 },
+      { -0.6, 0.2, -0.2, 2 },
+      { -1, -0.2, -0.2, 2 },
+      { -0.6, -0.2, -0.2, 2 },
+      // left hand, back
+      { -1, 0.2, 0.2, 2 },
+      { -0.6, 0.2, 0.2, 2 },
+      { -1, -0.2, 0.2, 2 },
+      { -0.6, -0.2, 0.2, 2 },
+
+      // right hand, front
+      { 1, 0.2, -0.2, 3 },
+      { 0.6, 0.2, -0.2, 3 },
+      { 1, -0.2, -0.2, 3 },
+      { 0.6, -0.2, -0.2, 3 },
+      // right hand, back
+      { 1, 0.2, 0.2, 3 },
+      { 0.6, 0.2, 0.2, 3 },
+      { 1, -0.2, 0.2, 3 },
+      { 0.6, -0.2, 0.2, 3 },
+
+      // left foot, front
+      { -0.5, -0.7, -0.2, 4 },
+      { -0.1, -0.7, -0.2, 4 },
+      { -0.5, -1.1, -0.2, 4 },
+      { -0.1, -1.1, -0.2, 4 },
+      // left foot, back
+      { -0.5, -0.7, 0.2, 4 },
+      { -0.1, -0.7, 0.2, 4 },
+      { -0.5, -1.1, 0.2, 4 },
+      { -0.1, -1.1, 0.2, 4 },
+
+      // right foot, front
+      { 0.5, -0.7, -0.2, 4 },
+      { 0.1, -0.7, -0.2, 4 },
+      { 0.5, -1.1, -0.2, 4 },
+      { 0.1, -1.1, -0.2, 4 },
+      // right foot, back
+      { 0.5, -0.7, 0.2, 4 },
+      { 0.1, -0.7, 0.2, 4 },
+      { 0.5, -1.1, 0.2, 4 },
+      { 0.1, -1.1, 0.2, 4 },
+    };
+
+    // TODO: Add hands
+
     uint16_t indexData[] = {
+      // body
       0, 2, 1, 1, 2, 3, // front
       1, 3, 7, 1, 7, 5, // right
       4, 7, 6, 4, 5, 7, // back
       0, 6, 2, 0, 4, 6, // right
       5, 0, 1, 5, 4, 0, // top
-      2, 7, 3, 2, 6, 7  // bottom
+      2, 7, 3, 2, 6, 7,  // bottom
+
+      // left hand
+      8, 10, 9, 9, 10, 11, // front
+      9, 11, 15, 9, 15, 13, // right
+      12, 15, 14, 12, 13, 15, // back
+      8, 14, 10, 8, 12, 14, // right
+      13, 8, 9, 13, 12, 8, // top
+      10, 15, 11, 10, 14, 15,  // bottom
+
+      // right hand
+      16, 18, 17, 17, 18, 19, // front
+      17, 19, 23, 17, 23, 21, // right
+      20, 23, 22, 20, 21, 23, // back
+      16, 22, 18, 16, 20, 22, // right
+      21, 16, 17, 21, 20, 16, // top
+      18, 23, 19, 18, 22, 23,  // bottom
+
+      // left foot
+      24, 26, 25, 25, 26, 27, // front
+      25, 27, 31, 25, 31, 29, // right
+      28, 31, 30, 28, 29, 31, // back
+      24, 30, 26, 24, 28, 30, // right
+      29, 24, 25, 29, 28, 24, // top
+      26, 31, 27, 26, 30, 31,  // bottom
+
+      // right foot
+      32, 34, 33, 33, 34, 35, // front
+      33, 35, 39, 33, 39, 37, // right
+      36, 39, 38, 36, 37, 39, // back
+      32, 38, 34, 32, 36, 38, // right
+      37, 32, 33, 37, 36, 32, // top
+      34, 39, 35, 34, 38, 39,  // bottom
     };
 
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    size_t vaoOffset = worldRenderer.createMesh(
+    size_t vaoOffset = worldRenderer.createAnimatedMesh(
       vertexData,
-      sizeof(vertexData)/sizeof(Rendering::Vertex),
+      sizeof(vertexData)/sizeof(Rendering::AnimatedVertex),
       indexData,
       sizeof(indexData)/sizeof(uint16_t)
     );
-    worldRenderer.createComponent(vaoOffset);
-    //worldRenderer.createComponent(vertexOffset, indexOffset);
 
-    worldRenderer.cameraTransform.position[2] = -5;
+    uint8_t skeletonInstanceID = animator.createSkeletonInstance(skeletonID);
+    worldRenderer.createAnimatedMeshInstance(vaoOffset, skeletonInstanceID);
+
+    worldRenderer.cameraTransform.position[2] = -3;
   }
 
   void SinglePlayerState::update(double deltaTime) {
@@ -48,10 +167,12 @@ namespace MainFlow {
     component->transform.position[1] += deltaTime*0.5;
     //worldRenderer.cameraTransform.position[0] += deltaTime;
     */
+
+    /*
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    Rendering::Component *component = worldRenderer.getComponent(0);
-    component->transform.rotateX(deltaTime);
-    component->transform.rotateY(deltaTime*0.5);
+    Rendering::AnimatedMeshInstance *instance = worldRenderer.getAnimatedMeshInstance(0);
+    instance->transform.rotateY(deltaTime*2);
+    */
   }
 
   State* SinglePlayerState::checkTransition() {

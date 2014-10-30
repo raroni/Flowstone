@@ -8,6 +8,7 @@ namespace Quanta {
 
   class Quaternion {
   public:
+    Quaternion();
     Quaternion(float real, Vector3 imaginaries);
     float real;
     Vector3 imaginaries;
