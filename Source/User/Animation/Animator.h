@@ -14,28 +14,57 @@ namespace Animation {
     uint8_t skeletonIDs[32];
     float passed[32];
     float durations[32];
+    uint8_t targetKeys[32];
+    uint8_t animations[32];
     uint8_t transformationOffsets[32];
     JointTransformation originTransformations[32];
     JointTransformation targetTransformations[32];
     Pose localPoses[32];
     Pose worldPoses[32];
     void updateLocalPoses(double timeDelta) {
-      uint8_t transformationOffset = 0;
       JointTransformation tempTransformation;
+      uint8_t transformationOffset = 0;
       for(uint8_t instanceIndex=0; instanceCount>instanceIndex; instanceIndex++) {
-        uint8_t bonesCount = registry.getBonesCount(skeletonIDs[instanceIndex]);
+        uint8_t skeletonID = skeletonIDs[instanceIndex];
+        uint8_t bonesCount = registry.getBonesCount(skeletonID);
         passed[instanceIndex] += timeDelta;
+        float rest = passed[instanceIndex]-durations[instanceIndex];
         float progress = passed[instanceIndex]/durations[instanceIndex];
+        progress = Quanta::min(progress, 1.0f);
         Pose *pose = &localPoses[instanceIndex];
         for(uint8_t boneIndex=0; bonesCount>boneIndex; boneIndex++) {
-          JointTransformation *origin = &originTransformations[transformationOffset+boneIndex];
-          JointTransformation *target = &targetTransformations[transformationOffset+boneIndex];
-          tempTransformation.translation[0] = Quanta::lerp(origin->translation[0], target->translation[0], progress);
-          tempTransformation.translation[1] = Quanta::lerp(origin->translation[1], target->translation[1], progress);
-          tempTransformation.translation[2] = Quanta::lerp(origin->translation[2], target->translation[2], progress);
+          JointTransformation &origin = originTransformations[transformationOffset+boneIndex];
+          JointTransformation &target = targetTransformations[transformationOffset+boneIndex];
+          tempTransformation.translation[0] = Quanta::lerp(origin.translation[0], target.translation[0], progress);
+          tempTransformation.translation[1] = Quanta::lerp(origin.translation[1], target.translation[1], progress);
+          tempTransformation.translation[2] = Quanta::lerp(origin.translation[2], target.translation[2], progress);
           // TODO: ROTATION
           pose->joints[boneIndex] = Quanta::TransformationFactory3D::translation(tempTransformation.translation);
         }
+
+        if(rest >= 0) {
+          passed[instanceIndex] = rest;
+          uint8_t keyCount = registry.getKeyCount(skeletonID, animations[instanceIndex]);
+
+          if(keyCount == targetKeys[instanceIndex]+1) {
+            durations[instanceIndex] = registry.getDuration(skeletonID, animations[instanceIndex]) - durations[instanceIndex];
+            targetKeys[instanceIndex] = 0;
+          } else {
+            float startTime = registry.getKeyTime(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
+            float endTime = registry.getKeyTime(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]+1);
+            durations[instanceIndex] = endTime-startTime;
+            targetKeys[instanceIndex]++;
+          }
+
+          const JointTransformation *targetTransformations = registry.getJointTransformations(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
+          for(uint8_t i=0; bonesCount>i; i++) {
+            originTransformations[transformationOffset+i] = this->targetTransformations[transformationOffset+i];
+            this->targetTransformations[transformationOffset+i] = targetTransformations[i];
+          }
+
+          // TODO INTERPOLATE OVER rest
+        }
+
         transformationOffset += bonesCount;
       }
     }
@@ -79,6 +108,8 @@ namespace Animation {
     uint8_t createSkeletonInstance(uint8_t skeletonID) {
       skeletonIDs[instanceCount] = skeletonID;
       passed[instanceCount] = 0;
+      animations[instanceCount] = 0;
+      targetKeys[instanceCount] = 1;
       durations[instanceCount] = registry.getKeyTime(skeletonID, 0, 1);
       uint8_t bonesCount = registry.getBonesCount(skeletonID);
       uint8_t transformationOffset = transformationOffsets[instanceCount];

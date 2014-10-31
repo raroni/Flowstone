@@ -11,10 +11,10 @@ namespace MainFlow {
   void SinglePlayerState::enter() {
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
-    float animationDurations[] = { 180.0f };
+    float animationDurations[] = { 3.0f };
     uint8_t animationKeyCounts[] = { 2 };
 
-    float keyTimes[] = { 0, 60.0f };
+    float keyTimes[] = { 0, 1.5f };
 
     Animation::JointConfig keyJointConfigs[] = {
       // standard
@@ -27,9 +27,9 @@ namespace MainFlow {
 
       // body a bit lowered, arms should follow
       { 0, 0, 0, 1, 0, 0, 0 },
-      { 0, -2.0, 0, 1, 0, 0, 0 },
-      { -2.0, 0, 0, 1, 0, 0, 0 },
-      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, -0.05, 0, 1, 0, 0, 0 },
+      { -0.05, 0, 0, 1, 0, 0, 0 },
+      { 0.05, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 }
     };

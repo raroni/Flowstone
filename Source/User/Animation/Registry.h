@@ -40,6 +40,14 @@ namespace Animation {
       uint8_t keyCount = getAccumulatedKeyCount(skeletonID, animation);
       return keyTimes[offset+keyCount+key];
     }
+    uint8_t getKeyCount(uint8_t skeletonID, uint8_t animation) const {
+      uint8_t offset = animationOffsets[skeletonID];
+      return animationKeyCounts[offset+animation];
+    }
+    float getDuration(uint8_t skeletonID, uint8_t animation) {
+      uint8_t offset = animationOffsets[skeletonID];
+      return animationDurations[offset+animation];
+    }
     uint8_t getBonesCount(uint8_t skeletonID) const {
       return jointParentIndicesOffsets[skeletonID+1]-jointParentIndicesOffsets[skeletonID]+1;
     }
