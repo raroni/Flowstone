@@ -5,11 +5,9 @@
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/UIRenderer.h"
 
-namespace Animation {
-  struct Pose;
-}
-
 namespace Rendering {
+  struct Input;
+
   class Renderer {
     ShaderRegistry registry;
     WorldRenderer worldRenderer;
@@ -18,7 +16,7 @@ namespace Rendering {
     Renderer();
     void initialize();
     WorldRenderer& getWorldRenderer();
-    void draw(const Animation::Pose *poses);
+    void draw(const Input &input);
   };
 }
 

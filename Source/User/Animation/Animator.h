@@ -1,3 +1,6 @@
+#ifndef ANIMATION_ANIMATOR_H
+#define ANIMATION_ANIMATOR_H
+
 #include <assert.h>
 #include "Quanta/Util.h"
 #include "Quanta/Math/Vector3.h"
@@ -145,3 +148,5 @@ namespace Animation {
     }
   };
 }
+
+#endif

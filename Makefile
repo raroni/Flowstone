@@ -11,11 +11,13 @@ SRC =\
 	Libraries/Quanta/Library/Source/Geometry/TransformationFactory3D.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Point3D.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
+	Source/Core/Error.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
 	Source/User/Rendering/Renderer.cpp\
 	Source/User/Rendering/ShaderRegistry.cpp\
 	Source/User/Rendering/WorldRenderer.cpp\
+	Source/User/Animation/Registry.cpp\
 	Source/User/Mainflow/SinglePlayerState.cpp
 
 FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL

@@ -1,14 +1,17 @@
 #include "Rendering/Renderer.h"
-#include "Animation/Animator.h"
+#include "Rendering/Input.h"
 #include "Animation/JointConfig.h"
 #include "MainFlow/SinglePlayerState.h"
 
 namespace MainFlow {
-  SinglePlayerState::SinglePlayerState(Animation::Animator &animator, Rendering::Renderer &renderer) :
-  animator(animator),
-  renderer(renderer) { }
+  SinglePlayerState::SinglePlayerState(Rendering::Renderer &renderer, Rendering::Input &renderingInput) :
+  renderer(renderer),
+  renderingInput(renderingInput) { }
 
   void SinglePlayerState::enter() {
+    renderingInput.poses = animator.getWorldPoses();
+
+
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
     float animationDurations[] = { 3.0f, 1.0f };
@@ -189,20 +192,19 @@ namespace MainFlow {
     worldRenderer.cameraTransform.position[2] = -3;
   }
 
-  void SinglePlayerState::update(double deltaTime) {
+  void SinglePlayerState::update(double timeDelta) {
     x++;
 
     if(x % 100 == 0) {
       if(toRun) {
-        printf("Start run!\n");
         animator.changeAnimation(0, 1);
         toRun = false;
       } else {
-        printf("Stop run!\n");
         animator.changeAnimation(0, 0);
         toRun = true;
       }
     }
+    animator.update(timeDelta);
     /*
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     Rendering::Component *component = worldRenderer.getComponent(0);

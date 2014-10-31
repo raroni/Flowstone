@@ -4,25 +4,24 @@
 #include <stddef.h>
 #include <OpenGL/gl3.h>
 #include "MainFlow/State.h"
+#include "Animation/Animator.h"
 
 namespace Rendering {
   class Renderer;
-}
-
-namespace Animation {
-  class Animator;
+  struct Input;
 }
 
 namespace MainFlow {
   class Manager;
 
   class SinglePlayerState : public State {
-    Animation::Animator &animator;
+    Animation::Animator animator;
     Rendering::Renderer &renderer;
+    Rendering::Input &renderingInput;
     int x = 0;
     bool toRun = true;
   public:
-    SinglePlayerState(Animation::Animator &animator, Rendering::Renderer &renderer);
+    SinglePlayerState(Rendering::Renderer &renderer, Rendering::Input &renderingInput);
     void enter();
     void update(double deltaTime);
     State* checkTransition();

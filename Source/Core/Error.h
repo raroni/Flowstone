@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef ERROR_H
+#define ERROR_H
 
-static void fatalError(const char *message) {
-  printf("Game error:\n%s\n", message);
-  exit(1);
-}
+void fatalError(const char *message);
+
+#endif

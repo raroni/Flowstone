@@ -1,12 +1,12 @@
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
-#include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
+#include "Rendering/Input.h"
 #include "Config.h"
 #include "Timing.h"
 
+static Rendering::Input renderingInput;
 static Rendering::Renderer renderer;
-static Animation::Animator animator;
 static MainFlow::Manager flow;
 
 int main() {
@@ -14,14 +14,13 @@ int main() {
   broInitialize();
   timingInitialize();
   renderer.initialize();
-  flow.initialize(animator, renderer);
+  flow.initialize(renderer, renderingInput);
   while(!broShouldTerminate()) {
     timingStartFrame();
     broPollEvents();
     double timeDelta = timingGetDelta();
     flow.update(timeDelta);
-    animator.update(timeDelta);
-    renderer.draw(animator.getWorldPoses());
+    renderer.draw(renderingInput);
     broSwapBuffers();
     timingWaitForNextFrame();
   }
