@@ -11,13 +11,13 @@ namespace MainFlow {
   void SinglePlayerState::enter() {
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
-    float animationDurations[] = { 3.0f };
-    uint8_t animationKeyCounts[] = { 2 };
+    float animationDurations[] = { 3.0f, 1.0f };
+    uint8_t animationKeyCounts[] = { 2, 4 };
 
-    float keyTimes[] = { 0, 1.5f };
+    float keyTimes[] = { 0, 1.5f, 0, 0.25f, 0.5f, 0.75f };
 
     Animation::JointConfig keyJointConfigs[] = {
-      // standard
+      // idle standard
       { 0, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 },
@@ -25,13 +25,45 @@ namespace MainFlow {
       { 0, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 },
 
-      // body a bit lowered, arms should follow
+      // idle deep breath
       { 0, 0, 0, 1, 0, 0, 0 },
       { 0, -0.05, 0, 1, 0, 0, 0 },
       { -0.05, 0, 0, 1, 0, 0, 0 },
       { 0.05, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 },
-      { 0, 0, 0, 1, 0, 0, 0 } // <- why can't I move foot?!
+      { 0, 0, 0, 1, 0, 0, 0 },
+
+      // run mid
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+
+      // run left foot front
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, -0.1, 0, 1, 0, 0, 0 },
+      { 0, 0, -0.2, 1, 0, 0, 0 },
+      { 0, 0, 0.2, 1, 0, 0, 0 },
+      { 0, 0, -0.2, 1, 0, 0, 0 },
+      { 0, 0, 0.2, 1, 0, 0, 0 },
+
+      // run mid
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, 0, 0, 1, 0, 0, 0 },
+
+      // run right foot front
+      { 0, 0, 0, 1, 0, 0, 0 },
+      { 0, -0.1, 0, 1, 0, 0, 0 },
+      { 0, 0, 0.2, 1, 0, 0, 0 },
+      { 0, 0, -0.2, 1, 0, 0, 0 },
+      { 0, 0, 0.2, 1, 0, 0, 0 },
+      { 0, 0, -0.2, 1, 0, 0, 0 }
     };
 
     uint8_t skeletonID = animator.createSkeleton(
@@ -158,6 +190,19 @@ namespace MainFlow {
   }
 
   void SinglePlayerState::update(double deltaTime) {
+    x++;
+
+    if(x % 100 == 0) {
+      if(toRun) {
+        printf("Start run!\n");
+        animator.changeAnimation(0, 1);
+        toRun = false;
+      } else {
+        printf("Stop run!\n");
+        animator.changeAnimation(0, 0);
+        toRun = true;
+      }
+    }
     /*
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     Rendering::Component *component = worldRenderer.getComponent(0);

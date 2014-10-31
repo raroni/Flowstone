@@ -19,6 +19,8 @@ namespace MainFlow {
   class SinglePlayerState : public State {
     Animation::Animator &animator;
     Rendering::Renderer &renderer;
+    int x = 0;
+    bool toRun = true;
   public:
     SinglePlayerState(Animation::Animator &animator, Rendering::Renderer &renderer);
     void enter();
