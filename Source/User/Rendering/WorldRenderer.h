@@ -6,6 +6,10 @@
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/AnimatedVertex.h"
 
+namespace Animation {
+  struct Pose;
+}
+
 namespace Rendering {
   class ShaderRegistry;
 
@@ -22,7 +26,7 @@ namespace Rendering {
     void initialize();
     size_t createAnimatedMesh(const AnimatedVertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength);
     size_t createAnimatedMeshInstance(size_t vaoOffset, uint8_t skeletonInstanceID);
-    void draw(const Quanta::Matrix4 *worldPoses);
+    void draw(const Animation::Pose *poses);
     AnimatedMeshInstance* getAnimatedMeshInstance(size_t index);
     Quanta::Transform cameraTransform;
   private:

@@ -101,8 +101,6 @@ namespace MainFlow {
       { 0.1, -1.1, 0.2, 4 },
     };
 
-    // TODO: Add hands
-
     uint16_t indexData[] = {
       // body
       0, 2, 1, 1, 2, 3, // front

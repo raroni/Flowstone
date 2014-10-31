@@ -5,8 +5,8 @@
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/UIRenderer.h"
 
-namespace Quanta {
-  class Matrix4;
+namespace Animation {
+  struct Pose;
 }
 
 namespace Rendering {
@@ -18,7 +18,7 @@ namespace Rendering {
     Renderer();
     void initialize();
     WorldRenderer& getWorldRenderer();
-    void draw(const Quanta::Matrix4 *worldPoses);
+    void draw(const Animation::Pose *poses);
   };
 }
 

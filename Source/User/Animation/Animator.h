@@ -4,9 +4,8 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/TransformationFactory3D.h"
+#include "Animation/Pose.h"
 #include "Animation/Registry.h"
-
-#include <stdio.h>
 
 namespace Animation {
   class Animator {
@@ -18,8 +17,8 @@ namespace Animation {
     uint8_t transformationOffsets[32];
     JointTransformation originTransformations[32];
     JointTransformation targetTransformations[32];
-    Quanta::Matrix4 localPoses[32];
-    Quanta::Matrix4 worldPoses[32];
+    Pose localPoses[32];
+    Pose worldPoses[32];
     void updateLocalPoses(double timeDelta) {
       uint8_t transformationOffset = 0;
       JointTransformation tempTransformation;
@@ -27,6 +26,7 @@ namespace Animation {
         uint8_t bonesCount = registry.getBonesCount(skeletonIDs[instanceIndex]);
         passed[instanceIndex] += timeDelta;
         float progress = passed[instanceIndex]/durations[instanceIndex];
+        Pose *pose = &localPoses[instanceIndex];
         for(uint8_t boneIndex=0; bonesCount>boneIndex; boneIndex++) {
           JointTransformation *origin = &originTransformations[transformationOffset+boneIndex];
           JointTransformation *target = &targetTransformations[transformationOffset+boneIndex];
@@ -34,31 +34,27 @@ namespace Animation {
           tempTransformation.translation[1] = Quanta::lerp(origin->translation[1], target->translation[1], progress);
           tempTransformation.translation[2] = Quanta::lerp(origin->translation[2], target->translation[2], progress);
           // TODO: ROTATION
-
-          //printf("%f\n", tempTransformation.translation[1]);
-          localPoses[instanceIndex+boneIndex] = Quanta::TransformationFactory3D::translation(tempTransformation.translation);
+          pose->joints[boneIndex] = Quanta::TransformationFactory3D::translation(tempTransformation.translation);
         }
         transformationOffset += bonesCount;
       }
-      //printf("\n");
-      //printf("%f\n", localPoses[1][13]);
     }
     void updateGlobalPoses() {
-      uint8_t offset = 0;
       for(uint8_t instanceIndex=0; instanceCount>instanceIndex; instanceIndex++) {
         uint8_t skeletonID = skeletonIDs[instanceIndex];
-        worldPoses[offset] = localPoses[offset];
+        Pose *worldPose = &worldPoses[instanceIndex];
+        Pose *localPose = &localPoses[instanceIndex];
+        worldPose->joints[0] = localPoses->joints[0];
         const uint8_t *parents = registry.getJointParentIndices(skeletonID);
         uint8_t bonesCount = registry.getBonesCount(skeletonID);
         for(uint8_t i=1; bonesCount>i; i++) {
           uint8_t parentIndex = parents[i-1];
-          worldPoses[offset+i] = worldPoses[parentIndex]*localPoses[offset+i];
+          worldPose->joints[i] = worldPose->joints[parentIndex]*localPose->joints[i];
         }
-        offset += bonesCount;
       }
     }
   public:
-    const Quanta::Matrix4* getWorldPoses() const {
+    const Pose* getWorldPoses() const {
       return worldPoses;
     }
     uint8_t createSkeleton(

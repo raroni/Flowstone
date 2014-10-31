@@ -3,6 +3,7 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
+#include "Animation/Pose.h"
 #include "Rendering/ShaderRegistry.h"
 #include "Rendering/WorldRenderer.h"
 
@@ -103,19 +104,17 @@ namespace Rendering {
     return animatedMeshInstanceCount-1;
   }
 
-  void WorldRenderer::draw(const Quanta::Matrix4 *animationTranformations) {
+  void WorldRenderer::draw(const Animation::Pose *poses) {
     glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
     glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, cameraTransform.getInverseMatrix().components);
 
     for(int i=0; animatedMeshInstanceCount>i; i++) {
-      glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, animatedMeshInstances[i].transform.getMatrix().components);
-
-      // TODO: This works ONLY because we only have one instance
-      const Quanta::Matrix4 *myAnimationTranformation = &animationTranformations[animatedMeshInstances[i].skeletonInstanceID];
-
-      glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, myAnimationTranformation->components);
-      glBindVertexArray(animatedMeshInstances[i].vaoHandle);
-      glDrawElements(GL_TRIANGLES, animatedMeshInstances[i].indexCount, GL_UNSIGNED_SHORT, 0);
+      AnimatedMeshInstance &instance = animatedMeshInstances[i];
+      glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, instance.transform.getMatrix().components);
+      const Animation::Pose *pose = &poses[instance.skeletonInstanceID];
+      glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, pose->joints[0].components);
+      glBindVertexArray(instance.vaoHandle);
+      glDrawElements(GL_TRIANGLES, instance.indexCount, GL_UNSIGNED_SHORT, 0);
     }
 
     glBindVertexArray(0);
