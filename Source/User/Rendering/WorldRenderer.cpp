@@ -98,13 +98,17 @@ namespace Rendering {
     return vaoCount++;
   }
 
+  void WorldRenderer::setPoses(const Animation::Pose *poses) {
+    this->poses = poses;
+  }
+
   size_t WorldRenderer::createAnimatedMeshInstance(size_t vaoOffset, uint8_t skeletonInstanceID) {
     AnimatedMeshInstance instance = { Quanta::Transform(), vaoHandles[vaoOffset], indexCounts[vaoOffset], skeletonInstanceID };
     animatedMeshInstances[animatedMeshInstanceCount++] = instance;
     return animatedMeshInstanceCount-1;
   }
 
-  void WorldRenderer::draw(const Animation::Pose *poses) {
+  void WorldRenderer::draw() {
     glUseProgram(shaderRegistry.getHandle(Rendering::ShaderName::Test));
     glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, cameraTransform.getInverseMatrix().components);
 

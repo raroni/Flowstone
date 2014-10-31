@@ -4,16 +4,12 @@
 #include "Mainflow/SinglePlayerState.h"
 #include "Mainflow/State.h"
 
-namespace Rendering {
-  struct Input;
-}
-
 namespace MainFlow {
   class Manager {
     State *state = nullptr;
   public:
-    void initialize(Rendering::Renderer &renderer, Rendering::Input &renderingInput) {
-      State *state = new SinglePlayerState(renderer, renderingInput);
+    void initialize(Rendering::Renderer &renderer) {
+      State *state = new SinglePlayerState(renderer);
       changeState(state);
     }
     void update(double timeDelta) {

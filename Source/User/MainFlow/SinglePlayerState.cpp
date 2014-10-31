@@ -1,16 +1,14 @@
 #include "Rendering/Renderer.h"
-#include "Rendering/Input.h"
 #include "Animation/JointConfig.h"
 #include "MainFlow/SinglePlayerState.h"
 
 namespace MainFlow {
-  SinglePlayerState::SinglePlayerState(Rendering::Renderer &renderer, Rendering::Input &renderingInput) :
-  renderer(renderer),
-  renderingInput(renderingInput) { }
+  SinglePlayerState::SinglePlayerState(Rendering::Renderer &renderer) :
+  renderer(renderer) { }
 
   void SinglePlayerState::enter() {
-    renderingInput.poses = animator.getWorldPoses();
-
+    Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
+    worldRenderer.setPoses(animator.getWorldPoses());
 
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
@@ -178,7 +176,6 @@ namespace MainFlow {
       34, 39, 35, 34, 38, 39,  // bottom
     };
 
-    Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     size_t vaoOffset = worldRenderer.createAnimatedMesh(
       vertexData,
       sizeof(vertexData)/sizeof(Rendering::AnimatedVertex),

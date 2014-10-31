@@ -1,5 +1,4 @@
 #include "Rendering/ShaderLoading.h"
-#include "Rendering/Input.h"
 #include "Rendering/Renderer.h"
 
 namespace Rendering {
@@ -15,9 +14,9 @@ namespace Rendering {
     return worldRenderer;
   }
 
-  void Renderer::draw(const Input &input) {
+  void Renderer::draw() {
     glClear(GL_COLOR_BUFFER_BIT);
-    worldRenderer.draw(input.poses);
+    worldRenderer.draw();
     uiRenderer.draw();
   }
 }

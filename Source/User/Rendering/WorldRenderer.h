@@ -26,10 +26,12 @@ namespace Rendering {
     void initialize();
     size_t createAnimatedMesh(const AnimatedVertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength);
     size_t createAnimatedMeshInstance(size_t vaoOffset, uint8_t skeletonInstanceID);
-    void draw(const Animation::Pose *poses);
+    void draw();
     AnimatedMeshInstance* getAnimatedMeshInstance(size_t index);
     Quanta::Transform cameraTransform;
+    void setPoses(const Animation::Pose *poses);
   private:
+    const Animation::Pose *poses;
     GLint worldViewTransformationUniformHandle;
     GLint jointWorldTransformationUniformHandle;
     GLint modelJointTransformationsUniformHandle;

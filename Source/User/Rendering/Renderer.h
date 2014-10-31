@@ -6,8 +6,6 @@
 #include "Rendering/UIRenderer.h"
 
 namespace Rendering {
-  struct Input;
-
   class Renderer {
     ShaderRegistry registry;
     WorldRenderer worldRenderer;
@@ -16,7 +14,7 @@ namespace Rendering {
     Renderer();
     void initialize();
     WorldRenderer& getWorldRenderer();
-    void draw(const Input &input);
+    void draw();
   };
 }
 

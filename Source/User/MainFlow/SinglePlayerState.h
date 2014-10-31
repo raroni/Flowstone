@@ -8,7 +8,6 @@
 
 namespace Rendering {
   class Renderer;
-  struct Input;
 }
 
 namespace MainFlow {
@@ -17,11 +16,10 @@ namespace MainFlow {
   class SinglePlayerState : public State {
     Animation::Animator animator;
     Rendering::Renderer &renderer;
-    Rendering::Input &renderingInput;
     int x = 0;
     bool toRun = true;
   public:
-    SinglePlayerState(Rendering::Renderer &renderer, Rendering::Input &renderingInput);
+    SinglePlayerState(Rendering::Renderer &renderer);
     void enter();
     void update(double deltaTime);
     State* checkTransition();
