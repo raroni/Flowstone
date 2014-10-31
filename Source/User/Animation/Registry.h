@@ -2,6 +2,8 @@
 #include "Animation/JointConfig.h"
 #include "Animation/JointTransformation.h"
 
+#include <stdio.h>
+
 namespace Animation {
   class Registry {
     uint8_t skeletonCount = 0;
@@ -31,12 +33,7 @@ namespace Animation {
       return keyTimes[keyOffset+animationKeyOffset+key];
     }
     uint8_t getBonesCount(uint8_t skeletonID) const {
-      // TODO:
-      // As far as I can see we cannot implement this without one of these
-      // a) making a branch/if (on whether ID is 0)
-      // b) make an array of bonecounts
-      assert(skeletonID == 0);
-      return jointParentIndicesOffsets[1]+1;
+      return jointParentIndicesOffsets[skeletonID+1]-jointParentIndicesOffsets[skeletonID]+1;
     }
     const JointTransformation* getJointTransformations(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
       uint8_t bonesCount = getBonesCount(skeletonID);
