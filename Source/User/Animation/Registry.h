@@ -1,4 +1,5 @@
 #include <assert.h>
+#include "Core/Error.h"
 #include "Animation/JointConfig.h"
 #include "Animation/JointTransformation.h"
 
@@ -16,38 +17,37 @@ namespace Animation {
     float keyTimes[128];
     uint8_t jointTransformationOffsets[128];
     JointTransformation jointTransformations[128];
+    uint8_t getAccumulatedKeyCount(uint8_t skeletonID, uint8_t animation) const {
+      uint8_t animationOffset = animationOffsets[skeletonID];
+      uint8_t count = 0;
+      for(uint8_t i=0; 100>i; i++) {
+        assert(i != 100);
+        if(i == animation) {
+          return count;
+        }
+        count += animationKeyCounts[animationOffset+i];
+      }
+      fatalError("Could not calculate accumulated key count.");
+      exit(1);
+    }
   public:
     const uint8_t* getJointParentIndices(uint8_t skeletonID) const {
       uint8_t offset = jointParentIndicesOffsets[skeletonID];
       return &jointParentIndices[offset];
     }
     float getKeyTime(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
-      uint8_t animationOffset = animationOffsets[skeletonID];
-      uint8_t animationKeyOffset = 0;
-      for(uint8_t i=0; 100>=i; i++) {
-        if(i == animation) break;
-        animationKeyOffset += animationKeyCounts[animationOffset+i];
-        assert(i != 100);
-      }
-      uint8_t keyOffset = keyOffsets[skeletonID];
-      return keyTimes[keyOffset+animationKeyOffset+key];
+      uint8_t offset = keyOffsets[skeletonID];
+      uint8_t keyCount = getAccumulatedKeyCount(skeletonID, animation);
+      return keyTimes[offset+keyCount+key];
     }
     uint8_t getBonesCount(uint8_t skeletonID) const {
       return jointParentIndicesOffsets[skeletonID+1]-jointParentIndicesOffsets[skeletonID]+1;
     }
     const JointTransformation* getJointTransformations(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
+      uint8_t offset = jointTransformationOffsets[skeletonID];
       uint8_t bonesCount = getBonesCount(skeletonID);
-      uint8_t skeletonOffset = jointTransformationOffsets[skeletonID];
-
-      // TODO: DRY this up (also used in getKeyTime)
-      uint8_t animationOffset = 0;
-      for(uint8_t i=0; 100>=i; i++) {
-        if(i == animation) break;
-        animationOffset += animationKeyCounts[animationOffset+i]*bonesCount;
-        assert(i != 100);
-      }
-
-      return &jointTransformations[skeletonOffset+animationOffset+key*bonesCount];
+      uint8_t keyCount = getAccumulatedKeyCount(skeletonID, animation);
+      return &jointTransformations[offset+(keyCount+key)*bonesCount];
     }
     uint8_t createSkeleton(
       uint8_t *jointParentIndices,
