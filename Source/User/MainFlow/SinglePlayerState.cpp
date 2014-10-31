@@ -31,7 +31,7 @@ namespace MainFlow {
       { -0.05, 0, 0, 1, 0, 0, 0 },
       { 0.05, 0, 0, 1, 0, 0, 0 },
       { 0, 0, 0, 1, 0, 0, 0 },
-      { 0, 0, 0, 1, 0, 0, 0 }
+      { 0, 0, 0, 1, 0, 0, 0 } // <- why can't I move foot?!
     };
 
     uint8_t skeletonID = animator.createSkeleton(
@@ -90,15 +90,15 @@ namespace MainFlow {
       { -0.1, -1.1, 0.2, 4 },
 
       // right foot, front
-      { 0.5, -0.7, -0.2, 4 },
-      { 0.1, -0.7, -0.2, 4 },
-      { 0.5, -1.1, -0.2, 4 },
-      { 0.1, -1.1, -0.2, 4 },
+      { 0.5, -0.7, -0.2, 5 },
+      { 0.1, -0.7, -0.2, 5 },
+      { 0.5, -1.1, -0.2, 5 },
+      { 0.1, -1.1, -0.2, 5 },
       // right foot, back
-      { 0.5, -0.7, 0.2, 4 },
-      { 0.1, -0.7, 0.2, 4 },
-      { 0.5, -1.1, 0.2, 4 },
-      { 0.1, -1.1, 0.2, 4 },
+      { 0.5, -0.7, 0.2, 5 },
+      { 0.1, -0.7, 0.2, 5 },
+      { 0.5, -1.1, 0.2, 5 },
+      { 0.1, -1.1, 0.2, 5 },
     };
 
     uint16_t indexData[] = {
@@ -169,7 +169,7 @@ namespace MainFlow {
     /*
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     Rendering::AnimatedMeshInstance *instance = worldRenderer.getAnimatedMeshInstance(0);
-    instance->transform.rotateY(deltaTime*2);
+    instance->transform.rotateY(deltaTime*0.1);
     */
   }
 
