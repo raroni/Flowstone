@@ -12,6 +12,7 @@ SRC =\
 	Libraries/Quanta/Library/Source/Geometry/Point3D.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Error.cpp\
+	Source/Core/Physics/Engine.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
 	Source/User/Rendering/Renderer.cpp\

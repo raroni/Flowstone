@@ -5,6 +5,8 @@
 #include <OpenGL/gl3.h>
 #include "MainFlow/State.h"
 #include "Animation/Animator.h"
+#include "Core/Physics/Engine.h"
+#include "FrameInterpolator.h"
 
 namespace Rendering {
   class Renderer;
@@ -15,9 +17,12 @@ namespace MainFlow {
 
   class SinglePlayerState : public State {
     Animation::Animator animator;
+    Physics::Engine physics;
     Rendering::Renderer &renderer;
+    FrameInterpolator frameInterpolator;
     int x = 0;
     bool toRun = true;
+    double stepTimeBank = 0;
   public:
     SinglePlayerState(Rendering::Renderer &renderer);
     void enter();

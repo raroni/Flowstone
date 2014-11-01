@@ -14,7 +14,7 @@ namespace Rendering {
   class ShaderRegistry;
 
   struct AnimatedMeshInstance {
-    Quanta::Transform transform;
+    uint8_t interpolationTransformID;
     size_t vaoHandle;
     uint16_t indexCount;
     uint8_t skeletonInstanceID;
@@ -25,11 +25,12 @@ namespace Rendering {
     WorldRenderer(ShaderRegistry &registry);
     void initialize();
     size_t createAnimatedMesh(const AnimatedVertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength);
-    size_t createAnimatedMeshInstance(size_t vaoOffset, uint8_t skeletonInstanceID);
+    size_t createAnimatedMeshInstance(size_t vaoOffset, uint8_t interpolationTransformID, uint8_t skeletonInstanceID);
     void draw();
     AnimatedMeshInstance* getAnimatedMeshInstance(size_t index);
     Quanta::Transform cameraTransform;
     void setPoses(const Animation::Pose *poses);
+    void setTransforms(const Quanta::Matrix4 *transforms);
   private:
     const Animation::Pose *poses;
     GLint worldViewTransformationUniformHandle;

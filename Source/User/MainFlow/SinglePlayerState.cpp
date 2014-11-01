@@ -184,12 +184,28 @@ namespace MainFlow {
     );
 
     uint8_t skeletonInstanceID = animator.createSkeletonInstance(skeletonID);
-    worldRenderer.createAnimatedMeshInstance(vaoOffset, skeletonInstanceID);
+
+    uint8_t physicsTransformID = physics.createTransform();
+    physics.createRigidBody(physicsTransformID);
+    physics.createSphereCollider(physicsTransformID);
+
+    uint8_t interpolationTransformID = frameInterpolator.createTransform(physicsTransformID);
+
+    worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID, skeletonInstanceID);
 
     worldRenderer.cameraTransform.position[2] = -3;
   }
 
   void SinglePlayerState::update(double timeDelta) {
+    if(stepTimeBank >= Physics::Engine::stepDuration) {
+      do {
+        physics.simulate();
+        stepTimeBank -= Physics::Engine::stepDuration;
+      } while(stepTimeBank >= Physics::Engine::stepDuration);
+      frameInterpolator.reload(physics.getPositions(), physics.getOrientations());
+    }
+    frameInterpolator.interpolate(stepTimeBank/Physics::Engine::stepDuration);
+
     x++;
 
     if(x % 100 == 0) {
@@ -202,6 +218,7 @@ namespace MainFlow {
       }
     }
     animator.update(timeDelta);
+
     /*
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     Rendering::Component *component = worldRenderer.getComponent(0);
