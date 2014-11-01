@@ -16,7 +16,7 @@ namespace Physics {
   }
 
   void Engine::simulate() {
-
+    positions[0][2] += 0.01; // <- just dummy testing
   }
 
   const Quanta::Vector3* Engine::getPositions() const {

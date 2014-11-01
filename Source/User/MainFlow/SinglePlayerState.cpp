@@ -9,6 +9,7 @@ namespace MainFlow {
   void SinglePlayerState::enter() {
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     worldRenderer.setPoses(animator.getWorldPoses());
+    worldRenderer.setJointWorldTransformations(frameInterpolator.getTransforms());
 
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
@@ -185,7 +186,7 @@ namespace MainFlow {
 
     uint8_t skeletonInstanceID = animator.createSkeletonInstance(skeletonID);
 
-    uint8_t physicsTransformID = physics.createTransform();
+    physicsTransformID = physics.createTransform();
     physics.createRigidBody(physicsTransformID);
     physics.createSphereCollider(physicsTransformID);
 
@@ -197,6 +198,7 @@ namespace MainFlow {
   }
 
   void SinglePlayerState::update(double timeDelta) {
+    stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Engine::stepDuration) {
       do {
         physics.simulate();
@@ -206,6 +208,7 @@ namespace MainFlow {
     }
     frameInterpolator.interpolate(stepTimeBank/Physics::Engine::stepDuration);
 
+    /*
     x++;
 
     if(x % 100 == 0) {
@@ -217,6 +220,7 @@ namespace MainFlow {
         toRun = true;
       }
     }
+    */
     animator.update(timeDelta);
 
     /*

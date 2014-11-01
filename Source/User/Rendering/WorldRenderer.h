@@ -30,9 +30,10 @@ namespace Rendering {
     AnimatedMeshInstance* getAnimatedMeshInstance(size_t index);
     Quanta::Transform cameraTransform;
     void setPoses(const Animation::Pose *poses);
-    void setTransforms(const Quanta::Matrix4 *transforms);
+    void setJointWorldTransformations(const Quanta::Matrix4 *transforms);
   private:
     const Animation::Pose *poses;
+    const Quanta::Matrix4 *jointWorldTransformations;
     GLint worldViewTransformationUniformHandle;
     GLint jointWorldTransformationUniformHandle;
     GLint modelJointTransformationsUniformHandle;

@@ -102,6 +102,10 @@ namespace Rendering {
     this->poses = poses;
   }
 
+  void WorldRenderer::setJointWorldTransformations(const Quanta::Matrix4 *transformations) {
+    jointWorldTransformations = transformations;
+  }
+
   size_t WorldRenderer::createAnimatedMeshInstance(size_t vaoOffset, uint8_t interpolationTransformID, uint8_t skeletonInstanceID) {
     AnimatedMeshInstance instance = { interpolationTransformID, vaoHandles[vaoOffset], indexCounts[vaoOffset], skeletonInstanceID };
     animatedMeshInstances[animatedMeshInstanceCount++] = instance;
@@ -114,10 +118,7 @@ namespace Rendering {
 
     for(int i=0; animatedMeshInstanceCount>i; i++) {
       AnimatedMeshInstance &instance = animatedMeshInstances[i];
-
-      // TODO: Use AnimatedMeshInstance#interpolationTransformID
-      glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, Quanta::Matrix4::identity().components);
-
+      glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, jointWorldTransformations[instance.interpolationTransformID].components);
       const Animation::Pose *pose = &poses[instance.skeletonInstanceID];
       glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, pose->joints[0].components);
       glBindVertexArray(instance.vaoHandle);
