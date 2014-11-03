@@ -7,7 +7,7 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/TransformationFactory3D.h"
-#include "Animation/Pose.h"
+#include "Pose.h"
 #include "Animation/Registry.h"
 
 namespace Animation {
@@ -109,7 +109,7 @@ namespace Animation {
         jointConfigs
       );
     }
-    uint8_t createSkeletonInstance(uint8_t skeletonID) {
+    void createSkeletonInstance(uint8_t skeletonID) {
       skeletonIDs[instanceCount] = skeletonID;
       passed[instanceCount] = 0;
       animations[instanceCount] = 0;
@@ -126,7 +126,7 @@ namespace Animation {
       for(uint8_t i=0; bonesCount>i; i++) {
         targetTransformations[transformationOffset+i] = transformations[i];
       }
-      return instanceCount++;
+      instanceCount++;
     }
     void changeAnimation(uint8_t instanceID, uint8_t animation) {
       passed[instanceID] = 0;

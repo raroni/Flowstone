@@ -3,7 +3,7 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
-#include "Animation/Pose.h"
+#include "Pose.h"
 #include "Rendering/ShaderRegistry.h"
 #include "Rendering/WorldRenderer.h"
 
@@ -98,7 +98,7 @@ namespace Rendering {
     return vaoCount++;
   }
 
-  void WorldRenderer::setPoses(const Animation::Pose *poses) {
+  void WorldRenderer::setPoses(const Pose *poses) {
     this->poses = poses;
   }
 
@@ -106,8 +106,8 @@ namespace Rendering {
     jointWorldTransformations = transformations;
   }
 
-  size_t WorldRenderer::createAnimatedMeshInstance(size_t vaoOffset, uint8_t interpolationTransformID, uint8_t skeletonInstanceID) {
-    AnimatedMeshInstance instance = { interpolationTransformID, vaoHandles[vaoOffset], indexCounts[vaoOffset], skeletonInstanceID };
+  size_t WorldRenderer::createAnimatedMeshInstance(size_t vaoOffset, uint8_t interpolationTransformID) {
+    AnimatedMeshInstance instance = { interpolationTransformID, vaoHandles[vaoOffset], indexCounts[vaoOffset] };
     animatedMeshInstances[animatedMeshInstanceCount++] = instance;
     return animatedMeshInstanceCount-1;
   }
@@ -119,7 +119,7 @@ namespace Rendering {
     for(int i=0; animatedMeshInstanceCount>i; i++) {
       AnimatedMeshInstance &instance = animatedMeshInstances[i];
       glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, jointWorldTransformations[instance.interpolationTransformID].components);
-      const Animation::Pose *pose = &poses[instance.skeletonInstanceID];
+      const Pose *pose = &poses[i];
       glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, pose->joints[0].components);
       glBindVertexArray(instance.vaoHandle);
       glDrawElements(GL_TRIANGLES, instance.indexCount, GL_UNSIGNED_SHORT, 0);

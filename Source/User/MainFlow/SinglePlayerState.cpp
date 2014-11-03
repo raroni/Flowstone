@@ -184,7 +184,7 @@ namespace MainFlow {
       sizeof(indexData)/sizeof(uint16_t)
     );
 
-    uint8_t skeletonInstanceID = animator.createSkeletonInstance(skeletonID);
+    animator.createSkeletonInstance(skeletonID);
 
     physicsTransformID = physics.createTransform();
     physics.createRigidBody(physicsTransformID);
@@ -192,7 +192,7 @@ namespace MainFlow {
 
     uint8_t interpolationTransformID = frameInterpolator.createTransform(physicsTransformID);
 
-    worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID, skeletonInstanceID);
+    worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
 
     worldRenderer.cameraTransform.position[2] = -3;
   }
@@ -208,7 +208,6 @@ namespace MainFlow {
     }
     frameInterpolator.interpolate(stepTimeBank/Physics::Engine::stepDuration);
 
-    /*
     x++;
 
     if(x % 100 == 0) {
@@ -220,7 +219,6 @@ namespace MainFlow {
         toRun = true;
       }
     }
-    */
     animator.update(timeDelta);
 
     /*

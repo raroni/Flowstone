@@ -6,9 +6,7 @@
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/AnimatedVertex.h"
 
-namespace Animation {
-  struct Pose;
-}
+struct Pose;
 
 namespace Rendering {
   class ShaderRegistry;
@@ -17,7 +15,6 @@ namespace Rendering {
     uint8_t interpolationTransformID;
     size_t vaoHandle;
     uint16_t indexCount;
-    uint8_t skeletonInstanceID;
   };
 
   class WorldRenderer {
@@ -25,14 +22,14 @@ namespace Rendering {
     WorldRenderer(ShaderRegistry &registry);
     void initialize();
     size_t createAnimatedMesh(const AnimatedVertex *vertices, const size_t verticesLength, const uint16_t *indices, const size_t indicesLength);
-    size_t createAnimatedMeshInstance(size_t vaoOffset, uint8_t interpolationTransformID, uint8_t skeletonInstanceID);
+    size_t createAnimatedMeshInstance(size_t vaoOffset, uint8_t interpolationTransformID);
     void draw();
     AnimatedMeshInstance* getAnimatedMeshInstance(size_t index);
     Quanta::Transform cameraTransform;
-    void setPoses(const Animation::Pose *poses);
+    void setPoses(const Pose *poses);
     void setJointWorldTransformations(const Quanta::Matrix4 *transforms);
   private:
-    const Animation::Pose *poses;
+    const Pose *poses;
     const Quanta::Matrix4 *jointWorldTransformations;
     GLint worldViewTransformationUniformHandle;
     GLint jointWorldTransformationUniformHandle;
