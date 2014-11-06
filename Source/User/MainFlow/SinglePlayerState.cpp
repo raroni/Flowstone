@@ -188,7 +188,7 @@ namespace MainFlow {
 
     physicsTransformID = physics.createTransform();
     physics.createRigidBody(physicsTransformID);
-    physics.createSphereCollider(physicsTransformID);
+    physics.createSphereCollider(physicsTransformID, 0.5);
 
     uint8_t interpolationTransformID = frameInterpolator.createTransform(physicsTransformID);
 

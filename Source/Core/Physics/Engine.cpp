@@ -1,22 +1,27 @@
 #include "Core/Physics/Engine.h"
+#include "Core/Physics/SphereColliderHandle.h"
 
 namespace Physics {
   const double Engine::stepDuration = 0.03;
 
-  uint8_t Engine::createTransform() {
-    return 0;
+  TransformIndex Engine::createTransform() {
+    TransformIndex index = transformCount++;
+    return index;
   }
 
-  void Engine::createRigidBody(uint8_t transformID) {
-
+  void Engine::createRigidBody(TransformIndex transformIndex) {
+    integrator.createRigidBody(transformIndex);
   }
 
-  void Engine::createSphereCollider(uint8_t transformID) {
-
+  SphereColliderHandle Engine::createSphereCollider(TransformIndex transformIndex, float radius) {
+    return collisionDetector.createSphereCollider(transformIndex, radius);
   }
 
   void Engine::simulate() {
-    positions[0][2] += 0.01; // <- just dummy testing
+    integrator.integrate();
+    collisionDetector.detect(collisionSet, positions);
+    //collisionResolver.resolve();
+    collisionSet.clear();
   }
 
   const Quanta::Vector3* Engine::getPositions() const {
