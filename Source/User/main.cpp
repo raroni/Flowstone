@@ -7,7 +7,21 @@
 static Rendering::Renderer renderer;
 static MainFlow::Manager flow;
 
+void handleKeyDown(BroKey key) {
+  if(key == BroKeyA) {
+
+  }
+}
+
+void handleKeyUp(BroKey key) {
+  if(key == BroKeyA) {
+
+  }
+}
+
 int main() {
+  broSetKeyDownCallback(handleKeyDown);
+  broSetKeyUpCallback(handleKeyUp);
   //broSetEventCallback(handleEvent);
   broInitialize();
   timingInitialize();

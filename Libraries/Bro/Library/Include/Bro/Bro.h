@@ -2,8 +2,10 @@
 #define BRO_H
 
 #include <stdint.h>
+#include "Key.h"
 
-typedef void (* BroEventCallback)();
+typedef void (*BroEventCallback)();
+typedef void (*BroKeyCallback)(BroKey broKey);
 
 struct BroResolution {
   uint16_t width;
@@ -12,6 +14,8 @@ struct BroResolution {
 
 void broInitialize();
 void broSetEventCallback(BroEventCallback callback);
+void broSetKeyDownCallback(BroKeyCallback callback);
+void broSetKeyUpCallback(BroKeyCallback callback);
 bool broShouldTerminate();
 void broPollEvents();
 void broTerminate();
@@ -20,5 +24,7 @@ void broSwapBuffers();
 bool broIsVisible();
 double broGetTime();
 BroResolution broGetResolution();
+void broHandleKeyDown(BroKey key);
+void broHandleKeyUp(BroKey key);
 
 #endif

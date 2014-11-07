@@ -6,6 +6,8 @@
 #include "Bro/OSX/AppDelegate.h"
 #include "Bro/Bro.h"
 
+void defaultKeyCallback(BroKey key) { }
+
 struct Bro {
   id appDelegate;
   id autoreleasePool;
@@ -13,6 +15,8 @@ struct Bro {
   id view;
   id windowDelegate;
   BroEventCallback eventCallback;
+  BroKeyCallback keyDownCallback = defaultKeyCallback;
+  BroKeyCallback keyUpCallback = defaultKeyCallback;
   bool shouldTerminate;
   NSOpenGLContext *context;
   uint64_t startTime;
@@ -141,6 +145,14 @@ bool broShouldTerminate() {
   return bro.shouldTerminate;
 }
 
+void broSetKeyDownCallback(BroKeyCallback callback) {
+  bro.keyDownCallback = callback;
+}
+
+void broSetKeyUpCallback(BroKeyCallback callback) {
+  bro.keyUpCallback = callback;
+}
+
 void broSetEventCallback(BroEventCallback callback) {
   bro.eventCallback = callback;
 }
@@ -160,6 +172,14 @@ void broTerminate() {
   [bro.appDelegate release];
 
   [bro.autoreleasePool release];
+}
+
+void broHandleKeyDown(BroKey key) {
+  bro.keyDownCallback(key);
+}
+
+void broHandleKeyUp(BroKey key) {
+  bro.keyUpCallback(key);
 }
 
 void broSwapBuffers() {
