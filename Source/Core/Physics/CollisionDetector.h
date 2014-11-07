@@ -16,7 +16,11 @@ namespace Physics {
       dynamicSphereColliders.destroy(handle);
     }
     void detect(CollisionSet &set, const Quanta::Vector3 *positions) {
-      CollisionSet::DynamicList &dynamics = set.getDynamics();
+      detectDynamics(set.getDynamics(), positions);
+      detectStatics(set.getStatics(), positions);
+    }
+  private:
+    void detectDynamics(CollisionSet::DynamicList &collisions, const Quanta::Vector3 *positions) {
       uint8_t count = dynamicSphereColliders.getCount();
       const DynamicBodyIndex *bodyIndices = dynamicSphereColliders.getBodyIndices();
       const float *radii = dynamicSphereColliders.getRadii();
@@ -25,13 +29,11 @@ namespace Physics {
         for(uint8_t n=substart; count>n; n++) {
           DynamicBodyIndex body1 = bodyIndices[i];
           DynamicBodyIndex body2 = bodyIndices[n];
-
           Quanta::Vector3 difference = positions[body2]-positions[body1];
-
           float radiiSum = radii[i] + radii[n];
           if(difference.getSquaredLength() < radiiSum*radiiSum) {
             Quanta::Vector3 separation = difference.getNormalized()*(radiiSum-difference.getLength());
-            dynamics.add({
+            collisions.add({
               body1,
               body2,
               separation
@@ -40,6 +42,9 @@ namespace Physics {
         }
         substart++;
       }
+    }
+    void detectStatics(CollisionSet::StaticList &collisions, const Quanta::Vector3 *positions) {
+      // not impl yet
     }
   };
 }

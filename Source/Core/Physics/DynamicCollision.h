@@ -1,5 +1,5 @@
-#ifndef PHYSICS_COLLISION_H
-#define PHYSICS_COLLISION_H
+#ifndef PHYSICS_DYNAMIC_COLLISION_H
+#define PHYSICS_DYNAMIC_COLLISION_H
 
 #include "Quanta/Math/Vector3.h"
 
