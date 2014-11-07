@@ -26,10 +26,7 @@ namespace Physics {
           DynamicBodyIndex body1 = bodyIndices[i];
           DynamicBodyIndex body2 = bodyIndices[n];
 
-          Quanta::Vector3 position1 = positions[body1];
-          Quanta::Vector3 position2 = positions[body2];
-
-          Quanta::Vector3 difference = position2-position1;
+          Quanta::Vector3 difference = positions[body2]-positions[body1];
 
           float radiiSum = radii[i] + radii[n];
           if(difference.getSquaredLength() < radiiSum*radiiSum) {

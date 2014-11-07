@@ -69,7 +69,7 @@ namespace Quanta {
         return *this;
     }
 
-    Vector3 Vector3::operator-(Vector3 vector) {
+    Vector3 Vector3::operator-(const Vector3 vector) const {
         Vector3 result = *this;
         result -= vector;
         return result;
