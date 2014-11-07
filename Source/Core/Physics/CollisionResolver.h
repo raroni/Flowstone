@@ -1,10 +1,13 @@
 namespace Physics {
-  void resolve(CollisionSet &set) {
-    // for(DynamicCollision &collision : set.dynamics) {
+  void resolveCollisions(CollisionSet &set, Quanta::Vector3 *positions, Quanta::Vector3 *velocities) {
+    CollisionSet::DynamicList &dynamics = set.getDynamics();
+    for(uint8_t i=0; dynamics.getCount()>i; i++) {
+      Quanta::Vector3 halfSeparation = dynamics[i].separation*0.5;
 
-    // }
-    // for(StaticCollision &collision : set.statics) {
-
-    // }
+      DynamicBodyIndex bodyA = dynamics[i].bodyA;
+      DynamicBodyIndex bodyB = dynamics[i].bodyB;
+      positions[bodyA] -= halfSeparation;
+      positions[bodyB] += halfSeparation;
+    }
   }
 }

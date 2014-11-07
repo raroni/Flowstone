@@ -1,3 +1,6 @@
+#ifndef PHYSICS_COLLISION_DETECTOR_H
+#define PHYSICS_COLLISION_DETECTOR_H
+
 #include "Core/Physics/DynamicBodyIndex.h"
 #include "Core/Physics/DynamicSphereColliderHandle.h"
 #include "Core/Physics/FreeList.h"
@@ -48,3 +51,5 @@ namespace Physics {
     }
   };
 }
+
+#endif

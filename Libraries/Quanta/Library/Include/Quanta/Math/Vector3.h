@@ -13,7 +13,7 @@ namespace Quanta {
     Vector3& operator/=(float divident);
     void negate();
     Vector3& operator*=(float factor);
-    Vector3 operator*(float factor);
+    Vector3 operator*(float factor) const;
     static float dot(Vector3 operand1, Vector3 operand2);
     static Vector3 cross(Vector3 operand1, Vector3 operand2);
     Vector3 operator+(Vector3 other);

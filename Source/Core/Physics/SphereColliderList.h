@@ -1,3 +1,6 @@
+#ifndef PHYSICS_SPHERE_COLLIDER_H
+#define PHYSICS_SPHERE_COLLIDER_H
+
 namespace Physics {
   template<typename Handle, typename BodyIndex>
   class SphereColliderList {
@@ -39,3 +42,5 @@ namespace Physics {
     }
   };
 }
+
+#endif

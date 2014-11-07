@@ -24,7 +24,7 @@ namespace Quanta {
         return negated;
     }
 
-    Vector3 Vector3::operator*(float factor) {
+    Vector3 Vector3::operator*(float factor) const {
         Vector3 result = *this;
         result *= factor;
         return result;
