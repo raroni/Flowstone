@@ -1,34 +1,30 @@
 #include "Core/Physics/Engine.h"
-#include "Core/Physics/SphereColliderHandle.h"
+#include "Core/Physics/DynamicSphereColliderHandle.h"
 
 namespace Physics {
   const double Engine::stepDuration = 0.03;
 
-  TransformIndex Engine::createTransform() {
-    TransformIndex index = transformCount++;
+  DynamicBodyIndex Engine::createDynamicBody() {
+    DynamicBodyIndex index = dynamicBodyCount++;
     return index;
   }
 
-  void Engine::createRigidBody(TransformIndex transformIndex) {
-    integrator.createRigidBody(transformIndex);
-  }
-
-  SphereColliderHandle Engine::createSphereCollider(TransformIndex transformIndex, float radius) {
-    return collisionDetector.createSphereCollider(transformIndex, radius);
+  DynamicSphereColliderHandle Engine::createDynamicSphereCollider(DynamicBodyIndex body, float radius) {
+    return collisionDetector.createDynamicSphere(body, radius);
   }
 
   void Engine::simulate() {
     integrator.integrate();
-    collisionDetector.detect(collisionSet, positions);
+    collisionDetector.detect(collisionSet, dynamicPositions);
     //collisionResolver.resolve();
     collisionSet.clear();
   }
 
-  const Quanta::Vector3* Engine::getPositions() const {
-    return positions;
+  const Quanta::Vector3* Engine::getDynamicPositions() const {
+    return dynamicPositions;
   }
 
-  const Quanta::Quaternion* Engine::getOrientations() const {
-    return orientations;
+  const Quanta::Quaternion* Engine::getDynamicOrientations() const {
+    return dynamicOrientations;
   }
 }

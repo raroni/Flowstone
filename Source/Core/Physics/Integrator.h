@@ -7,9 +7,6 @@ namespace Physics {
     void integrate() {
 
     }
-    void createRigidBody(TransformIndex index) {
-
-    }
   };
 }
 

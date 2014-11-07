@@ -4,9 +4,9 @@
 #include "Quanta/Math/Vector3.h"
 
 namespace Physics {
-  struct Collision {
-    TransformIndex a;
-    TransformIndex b;
+  struct DynamicCollision {
+    DynamicBodyIndex bodyA;
+    DynamicBodyIndex bodyB;
     Quanta::Vector3 separation;
   };
 }

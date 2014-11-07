@@ -186,11 +186,11 @@ namespace MainFlow {
 
     animator.createSkeletonInstance(skeletonID);
 
-    physicsTransformID = physics.createTransform();
-    physics.createRigidBody(physicsTransformID);
-    physics.createSphereCollider(physicsTransformID, 0.5);
 
-    uint8_t interpolationTransformID = frameInterpolator.createTransform(physicsTransformID);
+    Physics::DynamicBodyIndex body = physics.createDynamicBody();
+    physics.createDynamicSphereCollider(body, 0.5);
+
+    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(body);
 
     worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
 
@@ -204,7 +204,7 @@ namespace MainFlow {
         physics.simulate();
         stepTimeBank -= Physics::Engine::stepDuration;
       } while(stepTimeBank >= Physics::Engine::stepDuration);
-      frameInterpolator.reload(physics.getPositions(), physics.getOrientations());
+      frameInterpolator.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
     }
     frameInterpolator.interpolate(stepTimeBank/Physics::Engine::stepDuration);
 
