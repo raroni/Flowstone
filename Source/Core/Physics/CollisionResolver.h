@@ -1,3 +1,9 @@
+#ifndef PHYSICS_COLLISION_RESOLVER_H
+#define PHYSICS_COLLISION_RESOLVER_H
+
+#include "Quanta/Math/Vector3.h"
+#include "Core/Physics/CollisionSet.h"
+
 namespace Physics {
   void resolveCollisions(CollisionSet &set, Quanta::Vector3 *positions, Quanta::Vector3 *velocities) {
     CollisionSet::DynamicList &dynamics = set.getDynamics();
@@ -11,3 +17,5 @@ namespace Physics {
     }
   }
 }
+
+#endif

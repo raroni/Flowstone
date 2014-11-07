@@ -1,6 +1,9 @@
 #ifndef CONRAD_LIST_H
 #define CONRAD_LIST_H
 
+#include <stddef.h>
+#include <assert.h>
+
 template<typename T, size_t MAX_COUNT>
 class List {
 public:

@@ -13,6 +13,7 @@ namespace Physics {
   class Engine {
     Quanta::Vector3 dynamicPositions[128];
     Quanta::Quaternion dynamicOrientations[128];
+    Quanta::Vector3 dynamicVelocities[128];
     uint16_t dynamicBodyCount = 0;
     CollisionDetector collisionDetector;
     Integrator integrator;

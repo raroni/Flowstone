@@ -1,5 +1,6 @@
-#include "Core/Physics/Engine.h"
 #include "Core/Physics/DynamicSphereColliderHandle.h"
+#include "Core/Physics/CollisionResolver.h"
+#include "Core/Physics/Engine.h"
 
 namespace Physics {
   const double Engine::stepDuration = 0.03;
@@ -16,7 +17,7 @@ namespace Physics {
   void Engine::simulate() {
     integrator.integrate();
     collisionDetector.detect(collisionSet, dynamicPositions);
-    //collisionResolver.resolve();
+    resolveCollisions(collisionSet, dynamicPositions, dynamicVelocities);
     collisionSet.clear();
   }
 
