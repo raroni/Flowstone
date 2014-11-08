@@ -14,7 +14,7 @@ namespace Quanta {
       return matrix;
     }
 
-    Quaternion rotation(float angle, Vector3 axis) {
+    Quaternion rotation(Vector3 axis, float angle) {
       float halfAngle = angle*0.5;
       float real = cos(halfAngle);
       Vector3 imaginaries = axis*sin(halfAngle);

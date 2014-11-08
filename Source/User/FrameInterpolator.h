@@ -18,14 +18,19 @@ public:
   void interpolate(double progress) {
     for(uint8_t i=0; bodyCount>i; i++) {
       Quanta::Vector3 position = oldPositions[i] + (newPositions[i]-oldPositions[i])*progress;
-      transforms[i] = Quanta::TransformationFactory3D::translation(position);
+      Quanta::Matrix4 translation = Quanta::TransformationFactory3D::translation(position);
+      Quanta::Quaternion orientation = Quanta::Quaternion::slerp(oldOrientations[i], newOrientations[i], progress);
+      orientation.normalize();
+      transforms[i] = translation * static_cast<Quanta::Matrix4>(orientation);
     }
   }
   void reload(const Quanta::Vector3 *newPositions, const Quanta::Quaternion *newOrientations) {
     for(uint8_t i=0; bodyCount>i; i++) {
       oldPositions[i] = this->newPositions[i];
+      oldOrientations[i] = this->newOrientations[i];
       Physics::DynamicBodyIndex bodyIndex = bodyIndices[i];
       this->newPositions[i] = newPositions[bodyIndex];
+      this->newOrientations[i] = newOrientations[bodyIndex];
     }
   }
   const Quanta::Matrix4* getTransforms() const {

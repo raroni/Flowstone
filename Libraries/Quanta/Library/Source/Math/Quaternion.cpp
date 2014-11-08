@@ -22,6 +22,12 @@ namespace Quanta {
     return *this;
   }
 
+  Quaternion& Quaternion::operator/=(float divisor) {
+    real /= divisor;
+    imaginaries /= divisor;
+    return *this;
+  }
+
   Quaternion Quaternion::getConjugate() {
     Quaternion conjugate(real, imaginaries.getNegated());
     return conjugate;
@@ -44,7 +50,7 @@ namespace Quanta {
     return matrix;
   }
 
-  float Quaternion::getLength() {
+  float Quaternion::getLength() const {
     return sqrt(real*real + imaginaries[0]*imaginaries[0] + imaginaries[1]*imaginaries[1] + imaginaries[2]*imaginaries[2]);
   }
 
@@ -85,6 +91,18 @@ namespace Quanta {
     float q1 = sin(1-progress)*angle*inverseSine;
     float q2 = sin(progress*angle)*inverseSine;
 
+    return origin*q1+destination*q2;
+  }
+
+  void Quaternion::normalize() {
+    operator/=(getLength());
+  }
+
+  Quaternion Quaternion::slerp(Quaternion &origin, Quaternion &destination, float progress) {
+    float angle = acos(dot(origin, destination));
+    float inverseSine = 1/sin(angle);
+    float q1 = sin(1-progress)*angle*inverseSine;
+    float q2 = sin(progress*angle)*inverseSine;
     return origin*q1+destination*q2;
   }
 

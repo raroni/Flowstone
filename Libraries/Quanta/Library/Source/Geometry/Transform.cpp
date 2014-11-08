@@ -18,15 +18,15 @@ namespace Quanta {
   }
 
   void Transform::rotateX(float angle) {
-    orientation = TransformationFactory3D::rotation(angle, Vector3(1, 0, 0)) * orientation;
+    orientation = TransformationFactory3D::rotation(Vector3(1, 0, 0), angle) * orientation;
   }
 
   void Transform::rotateY(float angle) {
-    orientation = TransformationFactory3D::rotation(angle, Vector3(0, 1, 0)) * orientation;
+    orientation = TransformationFactory3D::rotation(Vector3(0, 1, 0), angle) * orientation;
   }
 
   void Transform::rotateZ(float angle) {
-    orientation = TransformationFactory3D::rotation(angle, Vector3(0, 0, 1)) * orientation;
+    orientation = TransformationFactory3D::rotation(Vector3(0, 0, 1), angle) * orientation;
   }
 
   void Transform::rotate(Quaternion &rotation) {

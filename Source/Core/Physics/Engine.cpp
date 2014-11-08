@@ -41,6 +41,7 @@ namespace Physics {
     body.position = &dynamicPositions[index];
     body.velocity = &dynamicVelocities[index];
     body.force = &dynamicForces[index];
+    body.orientation = &dynamicOrientations[index];
     return body;
   }
 }

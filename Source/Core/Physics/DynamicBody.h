@@ -6,6 +6,7 @@ namespace Physics {
     Quanta::Vector3 *position;
     Quanta::Vector3 *velocity;
     Quanta::Vector3 *force;
+    Quanta::Quaternion *orientation;
   };
 }
 

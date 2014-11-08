@@ -5,6 +5,6 @@ namespace Quanta {
 
   namespace TransformationFactory3D {
     Matrix4 translation(Vector3 position);
-    Quaternion rotation(float angle, Vector3 axis);
+    Quaternion rotation(Vector3 axis, float angle);
   }
 }
