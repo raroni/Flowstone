@@ -28,4 +28,11 @@ namespace Physics {
   const Quanta::Quaternion* Engine::getDynamicOrientations() const {
     return dynamicOrientations;
   }
+
+  DynamicBody Engine::getDynamicBody(DynamicBodyIndex index) {
+    DynamicBody body;
+    body.position = &dynamicPositions[index];
+    body.velocity = &dynamicVelocities[index];
+    return body;
+  }
 }

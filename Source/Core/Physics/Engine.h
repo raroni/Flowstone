@@ -8,6 +8,7 @@
 #include "Core/Physics/DynamicBodyIndex.h"
 #include "Core/Physics/CollisionSet.h"
 #include "Core/Physics/Integrator.h"
+#include "Core/Physics/DynamicBody.h"
 
 namespace Physics {
   class Engine {
@@ -22,6 +23,7 @@ namespace Physics {
       static const double stepDuration;
       DynamicBodyIndex createDynamicBody();
       DynamicSphereColliderHandle createDynamicSphereCollider(DynamicBodyIndex body, float radius);
+      DynamicBody getDynamicBody(DynamicBodyIndex index);
       void simulate();
       const Quanta::Vector3* getDynamicPositions() const;
       const Quanta::Quaternion* getDynamicOrientations() const;

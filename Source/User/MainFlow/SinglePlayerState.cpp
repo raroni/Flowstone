@@ -1,5 +1,6 @@
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
+#include "PlayerControl.h"
 #include "MainFlow/SinglePlayerState.h"
 
 namespace MainFlow {
@@ -186,11 +187,10 @@ namespace MainFlow {
 
     animator.createSkeletonInstance(skeletonID);
 
+    playerBodyIndex = physics.createDynamicBody();
+    physics.createDynamicSphereCollider(playerBodyIndex, 0.5);
 
-    Physics::DynamicBodyIndex body = physics.createDynamicBody();
-    physics.createDynamicSphereCollider(body, 0.5);
-
-    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(body);
+    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBodyIndex);
 
     worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
 
@@ -201,6 +201,8 @@ namespace MainFlow {
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Engine::stepDuration) {
       do {
+        Physics::DynamicBody body = physics.getDynamicBody(playerBodyIndex);
+        playerControlUpdate(body);
         physics.simulate();
         stepTimeBank -= Physics::Engine::stepDuration;
       } while(stepTimeBank >= Physics::Engine::stepDuration);

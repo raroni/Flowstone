@@ -23,6 +23,7 @@ namespace MainFlow {
     int x = 0;
     bool toRun = true;
     double stepTimeBank = 0;
+    Physics::DynamicBodyIndex playerBodyIndex;
   public:
     SinglePlayerState(Rendering::Renderer &renderer);
     void enter();
