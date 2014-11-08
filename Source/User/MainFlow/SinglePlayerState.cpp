@@ -199,16 +199,16 @@ namespace MainFlow {
 
   void SinglePlayerState::update(double timeDelta) {
     stepTimeBank += timeDelta;
-    if(stepTimeBank >= Physics::Engine::stepDuration) {
+    if(stepTimeBank >= Physics::Config::stepDuration) {
       do {
         Physics::DynamicBody body = physics.getDynamicBody(playerBodyIndex);
         playerControlUpdate(body);
         physics.simulate();
-        stepTimeBank -= Physics::Engine::stepDuration;
-      } while(stepTimeBank >= Physics::Engine::stepDuration);
+        stepTimeBank -= Physics::Config::stepDuration;
+      } while(stepTimeBank >= Physics::Config::stepDuration);
       frameInterpolator.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
     }
-    frameInterpolator.interpolate(stepTimeBank/Physics::Engine::stepDuration);
+    frameInterpolator.interpolate(stepTimeBank/Physics::Config::stepDuration);
 
     x++;
 

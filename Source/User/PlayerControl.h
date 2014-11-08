@@ -6,10 +6,10 @@
 
 void playerControlUpdate(Physics::DynamicBody &body) {
   if(broIsKeyPressed(BroKeyRight)) {
-    (*body.position)[0] += 0.025;
+    (*body.force)[0] += 1;
   }
   else if(broIsKeyPressed(BroKeyLeft)) {
-    (*body.position)[0] -= 0.025;
+    (*body.force)[0] -= 1;
   }
 }
 

@@ -8,19 +8,20 @@
 #include "Core/Physics/DynamicBodyIndex.h"
 #include "Core/Physics/CollisionSet.h"
 #include "Core/Physics/Integrator.h"
+#include "Core/Physics/Config.h"
 #include "Core/Physics/DynamicBody.h"
 
 namespace Physics {
   class Engine {
-    Quanta::Vector3 dynamicPositions[128];
-    Quanta::Quaternion dynamicOrientations[128];
-    Quanta::Vector3 dynamicVelocities[128];
+    Quanta::Vector3 dynamicPositions[Config::maxDynamicBodies];
+    Quanta::Quaternion dynamicOrientations[Config::maxDynamicBodies];
+    Quanta::Vector3 dynamicVelocities[Config::maxDynamicBodies];
+    Quanta::Vector3 dynamicForces[Config::maxDynamicBodies];
     uint16_t dynamicBodyCount = 0;
     CollisionDetector collisionDetector;
     Integrator integrator;
     CollisionSet collisionSet;
     public:
-      static const double stepDuration;
       DynamicBodyIndex createDynamicBody();
       DynamicSphereColliderHandle createDynamicSphereCollider(DynamicBodyIndex body, float radius);
       DynamicBody getDynamicBody(DynamicBodyIndex index);

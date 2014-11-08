@@ -3,10 +3,9 @@
 #include "Core/Physics/Engine.h"
 
 namespace Physics {
-  const double Engine::stepDuration = 0.03;
-
   DynamicBodyIndex Engine::createDynamicBody() {
     DynamicBodyIndex index = dynamicBodyCount++;
+    integrator.activate(index);
     return index;
   }
 
@@ -15,7 +14,7 @@ namespace Physics {
   }
 
   void Engine::simulate() {
-    integrator.integrate();
+    integrator.integrate(dynamicPositions, dynamicVelocities, dynamicForces);
     collisionDetector.detect(collisionSet, dynamicPositions);
     resolveCollisions(collisionSet, dynamicPositions, dynamicVelocities);
     collisionSet.clear();
@@ -33,6 +32,7 @@ namespace Physics {
     DynamicBody body;
     body.position = &dynamicPositions[index];
     body.velocity = &dynamicVelocities[index];
+    body.force = &dynamicForces[index];
     return body;
   }
 }
