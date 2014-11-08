@@ -41,6 +41,7 @@ namespace Physics {
               body2,
               separation
             });
+            if(collisions.full()) return;
           }
         }
         substart++;
