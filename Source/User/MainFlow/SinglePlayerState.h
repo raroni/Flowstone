@@ -5,6 +5,7 @@
 #include <OpenGL/gl3.h>
 #include "MainFlow/State.h"
 #include "Animation/Animator.h"
+#include "AirDrag.h"
 #include "Core/Physics/Engine.h"
 #include "FrameInterpolator.h"
 
@@ -20,6 +21,7 @@ namespace MainFlow {
     Physics::Engine physics;
     Rendering::Renderer &renderer;
     FrameInterpolator frameInterpolator;
+    AirDrag airDrag;
     int x = 0;
     bool toRun = true;
     double stepTimeBank = 0;

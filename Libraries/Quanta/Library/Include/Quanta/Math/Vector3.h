@@ -20,10 +20,11 @@ namespace Quanta {
     Vector3& operator+=(Vector3 other);
     Vector3 operator-(const Vector3 other) const;
     Vector3& operator-=(Vector3 other);
-    Vector3 getNormalized();
+    Vector3 getNormalized() const;
+    bool isZero() const;
     void normalize();
-    float getLength();
-    float getSquaredLength();
+    float getLength() const;
+    float getSquaredLength() const;
     void reset();
     static Vector3 zero();
   };

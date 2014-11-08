@@ -27,6 +27,8 @@ namespace Physics {
       DynamicBody getDynamicBody(DynamicBodyIndex index);
       void simulate();
       const Quanta::Vector3* getDynamicPositions() const;
+      Quanta::Vector3* getDynamicForces();
+      const Quanta::Vector3* getDynamicVelocities() const;
       const Quanta::Quaternion* getDynamicOrientations() const;
   };
 }

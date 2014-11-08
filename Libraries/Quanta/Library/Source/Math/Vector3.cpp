@@ -98,10 +98,14 @@ namespace Quanta {
         return result;
     }
 
-    Vector3 Vector3::getNormalized() {
+    Vector3 Vector3::getNormalized() const {
         Vector3 result = *this;
         result.normalize();
         return result;
+    }
+
+    bool Vector3::isZero() const {
+        return components[0] == 0 && components[1] == 0 && components[2] == 0;
     }
 
     void Vector3::normalize() {
@@ -112,11 +116,11 @@ namespace Quanta {
         return Vector3(0, 0, 0);
     }
 
-    float Vector3::getLength() {
+    float Vector3::getLength() const {
         return sqrt(getSquaredLength());
     }
 
-    float Vector3::getSquaredLength() {
+    float Vector3::getSquaredLength() const {
         return pow(components[0], 2) + pow(components[1], 2) + pow(components[2], 2);
     }
 }

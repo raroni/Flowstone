@@ -192,9 +192,13 @@ namespace MainFlow {
 
     uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBodyIndex);
 
+    airDrag.add(playerBodyIndex);
+
     worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
 
-    worldRenderer.cameraTransform.position[2] = -3;
+    worldRenderer.cameraTransform.position[2] = -12;
+    worldRenderer.cameraTransform.position[1] = 6;
+    worldRenderer.cameraTransform.rotateX(0.5);
   }
 
   void SinglePlayerState::update(double timeDelta) {
@@ -203,6 +207,7 @@ namespace MainFlow {
       do {
         Physics::DynamicBody body = physics.getDynamicBody(playerBodyIndex);
         playerControlUpdate(body);
+        airDrag.update(physics.getDynamicVelocities(), physics.getDynamicForces());
         physics.simulate();
         stepTimeBank -= Physics::Config::stepDuration;
       } while(stepTimeBank >= Physics::Config::stepDuration);

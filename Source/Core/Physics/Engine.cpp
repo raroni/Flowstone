@@ -24,6 +24,14 @@ namespace Physics {
     return dynamicPositions;
   }
 
+  Quanta::Vector3* Engine::getDynamicForces() {
+    return dynamicForces;
+  }
+
+  const Quanta::Vector3* Engine::getDynamicVelocities() const {
+    return dynamicVelocities;
+  }
+
   const Quanta::Quaternion* Engine::getDynamicOrientations() const {
     return dynamicOrientations;
   }
