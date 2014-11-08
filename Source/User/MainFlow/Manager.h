@@ -1,7 +1,7 @@
 #ifndef MAIN_FLOW_MANAGER_H
 #define MAIN_FLOW_MANAGER_H
 
-#include "Mainflow/SinglePlayerState.h"
+#include "Mainflow/PlayState.h"
 #include "Mainflow/State.h"
 
 namespace MainFlow {
@@ -9,7 +9,7 @@ namespace MainFlow {
     State *state = nullptr;
   public:
     void initialize(Rendering::Renderer &renderer) {
-      State *state = new SinglePlayerState(renderer);
+      State *state = new PlayState(renderer);
       changeState(state);
     }
     void update(double timeDelta) {

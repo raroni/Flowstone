@@ -20,7 +20,7 @@ USER_SRC =\
 	Source/User/Rendering/ShaderRegistry.cpp\
 	Source/User/Rendering/WorldRenderer.cpp\
 	Source/User/Animation/Registry.cpp\
-	Source/User/Mainflow/SinglePlayerState.cpp
+	Source/User/Mainflow/PlayState.cpp
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 

@@ -1,13 +1,13 @@
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
 #include "PlayerControl.h"
-#include "MainFlow/SinglePlayerState.h"
+#include "MainFlow/PlayState.h"
 
 namespace MainFlow {
-  SinglePlayerState::SinglePlayerState(Rendering::Renderer &renderer) :
+  PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer) { }
 
-  void SinglePlayerState::enter() {
+  void PlayState::enter() {
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
     worldRenderer.setPoses(animator.getWorldPoses());
     worldRenderer.setJointWorldTransformations(frameInterpolator.getTransforms());
@@ -201,7 +201,7 @@ namespace MainFlow {
     worldRenderer.cameraTransform.rotateX(0.5);
   }
 
-  void SinglePlayerState::update(double timeDelta) {
+  void PlayState::update(double timeDelta) {
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {
       do {
@@ -243,7 +243,7 @@ namespace MainFlow {
     */
   }
 
-  State* SinglePlayerState::checkTransition() {
+  State* PlayState::checkTransition() {
     return nullptr;
   }
 }

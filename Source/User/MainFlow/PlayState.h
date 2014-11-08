@@ -16,7 +16,7 @@ namespace Rendering {
 namespace MainFlow {
   class Manager;
 
-  class SinglePlayerState : public State {
+  class PlayState : public State {
     Animation::Animator animator;
     Physics::Engine physics;
     Rendering::Renderer &renderer;
@@ -27,7 +27,7 @@ namespace MainFlow {
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBodyIndex;
   public:
-    SinglePlayerState(Rendering::Renderer &renderer);
+    PlayState(Rendering::Renderer &renderer);
     void enter();
     void update(double deltaTime);
     State* checkTransition();
