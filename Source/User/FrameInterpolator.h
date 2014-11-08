@@ -20,7 +20,6 @@ public:
       Quanta::Vector3 position = oldPositions[i] + (newPositions[i]-oldPositions[i])*progress;
       Quanta::Matrix4 translation = Quanta::TransformationFactory3D::translation(position);
       Quanta::Quaternion orientation = Quanta::Quaternion::slerp(oldOrientations[i], newOrientations[i], progress);
-      orientation.normalize();
       transforms[i] = translation * static_cast<Quanta::Matrix4>(orientation);
     }
   }

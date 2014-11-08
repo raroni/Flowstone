@@ -7,6 +7,7 @@ namespace Quanta {
   class Matrix4;
 
   class Quaternion {
+    constexpr static float slerpDotThreshold = 0.9995;
   public:
     Quaternion();
     Quaternion(float real, Vector3 imaginaries);
@@ -14,12 +15,15 @@ namespace Quanta {
     Vector3 imaginaries;
     Quaternion operator*(Quaternion &other);
     Quaternion& operator*=(Quaternion other);
+    Quaternion operator-(Quaternion other) const;
+    Quaternion& operator-=(Quaternion other);
     Quaternion& operator/=(float divisor);
     static Quaternion identity();
     operator Matrix4();
     Quaternion getConjugate();
     static Quaternion slerpWithLimit(Quaternion &origin, Quaternion &destination, float angleLimit);
     static Quaternion slerp(Quaternion &origin, Quaternion &destination, float progress);
+    static Quaternion lerp(Quaternion &origin, Quaternion &destination, float progress);
     static float dot(Quaternion &operandA, Quaternion &operandB);
     Quaternion& operator*=(float factor);
     Quaternion operator*(float factor);

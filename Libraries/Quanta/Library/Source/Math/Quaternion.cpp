@@ -98,12 +98,34 @@ namespace Quanta {
     operator/=(getLength());
   }
 
+  Quaternion Quaternion::operator-(Quaternion other) const {
+    Quaternion result = *this;
+    result -= other;
+    return result;
+  }
+
+  Quaternion& Quaternion::operator-=(Quaternion other) {
+    real -= other.real;
+    imaginaries -= other.imaginaries;
+    return *this;
+  }
+
   Quaternion Quaternion::slerp(Quaternion &origin, Quaternion &destination, float progress) {
-    float angle = acos(dot(origin, destination));
+    float dotProduct = dot(origin, destination);
+    if(dotProduct > slerpDotThreshold) return lerp(origin, destination, progress);
+    float angle = acos(dotProduct);
     float inverseSine = 1/sin(angle);
     float q1 = sin(1-progress)*angle*inverseSine;
     float q2 = sin(progress*angle)*inverseSine;
-    return origin*q1+destination*q2;
+    Quaternion result = origin*q1+destination*q2;
+    result.normalize();
+    return result;
+  }
+
+  Quaternion Quaternion::lerp(Quaternion &origin, Quaternion &destination, float progress) {
+    Quaternion result = origin + (destination-origin)*progress;
+    result.normalize();
+    return result;
   }
 
   float Quaternion::dot(Quaternion &operandA, Quaternion &operandB) {
