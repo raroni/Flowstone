@@ -20,6 +20,7 @@ struct Bro {
   bool shouldTerminate;
   NSOpenGLContext *context;
   uint64_t startTime;
+  bool keyPresses[128];
 };
 
 static struct Bro bro;
@@ -175,15 +176,21 @@ void broTerminate() {
 }
 
 void broHandleKeyDown(BroKey key) {
+  bro.keyPresses[key] = true;
   bro.keyDownCallback(key);
 }
 
 void broHandleKeyUp(BroKey key) {
+  bro.keyPresses[key] = false;
   bro.keyUpCallback(key);
 }
 
 void broSwapBuffers() {
   [bro.context flushBuffer];
+}
+
+bool broIsKeyPressed(BroKey key) {
+  return bro.keyPresses[key];
 }
 
 void broRequestTermination() {

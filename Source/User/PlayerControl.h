@@ -2,9 +2,15 @@
 #define PLAYER_CONTROL_H
 
 #include "Core/Physics/DynamicBody.h"
+#include "Bro/Bro.h"
 
 void playerControlUpdate(Physics::DynamicBody &body) {
-  (*body.position)[0] += 0.001;
+  if(broIsKeyPressed(BroKeyRight)) {
+    (*body.position)[0] += 0.05;
+  }
+  else if(broIsKeyPressed(BroKeyLeft)) {
+    (*body.position)[0] -= 0.05;
+  }
 }
 
 #endif

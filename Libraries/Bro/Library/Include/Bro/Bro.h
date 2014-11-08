@@ -26,5 +26,6 @@ double broGetTime();
 BroResolution broGetResolution();
 void broHandleKeyDown(BroKey key);
 void broHandleKeyUp(BroKey key);
+bool broIsKeyPressed(BroKey key);
 
 #endif
