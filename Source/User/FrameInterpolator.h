@@ -17,7 +17,7 @@ public:
   }
   void interpolate(double progress) {
     for(uint8_t i=0; bodyCount>i; i++) {
-      Quanta::Vector3 position = oldPositions[i] + (oldPositions[i]-newPositions[i])*progress;
+      Quanta::Vector3 position = oldPositions[i] + (newPositions[i]-oldPositions[i])*progress;
       transforms[i] = Quanta::TransformationFactory3D::translation(position);
     }
   }
