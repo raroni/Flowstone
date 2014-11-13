@@ -1,6 +1,7 @@
 #ifndef PLAYER_CONTROL_H
 #define PLAYER_CONTROL_H
 
+#include <math.h>
 #include "Core/Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformationFactory3D.h"
 #include "Bro/Bro.h"
@@ -24,15 +25,17 @@ static void updateForce(Physics::DynamicBody &body) {
 
   if(!force.isZero()) {
     force.normalize();
-    force *= 40;
+    force *= 10;
     (*body.force) += force;
   }
 }
 
 static void updateOrientation(Physics::DynamicBody &body) {
-  x += 0.05;
+  if(body.velocity->getSquaredLength() < 0.01) return;
+  Quanta::Vector3 direction = body.velocity->getNormalized();
+  float angle = atan2(direction[0]*-1, direction[2]);
   Quanta::Vector3 up(0, 1, 0);
-  (*body.orientation) = Quanta::TransformationFactory3D::rotation(up, x);
+  (*body.orientation) = Quanta::TransformationFactory3D::rotation(up, -angle);
 }
 
 void playerControlUpdate(Physics::DynamicBody &body) {

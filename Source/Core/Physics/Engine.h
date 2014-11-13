@@ -14,7 +14,7 @@
 namespace Physics {
   class Engine {
     Quanta::Vector3 dynamicPositions[Config::maxDynamicBodies];
-    Quanta::Quaternion dynamicOrientations[Config::maxDynamicBodies];
+    Quanta::Quaternion dynamicOrientations[Config::maxDynamicBodies] = { Quanta::Quaternion::identity() };
     Quanta::Vector3 dynamicVelocities[Config::maxDynamicBodies];
     Quanta::Vector3 dynamicForces[Config::maxDynamicBodies];
     uint16_t dynamicBodyCount = 0;

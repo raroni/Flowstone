@@ -13,7 +13,7 @@ namespace Quanta {
     Quaternion(float real, Vector3 imaginaries);
     float real;
     Vector3 imaginaries;
-    Quaternion operator*(Quaternion &other);
+    Quaternion operator*(const Quaternion &other) const;
     Quaternion& operator*=(Quaternion other);
     Quaternion operator-(Quaternion other) const;
     Quaternion& operator-=(Quaternion other);
@@ -22,13 +22,13 @@ namespace Quanta {
     operator Matrix4();
     Quaternion getConjugate();
     static Quaternion slerpWithLimit(Quaternion &origin, Quaternion &destination, float angleLimit);
-    static Quaternion slerp(Quaternion &origin, Quaternion &destination, float progress);
-    static Quaternion lerp(Quaternion &origin, Quaternion &destination, float progress);
-    static float dot(Quaternion &operandA, Quaternion &operandB);
+    static Quaternion slerp(Quaternion origin, const Quaternion &destination, float progress);
+    static Quaternion lerp(const Quaternion &origin, const Quaternion &destination, float progress);
+    static float dot(const Quaternion &operandA, const Quaternion &operandB);
     Quaternion& operator*=(float factor);
-    Quaternion operator*(float factor);
+    Quaternion operator*(float factor) const;
     Quaternion& operator+=(Quaternion other);
-    Quaternion operator+(Quaternion other);
+    Quaternion operator+(Quaternion other) const;
     float getLength() const;
     void normalize();
   };

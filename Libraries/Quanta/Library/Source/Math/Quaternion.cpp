@@ -8,7 +8,7 @@ namespace Quanta {
 
   Quaternion::Quaternion(float real, Vector3 imaginaries) : real(real), imaginaries(imaginaries) { }
 
-  Quaternion Quaternion::operator*(Quaternion &other) {
+  Quaternion Quaternion::operator*(const Quaternion &other) const {
     Quaternion result = *this;
     result *= other;
     return result;
@@ -58,7 +58,7 @@ namespace Quanta {
     return Quaternion(1, Vector3(0, 0, 0));
   }
 
-  Quaternion Quaternion::operator*(float factor) {
+  Quaternion Quaternion::operator*(float factor) const {
     Quaternion result = *this;
     result *= factor;
     return result;
@@ -70,7 +70,7 @@ namespace Quanta {
     return *this;
   }
 
-  Quaternion Quaternion::operator+(Quaternion other) {
+  Quaternion Quaternion::operator+(Quaternion other) const {
     Quaternion result = *this;
     result += other;
     return result;
@@ -110,9 +110,10 @@ namespace Quanta {
     return *this;
   }
 
-  Quaternion Quaternion::slerp(Quaternion &origin, Quaternion &destination, float progress) {
+  Quaternion Quaternion::slerp(Quaternion origin, const Quaternion &destination, float progress) {
     float dotProduct = dot(origin, destination);
     if(dotProduct > slerpDotThreshold) return lerp(origin, destination, progress);
+    if(dotProduct < 0) origin *= -1;
     float angle = acos(dotProduct);
     float inverseSine = 1/sin(angle);
     float q1 = sin(1-progress)*angle*inverseSine;
@@ -122,13 +123,13 @@ namespace Quanta {
     return result;
   }
 
-  Quaternion Quaternion::lerp(Quaternion &origin, Quaternion &destination, float progress) {
+  Quaternion Quaternion::lerp(const Quaternion &origin, const Quaternion &destination, float progress) {
     Quaternion result = origin + (destination-origin)*progress;
     result.normalize();
     return result;
   }
 
-  float Quaternion::dot(Quaternion &operandA, Quaternion &operandB) {
+  float Quaternion::dot(const Quaternion &operandA, const Quaternion &operandB) {
     return operandA.real*operandB.real + Vector3::dot(operandA.imaginaries, operandB.imaginaries);
   }
 }
