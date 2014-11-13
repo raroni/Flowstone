@@ -22,8 +22,6 @@ namespace MainFlow {
     Rendering::Renderer &renderer;
     FrameInterpolator frameInterpolator;
     AirDrag airDrag;
-    int x = 0;
-    bool toRun = true;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBodyIndex;
   public:

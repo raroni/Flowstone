@@ -5,6 +5,7 @@
 #include "Core/Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformationFactory3D.h"
 #include "Bro/Bro.h"
+#include "Animation/Animator.h"
 
 static void updateForce(Physics::DynamicBody &body) {
   Quanta::Vector3 force = Quanta::Vector3::zero();
@@ -36,9 +37,28 @@ static void updateOrientation(Physics::DynamicBody &body) {
   (*body.orientation) = Quanta::TransformationFactory3D::rotation(up, -angle);
 }
 
-void playerControlUpdate(Physics::DynamicBody &body) {
+static void updateAnimation(Physics::DynamicBody &body, Animation::Animator &animator) {
+  static bool isRunning = false;
+  float speed = body.velocity->getLength();
+  float limit = 1.0;
+  if(!isRunning && speed > limit) {
+    isRunning = true;
+    animator.changeAnimation(0, 1);
+  }
+  else if(isRunning && speed <= limit) {
+    isRunning = false;
+    animator.changeAnimation(0, 0);
+  }
+}
+
+void playerControlUpdateForce(Physics::DynamicBody &body) {
   updateForce(body);
   updateOrientation(body);
+}
+
+void playerControlReact(Physics::DynamicBody &body, Animation::Animator &animator) {
+  updateOrientation(body);
+  updateAnimation(body, animator);
 }
 
 #endif

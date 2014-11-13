@@ -204,28 +204,17 @@ namespace MainFlow {
   void PlayState::update(double timeDelta) {
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {
+      Physics::DynamicBody body = physics.getDynamicBody(playerBodyIndex);
       do {
-        Physics::DynamicBody body = physics.getDynamicBody(playerBodyIndex);
-        playerControlUpdate(body);
+        playerControlUpdateForce(body);
         airDrag.update(physics.getDynamicVelocities(), physics.getDynamicForces());
         physics.simulate();
         stepTimeBank -= Physics::Config::stepDuration;
       } while(stepTimeBank >= Physics::Config::stepDuration);
+      playerControlReact(body, animator);
       frameInterpolator.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
     }
     frameInterpolator.interpolate(stepTimeBank/Physics::Config::stepDuration);
-
-    x++;
-
-    if(x % 100 == 0) {
-      if(toRun) {
-        animator.changeAnimation(0, 1);
-        toRun = false;
-      } else {
-        animator.changeAnimation(0, 0);
-        toRun = true;
-      }
-    }
     animator.update(timeDelta);
 
     /*
