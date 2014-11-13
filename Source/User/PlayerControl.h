@@ -6,8 +6,6 @@
 #include "Quanta/Geometry/TransformationFactory3D.h"
 #include "Bro/Bro.h"
 
-static float x = 0;
-
 static void updateForce(Physics::DynamicBody &body) {
   Quanta::Vector3 force = Quanta::Vector3::zero();
   if(broIsKeyPressed(BroKeyRight)) {
