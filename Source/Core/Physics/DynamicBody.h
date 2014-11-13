@@ -1,6 +1,9 @@
 #ifndef PHYSICS_DYNAMIC_BODY_H
 #define PHYSICS_DYNAMIC_BODY_H
 
+#include "Quanta/Math/Vector3.h"
+#include "Quanta/Math/Quaternion.h"
+
 namespace Physics {
   struct DynamicBody {
     Quanta::Vector3 *position;

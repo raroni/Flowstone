@@ -1,17 +1,13 @@
-#include "Rendering/Renderer.h"
+#include "Rendering2/Renderer.h"
 #include "Animation/JointConfig.h"
 #include "PlayerControl.h"
 #include "MainFlow/PlayState.h"
 
 namespace MainFlow {
-  PlayState::PlayState(Rendering::Renderer &renderer) :
+  PlayState::PlayState(Rendering2::Renderer &renderer) :
   renderer(renderer) { }
 
   void PlayState::enter() {
-    Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    worldRenderer.setPoses(animator.getWorldPoses());
-    worldRenderer.setJointWorldTransformations(frameInterpolator.getTransforms());
-
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
     float animationDurations[] = { 3.0f, 1.0f };
@@ -79,7 +75,7 @@ namespace MainFlow {
       keyJointConfigs
     );
 
-    Rendering::AnimatedVertex vertexData[] = {
+    Rendering2::AnimatedVertex vertices[] = {
       // body, front
       { -0.5, 0.5, -0.5, 1 }, // the 1 is the joint number this vertex will follow
       { 0.5, 0.5, -0.5, 1 },
@@ -136,7 +132,7 @@ namespace MainFlow {
       { 0.1, -1.1, 0.2, 5 },
     };
 
-    uint16_t indexData[] = {
+    uint16_t indices[] = {
       // body
       0, 2, 1, 1, 2, 3, // front
       1, 3, 7, 1, 7, 5, // right
@@ -178,11 +174,11 @@ namespace MainFlow {
       34, 39, 35, 34, 38, 39,  // bottom
     };
 
-    size_t vaoOffset = worldRenderer.createAnimatedMesh(
-      vertexData,
-      sizeof(vertexData)/sizeof(Rendering::AnimatedVertex),
-      indexData,
-      sizeof(indexData)/sizeof(uint16_t)
+    size_t vaoOffset = renderer.createAnimatedMesh(
+      vertices,
+      sizeof(vertices)/sizeof(Rendering2::AnimatedVertex),
+      indices,
+      sizeof(indices)/sizeof(uint16_t)
     );
 
     animator.createSkeletonInstance(skeletonID);
@@ -194,11 +190,11 @@ namespace MainFlow {
 
     airDrag.add(playerBodyIndex);
 
-    worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
+    //worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
 
-    worldRenderer.cameraTransform.position[2] = -12;
-    worldRenderer.cameraTransform.position[1] = 6;
-    worldRenderer.cameraTransform.rotateX(0.5);
+    //worldRenderer.cameraTransform.position[2] = -12;
+    //worldRenderer.cameraTransform.position[1] = 6;
+    //worldRenderer.cameraTransform.rotateX(0.5);
   }
 
   void PlayState::update(double timeDelta) {

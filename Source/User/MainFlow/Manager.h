@@ -8,7 +8,7 @@ namespace MainFlow {
   class Manager {
     State *state = nullptr;
   public:
-    void initialize(Rendering::Renderer &renderer) {
+    void initialize(Rendering2::Renderer &renderer) {
       State *state = new PlayState(renderer);
       changeState(state);
     }

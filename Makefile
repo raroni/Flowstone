@@ -16,11 +16,10 @@ USER_SRC =\
 	Source/Core/Physics/CollisionResolver.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
-	Source/User/Rendering/Renderer.cpp\
-	Source/User/Rendering/ShaderRegistry.cpp\
-	Source/User/Rendering/WorldRenderer.cpp\
 	Source/User/Animation/Registry.cpp\
-	Source/User/Mainflow/PlayState.cpp
+	Source/User/Mainflow/PlayState.cpp\
+	Source/User/Rendering2/OpenGL/ShaderLoading.cpp\
+	Source/User/Rendering2/OpenGL/ShaderRegistry.cpp
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 

@@ -9,7 +9,7 @@
 #include "Core/Physics/Engine.h"
 #include "FrameInterpolator.h"
 
-namespace Rendering {
+namespace Rendering2 {
   class Renderer;
 }
 
@@ -19,13 +19,13 @@ namespace MainFlow {
   class PlayState : public State {
     Animation::Animator animator;
     Physics::Engine physics;
-    Rendering::Renderer &renderer;
+    Rendering2::Renderer &renderer;
     FrameInterpolator frameInterpolator;
     AirDrag airDrag;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBodyIndex;
   public:
-    PlayState(Rendering::Renderer &renderer);
+    PlayState(Rendering2::Renderer &renderer);
     void enter();
     void update(double deltaTime);
     State* checkTransition();

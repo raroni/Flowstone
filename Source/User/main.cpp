@@ -1,10 +1,10 @@
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
-#include "Rendering/Renderer.h"
+#include "Rendering2/Renderer.h"
 #include "Config.h"
 #include "Timing.h"
 
-static Rendering::Renderer renderer;
+static Rendering2::Renderer renderer;
 static MainFlow::Manager flow;
 
 void handleKeyDown(BroKey key) {
