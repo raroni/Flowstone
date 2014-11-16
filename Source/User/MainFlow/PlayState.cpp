@@ -8,6 +8,9 @@ namespace MainFlow {
   renderer(renderer) { }
 
   void PlayState::enter() {
+    renderer.setPoses(animator.getWorldPoses());
+    renderer.setTransforms(frameInterpolator.getTransforms());
+
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
     float animationDurations[] = { 3.0f, 1.0f };
@@ -174,7 +177,7 @@ namespace MainFlow {
       34, 39, 35, 34, 38, 39,  // bottom
     };
 
-    size_t vaoOffset = renderer.createAnimatedMesh(
+    Rendering2::AnimatedMeshIndex meshIndex = renderer.createAnimatedMesh(
       vertices,
       sizeof(vertices)/sizeof(Rendering2::AnimatedVertex),
       indices,
@@ -190,7 +193,7 @@ namespace MainFlow {
 
     airDrag.add(playerBodyIndex);
 
-    //worldRenderer.createAnimatedMeshInstance(vaoOffset, interpolationTransformID);
+    renderer.createAnimatedMeshInstance(meshIndex, interpolationTransformID);
 
     //worldRenderer.cameraTransform.position[2] = -12;
     //worldRenderer.cameraTransform.position[1] = 6;

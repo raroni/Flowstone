@@ -4,14 +4,11 @@
 #include <stdint.h>
 #include <OpenGL/gl3.h>
 #include "Conrad/Array.h"
+#include "Rendering2/ShaderName.h"
 
 namespace Rendering2 {
   namespace OpenGL {
     typedef size_t ShaderHandle;
-
-    enum class ShaderName {
-      Animated
-    };
 
     class ShaderRegistry {
       static const uint8_t maxHandlesCount = 20;

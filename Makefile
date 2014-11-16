@@ -18,7 +18,13 @@ USER_SRC =\
 	Source/User/Timing.cpp\
 	Source/User/Animation/Registry.cpp\
 	Source/User/Mainflow/PlayState.cpp\
+	Source/User/Rendering2/Culler.cpp\
+	Source/User/Rendering2/Renderer.cpp\
+	Source/User/Rendering2/CommandBuilder.cpp\
+	Source/User/Rendering2/CommandMerger.cpp\
+	Source/User/Rendering2/ObjectIDCaster.cpp\
 	Source/User/Rendering2/OpenGL/ShaderLoading.cpp\
+	Source/User/Rendering2/OpenGL/Backend.cpp\
 	Source/User/Rendering2/OpenGL/ShaderRegistry.cpp
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
@@ -39,7 +45,7 @@ all: user
 
 user:
 	mkdir -p $(USER_BINARY_DIR)
-	clang++ -Wall -std=gnu++11 -stdlib=libc++ $(USER_HEADER_DIRS) $(USER_FRAMEWORKS) $(USER_SRC) -o $(USER_BINARY_PATH)
+	clang++ -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1 $(USER_HEADER_DIRS) $(USER_FRAMEWORKS) $(USER_SRC) -o $(USER_BINARY_PATH)
 	rm -rf $(USER_OUTPUT_DIR)/Resources
 	cp -r Resources $(USER_OUTPUT_DIR)/.
 
