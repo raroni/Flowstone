@@ -1,14 +1,20 @@
+#ifndef RENDERING2_COMMAND_MERGER_H
+#define RENDERING2_COMMAND_MERGER_H
+
 #include "Rendering2/Config.h"
+#include "Rendering2/CommandStream.h"
 
 namespace Rendering2 {
-  class CommandStream;
+  class CommandSorter;
 
   class CommandMerger {
-    char stream[Config::commandStreamSize];
     uint16_t count = 0;
+    CommandStream stream;
   public:
-    void merge(const CommandStream &stream);
+    void merge(const CommandSorter &sorter);
     uint16_t getCount() const;
-    const char* getStream() const;
+    const char* getBuffer() const;
   };
 }
+
+#endif

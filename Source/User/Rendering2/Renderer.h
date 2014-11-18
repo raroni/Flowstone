@@ -8,7 +8,7 @@
 #include "Rendering2/Config.h"
 #include "Rendering2/CommandMerger.h"
 #include "Rendering2/AnimatedMeshInstanceList.h"
-#include "Rendering2/CommandStream.h"
+#include "Rendering2/CommandSorter.h"
 #include "Rendering2/TransformIndex.h"
 
 struct Pose;
@@ -19,8 +19,8 @@ namespace Rendering2 {
     ObjectList objectList;
     ObjectIndex visibleBuffer[Config::maxObjects];
     Culler culler;
-    CommandStream commandStream;
     CommandBuilder commandBuilder;
+    CommandSorter commandSorter;
     CommandMerger commandMerger;
     Backend backend;
   public:

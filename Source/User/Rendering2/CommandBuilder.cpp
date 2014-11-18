@@ -1,14 +1,13 @@
 #include "Core/Error.h"
 #include "Rendering2/ObjectIDCaster.h"
-#include "Rendering2/Commands.h"
 #include "Rendering2/Object.h"
-#include "Rendering2/CommandStream.h"
+#include "Rendering2/CommandSorter.h"
 #include "Rendering2/AnimatedMeshInstanceList.h"
 #include "Rendering2/CommandBuilder.h"
 
 namespace Rendering2 {
-  CommandBuilder::CommandBuilder(CommandStream &stream, AnimatedMeshInstanceList &animatedMeshInstanceList) :
-  stream(stream),
+  CommandBuilder::CommandBuilder(CommandSorter &commandSorter, AnimatedMeshInstanceList &animatedMeshInstanceList) :
+  commandSorter(commandSorter),
   animatedMeshInstanceList(animatedMeshInstanceList) { }
 
   void CommandBuilder::build(const Object *objects, const ObjectIndex *indices, uint16_t count) {
@@ -29,22 +28,21 @@ namespace Rendering2 {
   }
 
   void CommandBuilder::enqueueAnimatedMeshInstanceDraw(AnimatedMeshInstanceIndex index) {
-    AnimatedMeshInstance &instance = animatedMeshInstanceList.get(index);
     enqueueShaderProgramChange(ShaderName::Animated);
-    DrawAnimatedMeshCommand command;
-    command.meshIndex = instance.meshIndex;
-    command.transform = transforms[instance.transformIndex];
-    command.pose = poses[instance.transformIndex];
-    OrderKey key;
-    key.layer = 1;
-    stream.writeDrawAnimatedMesh(command, key);
+    //AnimatedMeshInstance &instance = animatedMeshInstanceList.get(index);
+    //DrawAnimatedMeshCommand command;
+    //command.meshIndex = instance.meshIndex;
+    //command.transform = transforms[instance.transformIndex];
+    //command.pose = poses[instance.transformIndex];
+    //OrderKey key;
+    //key.layer = 1;
+    //commandSorter.writeDrawAnimatedMesh(command, key);
   }
 
   void CommandBuilder::enqueueShaderProgramChange(ShaderName shader) {
-    ChangeShaderCommand command;
-    command.shader = shader;
     OrderKey key;
     key.layer = 0;
-    stream.writeChangeShader(command, key);
+    commandSorter.writeType(CommandType::ChangeShaderProgram, key);
+    commandSorter.writeShaderName(shader);
   }
 }

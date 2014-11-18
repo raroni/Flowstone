@@ -12,18 +12,18 @@ namespace Quanta {
 struct Pose;
 
 namespace Rendering2 {
-  class CommandStream;
+  class CommandSorter;
   class AnimatedMeshInstanceList;
   struct Object;
 
   class CommandBuilder {
   public:
-    CommandBuilder(CommandStream &commandStream, AnimatedMeshInstanceList &animatedMeshInstanceList);
+    CommandBuilder(CommandSorter &commandSorter, AnimatedMeshInstanceList &animatedMeshInstanceList);
     void build(const Object *objects, const ObjectIndex *indices, uint16_t count);
     const Quanta::Matrix4 *transforms;
     const Pose *poses;
   private:
-    CommandStream &stream;
+    CommandSorter &commandSorter;
     AnimatedMeshInstanceList &animatedMeshInstanceList;
     void enqueueAnimatedMeshInstanceDraw(AnimatedMeshInstanceIndex index);
     void enqueueShaderProgramChange(ShaderName shader);

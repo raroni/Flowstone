@@ -2,10 +2,11 @@
 #include "Rendering2/ObjectIDCaster.h"
 #include "Rendering2/Renderer.h"
 
+#include <stdio.h>
+
 namespace Rendering2 {
   Renderer::Renderer() :
-  commandBuilder(commandStream, animatedMeshInstanceList)
-  { }
+  commandBuilder(commandSorter, animatedMeshInstanceList) { }
 
   void Renderer::initialize() {
     backend.initialize();
@@ -24,12 +25,12 @@ namespace Rendering2 {
   void Renderer::draw() {
     backend.clear();
     uint16_t visibleCount = culler.cull(visibleBuffer); // TODO: Pass frustrum data also
-    commandStream.clear();
     commandBuilder.build(objectList.getObjects(), visibleBuffer, visibleCount);
-    commandStream.sort();
-    commandMerger.merge(commandStream);
-    backend.draw(commandMerger.getStream(), commandMerger.getCount());
-    commandStream.clear();
+    printf("%d\n", commandSorter.getCount());
+    commandSorter.sort();
+    commandMerger.merge(commandSorter);
+    backend.draw(commandMerger.getBuffer(), commandMerger.getCount());
+    commandSorter.clear();
   }
 
   void Renderer::setTransforms(const Quanta::Matrix4 *transforms) {
