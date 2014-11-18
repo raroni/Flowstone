@@ -6,7 +6,7 @@
 #include <algorithm>
 #include "Rendering2/Config.h"
 #include "Rendering2/CommandType.h"
-#include "Rendering2/CommandStream.h"
+#include "Rendering2/CommandWriter.h"
 
 namespace Rendering2 {
   union OrderKey {
@@ -27,31 +27,37 @@ namespace Rendering2 {
   }
 
   class CommandSorter {
-    CommandStream stream;
+    char buffer[Config::commandBufferSize];
+    CommandWriter writer;
     static const uint16_t maxOrderRecords = 512;
-    OrderRecord orderRecords[maxOrderRecords];
+    OrderRecord orderRecords[maxOrderRecords] = {};
     uint16_t count = 0;
-  public:
     void writeType(CommandType type, OrderKey key) {
-      OrderRecord record;
+      OrderRecord &record = orderRecords[count];
       record.key = key;
-      record.offset = stream.getPosition();
-      orderRecords[count] = record;
+      record.offset = writer.getPosition();
       count++;
-      stream.writeType(type);
+      writer.writeType(type);
     }
-    void writeShaderName(ShaderName name) {
-      stream.writeShaderName(name);
+  public:
+    CommandSorter() : writer(buffer) { }
+    void writeChangeShaderProgram(ChangeShaderProgramCommand command, OrderKey key) {
+      writeType(CommandType::ChangeShaderProgram, key);
+      writer.writeChangeShaderProgram(command);
+    }
+    void writeDrawAnimatedMesh(DrawAnimatedMeshCommand command, OrderKey key) {
+      writeType(CommandType::DrawAnimatedMesh, key);
+      writer.writeDrawAnimatedMesh(command);
     }
     void sort() {
-      std::sort(orderRecords, orderRecords+maxOrderRecords, compareOrderRecords);
+      std::sort(orderRecords, orderRecords+count, compareOrderRecords);
     }
     uint16_t getCount() const {
       return count;
     }
     const char* get(uint16_t position) const {
       const OrderRecord &record = orderRecords[position];
-      return stream.getBuffer()+record.offset;
+      return buffer+record.offset;
     }
     void clear() {
       count = 0;

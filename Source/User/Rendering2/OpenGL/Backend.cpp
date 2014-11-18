@@ -1,6 +1,7 @@
 #include "Core/Error.h"
 #include "Rendering2/CommandType.h"
 #include "Rendering2/OpenGL/ShaderLoading.h"
+#include "Rendering2/CommandReader.h"
 #include "Rendering2/OpenGL/Backend.h"
 
 #include <stdio.h>
@@ -38,20 +39,25 @@ namespace Rendering2 {
     }
 
     void Backend::draw(const char *stream, uint16_t count) {
+      CommandReader reader(stream);
       printf("Running %d commands\n", count);
       for(uint16_t i=0; count>i; i++) {
-        CommandType type = *reinterpret_cast<const CommandType*>(stream);
-        printf("Type as int: %d\n", static_cast<int>(type));
+        CommandType type = reader.readType();
         switch(type) {
-          case CommandType::ChangeShaderProgram:
+          case CommandType::ChangeShaderProgram: {
             printf("ChangeShaderProgram!\n");
+            reader.readChangeShaderProgram();
             break;
-          case CommandType::DrawAnimatedMesh:
+          }
+          case CommandType::DrawAnimatedMesh: {
             printf("DrawAnimatedMesh!\n");
+            reader.readDrawAnimatedMesh();
             break;
-          default:
+          }
+          default: {
             fatalError("Could not execute command.");
             break;
+          }
         }
       }
     }

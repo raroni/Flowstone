@@ -2,9 +2,9 @@
 #include "Rendering2/CommandSorter.h"
 #include "Rendering2/CommandMerger.h"
 
-#include <stdio.h>
-
 namespace Rendering2 {
+  CommandMerger::CommandMerger() : writer(buffer) { }
+
   void CommandMerger::merge(const CommandSorter &sorter) {
     count = 0;
     for(uint16_t i=0; sorter.getCount()>i; i++) {
@@ -13,7 +13,12 @@ namespace Rendering2 {
       switch(type) {
         case CommandType::ChangeShaderProgram: {
           uint16_t length = sizeof(CommandType) + sizeof(ShaderName);
-          stream.writeRaw(command, length);
+          writer.writeRaw(command, length);
+          break;
+        }
+        case CommandType::DrawAnimatedMesh: {
+          uint16_t length = sizeof(CommandType) + sizeof(DrawAnimatedMeshCommand);
+          writer.writeRaw(command, length);
           break;
         }
         default: {
@@ -30,6 +35,6 @@ namespace Rendering2 {
   }
 
   const char* CommandMerger::getBuffer() const {
-    return stream.getBuffer();
+    return buffer;
   }
 }

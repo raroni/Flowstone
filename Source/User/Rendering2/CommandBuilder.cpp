@@ -29,20 +29,21 @@ namespace Rendering2 {
 
   void CommandBuilder::enqueueAnimatedMeshInstanceDraw(AnimatedMeshInstanceIndex index) {
     enqueueShaderProgramChange(ShaderName::Animated);
-    //AnimatedMeshInstance &instance = animatedMeshInstanceList.get(index);
-    //DrawAnimatedMeshCommand command;
-    //command.meshIndex = instance.meshIndex;
-    //command.transform = transforms[instance.transformIndex];
-    //command.pose = poses[instance.transformIndex];
-    //OrderKey key;
-    //key.layer = 1;
-    //commandSorter.writeDrawAnimatedMesh(command, key);
+    AnimatedMeshInstance &instance = animatedMeshInstanceList.get(index);
+    DrawAnimatedMeshCommand command;
+    command.meshIndex = instance.meshIndex;
+    command.transform = transforms[instance.transformIndex];
+    command.pose = poses[instance.transformIndex];
+    OrderKey key = {};
+    key.layer = 1;
+    commandSorter.writeDrawAnimatedMesh(command, key);
   }
 
   void CommandBuilder::enqueueShaderProgramChange(ShaderName shader) {
-    OrderKey key;
+    OrderKey key = {};
     key.layer = 0;
-    commandSorter.writeType(CommandType::ChangeShaderProgram, key);
-    commandSorter.writeShaderName(shader);
+    ChangeShaderProgramCommand command;
+    command.shader = shader;
+    commandSorter.writeChangeShaderProgram(command, key);
   }
 }

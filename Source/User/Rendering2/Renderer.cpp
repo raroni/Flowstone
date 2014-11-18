@@ -2,8 +2,6 @@
 #include "Rendering2/ObjectIDCaster.h"
 #include "Rendering2/Renderer.h"
 
-#include <stdio.h>
-
 namespace Rendering2 {
   Renderer::Renderer() :
   commandBuilder(commandSorter, animatedMeshInstanceList) { }
@@ -26,7 +24,6 @@ namespace Rendering2 {
     backend.clear();
     uint16_t visibleCount = culler.cull(visibleBuffer); // TODO: Pass frustrum data also
     commandBuilder.build(objectList.getObjects(), visibleBuffer, visibleCount);
-    printf("%d\n", commandSorter.getCount());
     commandSorter.sort();
     commandMerger.merge(commandSorter);
     backend.draw(commandMerger.getBuffer(), commandMerger.getCount());
