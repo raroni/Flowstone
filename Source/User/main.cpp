@@ -4,8 +4,6 @@
 #include "Config.h"
 #include "Timing.h"
 
-static bool myHack = false;
-
 static Rendering::Renderer renderer;
 static MainFlow::Manager flow;
 
@@ -34,11 +32,8 @@ int main() {
     broPollEvents();
     double timeDelta = timingGetDelta();
     flow.update(timeDelta);
-    if(!myHack) {
-      //myHack = true;
-      renderer.draw();
-      broSwapBuffers();
-    }
+    renderer.draw();
+    broSwapBuffers();
     timingWaitForNextFrame();
   }
   broTerminate();
