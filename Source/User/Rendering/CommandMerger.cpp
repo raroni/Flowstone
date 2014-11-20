@@ -17,8 +17,8 @@ namespace Rendering {
           writer.writeRaw(command, length);
           break;
         }
-        case CommandType::DrawAnimatedMesh: {
-          uint16_t length = sizeof(CommandType) + sizeof(DrawAnimatedMeshCommand);
+        case CommandType::DrawBoneMesh: {
+          uint16_t length = sizeof(CommandType) + sizeof(DrawBoneMeshCommand);
           writer.writeRaw(command, length);
           break;
         }

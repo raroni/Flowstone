@@ -4,19 +4,19 @@
 
 namespace Rendering {
   Renderer::Renderer() :
-  commandBuilder(commandSorter, animatedMeshInstanceList, cameraTransform) { }
+  commandBuilder(commandSorter, boneMeshInstanceList, cameraTransform) { }
 
   void Renderer::initialize() {
     backend.initialize();
   }
 
-  AnimatedMeshIndex Renderer::createAnimatedMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
-    return backend.createAnimatedMesh(vertices, vertexCount, indices, indexCount);
+  BoneMeshIndex Renderer::createBoneMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
+    return backend.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }
 
-  void Renderer::createAnimatedMeshInstance(AnimatedMeshIndex meshIndex, TransformIndex transformIndex) {
-    AnimatedMeshInstanceIndex meshInstanceIndex = animatedMeshInstanceList.create(meshIndex, transformIndex);
-    ObjectIndex objectIndex = objectList.create(ObjectType::AnimatedMeshInstance, ObjectIDCaster::createByAnimatedMeshInstanceIndex(meshInstanceIndex));
+  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
+    BoneMeshInstanceIndex meshInstanceIndex = boneMeshInstanceList.create(meshIndex, transformIndex);
+    ObjectIndex objectIndex = objectList.create(ObjectType::BoneMeshInstance, ObjectIDCaster::createByBoneMeshInstanceIndex(meshInstanceIndex));
     culler.create(objectIndex); // todo: pass bounding data also
   }
 

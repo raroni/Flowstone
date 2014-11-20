@@ -3,7 +3,7 @@
 
 namespace Rendering {
   enum class CommandType {
-    DrawAnimatedMesh,
+    DrawBoneMesh,
     ChangeShaderProgram,
     UpdateWorldViewTransform
   };

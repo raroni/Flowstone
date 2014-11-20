@@ -20,7 +20,7 @@ namespace Rendering {
       memcpy(buffer+position, &command, sizeof(command));
       position += sizeof(command);
     }
-    void writeDrawAnimatedMesh(DrawAnimatedMeshCommand command) {
+    void writeDrawBoneMesh(DrawBoneMeshCommand command) {
       memcpy(buffer+position, &command, sizeof(command));
       position += sizeof(command);
     }

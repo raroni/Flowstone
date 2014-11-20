@@ -4,12 +4,12 @@
 #include <stddef.h>
 #include <OpenGL/gl3.h>
 #include "Rendering/AnimatedVertex.h"
-#include "Rendering/AnimatedMeshIndex.h"
-#include "Rendering/OpenGL/AnimatedMesh.h"
+#include "Rendering/BoneMeshIndex.h"
+#include "Rendering/OpenGL/BoneMesh.h"
 
 namespace Rendering {
   namespace OpenGL {
-    class AnimatedMeshRegistry {
+    class BoneMeshRegistry {
       struct GLAnimatedVertex {
         GLfloat x;
         GLfloat y;
@@ -23,7 +23,7 @@ namespace Rendering {
     public:
       GLint positionAttributeHandle;
       GLint jointIndexAttributeHandle;
-      AnimatedMeshIndex create(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
+      BoneMeshIndex create(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
         GLuint vaoHandle;
         glGenVertexArrays(1, &vaoHandle);
         glBindVertexArray(vaoHandle);
@@ -63,8 +63,8 @@ namespace Rendering {
         return count++;
       }
 
-      AnimatedMesh get(AnimatedMeshIndex index) const {
-        AnimatedMesh mesh;
+      BoneMesh get(BoneMeshIndex index) const {
+        BoneMesh mesh;
         mesh.vaoHandle = vaoHandles[index];
         mesh.indexCount = indexCounts[index];
         return mesh;

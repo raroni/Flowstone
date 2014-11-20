@@ -3,7 +3,7 @@
 
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/ShaderName.h"
-#include "Rendering/AnimatedMeshInstanceIndex.h"
+#include "Rendering/BoneMeshInstanceIndex.h"
 #include "Rendering/ObjectIndex.h"
 
 namespace Quanta {
@@ -14,20 +14,20 @@ struct Pose;
 
 namespace Rendering {
   class CommandSorter;
-  class AnimatedMeshInstanceList;
+  class BoneMeshInstanceList;
   struct Object;
 
   class CommandBuilder {
   public:
-    CommandBuilder(CommandSorter &commandSorter, AnimatedMeshInstanceList &animatedMeshInstanceList, Quanta::Transform &cameraTransform);
+    CommandBuilder(CommandSorter &commandSorter, BoneMeshInstanceList &boneMeshInstanceList, Quanta::Transform &cameraTransform);
     void build(const Object *objects, const ObjectIndex *indices, uint16_t count);
     const Quanta::Matrix4 *transforms;
     const Pose *poses;
   private:
     CommandSorter &commandSorter;
-    AnimatedMeshInstanceList &animatedMeshInstanceList;
+    BoneMeshInstanceList &boneMeshInstanceList;
     Quanta::Transform &cameraTransform;
-    void enqueueAnimatedMeshInstanceDraw(AnimatedMeshInstanceIndex index);
+    void enqueueBoneMeshInstanceDraw(BoneMeshInstanceIndex index);
     void enqueueShaderProgramChange(ShaderName shader);
     void enqueueUpdateWorldViewTransform();
   };

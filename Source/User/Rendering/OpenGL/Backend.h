@@ -1,19 +1,19 @@
 #ifndef Rendering_OPENGL_BACKEND_H
 #define Rendering_OPENGL_BACKEND_H
 
-#include "Rendering/AnimatedMeshIndex.h"
+#include "Rendering/BoneMeshIndex.h"
 #include "Rendering/AnimatedVertex.h"
 #include "Rendering/OpenGL/ShaderRegistry.h"
-#include "Rendering/OpenGL/AnimatedMeshRegistry.h"
+#include "Rendering/OpenGL/BoneMeshRegistry.h"
 
 namespace Rendering {
   namespace OpenGL {
     class Backend {
     public:
       void initialize();
-      void configureAnimatedMeshRegistry();
+      void configureBoneMeshRegistry();
       void clear();
-      AnimatedMeshIndex createAnimatedMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount);
+      BoneMeshIndex createBoneMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount);
       void draw(const char *stream, uint16_t count);
     private:
       GLint worldViewTransformationUniformHandle;
@@ -22,7 +22,7 @@ namespace Rendering {
       GLint positionAttributeHandle;
       GLint jointIndexAttributeHandle;
       ShaderRegistry shaderRegistry;
-      AnimatedMeshRegistry animatedMeshRegistry;
+      BoneMeshRegistry boneMeshRegistry;
     };
   }
 }

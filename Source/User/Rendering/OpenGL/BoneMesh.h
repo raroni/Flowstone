@@ -3,7 +3,7 @@
 
 namespace Rendering {
   namespace OpenGL {
-    struct AnimatedMesh {
+    struct BoneMesh {
       GLuint vaoHandle;
       uint16_t indexCount;
     };

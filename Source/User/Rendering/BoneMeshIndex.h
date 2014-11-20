@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 namespace Rendering {
-  typedef uint8_t AnimatedMeshIndex;
+  typedef uint8_t BoneMeshIndex;
 }
 
 #endif

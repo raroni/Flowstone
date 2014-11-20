@@ -2,13 +2,13 @@
 
 namespace Rendering {
   namespace ObjectIDCaster {
-    union AnimatedMeshInstanceIndexCaster {
-      AnimatedMeshInstanceIndex index;
+    union BoneMeshInstanceIndexCaster {
+      BoneMeshInstanceIndex index;
       ObjectID id;
     };
 
-    ObjectID createByAnimatedMeshInstanceIndex(AnimatedMeshInstanceIndex index) {
-      AnimatedMeshInstanceIndexCaster caster;
+    ObjectID createByBoneMeshInstanceIndex(BoneMeshInstanceIndex index) {
+      BoneMeshInstanceIndexCaster caster;
       caster.index = index;
       return caster.id;
     }

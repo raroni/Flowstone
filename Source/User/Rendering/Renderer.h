@@ -7,7 +7,7 @@
 #include "Rendering/ObjectList.h"
 #include "Rendering/Config.h"
 #include "Rendering/CommandMerger.h"
-#include "Rendering/AnimatedMeshInstanceList.h"
+#include "Rendering/BoneMeshInstanceList.h"
 #include "Rendering/CommandSorter.h"
 #include "Rendering/TransformIndex.h"
 
@@ -15,7 +15,7 @@ struct Pose;
 
 namespace Rendering {
   class Renderer {
-    AnimatedMeshInstanceList animatedMeshInstanceList;
+    BoneMeshInstanceList boneMeshInstanceList;
     ObjectList objectList;
     ObjectIndex visibleBuffer[Config::maxObjects];
     Culler culler;
@@ -26,8 +26,8 @@ namespace Rendering {
   public:
     Renderer();
     void initialize();
-    AnimatedMeshIndex createAnimatedMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount);
-    void createAnimatedMeshInstance(AnimatedMeshIndex meshIndex, TransformIndex transformIndex);
+    BoneMeshIndex createBoneMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount);
+    void createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex);
     void draw();
     void setTransforms(const Quanta::Matrix4 *transforms);
     void setPoses(const Pose *poses);

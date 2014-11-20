@@ -177,7 +177,7 @@ namespace MainFlow {
       34, 39, 35, 34, 38, 39,  // bottom
     };
 
-    Rendering::AnimatedMeshIndex meshIndex = renderer.createAnimatedMesh(
+    Rendering::BoneMeshIndex meshIndex = renderer.createBoneMesh(
       vertices,
       sizeof(vertices)/sizeof(Rendering::AnimatedVertex),
       indices,
@@ -194,7 +194,7 @@ namespace MainFlow {
 
     airDrag.add(playerBodyIndex);
 
-    renderer.createAnimatedMeshInstance(meshIndex, interpolationTransformID);
+    renderer.createBoneMeshInstance(meshIndex, interpolationTransformID);
 
     renderer.cameraTransform.position[2] = -12;
     renderer.cameraTransform.position[1] = 6;
@@ -227,7 +227,7 @@ namespace MainFlow {
 
     /*
     Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    Rendering::AnimatedMeshInstance *instance = worldRenderer.getAnimatedMeshInstance(0);
+    Rendering::BoneMeshInstance *instance = worldRenderer.getBoneMeshInstance(0);
     instance->transform.rotateY(deltaTime*0.1);
     */
   }

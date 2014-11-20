@@ -45,9 +45,9 @@ namespace Rendering {
       writeType(CommandType::ChangeShaderProgram, key);
       writer.writeChangeShaderProgram(command);
     }
-    void writeDrawAnimatedMesh(DrawAnimatedMeshCommand command, OrderKey key) {
-      writeType(CommandType::DrawAnimatedMesh, key);
-      writer.writeDrawAnimatedMesh(command);
+    void writeDrawBoneMesh(DrawBoneMeshCommand command, OrderKey key) {
+      writeType(CommandType::DrawBoneMesh, key);
+      writer.writeDrawBoneMesh(command);
     }
     void writeUpdateWorldViewTransform(UpdateWorldViewTransformCommand command, OrderKey key) {
       writeType(CommandType::UpdateWorldViewTransform, key);

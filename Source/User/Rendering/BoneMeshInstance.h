@@ -2,11 +2,11 @@
 #define Rendering_ANIMATED_MESH_INSTANCE_H
 
 #include "Rendering/TransformIndex.h"
-#include "Rendering/AnimatedMeshIndex.h"
+#include "Rendering/BoneMeshIndex.h"
 
 namespace Rendering {
-  struct AnimatedMeshInstance {
-    AnimatedMeshIndex meshIndex;
+  struct BoneMeshInstance {
+    BoneMeshIndex meshIndex;
     TransformIndex transformIndex;
   };
 }

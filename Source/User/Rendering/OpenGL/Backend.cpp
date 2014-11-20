@@ -53,20 +53,20 @@ namespace Rendering {
       }
 
       glUseProgram(0);
-      configureAnimatedMeshRegistry();
+      configureBoneMeshRegistry();
     }
 
-    void Backend::configureAnimatedMeshRegistry() {
-      animatedMeshRegistry.positionAttributeHandle = positionAttributeHandle;
-      animatedMeshRegistry.jointIndexAttributeHandle = jointIndexAttributeHandle;
+    void Backend::configureBoneMeshRegistry() {
+      boneMeshRegistry.positionAttributeHandle = positionAttributeHandle;
+      boneMeshRegistry.jointIndexAttributeHandle = jointIndexAttributeHandle;
     }
 
     void Backend::clear() {
       glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    AnimatedMeshIndex Backend::createAnimatedMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
-      return animatedMeshRegistry.create(vertices, vertexCount, indices, indexCount);
+    BoneMeshIndex Backend::createBoneMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
+      return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
     }
 
     void Backend::draw(const char *stream, uint16_t count) {
@@ -84,9 +84,9 @@ namespace Rendering {
             glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, command.matrix);
             break;
           }
-          case CommandType::DrawAnimatedMesh: {
-            DrawAnimatedMeshCommand command = reader.readDrawAnimatedMesh();
-            AnimatedMesh mesh = animatedMeshRegistry.get(command.meshIndex);
+          case CommandType::DrawBoneMesh: {
+            DrawBoneMeshCommand command = reader.readDrawBoneMesh();
+            BoneMesh mesh = boneMeshRegistry.get(command.meshIndex);
             glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, command.transform.components);
             glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, command.pose.joints[0].components);
             glBindVertexArray(mesh.vaoHandle);

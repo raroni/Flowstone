@@ -2,13 +2,13 @@
 #include "Rendering/ObjectIDCaster.h"
 #include "Rendering/Object.h"
 #include "Rendering/CommandSorter.h"
-#include "Rendering/AnimatedMeshInstanceList.h"
+#include "Rendering/BoneMeshInstanceList.h"
 #include "Rendering/CommandBuilder.h"
 
 namespace Rendering {
-  CommandBuilder::CommandBuilder(CommandSorter &commandSorter, AnimatedMeshInstanceList &animatedMeshInstanceList, Quanta::Transform &cameraTransform) :
+  CommandBuilder::CommandBuilder(CommandSorter &commandSorter, BoneMeshInstanceList &boneMeshInstanceList, Quanta::Transform &cameraTransform) :
   commandSorter(commandSorter),
-  animatedMeshInstanceList(animatedMeshInstanceList),
+  boneMeshInstanceList(boneMeshInstanceList),
   cameraTransform(cameraTransform) { }
 
   void CommandBuilder::build(const Object *objects, const ObjectIndex *indices, uint16_t count) {
@@ -17,9 +17,9 @@ namespace Rendering {
     for(uint16_t i=0; count>i; i++) {
       const Object &object = objects[i];
       switch(object.type) {
-        case ObjectType::AnimatedMeshInstance: {
-          AnimatedMeshInstanceIndex index = ObjectIDCaster::createByAnimatedMeshInstanceIndex(object.id);
-          enqueueAnimatedMeshInstanceDraw(index);
+        case ObjectType::BoneMeshInstance: {
+          BoneMeshInstanceIndex index = ObjectIDCaster::createByBoneMeshInstanceIndex(object.id);
+          enqueueBoneMeshInstanceDraw(index);
           break;
         }
         default: {
@@ -39,16 +39,16 @@ namespace Rendering {
     commandSorter.writeUpdateWorldViewTransform(command, key);
   }
 
-  void CommandBuilder::enqueueAnimatedMeshInstanceDraw(AnimatedMeshInstanceIndex index) {
+  void CommandBuilder::enqueueBoneMeshInstanceDraw(BoneMeshInstanceIndex index) {
     enqueueShaderProgramChange(ShaderName::Animated);
-    AnimatedMeshInstance &instance = animatedMeshInstanceList.get(index);
-    DrawAnimatedMeshCommand command;
+    BoneMeshInstance &instance = boneMeshInstanceList.get(index);
+    DrawBoneMeshCommand command;
     command.meshIndex = instance.meshIndex;
     command.transform = transforms[instance.transformIndex];
     command.pose = poses[instance.transformIndex];
     OrderKey key = {};
     key.layer = 2;
-    commandSorter.writeDrawAnimatedMesh(command, key);
+    commandSorter.writeDrawBoneMesh(command, key);
   }
 
   void CommandBuilder::enqueueShaderProgramChange(ShaderName shader) {

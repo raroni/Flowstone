@@ -2,11 +2,11 @@
 #define Rendering_OBJECT_ID_CASTER_H
 
 #include "Rendering/ObjectID.h"
-#include "Rendering/AnimatedMeshInstanceIndex.h"
+#include "Rendering/BoneMeshInstanceIndex.h"
 
 namespace Rendering {
   namespace ObjectIDCaster {
-    ObjectID createByAnimatedMeshInstanceIndex(AnimatedMeshInstanceIndex index);
+    ObjectID createByBoneMeshInstanceIndex(BoneMeshInstanceIndex index);
   }
 }
 

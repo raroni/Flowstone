@@ -25,8 +25,8 @@ namespace Rendering {
       position += sizeof(command);
       return command;
     }
-    DrawAnimatedMeshCommand readDrawAnimatedMesh() {
-      DrawAnimatedMeshCommand command = *reinterpret_cast<const DrawAnimatedMeshCommand*>(buffer+position);
+    DrawBoneMeshCommand readDrawBoneMesh() {
+      DrawBoneMeshCommand command = *reinterpret_cast<const DrawBoneMeshCommand*>(buffer+position);
       position += sizeof(command);
       return command;
     }

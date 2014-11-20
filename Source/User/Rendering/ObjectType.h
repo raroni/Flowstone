@@ -3,7 +3,7 @@
 
 namespace Rendering {
   enum class ObjectType {
-    AnimatedMeshInstance
+    BoneMeshInstance
   };
 }
 
