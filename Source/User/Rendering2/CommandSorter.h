@@ -49,6 +49,10 @@ namespace Rendering2 {
       writeType(CommandType::DrawAnimatedMesh, key);
       writer.writeDrawAnimatedMesh(command);
     }
+    void writeUpdateWorldViewTransform(UpdateWorldViewTransformCommand command, OrderKey key) {
+      writeType(CommandType::UpdateWorldViewTransform, key);
+      writer.writeUpdateWorldViewTransform(command);
+    }
     void sort() {
       std::sort(orderRecords, orderRecords+count, compareOrderRecords);
     }

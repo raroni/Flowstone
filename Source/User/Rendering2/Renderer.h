@@ -31,6 +31,7 @@ namespace Rendering2 {
     void draw();
     void setTransforms(const Quanta::Matrix4 *transforms);
     void setPoses(const Pose *poses);
+    Quanta::Transform cameraTransform;
   };
 }
 

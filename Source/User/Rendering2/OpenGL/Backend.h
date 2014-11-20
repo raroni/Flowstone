@@ -16,6 +16,7 @@ namespace Rendering2 {
       AnimatedMeshIndex createAnimatedMesh(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount);
       void draw(const char *stream, uint16_t count);
     private:
+      GLint worldViewTransformationUniformHandle;
       ShaderRegistry shaderRegistry;
       AnimatedMeshRegistry animatedMeshRegistry;
     };

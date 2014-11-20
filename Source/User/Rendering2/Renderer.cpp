@@ -4,7 +4,7 @@
 
 namespace Rendering2 {
   Renderer::Renderer() :
-  commandBuilder(commandSorter, animatedMeshInstanceList) { }
+  commandBuilder(commandSorter, animatedMeshInstanceList, cameraTransform) { }
 
   void Renderer::initialize() {
     backend.initialize();

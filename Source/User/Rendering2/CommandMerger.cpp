@@ -21,6 +21,11 @@ namespace Rendering2 {
           writer.writeRaw(command, length);
           break;
         }
+        case CommandType::UpdateWorldViewTransform: {
+          uint16_t length = sizeof(CommandType) + sizeof(UpdateWorldViewTransformCommand);
+          writer.writeRaw(command, length);
+          break;
+        }
         default: {
           fatalError("Cannot process command.");
           break;

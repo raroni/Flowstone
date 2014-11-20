@@ -16,6 +16,10 @@ namespace Rendering2 {
   struct ChangeShaderProgramCommand {
     ShaderName shader;
   };
+
+  struct UpdateWorldViewTransformCommand {
+    float matrix[16];
+  };
 }
 
 #endif

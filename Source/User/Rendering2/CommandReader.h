@@ -22,6 +22,11 @@ namespace Rendering2 {
       position += sizeof(command);
       return command;
     }
+    UpdateWorldViewTransformCommand readUpdateWorldViewTransform() {
+      UpdateWorldViewTransformCommand command = *reinterpret_cast<const UpdateWorldViewTransformCommand*>(buffer+position);
+      position += sizeof(command);
+      return command;
+    }
     DrawAnimatedMeshCommand readDrawAnimatedMesh() {
       DrawAnimatedMeshCommand command = *reinterpret_cast<const DrawAnimatedMeshCommand*>(buffer+position);
       position += sizeof(command);

@@ -24,6 +24,10 @@ namespace Rendering2 {
       buffer[position] = *reinterpret_cast<char*>(&command);
       position += sizeof(command);
     }
+    void writeUpdateWorldViewTransform(UpdateWorldViewTransformCommand command) {
+      buffer[position] = *reinterpret_cast<char*>(&command);
+      position += sizeof(command);
+    }
     void writeRaw(const void *data, uint16_t length) {
       memcpy(&buffer[position], data, length);
       position += length;

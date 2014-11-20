@@ -3,9 +3,9 @@
 
 namespace Rendering2 {
   enum class CommandType {
-    Undefined,
     DrawAnimatedMesh,
-    ChangeShaderProgram
+    ChangeShaderProgram,
+    UpdateWorldViewTransform
   };
 }
 

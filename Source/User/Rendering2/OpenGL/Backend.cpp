@@ -12,6 +12,12 @@ namespace Rendering2 {
         loadShaders(shaderRegistry);
         glClearColor(1, 0, 0, 1);
         glEnable(GL_CULL_FACE);
+
+        GLuint handle = shaderRegistry.getHandle(ShaderName::Animated);
+        worldViewTransformationUniformHandle = glGetUniformLocation(handle, "worldViewTransformation");
+        if(worldViewTransformationUniformHandle == -1) {
+          fatalError("Could not find world view transformation uniform handle.");
+        }
       }
 
     void Backend::configureAnimatedMeshRegistry() {
@@ -43,10 +49,18 @@ namespace Rendering2 {
       printf("Running %d commands\n", count);
       for(uint16_t i=0; count>i; i++) {
         CommandType type = reader.readType();
+        printf("Command as int: %d\n", type);
         switch(type) {
           case CommandType::ChangeShaderProgram: {
             printf("ChangeShaderProgram!\n");
-            reader.readChangeShaderProgram();
+            ChangeShaderProgramCommand command = reader.readChangeShaderProgram();
+            glUseProgram(shaderRegistry.getHandle(command.shader));
+            break;
+          }
+          case CommandType::UpdateWorldViewTransform: {
+            UpdateWorldViewTransformCommand command = reader.readUpdateWorldViewTransform();
+            glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, command.matrix);
+            printf("Update world view\n");
             break;
           }
           case CommandType::DrawAnimatedMesh: {

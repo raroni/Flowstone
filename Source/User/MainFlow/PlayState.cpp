@@ -195,9 +195,9 @@ namespace MainFlow {
 
     renderer.createAnimatedMeshInstance(meshIndex, interpolationTransformID);
 
-    //worldRenderer.cameraTransform.position[2] = -12;
-    //worldRenderer.cameraTransform.position[1] = 6;
-    //worldRenderer.cameraTransform.rotateX(0.5);
+    renderer.cameraTransform.position[2] = -12;
+    renderer.cameraTransform.position[1] = 6;
+    renderer.cameraTransform.rotateX(0.5);
   }
 
   void PlayState::update(double timeDelta) {
