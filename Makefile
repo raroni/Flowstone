@@ -18,14 +18,14 @@ USER_SRC =\
 	Source/User/Timing.cpp\
 	Source/User/Animation/Registry.cpp\
 	Source/User/Mainflow/PlayState.cpp\
-	Source/User/Rendering2/Culler.cpp\
-	Source/User/Rendering2/Renderer.cpp\
-	Source/User/Rendering2/CommandBuilder.cpp\
-	Source/User/Rendering2/CommandMerger.cpp\
-	Source/User/Rendering2/ObjectIDCaster.cpp\
-	Source/User/Rendering2/OpenGL/ShaderLoading.cpp\
-	Source/User/Rendering2/OpenGL/Backend.cpp\
-	Source/User/Rendering2/OpenGL/ShaderRegistry.cpp
+	Source/User/Rendering/Culler.cpp\
+	Source/User/Rendering/Renderer.cpp\
+	Source/User/Rendering/CommandBuilder.cpp\
+	Source/User/Rendering/CommandMerger.cpp\
+	Source/User/Rendering/ObjectIDCaster.cpp\
+	Source/User/Rendering/OpenGL/ShaderLoading.cpp\
+	Source/User/Rendering/OpenGL/Backend.cpp\
+	Source/User/Rendering/OpenGL/ShaderRegistry.cpp
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 

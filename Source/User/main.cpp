@@ -1,12 +1,12 @@
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
-#include "Rendering2/Renderer.h"
+#include "Rendering/Renderer.h"
 #include "Config.h"
 #include "Timing.h"
 
 static bool myHack = false;
 
-static Rendering2::Renderer renderer;
+static Rendering::Renderer renderer;
 static MainFlow::Manager flow;
 
 void handleKeyDown(BroKey key) {

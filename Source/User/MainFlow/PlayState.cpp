@@ -1,10 +1,10 @@
-#include "Rendering2/Renderer.h"
+#include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
 #include "PlayerControl.h"
 #include "MainFlow/PlayState.h"
 
 namespace MainFlow {
-  PlayState::PlayState(Rendering2::Renderer &renderer) :
+  PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer) { }
 
   void PlayState::enter() {
@@ -78,7 +78,7 @@ namespace MainFlow {
       keyJointConfigs
     );
 
-    Rendering2::AnimatedVertex vertices[] = {
+    Rendering::AnimatedVertex vertices[] = {
       // body, front
       { -0.5, 0.5, -0.5, 1 }, // the 1 is the joint number this vertex will follow
       { 0.5, 0.5, -0.5, 1 },
@@ -177,9 +177,9 @@ namespace MainFlow {
       34, 39, 35, 34, 38, 39,  // bottom
     };
 
-    Rendering2::AnimatedMeshIndex meshIndex = renderer.createAnimatedMesh(
+    Rendering::AnimatedMeshIndex meshIndex = renderer.createAnimatedMesh(
       vertices,
-      sizeof(vertices)/sizeof(Rendering2::AnimatedVertex),
+      sizeof(vertices)/sizeof(Rendering::AnimatedVertex),
       indices,
       sizeof(indices)/sizeof(uint16_t)
     );
