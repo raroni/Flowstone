@@ -23,6 +23,16 @@ public:
       transforms[i] = translation * static_cast<Quanta::Matrix4>(orientation);
     }
   }
+  void initialize(const Quanta::Vector3 *positions, const Quanta::Quaternion *orientations) {
+    for(uint8_t i=0; bodyCount>i; i++) {
+      Physics::DynamicBodyIndex bodyIndex = bodyIndices[i];
+      oldPositions[i] = positions[bodyIndex];
+      newPositions[i] = positions[bodyIndex];
+      newOrientations[i] = orientations[bodyIndex];
+      oldOrientations[i] = orientations[bodyIndex];
+    }
+    interpolate(0);
+  }
   void reload(const Quanta::Vector3 *newPositions, const Quanta::Quaternion *newOrientations) {
     for(uint8_t i=0; bodyCount>i; i++) {
       oldPositions[i] = this->newPositions[i];

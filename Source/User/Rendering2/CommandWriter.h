@@ -13,19 +13,19 @@ namespace Rendering2 {
   public:
     CommandWriter(char *buffer) : buffer(buffer) { }
     void writeType(CommandType type) {
-      buffer[position] = *reinterpret_cast<char*>(&type);
+      memcpy(buffer+position, &type, sizeof(type));
       position += sizeof(type);
     }
     void writeChangeShaderProgram(ChangeShaderProgramCommand command) {
-      buffer[position] = *reinterpret_cast<char*>(&command);
+      memcpy(buffer+position, &command, sizeof(command));
       position += sizeof(command);
     }
     void writeDrawAnimatedMesh(DrawAnimatedMeshCommand command) {
-      buffer[position] = *reinterpret_cast<char*>(&command);
+      memcpy(buffer+position, &command, sizeof(command));
       position += sizeof(command);
     }
     void writeUpdateWorldViewTransform(UpdateWorldViewTransformCommand command) {
-      buffer[position] = *reinterpret_cast<char*>(&command);
+      memcpy(buffer+position, &command, sizeof(command));
       position += sizeof(command);
     }
     void writeRaw(const void *data, uint16_t length) {
@@ -34,6 +34,9 @@ namespace Rendering2 {
     }
     uint16_t getPosition() const {
       return position;
+    }
+    void reset() {
+      position = 0;
     }
   };
 }

@@ -1,37 +1,62 @@
+#include <math.h>
+#include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
+#include "Bro/Bro.h"
 #include "Rendering2/CommandType.h"
 #include "Rendering2/OpenGL/ShaderLoading.h"
 #include "Rendering2/CommandReader.h"
 #include "Rendering2/OpenGL/Backend.h"
 
-#include <stdio.h>
-
 namespace Rendering2 {
   namespace OpenGL {
     void Backend::initialize() {
-        loadShaders(shaderRegistry);
-        glClearColor(1, 0, 0, 1);
-        glEnable(GL_CULL_FACE);
+      loadShaders(shaderRegistry);
+      glClearColor(1, 0, 0, 1);
+      glEnable(GL_CULL_FACE);
 
-        GLuint handle = shaderRegistry.getHandle(ShaderName::Animated);
-        worldViewTransformationUniformHandle = glGetUniformLocation(handle, "worldViewTransformation");
-        if(worldViewTransformationUniformHandle == -1) {
-          fatalError("Could not find world view transformation uniform handle.");
-        }
-      }
+      GLint handle = shaderRegistry.getHandle(ShaderName::Animated);
+      glUseProgram(handle);
 
-    void Backend::configureAnimatedMeshRegistry() {
-      GLuint handle = shaderRegistry.getHandle(ShaderName::Animated);
-      GLint positionAttributeHandle = glGetAttribLocation(handle, "position");
+      positionAttributeHandle = glGetAttribLocation(handle, "position");
       if(positionAttributeHandle == -1) {
         fatalError("Could not find position attribute handle.");
       }
 
-      GLint jointIndexAttributeHandle = glGetAttribLocation(handle, "jointIndex");
+      jointIndexAttributeHandle = glGetAttribLocation(handle, "jointIndex");
       if(jointIndexAttributeHandle == -1) {
         fatalError("Could not find joint attribute handle.");
       }
 
+      GLint viewClipTransformationUniformHandle = glGetUniformLocation(handle, "viewClipTransformation");
+      if(viewClipTransformationUniformHandle == -1) {
+        fatalError("Could not find view clip transformation uniform handle.");
+      }
+      BroResolution resolution = broGetResolution();
+      float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
+      float fieldOfView = M_PI/3.0f;
+      Quanta::Matrix4 viewClipTransformation = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 0.1, 50);
+      glUniformMatrix4fv(viewClipTransformationUniformHandle, 1, GL_FALSE, viewClipTransformation.components);
+
+      worldViewTransformationUniformHandle = glGetUniformLocation(handle, "worldViewTransformation");
+      if(worldViewTransformationUniformHandle == -1) {
+        fatalError("Could not find world view transformation uniform handle.");
+      }
+
+      jointWorldTransformationUniformHandle = glGetUniformLocation(handle, "jointWorldTransformation");
+      if(jointWorldTransformationUniformHandle == -1) {
+        fatalError("Could not find joint world transformation uniform handle.");
+      }
+
+      modelJointTransformationsUniformHandle = glGetUniformLocation(handle, "modelJointTransformations");
+      if(modelJointTransformationsUniformHandle == -1) {
+        fatalError("Could not find model joint transformations uniform handle.");
+      }
+
+      glUseProgram(0);
+      configureAnimatedMeshRegistry();
+    }
+
+    void Backend::configureAnimatedMeshRegistry() {
       animatedMeshRegistry.positionAttributeHandle = positionAttributeHandle;
       animatedMeshRegistry.jointIndexAttributeHandle = jointIndexAttributeHandle;
     }
@@ -46,13 +71,10 @@ namespace Rendering2 {
 
     void Backend::draw(const char *stream, uint16_t count) {
       CommandReader reader(stream);
-      printf("Running %d commands\n", count);
       for(uint16_t i=0; count>i; i++) {
         CommandType type = reader.readType();
-        printf("Command as int: %d\n", type);
         switch(type) {
           case CommandType::ChangeShaderProgram: {
-            printf("ChangeShaderProgram!\n");
             ChangeShaderProgramCommand command = reader.readChangeShaderProgram();
             glUseProgram(shaderRegistry.getHandle(command.shader));
             break;
@@ -60,12 +82,15 @@ namespace Rendering2 {
           case CommandType::UpdateWorldViewTransform: {
             UpdateWorldViewTransformCommand command = reader.readUpdateWorldViewTransform();
             glUniformMatrix4fv(worldViewTransformationUniformHandle, 1, GL_FALSE, command.matrix);
-            printf("Update world view\n");
             break;
           }
           case CommandType::DrawAnimatedMesh: {
-            printf("DrawAnimatedMesh!\n");
-            reader.readDrawAnimatedMesh();
+            DrawAnimatedMeshCommand command = reader.readDrawAnimatedMesh();
+            AnimatedMesh mesh = animatedMeshRegistry.get(command.meshIndex);
+            glUniformMatrix4fv(jointWorldTransformationUniformHandle, 1, GL_FALSE, command.transform.components);
+            glUniformMatrix4fv(modelJointTransformationsUniformHandle, 8, GL_FALSE, command.pose.joints[0].components);
+            glBindVertexArray(mesh.vaoHandle);
+            glDrawElements(GL_TRIANGLES, mesh.indexCount, GL_UNSIGNED_SHORT, 0);
             break;
           }
           default: {

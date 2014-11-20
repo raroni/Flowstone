@@ -17,6 +17,10 @@ namespace Rendering2 {
       void draw(const char *stream, uint16_t count);
     private:
       GLint worldViewTransformationUniformHandle;
+      GLint jointWorldTransformationUniformHandle;
+      GLint modelJointTransformationsUniformHandle;
+      GLint positionAttributeHandle;
+      GLint jointIndexAttributeHandle;
       ShaderRegistry shaderRegistry;
       AnimatedMeshRegistry animatedMeshRegistry;
     };

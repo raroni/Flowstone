@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include "Rendering2/Commands.h"
 
-#include <stdio.h>
-
 namespace Rendering2 {
   class CommandReader {
     const char *buffer;

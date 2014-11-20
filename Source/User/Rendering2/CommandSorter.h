@@ -65,6 +65,7 @@ namespace Rendering2 {
     }
     void clear() {
       count = 0;
+      writer.reset();
     }
   };
 }

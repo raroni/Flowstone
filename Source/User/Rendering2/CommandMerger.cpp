@@ -6,6 +6,7 @@ namespace Rendering2 {
   CommandMerger::CommandMerger() : writer(buffer) { }
 
   void CommandMerger::merge(const CommandSorter &sorter) {
+    writer.reset();
     count = 0;
     for(uint16_t i=0; sorter.getCount()>i; i++) {
       const char *command = sorter.get(i);

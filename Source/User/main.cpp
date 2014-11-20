@@ -35,7 +35,7 @@ int main() {
     double timeDelta = timingGetDelta();
     flow.update(timeDelta);
     if(!myHack) {
-      myHack = true;
+      //myHack = true;
       renderer.draw();
       broSwapBuffers();
     }

@@ -190,6 +190,7 @@ namespace MainFlow {
     physics.createDynamicSphereCollider(playerBodyIndex, 0.5);
 
     uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBodyIndex);
+    frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
 
     airDrag.add(playerBodyIndex);
 

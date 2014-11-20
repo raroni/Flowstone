@@ -5,6 +5,7 @@
 #include <OpenGL/gl3.h>
 #include "Rendering2/AnimatedVertex.h"
 #include "Rendering2/AnimatedMeshIndex.h"
+#include "Rendering2/OpenGL/AnimatedMesh.h"
 
 namespace Rendering2 {
   namespace OpenGL {
@@ -20,9 +21,9 @@ namespace Rendering2 {
       GLuint vaoHandles[maxCount];
       uint16_t indexCounts[maxCount];
     public:
-    GLint positionAttributeHandle;
-    GLint jointIndexAttributeHandle;
-    AnimatedMeshIndex create(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
+      GLint positionAttributeHandle;
+      GLint jointIndexAttributeHandle;
+      AnimatedMeshIndex create(const AnimatedVertex *vertices, const size_t vertexCount, const uint16_t *indices, const size_t indexCount) {
         GLuint vaoHandle;
         glGenVertexArrays(1, &vaoHandle);
         glBindVertexArray(vaoHandle);
@@ -60,6 +61,13 @@ namespace Rendering2 {
         vaoHandles[count] = vaoHandle;
 
         return count++;
+      }
+
+      AnimatedMesh get(AnimatedMeshIndex index) const {
+        AnimatedMesh mesh;
+        mesh.vaoHandle = vaoHandles[index];
+        mesh.indexCount = indexCounts[index];
+        return mesh;
       }
     };
   }
