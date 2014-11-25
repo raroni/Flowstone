@@ -19,6 +19,8 @@ USER_SOURCES_CPP =\
 	Source/User/Animation/Registry.cpp\
 	Source/User/Mainflow/PlayState.cpp\
 	Source/User/Rendering/Renderer.cpp\
+	Source/User/Rendering/WorldRenderer.cpp\
+	Source/User/Rendering/OpenGL.cpp
 
 USER_SOURCES_OBJC = \
 	Libraries/Bro/Library/Source/OSX/Bro.mm\

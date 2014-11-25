@@ -6,7 +6,7 @@ namespace Rendering {
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-    return BoneMeshIndex(); // obviously just a dummy
+    return worldRenderer.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }
 
   void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {

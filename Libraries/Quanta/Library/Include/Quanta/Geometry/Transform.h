@@ -1,3 +1,6 @@
+#ifndef QUANTA_TRANSFORM_H
+#define QUANTA_TRANSFORM_H
+
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/Point3D.h"
 
@@ -18,3 +21,5 @@ namespace Quanta {
     void rotate(Quaternion &rotation);
   };
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef QUANTA_POINT3D_H
+#define QUANTA_POINT3D_H
+
 #include "Quanta/Math/Vector3.h"
 
 namespace Quanta {
@@ -20,3 +23,5 @@ namespace Quanta {
         Point3D getRotated(Quaternion &rotation);
     };
 }
+
+#endif
