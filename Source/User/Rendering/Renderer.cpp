@@ -1,0 +1,27 @@
+#include "Rendering/Renderer.h"
+
+namespace Rendering {
+  void Renderer::initialize() {
+
+  }
+
+  BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
+    return BoneMeshIndex(); // obviously just a dummy
+  }
+
+  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
+
+  }
+
+  void Renderer::draw() {
+
+  }
+
+  void Renderer::setTransforms(const Quanta::Matrix4 *transforms) {
+
+  }
+
+  void Renderer::setPoses(const Pose *poses) {
+
+  }
+}
