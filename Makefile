@@ -1,9 +1,9 @@
 NAME = Flowstone
 
-USER_SRC =\
-	Libraries/Bro/Library/Source/OSX/Bro.mm\
-	Libraries/Bro/Library/Source/OSX/View.mm\
-	Libraries/Cabi/Library/Source/OSX/Cabi.mm\
+CC = clang++
+CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
+
+USER_SOURCES_CPP =\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
@@ -20,6 +20,13 @@ USER_SRC =\
 	Source/User/Mainflow/PlayState.cpp\
 	Source/User/Rendering/Renderer.cpp\
 
+USER_SOURCES_OBJC = \
+	Libraries/Bro/Library/Source/OSX/Bro.mm\
+	Libraries/Bro/Library/Source/OSX/View.mm\
+	Libraries/Cabi/Library/Source/OSX/Cabi.mm
+
+USER_OBJECTS = $(patsubst %.cpp,Build/Objects/User/%.o,$(USER_SOURCES_CPP)) $(patsubst %.mm,Build/Objects/User/%.o,$(USER_SOURCES_OBJC))
+
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 
 USER_HEADER_DIRS =\
@@ -31,20 +38,30 @@ USER_HEADER_DIRS =\
 	-ISource/User\
 
 USER_OUTPUT_DIR = Build/$(NAME).app/Contents
-USER_BINARY_DIR = $(USER_OUTPUT_DIR)/MacOS
-USER_BINARY_PATH = $(USER_BINARY_DIR)/$(NAME)
+USER_EXECUTABLE_DIR = $(USER_OUTPUT_DIR)/MacOS
+USER_EXECUTABLE_PATH = $(USER_EXECUTABLE_DIR)/$(NAME)
 
 all: user
 
-user:
-	mkdir -p $(USER_BINARY_DIR)
-	clang++ -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1 $(USER_HEADER_DIRS) $(USER_FRAMEWORKS) $(USER_SRC) -o $(USER_BINARY_PATH)
+user: $(USER_EXECUTABLE_PATH)
+
+$(USER_EXECUTABLE_PATH): $(USER_OBJECTS)
+	mkdir -p $(USER_EXECUTABLE_DIR)
+	$(CC) $(CFLAGS) $(USER_FRAMEWORKS) $(USER_OBJECTS) -o $(USER_EXECUTABLE_PATH)
 	rm -rf $(USER_OUTPUT_DIR)/Resources
 	cp -r Resources $(USER_OUTPUT_DIR)/.
 
+Build/Objects/User/%.o : %.mm
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
+
+Build/Objects/User/%.o : %.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
+
 .PHONY: test
 
-TEST_SRC =\
+TEST_SOURCES =\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
@@ -62,6 +79,20 @@ TEST_HEADER_DIRS =\
 	-ISource\
 	-ISource/User\
 
-test:
-	clang++ -Wall -std=gnu++11 -stdlib=libc++ $(TEST_HEADER_DIRS) $(TEST_SRC) -o Build/Test
+TEST_OBJECTS = $(patsubst %.cpp,Build/Objects/Test/%.o,$(TEST_SOURCES))
+
+TEST_EXECUTABLE_PATH = Build/Test
+
+test: $(TEST_EXECUTABLE_PATH)
 	./Build/Test
+
+$(TEST_EXECUTABLE_PATH): $(TEST_OBJECTS)
+	$(CC) $(CFLAGS) $(TEST_HEADER_DIRS) $(TEST_OBJECTS) -o $@
+
+Build/Objects/Test/%.o : %.mm
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(TEST_HEADER_DIRS) $< -c -o $@
+
+Build/Objects/Test/%.o : %.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(TEST_HEADER_DIRS) $< -c -o $@
