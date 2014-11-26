@@ -20,7 +20,8 @@ USER_SOURCES_CPP =\
 	Source/User/Mainflow/PlayState.cpp\
 	Source/User/Rendering/Renderer.cpp\
 	Source/User/Rendering/WorldRenderer.cpp\
-	Source/User/Rendering/OpenGL.cpp
+	Source/User/Rendering/Backend/OpenGL.cpp\
+	Source/User/Rendering/BoneMeshRegistry.cpp
 
 USER_SOURCES_OBJC = \
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
@@ -61,8 +62,6 @@ Build/Objects/User/%.o : %.cpp
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
 
-.PHONY: test
-
 TEST_SOURCES =\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
@@ -98,3 +97,6 @@ Build/Objects/Test/%.o : %.mm
 Build/Objects/Test/%.o : %.cpp
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(TEST_HEADER_DIRS) $< -c -o $@
+
+clean:
+	rm -rf ./Build

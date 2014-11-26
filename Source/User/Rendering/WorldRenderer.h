@@ -3,11 +3,12 @@
 
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/Config.h"
 
 namespace Rendering {
   class WorldRenderer {
-    uint16_t boneMeshIndexCounts[Config::maxBoneMeshes];
+    BoneMeshRegistry boneMeshRegistry;
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
   };
