@@ -12,11 +12,10 @@ namespace Rendering {
   }
 
   void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
-
+    worldRenderer.createBoneMeshInstance(meshIndex, transformIndex);
   }
 
   void Renderer::draw() {
-
   }
 
   void Renderer::setTransforms(const Quanta::Matrix4 *transforms) {
