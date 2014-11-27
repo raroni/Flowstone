@@ -6,11 +6,11 @@
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/CommandStream.h"
 #include "Rendering/TransformIndex.h"
 
 namespace Rendering {
   class Renderer {
-    WorldRenderer worldRenderer;
   public:
     void initialize();
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
@@ -19,6 +19,10 @@ namespace Rendering {
     void setTransforms(const Quanta::Matrix4 *transforms);
     void setPoses(const Pose *poses);
     Quanta::Transform cameraTransform;
+  private:
+    CommandStream stream;
+    WorldRenderer worldRenderer;
+    void dispatch();
   };
 }
 

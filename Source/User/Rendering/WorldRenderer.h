@@ -8,11 +8,14 @@
 #include "Rendering/Config.h"
 
 namespace Rendering {
+  class CommandStream;
+
   class WorldRenderer {
     BoneMeshRegistry boneMeshRegistry;
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
     void createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex);
+    void writeCommands(CommandStream &stream);
   };
 }
 

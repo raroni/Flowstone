@@ -23,7 +23,8 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/Backend/OpenGL.cpp\
 	Source/User/Rendering/BoneMeshRegistry.cpp\
 	Source/User/Rendering/ShaderPrograms.cpp\
-	Source/User/Rendering/BoneMeshInstances.cpp
+	Source/User/Rendering/BoneMeshInstances.cpp\
+	Source/User/Rendering/CommandStream.cpp
 
 USER_SOURCES_OBJC = \
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
