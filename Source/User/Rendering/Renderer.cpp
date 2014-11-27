@@ -26,20 +26,20 @@ namespace Rendering {
   }
 
   void Renderer::setTransforms(const Quanta::Matrix4 *transforms) {
-
+    worldRenderer.transforms = transforms;
   }
 
   void Renderer::setPoses(const Pose *poses) {
-
+    worldRenderer.poses = poses;
   }
 
   void Renderer::dispatch() {
     for(uint16_t i=0; stream.getCount()>i; i++) {
       CommandType type = stream.readType();
       switch(type) {
-        case CommandType::ProgramChange: {
-          ProgramChangeCommand command = stream.readProgramChange();
-          Backend::changeProgram(command.program);
+        case CommandType::ProgramSet: {
+          ProgramSetCommand command = stream.readProgramSet();
+          Backend::setProgram(command.program);
           break;
         }
         default:

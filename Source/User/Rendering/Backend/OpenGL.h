@@ -15,7 +15,7 @@ namespace Rendering {
       ProgramHandle createProgram();
       void linkProgram(ProgramHandle handle);
       void attachShader(ProgramHandle program, ShaderHandle shader);
-      void changeProgram(ProgramHandle program);
+      void setProgram(ProgramHandle program);
     }
   }
 }

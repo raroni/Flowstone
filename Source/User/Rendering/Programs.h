@@ -1,5 +1,5 @@
-#ifndef RENDERING_SHADER_PROGRAMS_H
-#define RENDERING_SHADER_PROGRAMS_H
+#ifndef RENDERING_PROGRAMS_H
+#define RENDERING_PROGRAMS_H
 
 #include "Rendering/Backend/ShaderHandle.h"
 

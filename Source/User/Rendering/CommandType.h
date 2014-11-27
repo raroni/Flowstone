@@ -3,7 +3,7 @@
 
 namespace Rendering {
   enum class CommandType {
-    ProgramChange
+    ProgramSet
   };
 }
 

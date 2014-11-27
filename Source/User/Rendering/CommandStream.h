@@ -10,9 +10,9 @@ namespace Rendering {
     void reset();
     void rewind();
     uint16_t getCount() { return count; }
-    void writeProgramChange(ProgramChangeCommand command);
+    void writeProgramSet(ProgramSetCommand command);
     CommandType readType();
-    ProgramChangeCommand readProgramChange();
+    ProgramSetCommand readProgramSet();
   private:
     void writeType(CommandType type);
     uint16_t position = 0;

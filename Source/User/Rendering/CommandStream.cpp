@@ -2,8 +2,8 @@
 #include "Rendering/CommandStream.h"
 
 namespace Rendering {
-  void CommandStream::writeProgramChange(ProgramChangeCommand command) {
-    writeType(CommandType::ProgramChange);
+  void CommandStream::writeProgramSet(ProgramSetCommand command) {
+    writeType(CommandType::ProgramSet);
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
   }
@@ -29,8 +29,8 @@ namespace Rendering {
     return type;
   }
 
-  ProgramChangeCommand CommandStream::readProgramChange() {
-    ProgramChangeCommand command = *reinterpret_cast<const ProgramChangeCommand*>(buffer+position);
+  ProgramSetCommand CommandStream::readProgramSet() {
+    ProgramSetCommand command = *reinterpret_cast<const ProgramSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

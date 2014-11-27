@@ -1,5 +1,8 @@
 #include <stddef.h>
+#include <string.h>
+#include "Quanta/Math/Matrix4.h"
 #include "Rendering/BoneMeshInstances.h"
+#include "Rendering/BoneMeshInstance.h"
 #include "Rendering/Commands.h"
 #include "Rendering/Programs.h"
 #include "Rendering/ProgramName.h"
@@ -16,10 +19,22 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    /*
-    ProgramChangeCommand command;
+    // todo update constant uniform / uniform object, world view
+
+    ProgramSetCommand command;
     command.program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-    stream.writeProgramChange(command);
-    */
+    stream.writeProgramSet(command);
+
+    drawQueue.reset();
+    for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
+      BoneMeshInstance &instance = BoneMeshInstances::list[i];
+      BoneMeshDrawCall call;
+      call.mesh = instance.mesh;
+      const Quanta::Matrix4 &transform = transforms[instance.transform];
+      memcpy(call.transform, &transform, sizeof(transform));
+      const Pose &pose = poses[instance.transform];
+      memcpy(call.pose, &pose, sizeof(pose));
+      drawQueue.addBoneMesh(call);
+    }
   }
 }

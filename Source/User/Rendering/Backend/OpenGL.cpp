@@ -113,7 +113,7 @@ namespace Rendering {
         glAttachShader(program, shader);
       }
 
-      void changeProgram(ProgramHandle program) {
+      void setProgram(ProgramHandle program) {
         glUseProgram(static_cast<GLuint>(program));
       }
     }
