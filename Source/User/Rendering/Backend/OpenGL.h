@@ -1,7 +1,7 @@
 #ifndef RENDERING_BACKEND_OPENGL_H
 #define RENDERING_BACKEND_OPENGL_H
 
-#include "Rendering/ObjectHandle.h"
+#include "Rendering/Backend/ObjectHandle.h"
 #include "Rendering/Backend/BoneVertex.h"
 
 namespace Rendering {

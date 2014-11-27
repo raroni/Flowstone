@@ -4,11 +4,11 @@
 #include "Rendering/Config.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
-#include "Rendering/ObjectHandle.h"
+#include "Rendering/Backend/ObjectHandle.h"
 
 namespace Rendering {
   class BoneMeshRegistry {
-    ObjectHandle handles[Config::maxBoneMeshes];
+    Backend::ObjectHandle handles[Config::maxBoneMeshes];
     uint16_t indexCounts[Config::maxBoneMeshes];
     uint16_t count = 0;
   public:
