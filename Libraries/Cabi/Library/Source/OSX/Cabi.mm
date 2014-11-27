@@ -22,8 +22,11 @@ void cabiReadFile(const char *name, char *buffer, size_t bufferLength) {
   if(file == NULL) {
     fatalError("Could not read file.");
   }
-  fread(buffer, 1, bufferLength, file);
+  size_t bytes = fread(buffer, 1, bufferLength, file);
   fclose(file);
-
+  if(bytes == bufferLength) {
+    fatalError("Buffer too small.");
+  }
+  buffer[bytes] = '\0';
   pathBuffer[0] = '\0';
 }

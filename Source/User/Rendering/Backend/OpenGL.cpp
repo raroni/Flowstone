@@ -1,4 +1,6 @@
 #include <OpenGL/gl3.h>
+#include <cstddef>
+#include "Core/Error.h"
 #include "Rendering/AttributeLocation.h"
 #include "Rendering/Backend/OpenGL.h"
 
@@ -58,6 +60,57 @@ namespace Rendering {
         glBindVertexArray(0);
 
         return static_cast<ObjectHandle>(handle);
+      }
+
+      ShaderHandle createShader(ShaderType type, const char *source) {
+        GLenum oglType;
+        switch(type) {
+          case ShaderType::Vertex:
+            oglType = GL_VERTEX_SHADER;
+            break;
+          case ShaderType::Fragment:
+            oglType = GL_FRAGMENT_SHADER;
+            break;
+          default:
+            fatalError("Unknown shader type.");
+            break;
+        }
+
+        GLuint handle = glCreateShader(oglType);
+        glShaderSource(handle, 1, &source, NULL);
+        glCompileShader(handle);
+
+        GLint compileSuccess;
+        glGetShaderiv(handle, GL_COMPILE_STATUS, &compileSuccess);
+        if(compileSuccess == GL_FALSE) {
+          GLint logLength;
+          glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &logLength);
+          GLchar *log = new GLchar[logLength+1];
+          glGetShaderInfoLog(handle, logLength, NULL, log);
+          fatalError(log);
+          delete[] log;
+        }
+
+        return static_cast<ShaderHandle>(handle);
+      }
+
+      ProgramHandle createProgram() {
+        GLuint handle = glCreateProgram();
+        return static_cast<ProgramHandle>(handle);
+      }
+
+      void linkProgram(ProgramHandle handle) {
+        GLuint oglHandle = handle;
+        glLinkProgram(oglHandle);
+        GLint linkSuccess;
+        glGetProgramiv(oglHandle, GL_LINK_STATUS, &linkSuccess);
+        if(linkSuccess == GL_FALSE) {
+          fatalError("GL program linking failed.");
+        }
+      }
+
+      void attachShader(ProgramHandle program, ShaderHandle shader) {
+        glAttachShader(program, shader);
       }
     }
   }
