@@ -4,7 +4,7 @@
 #include "Rendering/Backend/ShaderHandle.h"
 
 namespace Rendering {
-  namespace ShaderPrograms {
+  namespace Programs {
     extern Backend::ShaderHandle handles[16];
     void initialize();
   }

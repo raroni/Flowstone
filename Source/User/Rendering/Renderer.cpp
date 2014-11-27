@@ -1,12 +1,12 @@
 #include "Core/Error.h"
 #include "Rendering/Renderer.h"
-#include "Rendering/ShaderPrograms.h"
+#include "Rendering/Programs.h"
 #include "Rendering/Backend/Backend.h"
 #include "Rendering/CommandType.h"
 
 namespace Rendering {
   void Renderer::initialize() {
-    ShaderPrograms::initialize();
+    Programs::initialize();
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {

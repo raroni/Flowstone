@@ -1,8 +1,8 @@
 #include <stddef.h>
 #include "Rendering/BoneMeshInstances.h"
 #include "Rendering/Commands.h"
-#include "Rendering/ShaderPrograms.h"
-#include "Rendering/ShaderProgramName.h"
+#include "Rendering/Programs.h"
+#include "Rendering/ProgramName.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
 
@@ -18,7 +18,7 @@ namespace Rendering {
   void WorldRenderer::writeCommands(CommandStream &stream) {
     /*
     ProgramChangeCommand command;
-    command.program = ShaderPrograms::handles[static_cast<size_t>(ShaderProgramName::Bone)];
+    command.program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
     stream.writeProgramChange(command);
     */
   }

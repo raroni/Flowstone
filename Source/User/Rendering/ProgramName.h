@@ -2,7 +2,7 @@
 #define RENDERING_SHADER_PROGRAM_NAME_H
 
 namespace Rendering {
-  enum class ShaderProgramName {
+  enum class ProgramName {
     Bone
   };
 }

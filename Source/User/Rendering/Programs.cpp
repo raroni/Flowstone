@@ -4,8 +4,8 @@
 #include "Rendering/Backend/ShaderType.h"
 #include "Rendering/Backend/ShaderHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"
-#include "Rendering/ShaderProgramName.h"
-#include "Rendering/ShaderPrograms.h"
+#include "Rendering/ProgramName.h"
+#include "Rendering/Programs.h"
 
 namespace Rendering {
   const static size_t sourceBufferLength = 4096;
@@ -34,11 +34,11 @@ namespace Rendering {
     return program;
   }
 
-  namespace ShaderPrograms {
+  namespace Programs {
     Backend::ShaderHandle handles[16];
 
     void initialize() {
-      handles[static_cast<size_t>(ShaderProgramName::Bone)] = initializeProgram("Bone");
+      handles[static_cast<size_t>(ProgramName::Bone)] = initializeProgram("Bone");
     }
   }
 }
