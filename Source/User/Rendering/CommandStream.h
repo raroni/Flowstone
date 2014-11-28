@@ -15,7 +15,7 @@ namespace Rendering {
     void writeIndexedDraw(uint16_t indexCount);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);
-    void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const void *data);
+    void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     CommandType readType();
     BufferSetCommand readBufferSet();
     BufferWriteCommand readBufferWrite(const void **data);

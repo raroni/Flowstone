@@ -85,13 +85,13 @@ namespace Rendering {
           stream.writeUniformMat4Set(
             Uniforms::handles[static_cast<size_t>(UniformName::BoneJointWorldTransformation)],
             1,
-            &boneMeshDrawCall->transform
+            &boneMeshDrawCall->transform.components[0]
           );
 
           stream.writeUniformMat4Set(
             Uniforms::handles[static_cast<size_t>(UniformName::BoneModelJointTransformation)],
             8,
-            &boneMeshDrawCall->pose
+            &boneMeshDrawCall->pose.joints[0].components[0]
           );
 
           // todo: Tjek her på om objekt allerede er current

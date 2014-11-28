@@ -46,15 +46,16 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const void *data) {
+  void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformMat4Set);
     UniformMat4SetCommand command;
     command.uniform = uniform;
     command.count = count;
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
-    memcpy(buffer+position, data, count);
-    position += count*sizeof(float)*16;
+    size_t dataSize = count*sizeof(float)*16;
+    memcpy(buffer+position, data, dataSize);
+    position += dataSize;
   }
 
   void CommandStream::writeType(CommandType type) {
