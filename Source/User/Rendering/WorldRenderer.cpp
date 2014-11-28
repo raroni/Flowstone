@@ -8,18 +8,14 @@
 #include "Rendering/Programs.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/ProgramName.h"
+#include "Rendering/Buffers.h"
+#include "Rendering/BufferName.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/UniformName.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
 
 namespace Rendering {
-  void WorldRenderer::initialize() {
-    Backend::ProgramHandle program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-    globalUniformBlock = Backend::getUniformBlock(program, "global");
-    globalUniformBuffer = Backend::createBuffer();
-  }
-
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
@@ -51,7 +47,8 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeGlobalUniformUpdate(CommandStream &stream) {
-    stream.writeBufferSet(Backend::BufferTarget::Uniform, globalUniformBuffer);
+    Backend::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
+    stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
 
     const size_t size = sizeof(Quanta::Matrix4)*2;
     char data[size];

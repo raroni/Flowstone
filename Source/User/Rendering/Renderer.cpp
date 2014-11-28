@@ -2,13 +2,16 @@
 #include "Rendering/Renderer.h"
 #include "Rendering/Programs.h"
 #include "Rendering/Backend/Functions.h"
+#include "Rendering/Buffers.h"
+#include "Rendering/Uniforms.h"
 #include "Rendering/CommandType.h"
 
 namespace Rendering {
   void Renderer::initialize() {
+    Buffers::initialize();
     Programs::initialize();
+    Uniforms::initialize();
     Backend::setClearColor(0, 0, 1);
-    worldRenderer.initialize();
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
