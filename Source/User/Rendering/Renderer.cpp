@@ -7,6 +7,7 @@
 namespace Rendering {
   void Renderer::initialize() {
     Programs::initialize();
+    Backend::setClearColor(0, 0, 1);
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -34,6 +35,7 @@ namespace Rendering {
   }
 
   void Renderer::dispatch() {
+    Backend::clear();
     for(uint16_t i=0; stream.getCount()>i; i++) {
       CommandType type = stream.readType();
       switch(type) {
@@ -43,19 +45,23 @@ namespace Rendering {
           break;
         }
         case CommandType::UniformMat4Set: {
-          stream.readUniformMat4Set();
+          UniformMat4SetCommand command = stream.readUniformMat4Set();
+          Backend::setUniformMat4(command.uniform, command.matrix.components);
           break;
         }
         case CommandType::Uniform8Mat4Set: {
-          stream.readUniform8Mat4Set();
+          Uniform8Mat4SetCommand command = stream.readUniform8Mat4Set();
+          Backend::setUniformMat4(command.uniform, command.matrices[0].components, 8);
           break;
         }
         case CommandType::ObjectSet: {
-          stream.readObjectSet();
+          ObjectSetCommand command = stream.readObjectSet();
+          Backend::setObject(command.object);
           break;
         }
         case CommandType::IndexedDraw: {
-          stream.readIndexedDraw();
+          IndexedDrawCommand command = stream.readIndexedDraw();
+          Backend::drawIndexed(command.indexCount);
           break;
         }
         default:

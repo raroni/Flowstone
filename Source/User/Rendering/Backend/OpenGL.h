@@ -18,6 +18,11 @@ namespace Rendering {
       void attachShader(ProgramHandle program, ShaderHandle shader);
       void setProgram(ProgramHandle program);
       UniformHandle getUniformLocation(ProgramHandle program, const char *name);
+      void clear();
+      void setClearColor(float r, float g, float b);
+      void setUniformMat4(UniformHandle uniform, float *data, uint8_t count = 1);
+      void setObject(ObjectHandle object);
+      void drawIndexed(uint16_t indexCount);
     }
   }
 }

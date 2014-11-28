@@ -120,6 +120,26 @@ namespace Rendering {
       UniformHandle getUniformLocation(ProgramHandle program, const char *name) {
         return glGetUniformLocation(program, name);
       }
+
+      void clear() {
+        glClear(GL_COLOR_BUFFER_BIT);
+      }
+
+      void setClearColor(float red, float green, float blue) {
+        glClearColor(red, green, blue, 1);
+      }
+
+      void setUniformMat4(UniformHandle uniform, float *data, uint8_t count) {
+        glUniformMatrix4fv(uniform, count, GL_FALSE, data);
+      }
+
+      void setObject(ObjectHandle object) {
+        glBindVertexArray(object);
+      }
+
+      void drawIndexed(uint16_t indexCount) {
+        glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, 0);
+      }
     }
   }
 }
