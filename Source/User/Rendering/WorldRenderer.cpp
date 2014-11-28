@@ -8,11 +8,18 @@
 #include "Rendering/Programs.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/ProgramName.h"
+#include "Rendering/Backend/Functions.h"
 #include "Rendering/UniformName.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
 
 namespace Rendering {
+  void WorldRenderer::initialize() {
+    Backend::ProgramHandle program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
+    globalUniformBlock = Backend::getUniformBlock(program, "global");
+    globalUniformBuffer = Backend::createBuffer();
+  }
+
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
@@ -22,11 +29,7 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    // todo update constant uniform / uniform object, world view
-
-    ProgramSetCommand command;
-    command.program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-    stream.writeProgramSet(command);
+    writeGlobalUniformUpdate(stream);
     buildDrawQueue();
     writeDrawQueueToStream(stream);
   }
@@ -47,6 +50,17 @@ namespace Rendering {
     drawQueue.sort();
   }
 
+  void WorldRenderer::writeGlobalUniformUpdate(CommandStream &stream) {
+    stream.writeBufferSet(Backend::BufferTarget::Uniform, globalUniformBuffer);
+
+    const size_t size = sizeof(Quanta::Matrix4)*2;
+    char data[size];
+    // copy the two matrices to data
+    stream.writeBufferWrite(Backend::BufferTarget::Uniform, 32, data);
+
+    stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);
+  }
+
   void WorldRenderer::writeDrawQueueToStream(CommandStream &stream) {
     for(uint16_t i=0; drawQueue.getCount()>i; i++) {
       const char *buffer = drawQueue.getBuffer(i);
@@ -56,28 +70,23 @@ namespace Rendering {
         case DrawCallType::BoneMesh: {
           const BoneMeshDrawCall *boneMeshDrawCall = reinterpret_cast<const BoneMeshDrawCall*>(drawCall);
 
-          ProgramSetCommand programCommand;
-          programCommand.program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-          stream.writeProgramSet(programCommand);
+          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Bone)]);
 
-          UniformMat4SetCommand transformCommand;
-          transformCommand.uniform = Uniforms::handles[static_cast<size_t>(UniformName::BoneJointWorldTransformation)];
-          transformCommand.matrix = boneMeshDrawCall->transform;
-          stream.writeUniformMat4Set(transformCommand);
+          stream.writeUniformMat4Set(
+            Uniforms::handles[static_cast<size_t>(UniformName::BoneJointWorldTransformation)],
+            1,
+            &boneMeshDrawCall->transform
+          );
 
-          Uniform8Mat4SetCommand poseCommand;
-          poseCommand.uniform = Uniforms::handles[static_cast<size_t>(UniformName::BoneModelJointTransformation)];
-          memcpy(poseCommand.matrices, &boneMeshDrawCall->pose, sizeof(poseCommand.matrices));
-          stream.writeUniform8Mat4Set(poseCommand);
+          stream.writeUniformMat4Set(
+            Uniforms::handles[static_cast<size_t>(UniformName::BoneModelJointTransformation)],
+            8,
+            &boneMeshDrawCall->pose
+          );
 
           // todo: Tjek her på om objekt allerede er current
-          ObjectSetCommand objectCommand;
-          objectCommand.object = boneMeshDrawCall->object;
-          stream.writeObjectSet(objectCommand);
-
-          IndexedDrawCommand drawCommand;
-          drawCommand.indexCount = boneMeshDrawCall->indexCount;
-          stream.writeIndexedDraw(drawCommand);
+          stream.writeObjectSet(boneMeshDrawCall->object);
+          stream.writeIndexedDraw(boneMeshDrawCall->indexCount);
           break;
         }
         default:

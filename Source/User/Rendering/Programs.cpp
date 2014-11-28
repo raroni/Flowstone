@@ -1,6 +1,6 @@
 #include <string.h>
 #include "Cabi/Cabi.h"
-#include "Rendering/Backend/Backend.h"
+#include "Rendering/Backend/Functions.h"
 #include "Rendering/Backend/ShaderType.h"
 #include "Rendering/Backend/ShaderHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"

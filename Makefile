@@ -20,7 +20,7 @@ USER_SOURCES_CPP =\
 	Source/User/Mainflow/PlayState.cpp\
 	Source/User/Rendering/Renderer.cpp\
 	Source/User/Rendering/WorldRenderer.cpp\
-	Source/User/Rendering/Backend/OpenGL.cpp\
+	Source/User/Rendering/Backend/OpenGL/Functions.cpp\
 	Source/User/Rendering/BoneMeshRegistry.cpp\
 	Source/User/Rendering/Programs.cpp\
 	Source/User/Rendering/BoneMeshInstances.cpp\

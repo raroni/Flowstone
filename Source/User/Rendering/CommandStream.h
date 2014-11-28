@@ -10,21 +10,23 @@ namespace Rendering {
     void reset();
     void rewind();
     uint16_t getCount() { return count; }
-    void writeIndexedDraw(IndexedDrawCommand command);
-    void writeObjectSet(ObjectSetCommand command);
-    void writeProgramSet(ProgramSetCommand command);
-    void writeUniformMat4Set(UniformMat4SetCommand command);
-    void writeUniform8Mat4Set(Uniform8Mat4SetCommand command);
+    void writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer);
+    void writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data);
+    void writeIndexedDraw(uint16_t indexCount);
+    void writeObjectSet(Backend::ObjectHandle object);
+    void writeProgramSet(Backend::ProgramHandle program);
+    void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const void *data);
     CommandType readType();
+    BufferSetCommand readBufferSet();
+    BufferWriteCommand readBufferWrite(const void **data);
     IndexedDrawCommand readIndexedDraw();
     ObjectSetCommand readObjectSet();
     ProgramSetCommand readProgramSet();
-    UniformMat4SetCommand readUniformMat4Set();
-    Uniform8Mat4SetCommand readUniform8Mat4Set();
+    UniformMat4SetCommand readUniformMat4Set(const float **data);
   private:
     void writeType(CommandType type);
     uint16_t position = 0;
-    char buffer[1024*10];
+    char buffer[1024*50];
     uint16_t count = 0;
   };
 }

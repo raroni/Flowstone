@@ -1,13 +1,14 @@
 #include "Core/Error.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Programs.h"
-#include "Rendering/Backend/Backend.h"
+#include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandType.h"
 
 namespace Rendering {
   void Renderer::initialize() {
     Programs::initialize();
     Backend::setClearColor(0, 0, 1);
+    worldRenderer.initialize();
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -45,13 +46,9 @@ namespace Rendering {
           break;
         }
         case CommandType::UniformMat4Set: {
-          UniformMat4SetCommand command = stream.readUniformMat4Set();
-          Backend::setUniformMat4(command.uniform, command.matrix.components);
-          break;
-        }
-        case CommandType::Uniform8Mat4Set: {
-          Uniform8Mat4SetCommand command = stream.readUniform8Mat4Set();
-          Backend::setUniformMat4(command.uniform, command.matrices[0].components, 8);
+          const float *data;
+          UniformMat4SetCommand command = stream.readUniformMat4Set(&data);
+          Backend::setUniformMat4(command.uniform, command.count, data);
           break;
         }
         case CommandType::ObjectSet: {
@@ -62,6 +59,17 @@ namespace Rendering {
         case CommandType::IndexedDraw: {
           IndexedDrawCommand command = stream.readIndexedDraw();
           Backend::drawIndexed(command.indexCount);
+          break;
+        }
+        case CommandType::BufferSet: {
+          BufferSetCommand command = stream.readBufferSet();
+          Backend::setBuffer(command.target, command.buffer);
+          break;
+        }
+        case CommandType::BufferWrite: {
+          const void *data;
+          BufferWriteCommand command = stream.readBufferWrite(&data);
+          Backend::writeBuffer(command.target, command.size, data);
           break;
         }
         default:

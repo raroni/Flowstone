@@ -3,8 +3,11 @@
 in vec3 position;
 in uint jointIndex;
 
-uniform mat4 viewClipTransformation;
-uniform mat4 worldViewTransformation;
+layout(std140) uniform global {
+  mat4 viewClipTransformation;
+  mat4 worldViewTransformation;
+};
+
 uniform mat4 jointWorldTransformation;
 uniform mat4 modelJointTransformations[8];
 

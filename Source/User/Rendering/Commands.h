@@ -1,10 +1,11 @@
 #ifndef RENDERING_COMMANDS_H
 #define RENDERING_COMMANDS_H
 
-#include "Quanta/Math/Matrix4.h"
-#include "Rendering/Backend/UniformHandle.h"
-#include "Rendering/Backend/ProgramHandle.h"
+#include "Rendering/Backend/BufferHandle.h"
+#include "Rendering/Backend/BufferTarget.h"
 #include "Rendering/Backend/ObjectHandle.h"
+#include "Rendering/Backend/ProgramHandle.h"
+#include "Rendering/Backend/UniformHandle.h"
 
 namespace Rendering {
   struct ProgramSetCommand {
@@ -17,16 +18,21 @@ namespace Rendering {
 
   struct UniformMat4SetCommand {
     Backend::UniformHandle uniform;
-    Quanta::Matrix4 matrix;
-  };
-
-  struct Uniform8Mat4SetCommand {
-    Backend::UniformHandle uniform;
-    Quanta::Matrix4 matrices[8];
+    uint16_t count;
   };
 
   struct IndexedDrawCommand {
     uint16_t indexCount;
+  };
+
+  struct BufferSetCommand {
+    Backend::BufferTarget target;
+    Backend::BufferHandle buffer;
+  };
+
+  struct BufferWriteCommand {
+    uint16_t size;
+    Backend::BufferTarget target;
   };
 }
 
