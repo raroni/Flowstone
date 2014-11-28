@@ -1,5 +1,7 @@
 #include <stddef.h>
 #include <string.h>
+#include <math.h>
+#include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
 #include "Quanta/Math/Matrix4.h"
 #include "Rendering/BoneMeshInstances.h"
@@ -22,6 +24,11 @@ namespace Rendering {
 
   void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
     BoneMeshInstances::create(meshIndex, transformIndex);
+  }
+
+  void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {
+    resolution.width = width;
+    resolution.height = height;
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
@@ -50,10 +57,16 @@ namespace Rendering {
     Backend::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
     stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
 
-    const size_t size = sizeof(Quanta::Matrix4)*2;
-    char data[size];
-    // copy the two matrices to data
-    stream.writeBufferWrite(Backend::BufferTarget::Uniform, 32, data);
+    float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
+    float fieldOfView = M_PI/3.0f;
+    Quanta::Matrix4 viewClipTransform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 0.1, 50);
+    Quanta::Matrix4 worldViewTransform = cameraTransform.getInverseMatrix();
+
+    const size_t size = sizeof(Quanta::Matrix4);
+    char data[size*2];
+    memcpy(data, &viewClipTransform, size);
+    memcpy(data+size, &worldViewTransform, size);
+    stream.writeBufferWrite(Backend::BufferTarget::Uniform, size*2, data);
 
     stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);
   }

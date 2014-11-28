@@ -197,9 +197,10 @@ namespace MainFlow {
 
     renderer.createBoneMeshInstance(meshIndex, interpolationTransformID);
 
-    renderer.cameraTransform.position[2] = -12;
-    renderer.cameraTransform.position[1] = 6;
-    renderer.cameraTransform.rotateX(0.5);
+    Quanta::Transform& camera = renderer.getCameraTransform();
+    camera.position[2] = -12;
+    camera.position[1] = 6;
+    camera.rotateX(0.5);
   }
 
   void PlayState::update(double timeDelta) {

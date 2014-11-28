@@ -18,6 +18,14 @@ namespace Rendering {
     return worldRenderer.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }
 
+  Quanta::Transform& Renderer::getCameraTransform() {
+    return worldRenderer.cameraTransform;
+  }
+
+  void Renderer::updateResolution(uint16_t width, uint16_t height) {
+    worldRenderer.updateResolution(width, height);
+  }
+
   void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
     worldRenderer.createBoneMeshInstance(meshIndex, transformIndex);
   }

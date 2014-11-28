@@ -18,7 +18,8 @@ namespace Rendering {
     void draw();
     void setTransforms(const Quanta::Matrix4 *transforms);
     void setPoses(const Pose *poses);
-    Quanta::Transform cameraTransform;
+    Quanta::Transform& getCameraTransform();
+    void updateResolution(uint16_t width, uint16_t height);
   private:
     CommandStream stream;
     WorldRenderer worldRenderer;

@@ -17,7 +17,7 @@ namespace Rendering {
     void initialize() {
       Backend::ProgramHandle program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
       setupLocation(program, UniformName::BoneJointWorldTransformation, "jointWorldTransformation");
-      setupLocation(program, UniformName::BoneModelJointTransformation, "modelJointTransformation");
+      setupLocation(program, UniformName::BoneModelJointTransformation, "modelJointTransformations");
     }
   }
 }

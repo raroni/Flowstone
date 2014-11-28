@@ -7,6 +7,11 @@
 static Rendering::Renderer renderer;
 static MainFlow::Manager flow;
 
+static void updateResolution() {
+  BroResolution resolution = broGetResolution();
+  renderer.updateResolution(resolution.width, resolution.height);
+}
+
 void handleKeyDown(BroKey key) {
   if(key == BroKeyA) {
 
@@ -25,6 +30,7 @@ int main() {
   //broSetEventCallback(handleEvent);
   broInitialize();
   timingInitialize();
+  updateResolution();
   renderer.initialize();
   flow.initialize(renderer);
   while(!broShouldTerminate()) {
