@@ -116,6 +116,10 @@ namespace Rendering {
       void setProgram(ProgramHandle program) {
         glUseProgram(static_cast<GLuint>(program));
       }
+
+      UniformHandle getUniformLocation(ProgramHandle program, const char *name) {
+        return glGetUniformLocation(program, name);
+      }
     }
   }
 }

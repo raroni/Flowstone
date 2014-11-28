@@ -61,4 +61,11 @@ namespace Rendering {
     indexCounts[count] = indexCount;
     return count++;
   }
+
+  BoneMesh BoneMeshRegistry::get(BoneMeshIndex index) const {
+    BoneMesh mesh;
+    mesh.object = handles[index];
+    mesh.indexCount = indexCounts[index];
+    return mesh;
+  }
 }

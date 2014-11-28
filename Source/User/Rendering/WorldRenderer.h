@@ -22,6 +22,8 @@ namespace Rendering {
   private:
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    void writeDrawQueueToStream(CommandStream &stream);
+    void buildDrawQueue();
   };
 }
 

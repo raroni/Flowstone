@@ -10,9 +10,17 @@ namespace Rendering {
     void reset();
     void rewind();
     uint16_t getCount() { return count; }
+    void writeIndexedDraw(IndexedDrawCommand command);
+    void writeObjectSet(ObjectSetCommand command);
     void writeProgramSet(ProgramSetCommand command);
+    void writeUniformMat4Set(UniformMat4SetCommand command);
+    void writeUniform8Mat4Set(Uniform8Mat4SetCommand command);
     CommandType readType();
+    IndexedDrawCommand readIndexedDraw();
+    ObjectSetCommand readObjectSet();
     ProgramSetCommand readProgramSet();
+    UniformMat4SetCommand readUniformMat4Set();
+    Uniform8Mat4SetCommand readUniform8Mat4Set();
   private:
     void writeType(CommandType type);
     uint16_t position = 0;

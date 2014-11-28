@@ -1,18 +1,23 @@
-#include "Backend/Backend.h"
+#include <stddef.h>
+#include "Rendering/Backend/Backend.h"
+#include "Rendering/Backend/UniformHandle.h"
+#include "Rendering/UniformName.h"
+#include "Rendering/ProgramName.h"
 #include "Rendering/Uniforms.h"
+#include "Rendering/Programs.h"
 
 namespace Rendering {
   namespace Uniforms {
-    UniformHandle handles[32];
+    Backend::UniformHandle handles[32];
 
-    static void setupLocation(UniformName enumName, const char *stringName) {
-      handles[static_cast<size_t>(enumName)] = Backend::getUniformLocation(stringName);
+    static void setupLocation(Backend::ProgramHandle program, UniformName enumName, const char *stringName) {
+      handles[static_cast<size_t>(enumName)] = Backend::getUniformLocation(program, stringName);
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>](ShaderName::Bone));
-      setupLocation(UniformName::BoneJointWorldTransformation, "jointWorldTransformation");
-      setupLocation(UniformName::BoneModelJointTransformation, "modelJointTransformation");
+      Backend::ProgramHandle program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
+      setupLocation(program, UniformName::BoneJointWorldTransformation, "jointWorldTransformation");
+      setupLocation(program, UniformName::BoneModelJointTransformation, "modelJointTransformation");
     }
   }
 }

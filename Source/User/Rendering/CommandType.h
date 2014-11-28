@@ -3,7 +3,11 @@
 
 namespace Rendering {
   enum class CommandType {
-    ProgramSet
+    ProgramSet,
+    UniformMat4Set,
+    Uniform8Mat4Set,
+    ObjectSet,
+    IndexedDraw
   };
 }
 

@@ -42,6 +42,22 @@ namespace Rendering {
           Backend::setProgram(command.program);
           break;
         }
+        case CommandType::UniformMat4Set: {
+          stream.readUniformMat4Set();
+          break;
+        }
+        case CommandType::Uniform8Mat4Set: {
+          stream.readUniform8Mat4Set();
+          break;
+        }
+        case CommandType::ObjectSet: {
+          stream.readObjectSet();
+          break;
+        }
+        case CommandType::IndexedDraw: {
+          stream.readIndexedDraw();
+          break;
+        }
         default:
           fatalError("Unknown command type.");
           break;

@@ -5,6 +5,7 @@
 #include "Rendering/Backend/BoneVertex.h"
 #include "Rendering/Backend/ShaderType.h"
 #include "Rendering/Backend/ShaderHandle.h"
+#include "Rendering/Backend/UniformHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"
 
 namespace Rendering {
@@ -16,6 +17,7 @@ namespace Rendering {
       void linkProgram(ProgramHandle handle);
       void attachShader(ProgramHandle program, ShaderHandle shader);
       void setProgram(ProgramHandle program);
+      UniformHandle getUniformLocation(ProgramHandle program, const char *name);
     }
   }
 }

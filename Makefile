@@ -25,7 +25,8 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/Programs.cpp\
 	Source/User/Rendering/BoneMeshInstances.cpp\
 	Source/User/Rendering/CommandStream.cpp\
-	Source/User/Rendering/DrawQueue.cpp
+	Source/User/Rendering/DrawQueue.cpp\
+	Source/User/Rendering/Uniforms.cpp
 
 USER_SOURCES_OBJC = \
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
