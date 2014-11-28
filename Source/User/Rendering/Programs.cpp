@@ -34,11 +34,18 @@ namespace Rendering {
     return program;
   }
 
+  static Backend::ProgramHandle initializeBoneProgram() {
+    Backend::ProgramHandle program = initializeProgram("Bone");
+    Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "global");
+    Backend::setUniformBlockIndex(program, block, 0);
+    return program;
+  }
+
   namespace Programs {
     Backend::ShaderHandle handles[16];
 
     void initialize() {
-      handles[static_cast<size_t>(ProgramName::Bone)] = initializeProgram("Bone");
+      handles[static_cast<size_t>(ProgramName::Bone)] = initializeBoneProgram();
     }
   }
 }

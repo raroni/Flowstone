@@ -159,5 +159,13 @@ namespace Rendering {
     void setBuffer(BufferTarget target, BufferHandle buffer) {
       glBindBuffer(static_cast<GLenum>(target), buffer);
     }
+
+    void setBufferIndex(BufferTarget target, BufferHandle buffer, uint8_t index) {
+      glBindBufferBase(static_cast<GLenum>(target), buffer, index);
+    }
+
+    void setUniformBlockIndex(ProgramHandle program, UniformBlockHandle block, uint8_t index) {
+      glUniformBlockBinding(program, block, index);
+    }
   }
 }

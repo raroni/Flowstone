@@ -28,6 +28,8 @@ namespace Rendering {
     void drawIndexed(uint16_t indexCount);
     BufferHandle createBuffer();
     void setBuffer(BufferTarget target, BufferHandle buffer);
+    void setBufferIndex(BufferTarget target, BufferHandle buffer, uint8_t index);
+    void setUniformBlockIndex(ProgramHandle program, UniformBlockHandle block, uint8_t index);
     void writeBuffer(BufferTarget target, uint16_t size, const void *data);
   }
 }

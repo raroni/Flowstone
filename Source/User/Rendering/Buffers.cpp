@@ -8,7 +8,9 @@ namespace Rendering {
     Backend::BufferHandle handles[8];
 
     void initialize() {
-      handles[static_cast<size_t>(BufferName::Global1)] = Backend::createBuffer();
+      Backend::BufferHandle globalBuffer = Backend::createBuffer();
+      handles[static_cast<size_t>(BufferName::Global1)] = globalBuffer;
+      Backend::setBufferIndex(Backend::BufferTarget::Uniform, 0, globalBuffer);
     }
   }
 }
