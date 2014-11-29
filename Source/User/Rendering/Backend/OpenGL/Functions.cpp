@@ -161,7 +161,7 @@ namespace Rendering {
     }
 
     void setBufferIndex(BufferTarget target, BufferHandle buffer, uint8_t index) {
-      glBindBufferBase(static_cast<GLenum>(target), buffer, index);
+      glBindBufferBase(static_cast<GLenum>(target), index, buffer);
     }
 
     void setUniformBlockIndex(ProgramHandle program, UniformBlockHandle block, uint8_t index) {

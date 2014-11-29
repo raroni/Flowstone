@@ -10,7 +10,7 @@ namespace Rendering {
     void initialize() {
       Backend::BufferHandle globalBuffer = Backend::createBuffer();
       handles[static_cast<size_t>(BufferName::Global1)] = globalBuffer;
-      Backend::setBufferIndex(Backend::BufferTarget::Uniform, 0, globalBuffer);
+      Backend::setBufferIndex(Backend::BufferTarget::Uniform, globalBuffer, 0);
     }
   }
 }
