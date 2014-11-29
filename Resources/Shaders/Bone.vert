@@ -1,7 +1,7 @@
 #version 330
 
-in vec3 position;
-in uint jointIndex;
+layout(location = 0) in vec3 position;
+layout(location = 2) in uint jointIndex;
 
 layout(std140) uniform global {
   mat4 viewClipTransformation;
