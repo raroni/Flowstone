@@ -1,5 +1,5 @@
-#ifndef RENDERING_BUFFER_TARGET_H
-#define RENDERING_BUFFER_TARGET_H
+#ifndef RENDERING_BACKEND_BUFFER_TARGET_H
+#define RENDERING_BACKEND_BUFFER_TARGET_H
 
 #include "Rendering/Backend/OpenGL/BufferTarget.h"
 

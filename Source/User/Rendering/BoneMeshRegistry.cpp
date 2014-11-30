@@ -1,11 +1,22 @@
 #include "Rendering/Backend/Functions.h"
-#include "Rendering/Backend/BoneVertex.h"
+#include "Rendering/AttributeLocation.h"
+#include "Rendering/Backend/AttributeLocation.h"
+#include "Rendering/Backend/BufferTarget.h"
+#include "Rendering/Backend/ObjectHandle.h"
 #include "Rendering/BoneMeshRegistry.h"
 
 namespace Rendering {
+  namespace {
+    struct BackendBoneVertex {
+      float px, py, pz;
+      float nx, ny, nz;
+      uint8_t jointIndex;
+    };
+  }
+
   static void buildBackendMesh(
     const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount,
-    uint8_t *backendVertexCount, Backend::BoneVertex *backendVertices, uint16_t *backendIndices
+    uint8_t *backendVertexCount, BackendBoneVertex *backendVertices, uint16_t *backendIndices
   ) {
     uint8_t triangleCount = indexCount/3;
     for(uint8_t i=0; triangleCount>i; i++) {
@@ -25,7 +36,7 @@ namespace Rendering {
         bool found = false;
         BoneVertex vertex = triangleVertices[m];
         for(uint8_t n=0; *backendVertexCount>n; n++) {
-          Backend::BoneVertex &v = backendVertices[n];
+          BackendBoneVertex &v = backendVertices[n];
           if(
             v.px == vertex.position[0] && v.py == vertex.position[1] && v.pz == vertex.position[2] &&
             v.nx == normal[0] && v.ny == normal[1] && v.nz == normal[2] &&
@@ -37,7 +48,7 @@ namespace Rendering {
           }
         }
         if(!found) {
-          Backend::BoneVertex &v = backendVertices[*backendVertexCount];
+          BackendBoneVertex &v = backendVertices[*backendVertexCount];
           v.px = vertex.position[0];
           v.py = vertex.position[1];
           v.pz = vertex.position[2];
@@ -52,12 +63,55 @@ namespace Rendering {
     }
   }
 
+  static Backend::ObjectHandle upload(const BackendBoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
+    Backend::ObjectHandle object = Backend::createObject();
+    Backend::setObject(object);
+
+    Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
+    Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Normal));
+    Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::JointIndex));
+
+    Backend::BufferHandle vertexBuffer = Backend::createBuffer();
+    Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
+    Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(BackendBoneVertex)*vertexCount, vertices);
+
+    Backend::BufferHandle indexBuffer = Backend::createBuffer();
+    Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
+    Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
+
+    Backend::configureAttribute(
+      static_cast<Backend::AttributeLocation>(AttributeLocation::Position),
+      3,
+      Backend::DataType::Float,
+      sizeof(BackendBoneVertex),
+      0
+    );
+    Backend::configureAttribute(
+      static_cast<Backend::AttributeLocation>(AttributeLocation::Normal),
+      3,
+      Backend::DataType::Float,
+      sizeof(BackendBoneVertex),
+      sizeof(float)*3
+    );
+    Backend::configureAttribute(
+      static_cast<Backend::AttributeLocation>(AttributeLocation::JointIndex),
+      1,
+      Backend::DataType::UnsignedByte,
+      sizeof(BackendBoneVertex),
+      sizeof(float)*6
+    );
+
+    Backend::setObject(0);
+
+    return object;
+  }
+
   BoneMeshIndex BoneMeshRegistry::create(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     uint8_t backendVertexCount = 0;
-    Backend::BoneVertex backendVertices[indexCount];
+    BackendBoneVertex backendVertices[indexCount];
     uint16_t backendIndices[indexCount];
     buildBackendMesh(vertices, vertexCount, indices, indexCount, &backendVertexCount, backendVertices, backendIndices);
-    handles[count] = Backend::createBoneMesh(backendVertices, backendVertexCount, backendIndices, indexCount);
+    handles[count] = upload(backendVertices, backendVertexCount, backendIndices, indexCount);
     indexCounts[count] = indexCount;
     return count++;
   }

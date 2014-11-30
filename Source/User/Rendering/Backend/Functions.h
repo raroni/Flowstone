@@ -2,18 +2,18 @@
 #define RENDERING_BACKEND_H
 
 #include "Rendering/Backend/ObjectHandle.h"
-#include "Rendering/Backend/BoneVertex.h"
 #include "Rendering/Backend/ShaderType.h"
 #include "Rendering/Backend/ShaderHandle.h"
 #include "Rendering/Backend/UniformHandle.h"
+#include "Rendering/Backend/AttributeLocation.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Backend/BufferTarget.h"
+#include "Rendering/Backend/DataType.h"
 
 namespace Rendering {
   namespace Backend {
-    ObjectHandle createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
     ShaderHandle createShader(ShaderType type, const char *source);
     ProgramHandle createProgram();
     void linkProgram(ProgramHandle handle);
@@ -24,6 +24,9 @@ namespace Rendering {
     void clear();
     void setClearColor(float r, float g, float b);
     void setUniformMat4(UniformHandle uniform, uint8_t count, const float *data);
+    ObjectHandle createObject();
+    void enableAttributeLocation(AttributeLocation location);
+    void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);
     void setObject(ObjectHandle object);
     void drawIndexed(uint16_t indexCount);
     BufferHandle createBuffer();
