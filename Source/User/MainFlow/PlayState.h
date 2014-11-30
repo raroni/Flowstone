@@ -5,6 +5,7 @@
 #include <OpenGL/gl3.h>
 #include "MainFlow/State.h"
 #include "Animation/Animator.h"
+#include "Rendering/BoneMeshIndex.h"
 #include "AirDrag.h"
 #include "Core/Physics/Engine.h"
 #include "FrameInterpolator.h"
