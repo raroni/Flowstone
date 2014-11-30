@@ -34,8 +34,15 @@ namespace Physics {
           DynamicBodyIndex body2 = bodyIndices[n];
           Quanta::Vector3 difference = positions[body2]-positions[body1];
           float radiiSum = radii[i] + radii[n];
-          if(difference.getSquaredLength() < radiiSum*radiiSum) {
-            Quanta::Vector3 separation = difference.getNormalized()*(radiiSum-difference.getLength());
+          float differenceSquaredLength = difference.getSquaredLength();
+          if(differenceSquaredLength < radiiSum*radiiSum) {
+            Quanta::Vector3 direction;
+            if(differenceSquaredLength < 0.001) {
+              direction[0] = 1;
+            } else {
+              direction = difference.getNormalized();
+            }
+            Quanta::Vector3 separation = direction*(radiiSum-difference.getLength());
             collisions.add({
               body1,
               body2,

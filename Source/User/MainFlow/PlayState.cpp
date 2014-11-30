@@ -212,7 +212,7 @@ namespace MainFlow {
     Animation::PoseIndex pose = animator.createPose(skeletonID);
 
     Physics::DynamicBodyIndex body = physics.createDynamicBody();
-    //physics.createDynamicSphereCollider(body, 0.5);
+    physics.createDynamicSphereCollider(body, 0.5);
 
     uint8_t interpolationTransformID = frameInterpolator.createInterpolation(body);
     frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
