@@ -203,7 +203,7 @@ bool broIsVisible() {
 
 BroResolution broGetResolution() {
   struct BroResolution resolution;
-  CGSize size = bro.window.frame.size;
+  CGSize size = [bro.window.contentView frame].size;
   resolution.width = size.width;
   resolution.height = size.height;
   return resolution;
