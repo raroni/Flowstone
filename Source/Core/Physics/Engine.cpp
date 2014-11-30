@@ -4,6 +4,7 @@
 
 namespace Physics {
   DynamicBodyIndex Engine::createDynamicBody() {
+    dynamicOrientations[dynamicBodyCount] = Quanta::Quaternion::identity();
     DynamicBodyIndex index = dynamicBodyCount++;
     integrator.activate(index);
     return index;
