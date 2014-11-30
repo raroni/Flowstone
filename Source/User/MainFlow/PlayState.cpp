@@ -185,10 +185,8 @@ namespace MainFlow {
       sizeof(indices)/sizeof(uint16_t)
     );
 
-    animator.createSkeletonInstance(skeletonID);
-
-    setupPlayer(meshIndex);
-    setupMonster(meshIndex);
+    setupPlayer(meshIndex, skeletonID);
+    setupMonster(meshIndex, skeletonID);
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
@@ -196,28 +194,32 @@ namespace MainFlow {
     camera.rotateX(0.5);
   }
 
-  void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh) {
+  void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
+    Animation::PoseIndex pose = animator.createPose(skeletonID);
+
     playerBody = physics.createDynamicBody();
-    //physics.createDynamicSphereCollider(playerBody, 0.5);
+    physics.createDynamicSphereCollider(playerBody, 0.5);
 
     uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBody);
     frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
 
     airDrag.add(playerBody);
 
-    renderer.createBoneMeshInstance(mesh, interpolationTransformID);
+    renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
   }
 
-  void PlayState::setupMonster(Rendering::BoneMeshIndex mesh) {
+  void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
+    Animation::PoseIndex pose = animator.createPose(skeletonID);
+
     Physics::DynamicBodyIndex body = physics.createDynamicBody();
-    physics.createDynamicSphereCollider(body, 0.5);
+    //physics.createDynamicSphereCollider(body, 0.5);
 
     uint8_t interpolationTransformID = frameInterpolator.createInterpolation(body);
     frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
 
     airDrag.add(body);
 
-    renderer.createBoneMeshInstance(mesh, interpolationTransformID);
+    renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
   }
 
   void PlayState::update(double timeDelta) {

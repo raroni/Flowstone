@@ -22,8 +22,8 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
-  void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
-    BoneMeshInstances::create(meshIndex, transformIndex);
+  void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose) {
+    BoneMeshInstances::create(meshIndex, transformIndex, pose);
   }
 
   void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {
@@ -45,7 +45,7 @@ namespace Rendering {
       BoneMesh mesh = boneMeshRegistry.get(instance.mesh);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.pose = poses[instance.transform];
+      call.pose = poses[instance.pose];
       call.transform = transforms[instance.transform];
       drawQueue.addBoneMesh(call);
     }

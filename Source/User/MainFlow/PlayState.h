@@ -25,8 +25,8 @@ namespace MainFlow {
     AirDrag airDrag;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBody;
-    void setupPlayer(Rendering::BoneMeshIndex mesh);
-    void setupMonster(Rendering::BoneMeshIndex mesh);
+    void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
+    void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose);
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();

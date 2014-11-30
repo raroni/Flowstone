@@ -96,7 +96,7 @@ namespace Animation {
     );
   }
 
-  void Animator::createSkeletonInstance(uint8_t skeletonID) {
+  PoseIndex Animator::createPose(uint8_t skeletonID) {
     skeletonIDs[instanceCount] = skeletonID;
     passed[instanceCount] = 0;
     animations[instanceCount] = 0;
@@ -113,7 +113,7 @@ namespace Animation {
     for(uint8_t i=0; bonesCount>i; i++) {
       targetTransformations[transformationOffset+i] = transformations[i];
     }
-    instanceCount++;
+    return instanceCount++;
   }
 
   void Animator::changeAnimation(uint8_t instanceID, uint8_t animation) {

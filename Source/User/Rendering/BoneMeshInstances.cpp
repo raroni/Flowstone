@@ -5,9 +5,10 @@ namespace Rendering {
     static uint16_t count = 0;
     BoneMeshInstance list[256];
 
-    BoneMeshInstanceIndex create(BoneMeshIndex mesh, TransformIndex transform) {
+    BoneMeshInstanceIndex create(BoneMeshIndex mesh, TransformIndex transform, Animation::PoseIndex pose) {
       list[count].mesh = mesh;
       list[count].transform = transform;
+      list[count].pose = pose;
       return count++;
     }
 

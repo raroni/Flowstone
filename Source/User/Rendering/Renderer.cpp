@@ -26,8 +26,8 @@ namespace Rendering {
     worldRenderer.updateResolution(width, height);
   }
 
-  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex) {
-    worldRenderer.createBoneMeshInstance(meshIndex, transformIndex);
+  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose) {
+    worldRenderer.createBoneMeshInstance(meshIndex, transformIndex, pose);
   }
 
   void Renderer::draw() {

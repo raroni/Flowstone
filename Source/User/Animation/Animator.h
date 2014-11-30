@@ -3,6 +3,7 @@
 
 #include "Pose.h"
 #include "Animation/Registry.h"
+#include "Animation/PoseIndex.h"
 
 namespace Animation {
   class Animator {
@@ -17,7 +18,7 @@ namespace Animation {
       float *keyTimes,
       JointConfig *jointConfigs
     );
-    void createSkeletonInstance(uint8_t skeletonID);
+    PoseIndex createPose(uint8_t skeletonID);
     void changeAnimation(uint8_t instanceID, uint8_t animation);
     void update(double timeDelta);
   private:
