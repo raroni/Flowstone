@@ -187,15 +187,8 @@ namespace MainFlow {
 
     animator.createSkeletonInstance(skeletonID);
 
-    playerBodyIndex = physics.createDynamicBody();
-    physics.createDynamicSphereCollider(playerBodyIndex, 0.5);
-
-    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBodyIndex);
-    frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
-
-    airDrag.add(playerBodyIndex);
-
-    renderer.createBoneMeshInstance(meshIndex, interpolationTransformID);
+    setupPlayer(meshIndex);
+    setupMonster(meshIndex);
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
@@ -203,10 +196,34 @@ namespace MainFlow {
     camera.rotateX(0.5);
   }
 
+  void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh) {
+    playerBody = physics.createDynamicBody();
+    //physics.createDynamicSphereCollider(playerBody, 0.5);
+
+    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBody);
+    frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
+
+    airDrag.add(playerBody);
+
+    renderer.createBoneMeshInstance(mesh, interpolationTransformID);
+  }
+
+  void PlayState::setupMonster(Rendering::BoneMeshIndex mesh) {
+    Physics::DynamicBodyIndex body = physics.createDynamicBody();
+    physics.createDynamicSphereCollider(body, 0.5);
+
+    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(body);
+    frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
+
+    airDrag.add(body);
+
+    renderer.createBoneMeshInstance(mesh, interpolationTransformID);
+  }
+
   void PlayState::update(double timeDelta) {
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {
-      Physics::DynamicBody body = physics.getDynamicBody(playerBodyIndex);
+      Physics::DynamicBody body = physics.getDynamicBody(playerBody);
       do {
         playerControlUpdateForce(body);
         airDrag.update(physics.getDynamicVelocities(), physics.getDynamicForces());

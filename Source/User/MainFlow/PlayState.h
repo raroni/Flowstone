@@ -23,7 +23,9 @@ namespace MainFlow {
     FrameInterpolator frameInterpolator;
     AirDrag airDrag;
     double stepTimeBank = 0;
-    Physics::DynamicBodyIndex playerBodyIndex;
+    Physics::DynamicBodyIndex playerBody;
+    void setupPlayer(Rendering::BoneMeshIndex mesh);
+    void setupMonster(Rendering::BoneMeshIndex mesh);
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();
