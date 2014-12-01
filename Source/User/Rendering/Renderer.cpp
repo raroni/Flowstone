@@ -3,11 +3,13 @@
 #include "Rendering/Programs.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/Buffers.h"
+#include "Rendering/RenderTargets.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/CommandType.h"
 
 namespace Rendering {
   void Renderer::initialize() {
+    RenderTargets::initialize();
     Buffers::initialize();
     Programs::initialize();
     Uniforms::initialize();

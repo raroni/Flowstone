@@ -9,8 +9,11 @@
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
+#include "Rendering/Backend/RenderTargetHandle.h"
 #include "Rendering/Backend/BufferTarget.h"
+#include "Rendering/Backend/TextureHandle.h"
 #include "Rendering/Backend/DataType.h"
+#include "Rendering/Backend/TextureFormat.h"
 
 namespace Rendering {
   namespace Backend {
@@ -34,6 +37,11 @@ namespace Rendering {
     void setBufferIndex(BufferTarget target, BufferHandle buffer, uint8_t index);
     void setUniformBlockIndex(ProgramHandle program, UniformBlockHandle block, uint8_t index);
     void writeBuffer(BufferTarget target, uint16_t size, const void *data);
+    RenderTargetHandle createRenderTarget();
+    void setRenderTarget(RenderTargetHandle renderTarget);
+    TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format);
+    void attachTexture(TextureHandle texture, uint8_t location);
+    bool checkRenderTarget();
   }
 }
 

@@ -29,6 +29,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/DrawQueue.cpp\
 	Source/User/Rendering/Uniforms.cpp\
 	Source/User/Rendering/Buffers.cpp\
+	Source/User/Rendering/RenderTargets.cpp\
 	Source/User/FrameInterpolator.cpp
 
 USER_SOURCES_OBJC = \

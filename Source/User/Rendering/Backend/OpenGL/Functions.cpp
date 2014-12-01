@@ -120,6 +120,34 @@ namespace Rendering {
       glUniformBlockBinding(program, block, index);
     }
 
+    TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format) {
+      GLuint texture;
+      glGenTextures(1, &texture);
+      glBindTexture(GL_TEXTURE_2D, texture);
+      glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        static_cast<GLint>(format),
+        width,
+        height,
+        0,
+        GL_RGB,
+        GL_UNSIGNED_BYTE,
+        NULL
+      );
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+      glBindTexture(GL_TEXTURE_2D, 0);
+
+      return texture;
+    }
+
+    void attachTexture(TextureHandle texture, uint8_t location) {
+      glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+location, texture, 0);
+    }
+
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset) {
       switch(dataType) {
         case DataType::Float:
@@ -133,6 +161,21 @@ namespace Rendering {
           fatalError("Unknown data type.");
           break;
       }
+    }
+
+    RenderTargetHandle createRenderTarget() {
+      GLuint handle;
+      glGenFramebuffers(1, &handle);
+      return handle;
+    }
+
+    void setRenderTarget(RenderTargetHandle renderTarget) {
+      glBindFramebuffer(GL_FRAMEBUFFER, renderTarget);
+    }
+
+    bool checkRenderTarget() {
+      GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+      return status == GL_FRAMEBUFFER_COMPLETE;
     }
   }
 }
