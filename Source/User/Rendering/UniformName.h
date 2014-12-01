@@ -4,7 +4,9 @@
 namespace Rendering {
   enum class UniformName {
     BoneJointWorldTransformation,
-    BoneModelJointTransformation
+    BoneModelJointTransformation,
+    MergeDiffuse,
+    MergeLambert
   };
 }
 

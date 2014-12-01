@@ -9,6 +9,8 @@
 #include "Rendering/Commands.h"
 #include "Rendering/Programs.h"
 #include "Rendering/Uniforms.h"
+#include "Rendering/FullscreenQuad.h"
+#include "Rendering/Textures.h"
 #include "Rendering/RenderTargets.h"
 #include "Rendering/ProgramName.h"
 #include "Rendering/Buffers.h"
@@ -40,6 +42,27 @@ namespace Rendering {
     writeDrawQueueToStream(stream);
 
     stream.writeRenderTargetSet(0);
+
+    writeMerge(stream);
+  }
+
+  void WorldRenderer::writeMerge(CommandStream &stream) {
+    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+
+    stream.writeTextureSet(
+      Uniforms::handles[static_cast<size_t>(UniformName::MergeDiffuse)],
+      Textures::list.geometryDiffuse,
+      0
+    );
+    stream.writeTextureSet(
+      Uniforms::handles[static_cast<size_t>(UniformName::MergeLambert)],
+      Textures::list.geometryLambert,
+      1
+    );
+
+    stream.writeObjectSet(FullscreenQuad::object);
+    stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
+    stream.writeObjectSet(0);
   }
 
   void WorldRenderer::buildDrawQueue() {
@@ -101,7 +124,7 @@ namespace Rendering {
 
           // todo: Tjek her på om objekt allerede er current
           stream.writeObjectSet(boneMeshDrawCall->object);
-          stream.writeIndexedDraw(boneMeshDrawCall->indexCount);
+          stream.writeIndexedDraw(boneMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
           break;
         }
         default:

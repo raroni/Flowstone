@@ -22,10 +22,11 @@ namespace Rendering {
     position += size;
   }
 
-  void CommandStream::writeIndexedDraw(uint16_t indexCount) {
+  void CommandStream::writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType) {
     writeType(CommandType::IndexedDraw);
     IndexedDrawCommand command;
     command.indexCount = indexCount;
+    command.dataType = dataType;
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
   }
@@ -50,6 +51,16 @@ namespace Rendering {
     writeType(CommandType::RenderTargetSet);
     RenderTargetSetCommand command;
     command.renderTarget = renderTarget;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
+  void CommandStream::writeTextureSet(Backend::UniformHandle uniform, Backend::TextureHandle texture, uint8_t unit) {
+    writeType(CommandType::TextureSet);
+    TextureSetCommand command;
+    command.uniform = uniform;
+    command.texture = texture;
+    command.unit = unit;
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
   }
@@ -121,6 +132,12 @@ namespace Rendering {
 
   RenderTargetSetCommand CommandStream::readRenderTargetSet() {
     RenderTargetSetCommand command = *reinterpret_cast<const RenderTargetSetCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
+  TextureSetCommand CommandStream::readTextureSet() {
+    TextureSetCommand command = *reinterpret_cast<const TextureSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

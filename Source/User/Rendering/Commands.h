@@ -3,7 +3,9 @@
 
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Backend/BufferTarget.h"
+#include "Rendering/Backend/DataType.h"
 #include "Rendering/Backend/ObjectHandle.h"
+#include "Rendering/Backend/TextureHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/UniformHandle.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
@@ -24,6 +26,7 @@ namespace Rendering {
 
   struct IndexedDrawCommand {
     uint16_t indexCount;
+    Backend::DataType dataType;
   };
 
   struct BufferSetCommand {
@@ -38,6 +41,12 @@ namespace Rendering {
 
   struct RenderTargetSetCommand {
     Backend::RenderTargetHandle renderTarget;
+  };
+
+  struct TextureSetCommand {
+    Backend::UniformHandle uniform;
+    Backend::TextureHandle texture;
+    uint8_t unit;
   };
 }
 

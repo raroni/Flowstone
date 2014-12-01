@@ -13,10 +13,11 @@ namespace Rendering {
     uint16_t getCount() { return count; }
     void writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer);
     void writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data);
-    void writeIndexedDraw(uint16_t indexCount);
+    void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);
     void writeRenderTargetSet(Backend::RenderTargetHandle renderTarget);
+    void writeTextureSet(Backend::UniformHandle uniform, Backend::TextureHandle texture, uint8_t unit);
     void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     CommandType readType();
     BufferSetCommand readBufferSet();
@@ -25,6 +26,7 @@ namespace Rendering {
     ObjectSetCommand readObjectSet();
     ProgramSetCommand readProgramSet();
     RenderTargetSetCommand readRenderTargetSet();
+    TextureSetCommand readTextureSet();
     UniformMat4SetCommand readUniformMat4Set(const float **data);
   private:
     void writeType(CommandType type);

@@ -46,6 +46,7 @@ namespace Rendering {
 
     void initialize() {
       handles[static_cast<size_t>(ProgramName::Bone)] = initializeBoneProgram();
+      handles[static_cast<size_t>(ProgramName::Merge)] = initializeProgram("Merge");
     }
   }
 }

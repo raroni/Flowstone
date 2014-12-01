@@ -1,18 +1,22 @@
 #include "Core/Error.h"
+#include "Rendering/Textures.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Programs.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/Buffers.h"
+#include "Rendering/FullscreenQuad.h"
 #include "Rendering/RenderTargets.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/CommandType.h"
 
 namespace Rendering {
   void Renderer::initialize() {
+    Textures::initialize();
     RenderTargets::initialize();
     Buffers::initialize();
     Programs::initialize();
     Uniforms::initialize();
+    FullscreenQuad::initialize();
     Backend::setClearColor(0, 0, 1);
   }
 
@@ -71,12 +75,17 @@ namespace Rendering {
         }
         case CommandType::IndexedDraw: {
           IndexedDrawCommand command = stream.readIndexedDraw();
-          Backend::drawIndexed(command.indexCount);
+          Backend::drawIndexed(command.indexCount, command.dataType);
           break;
         }
         case CommandType::RenderTargetSet: {
           RenderTargetSetCommand command = stream.readRenderTargetSet();
           Backend::setRenderTarget(command.renderTarget);
+          break;
+        }
+        case CommandType::TextureSet: {
+          TextureSetCommand command = stream.readTextureSet();
+          Backend::setTexture(command.uniform, command.texture, command.unit);
           break;
         }
         case CommandType::BufferSet: {

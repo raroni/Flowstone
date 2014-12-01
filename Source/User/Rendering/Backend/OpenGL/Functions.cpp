@@ -94,8 +94,8 @@ namespace Rendering {
       glBindVertexArray(object);
     }
 
-    void drawIndexed(uint16_t indexCount) {
-      glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, 0);
+    void drawIndexed(uint16_t indexCount, DataType dataType) {
+      glDrawElements(GL_TRIANGLES, indexCount, static_cast<GLenum>(dataType), 0);
     }
 
     BufferHandle createBuffer() {
@@ -184,6 +184,12 @@ namespace Rendering {
         buffers[i] = GL_COLOR_ATTACHMENT0+i;
       }
       glDrawBuffers(count, buffers);
+    }
+
+    void setTexture(UniformHandle uniform, TextureHandle texture, uint8_t unit) {
+      glActiveTexture(GL_TEXTURE0 + unit);
+      glBindTexture(GL_TEXTURE_2D, texture);
+      glUniform1i(uniform, unit);
     }
   }
 }

@@ -9,7 +9,8 @@ namespace Rendering {
     IndexedDraw,
     BufferSet,
     BufferWrite,
-    RenderTargetSet
+    RenderTargetSet,
+    TextureSet
   };
 }
 

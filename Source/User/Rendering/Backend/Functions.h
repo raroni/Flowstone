@@ -31,7 +31,7 @@ namespace Rendering {
     void enableAttributeLocation(AttributeLocation location);
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);
     void setObject(ObjectHandle object);
-    void drawIndexed(uint16_t indexCount);
+    void drawIndexed(uint16_t indexCount, DataType dataType);
     BufferHandle createBuffer();
     void setBuffer(BufferTarget target, BufferHandle buffer);
     void setBufferIndex(BufferTarget target, BufferHandle buffer, uint8_t index);
@@ -43,6 +43,7 @@ namespace Rendering {
     void attachTexture(TextureHandle texture, uint8_t location);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
+    void setTexture(UniformHandle uniform, TextureHandle texture, uint8_t unit);
   }
 }
 

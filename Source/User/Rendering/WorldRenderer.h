@@ -31,6 +31,7 @@ namespace Rendering {
     } resolution;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    void writeMerge(CommandStream &stream);
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();
     void writeGlobalUniformUpdate(CommandStream &stream);

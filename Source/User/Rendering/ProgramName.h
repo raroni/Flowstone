@@ -3,7 +3,8 @@
 
 namespace Rendering {
   enum class ProgramName {
-    Bone
+    Bone,
+    Merge
   };
 }
 

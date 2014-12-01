@@ -15,9 +15,13 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::ProgramHandle program = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-      setupLocation(program, UniformName::BoneJointWorldTransformation, "jointWorldTransformation");
-      setupLocation(program, UniformName::BoneModelJointTransformation, "modelJointTransformations");
+      Backend::ProgramHandle boneProgram = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
+      setupLocation(boneProgram, UniformName::BoneJointWorldTransformation, "jointWorldTransformation");
+      setupLocation(boneProgram, UniformName::BoneModelJointTransformation, "modelJointTransformations");
+
+      Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
+      setupLocation(mergeProgram, UniformName::MergeDiffuse, "diffuse");
+      setupLocation(mergeProgram, UniformName::MergeLambert, "lambert");
     }
   }
 }
