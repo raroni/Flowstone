@@ -42,6 +42,7 @@ namespace Rendering {
     TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format);
     void attachTexture(TextureHandle texture, uint8_t location);
     bool checkRenderTarget();
+    void setDrawBufferCount(uint8_t count);
   }
 }
 

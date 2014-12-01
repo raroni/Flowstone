@@ -177,5 +177,13 @@ namespace Rendering {
       GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
       return status == GL_FRAMEBUFFER_COMPLETE;
     }
+
+    void setDrawBufferCount(uint8_t count) {
+      GLenum buffers[count];
+      for(uint8_t i=0; count>i; i++) {
+        buffers[i] = GL_COLOR_ATTACHMENT0+i;
+      }
+      glDrawBuffers(count, buffers);
+    }
   }
 }

@@ -46,6 +46,14 @@ namespace Rendering {
     position += sizeof(command);
   }
 
+  void CommandStream::writeRenderTargetSet(Backend::RenderTargetHandle renderTarget) {
+    writeType(CommandType::RenderTargetSet);
+    RenderTargetSetCommand command;
+    command.renderTarget = renderTarget;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformMat4Set);
     UniformMat4SetCommand command;
@@ -107,6 +115,12 @@ namespace Rendering {
 
   ProgramSetCommand CommandStream::readProgramSet() {
     ProgramSetCommand command = *reinterpret_cast<const ProgramSetCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
+  RenderTargetSetCommand CommandStream::readRenderTargetSet() {
+    RenderTargetSetCommand command = *reinterpret_cast<const RenderTargetSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

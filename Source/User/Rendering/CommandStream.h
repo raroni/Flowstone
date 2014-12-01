@@ -3,6 +3,7 @@
 
 #include "Rendering/Commands.h"
 #include "Rendering/CommandType.h"
+#include "Rendering/Backend/RenderTargetHandle.h"
 
 namespace Rendering {
   class CommandStream {
@@ -15,6 +16,7 @@ namespace Rendering {
     void writeIndexedDraw(uint16_t indexCount);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);
+    void writeRenderTargetSet(Backend::RenderTargetHandle renderTarget);
     void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     CommandType readType();
     BufferSetCommand readBufferSet();
@@ -22,6 +24,7 @@ namespace Rendering {
     IndexedDrawCommand readIndexedDraw();
     ObjectSetCommand readObjectSet();
     ProgramSetCommand readProgramSet();
+    RenderTargetSetCommand readRenderTargetSet();
     UniformMat4SetCommand readUniformMat4Set(const float **data);
   private:
     void writeType(CommandType type);

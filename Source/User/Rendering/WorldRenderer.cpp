@@ -9,6 +9,7 @@
 #include "Rendering/Commands.h"
 #include "Rendering/Programs.h"
 #include "Rendering/Uniforms.h"
+#include "Rendering/RenderTargets.h"
 #include "Rendering/ProgramName.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
@@ -32,9 +33,13 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
+    stream.writeRenderTargetSet(RenderTargets::handles.geometry);
+
     writeGlobalUniformUpdate(stream);
     buildDrawQueue();
     writeDrawQueueToStream(stream);
+
+    stream.writeRenderTargetSet(0);
   }
 
   void WorldRenderer::buildDrawQueue() {

@@ -4,6 +4,8 @@
 
 namespace Rendering {
   namespace RenderTargets {
+    HandleList handles;
+
     void initialize() {
       handles.geometry = Backend::createRenderTarget();
       Backend::TextureHandle diffuseTexture = Backend::createTexture(800, 600, Backend::TextureFormat::RGB);
@@ -12,7 +14,7 @@ namespace Rendering {
       Backend::setRenderTarget(handles.geometry);
       Backend::attachTexture(diffuseTexture, 0);
       Backend::attachTexture(lambertTexture, 1);
-
+      Backend::setDrawBufferCount(2);
       if(!Backend::checkRenderTarget()) {
         fatalError("Render target not configured propertly.");
       }

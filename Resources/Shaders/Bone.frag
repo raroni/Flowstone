@@ -1,7 +1,12 @@
 #version 330
 
-out vec4 fragColor;
+in vec3 interpolatedColor;
+in float interpolatedLambert;
+
+layout (location = 0) out vec3 fragColor;
+layout (location = 1) out float fragLambert;
 
 void main() {
-  fragColor = vec4(0, 1, 0, 1);
+  fragColor = interpolatedColor;
+  fragLambert = interpolatedLambert;
 }

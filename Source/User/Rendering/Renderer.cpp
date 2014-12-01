@@ -74,6 +74,11 @@ namespace Rendering {
           Backend::drawIndexed(command.indexCount);
           break;
         }
+        case CommandType::RenderTargetSet: {
+          RenderTargetSetCommand command = stream.readRenderTargetSet();
+          Backend::setRenderTarget(command.renderTarget);
+          break;
+        }
         case CommandType::BufferSet: {
           BufferSetCommand command = stream.readBufferSet();
           Backend::setBuffer(command.target, command.buffer);

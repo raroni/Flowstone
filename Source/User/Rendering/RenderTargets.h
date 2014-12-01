@@ -5,9 +5,10 @@
 
 namespace Rendering {
   namespace RenderTargets {
-    struct {
+    struct HandleList {
       Backend::RenderTargetHandle geometry;
-    } handles;
+    };
+    extern HandleList handles;
 
     void initialize();
   }

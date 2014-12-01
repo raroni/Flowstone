@@ -8,7 +8,8 @@ namespace Rendering {
     ObjectSet,
     IndexedDraw,
     BufferSet,
-    BufferWrite
+    BufferWrite,
+    RenderTargetSet
   };
 }
 

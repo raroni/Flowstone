@@ -6,6 +6,7 @@
 #include "Rendering/Backend/ObjectHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/UniformHandle.h"
+#include "Rendering/Backend/RenderTargetHandle.h"
 
 namespace Rendering {
   struct ProgramSetCommand {
@@ -33,6 +34,10 @@ namespace Rendering {
   struct BufferWriteCommand {
     uint16_t size;
     Backend::BufferTarget target;
+  };
+
+  struct RenderTargetSetCommand {
+    Backend::RenderTargetHandle renderTarget;
   };
 }
 
