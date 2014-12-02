@@ -18,6 +18,7 @@ namespace Rendering {
     Uniforms::initialize();
     FullscreenQuad::initialize();
     Backend::setClearColor(0, 0, 1);
+    Backend::enableFaceCulling();
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {

@@ -220,5 +220,9 @@ namespace Rendering {
       glBindRenderbuffer(GL_RENDERBUFFER, 0);
       return buffer;
     }
+
+    void enableFaceCulling() {
+      glEnable(GL_CULL_FACE);
+    }
   }
 }
