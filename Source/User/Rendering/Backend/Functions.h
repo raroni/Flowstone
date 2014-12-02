@@ -7,6 +7,7 @@
 #include "Rendering/Backend/UniformHandle.h"
 #include "Rendering/Backend/AttributeLocation.h"
 #include "Rendering/Backend/ProgramHandle.h"
+#include "Rendering/Backend/ClearBitMask.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
@@ -24,7 +25,7 @@ namespace Rendering {
     void setProgram(ProgramHandle program);
     UniformHandle getUniform(ProgramHandle program, const char *name);
     UniformBlockHandle getUniformBlock(ProgramHandle program, const char *name);
-    void clear();
+    void clear(ClearBitMask mask);
     void setClearColor(float r, float g, float b);
     void setUniformMat4(UniformHandle uniform, uint8_t count, const float *data);
     ObjectHandle createObject();

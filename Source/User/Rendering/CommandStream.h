@@ -3,6 +3,7 @@
 
 #include "Rendering/Commands.h"
 #include "Rendering/CommandType.h"
+#include "Rendering/Backend/ClearBitMask.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
 
 namespace Rendering {
@@ -13,6 +14,7 @@ namespace Rendering {
     uint16_t getCount() { return count; }
     void writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer);
     void writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data);
+    void writeClear(Backend::ClearBitMask mask);
     void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);
@@ -22,6 +24,7 @@ namespace Rendering {
     CommandType readType();
     BufferSetCommand readBufferSet();
     BufferWriteCommand readBufferWrite(const void **data);
+    ClearCommand readClear();
     IndexedDrawCommand readIndexedDraw();
     ObjectSetCommand readObjectSet();
     ProgramSetCommand readProgramSet();

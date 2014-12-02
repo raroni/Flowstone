@@ -53,7 +53,6 @@ namespace Rendering {
   }
 
   void Renderer::dispatch() {
-    Backend::clear();
     for(uint16_t i=0; stream.getCount()>i; i++) {
       CommandType type = stream.readType();
       switch(type) {
@@ -71,6 +70,11 @@ namespace Rendering {
         case CommandType::ObjectSet: {
           ObjectSetCommand command = stream.readObjectSet();
           Backend::setObject(command.object);
+          break;
+        }
+        case CommandType::Clear: {
+          ClearCommand command = stream.readClear();
+          Backend::clear(command.mask);
           break;
         }
         case CommandType::IndexedDraw: {

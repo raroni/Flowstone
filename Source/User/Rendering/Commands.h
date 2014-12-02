@@ -8,6 +8,7 @@
 #include "Rendering/Backend/TextureHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/UniformHandle.h"
+#include "Rendering/Backend/ClearBitMask.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
 
 namespace Rendering {
@@ -47,6 +48,10 @@ namespace Rendering {
     Backend::UniformHandle uniform;
     Backend::TextureHandle texture;
     uint8_t unit;
+  };
+
+  struct ClearCommand {
+    Backend::ClearBitMask mask;
   };
 }
 

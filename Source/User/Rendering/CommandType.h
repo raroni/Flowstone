@@ -10,7 +10,8 @@ namespace Rendering {
     BufferSet,
     BufferWrite,
     RenderTargetSet,
-    TextureSet
+    TextureSet,
+    Clear
   };
 }
 

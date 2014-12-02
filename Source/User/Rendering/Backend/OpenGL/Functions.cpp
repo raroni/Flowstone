@@ -78,8 +78,8 @@ namespace Rendering {
       return glGetUniformBlockIndex(program, name);
     }
 
-    void clear() {
-      glClear(GL_COLOR_BUFFER_BIT);
+    void clear(ClearBitMask mask) {
+      glClear(static_cast<GLbitfield>(mask));
     }
 
     void setClearColor(float red, float green, float blue) {

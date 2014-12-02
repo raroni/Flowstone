@@ -13,6 +13,7 @@
 #include "Rendering/Textures.h"
 #include "Rendering/RenderTargets.h"
 #include "Rendering/ProgramName.h"
+#include "Rendering/Backend/ClearBit.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
 #include "Rendering/Backend/Functions.h"
@@ -38,11 +39,16 @@ namespace Rendering {
     stream.writeRenderTargetSet(RenderTargets::handles.geometry);
 
     writeGlobalUniformUpdate(stream);
+    stream.writeClear(
+      static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color) |
+      static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth)
+    );
     buildDrawQueue();
     writeDrawQueueToStream(stream);
 
     stream.writeRenderTargetSet(0);
 
+    stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
     writeMerge(stream);
   }
 

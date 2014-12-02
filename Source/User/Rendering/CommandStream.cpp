@@ -22,6 +22,14 @@ namespace Rendering {
     position += size;
   }
 
+  void CommandStream::writeClear(Backend::ClearBitMask mask) {
+    writeType(CommandType::Clear);
+    ClearCommand command;
+    command.mask = mask;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType) {
     writeType(CommandType::IndexedDraw);
     IndexedDrawCommand command;
@@ -109,6 +117,12 @@ namespace Rendering {
     position += sizeof(command);
     *data = reinterpret_cast<const void*>(buffer+position);
     position += command.size;
+    return command;
+  }
+
+  ClearCommand CommandStream::readClear() {
+    ClearCommand command = *reinterpret_cast<const ClearCommand*>(buffer+position);
+    position += sizeof(command);
     return command;
   }
 
