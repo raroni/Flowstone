@@ -188,6 +188,7 @@ namespace MainFlow {
     setupPlayer(meshIndex, skeletonID);
     setupMonster(meshIndex, skeletonID);
     setupMonster(meshIndex, skeletonID);
+    setupMonster(meshIndex, skeletonID);
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
