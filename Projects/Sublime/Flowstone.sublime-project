@@ -1,0 +1,12 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/Users/rasmus/projects/Flowstone",
+      "folder_exclude_patterns": [
+        "Build"
+      ]
+		}
+	]
+}
