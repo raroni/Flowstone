@@ -154,12 +154,12 @@ namespace MainFlow {
       10, 15, 11, 10, 14, 15,  // bottom
 
       // right hand
-      16, 18, 17, 17, 18, 19, // front
-      17, 19, 23, 17, 23, 21, // right
-      20, 23, 22, 20, 21, 23, // back
-      16, 22, 18, 16, 20, 22, // right
-      21, 16, 17, 21, 20, 16, // top
-      18, 23, 19, 18, 22, 23,  // bottom
+      17, 18, 16, 19, 18, 17, // front
+      23, 19, 17, 21, 23, 17, // right
+      22, 23, 20, 23, 21, 20, // back
+      18, 22, 16, 22, 20, 16, // right
+      17, 16, 21, 16, 20, 21, // top
+      19, 23, 18, 23, 22, 18,  // bottom
 
       // left foot
       24, 26, 25, 25, 26, 27, // front
@@ -170,12 +170,12 @@ namespace MainFlow {
       26, 31, 27, 26, 30, 31,  // bottom
 
       // right foot
-      32, 34, 33, 33, 34, 35, // front
-      33, 35, 39, 33, 39, 37, // right
-      36, 39, 38, 36, 37, 39, // back
-      32, 38, 34, 32, 36, 38, // right
-      37, 32, 33, 37, 36, 32, // top
-      34, 39, 35, 34, 38, 39,  // bottom
+      33, 34, 32, 35, 34, 33, // front
+      39, 35, 33, 37, 39, 33, // right
+      38, 39, 36, 39, 37, 36, // back
+      34, 38, 32, 38, 36, 32, // right
+      33, 32, 37, 32, 36, 37, // top
+      35, 39, 34, 39, 38, 34,  // bottom
     };
 
     Rendering::BoneMeshIndex meshIndex = renderer.createBoneMesh(
@@ -186,6 +186,7 @@ namespace MainFlow {
     );
 
     setupPlayer(meshIndex, skeletonID);
+    setupMonster(meshIndex, skeletonID);
     setupMonster(meshIndex, skeletonID);
 
     Quanta::Transform& camera = renderer.getCameraTransform();

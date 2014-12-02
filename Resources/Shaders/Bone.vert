@@ -23,5 +23,5 @@ void main() {
   vec3 worldLightDirection = normalize(vec3(-1, -3, 1)*-1);
   interpolatedLambert = dot(worldLightDirection, worldNormal)*0.4+0.6;
 
-  interpolatedColor = vec3(0, 0, 1);
+  interpolatedColor = vec3(0, 1, 0);
 }
