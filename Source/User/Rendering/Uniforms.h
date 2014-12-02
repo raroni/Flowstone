@@ -5,7 +5,14 @@
 
 namespace Rendering {
   namespace Uniforms {
-    extern Backend::UniformHandle handles[32];
+    struct List {
+      Backend::UniformHandle boneJointWorldTransformation;
+      Backend::UniformHandle boneModelJointTransformation;
+      Backend::UniformHandle mergeDiffuse;
+      Backend::UniformHandle mergeLambert;
+    };
+    extern List list;
+
     void initialize();
   }
 }

@@ -17,7 +17,6 @@
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
 #include "Rendering/Backend/Functions.h"
-#include "Rendering/UniformName.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
 
@@ -58,12 +57,12 @@ namespace Rendering {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
 
     stream.writeTextureSet(
-      Uniforms::handles[static_cast<size_t>(UniformName::MergeDiffuse)],
+      Uniforms::list.mergeDiffuse,
       Textures::list.geometryDiffuse,
       0
     );
     stream.writeTextureSet(
-      Uniforms::handles[static_cast<size_t>(UniformName::MergeLambert)],
+      Uniforms::list.mergeLambert,
       Textures::list.geometryLambert,
       1
     );
@@ -119,13 +118,13 @@ namespace Rendering {
           stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Bone)]);
 
           stream.writeUniformMat4Set(
-            Uniforms::handles[static_cast<size_t>(UniformName::BoneJointWorldTransformation)],
+            Uniforms::list.boneJointWorldTransformation,
             1,
             &boneMeshDrawCall->transform.components[0]
           );
 
           stream.writeUniformMat4Set(
-            Uniforms::handles[static_cast<size_t>(UniformName::BoneModelJointTransformation)],
+            Uniforms::list.boneModelJointTransformation,
             8,
             &boneMeshDrawCall->pose.joints[0].components[0]
           );
