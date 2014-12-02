@@ -11,6 +11,7 @@
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
+#include "Rendering/Backend/RenderBufferHandle.h"
 #include "Rendering/Backend/BufferTarget.h"
 #include "Rendering/Backend/TextureHandle.h"
 #include "Rendering/Backend/DataType.h"
@@ -40,11 +41,16 @@ namespace Rendering {
     void writeBuffer(BufferTarget target, uint16_t size, const void *data);
     RenderTargetHandle createRenderTarget();
     void setRenderTarget(RenderTargetHandle renderTarget);
+    void setRenderBuffer(RenderBufferHandle renderBuffer);
     TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format);
     void attachTexture(TextureHandle texture, uint8_t location);
+    void attachRenderBuffer(RenderBufferHandle renderBuffer);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
     void setTexture(UniformHandle uniform, TextureHandle texture, uint8_t unit);
+    void enableDepthTest();
+    void disableDepthTest();
+    RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height);
   }
 }
 

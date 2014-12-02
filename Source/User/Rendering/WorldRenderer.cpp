@@ -44,7 +44,9 @@ namespace Rendering {
       static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth)
     );
     buildDrawQueue();
+    stream.writeEnableDepthTest();
     writeDrawQueueToStream(stream);
+    stream.writeDisableDepthTest();
 
     stream.writeRenderTargetSet(0);
 

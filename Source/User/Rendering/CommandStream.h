@@ -15,6 +15,8 @@ namespace Rendering {
     void writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer);
     void writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data);
     void writeClear(Backend::ClearBitMask mask);
+    void writeDisableDepthTest();
+    void writeEnableDepthTest();
     void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);

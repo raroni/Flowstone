@@ -30,6 +30,14 @@ namespace Rendering {
     position += sizeof(command);
   }
 
+  void CommandStream::writeDisableDepthTest() {
+    writeType(CommandType::DisableDepthTest);
+  }
+
+  void CommandStream::writeEnableDepthTest() {
+    writeType(CommandType::EnableDepthTest);
+  }
+
   void CommandStream::writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType) {
     writeType(CommandType::IndexedDraw);
     IndexedDrawCommand command;

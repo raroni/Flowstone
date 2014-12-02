@@ -77,6 +77,14 @@ namespace Rendering {
           Backend::clear(command.mask);
           break;
         }
+        case CommandType::EnableDepthTest: {
+          Backend::enableDepthTest();
+          break;
+        }
+        case CommandType::DisableDepthTest: {
+          Backend::disableDepthTest();
+          break;
+        }
         case CommandType::IndexedDraw: {
           IndexedDrawCommand command = stream.readIndexedDraw();
           Backend::drawIndexed(command.indexCount, command.dataType);

@@ -11,6 +11,8 @@ namespace Rendering {
     BufferWrite,
     RenderTargetSet,
     TextureSet,
+    EnableDepthTest,
+    DisableDepthTest,
     Clear
   };
 }

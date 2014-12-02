@@ -66,6 +66,10 @@ namespace Rendering {
       glAttachShader(program, shader);
     }
 
+    void attachRenderBuffer(RenderBufferHandle renderBuffer) {
+      glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBuffer);
+    }
+
     void setProgram(ProgramHandle program) {
       glUseProgram(static_cast<GLuint>(program));
     }
@@ -148,6 +152,10 @@ namespace Rendering {
       glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+location, texture, 0);
     }
 
+    void attachDepthBuffer(RenderBufferHandle renderBuffer) {
+
+    }
+
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset) {
       switch(dataType) {
         case DataType::Float:
@@ -190,6 +198,27 @@ namespace Rendering {
       glActiveTexture(GL_TEXTURE0 + unit);
       glBindTexture(GL_TEXTURE_2D, texture);
       glUniform1i(uniform, unit);
+    }
+
+    void setRenderBuffer(RenderBufferHandle renderBuffer) {
+      glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
+    }
+
+    void enableDepthTest() {
+      glEnable(GL_DEPTH_TEST);
+    }
+
+    void disableDepthTest() {
+      glDisable(GL_DEPTH_TEST);
+    }
+
+    RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height) {
+      GLuint buffer;
+      glGenRenderbuffers(1, &buffer);
+      glBindRenderbuffer(GL_RENDERBUFFER, buffer);
+      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
+      glBindRenderbuffer(GL_RENDERBUFFER, 0);
+      return buffer;
     }
   }
 }

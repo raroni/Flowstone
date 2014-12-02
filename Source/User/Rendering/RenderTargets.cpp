@@ -9,8 +9,10 @@ namespace Rendering {
 
     void initialize() {
       handles.geometry = Backend::createRenderTarget();
-
       Backend::setRenderTarget(handles.geometry);
+      Backend::RenderBufferHandle depthBuffer = Backend::createRenderBuffer(800, 600);
+      Backend::setRenderBuffer(depthBuffer);
+      Backend::attachRenderBuffer(depthBuffer);
       Backend::attachTexture(Textures::list.geometryDiffuse, 0);
       Backend::attachTexture(Textures::list.geometryLambert, 1);
       Backend::setDrawBufferCount(2);
