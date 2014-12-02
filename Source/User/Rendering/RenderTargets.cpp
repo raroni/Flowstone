@@ -19,7 +19,6 @@ namespace Rendering {
       if(!Backend::checkRenderTarget()) {
         fatalError("Render target not configured propertly.");
       }
-
       Backend::setRenderTarget(0);
     }
   }
