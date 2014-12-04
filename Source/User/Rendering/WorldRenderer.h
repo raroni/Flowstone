@@ -20,8 +20,9 @@ namespace Rendering {
   class WorldRenderer {
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    StaticMeshIndex createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
     void createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose);
+    StaticMeshIndex createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
+    void createStaticMeshInstance(StaticMeshIndex mesh);
     void writeCommands(CommandStream &stream);
     const Quanta::Matrix4* transforms;
     const Pose* poses;

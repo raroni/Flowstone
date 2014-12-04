@@ -33,6 +33,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/FullscreenQuad.cpp\
 	Source/User/Rendering/Textures.cpp\
 	Source/User/Rendering/StaticMeshes.cpp\
+	Source/User/Rendering/StaticMeshInstances.cpp\
 	Source/User/FrameInterpolator.cpp
 
 USER_SOURCES_OBJC = \

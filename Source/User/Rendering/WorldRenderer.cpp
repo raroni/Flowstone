@@ -7,7 +7,8 @@
 #include "Rendering/BoneMeshInstances.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/Commands.h"
-#include "StaticMeshes.h"
+#include "Rendering/StaticMeshes.h"
+#include "Rendering/StaticMeshInstances.h"
 #include "Rendering/Programs.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/FullscreenQuad.h"
@@ -26,12 +27,17 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
-  StaticMeshIndex WorldRenderer::createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-    StaticMeshes::create(vertices, vertexCount, indices, indexCount);
-  }
-
   void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose) {
     BoneMeshInstances::create(meshIndex, transformIndex, pose);
+  }
+
+  StaticMeshIndex WorldRenderer::createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
+    return StaticMeshes::create(vertices, vertexCount, indices, indexCount);
+  }
+
+  void WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh) {
+    StaticMeshInstances::create(mesh);
+    return;
   }
 
   void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {

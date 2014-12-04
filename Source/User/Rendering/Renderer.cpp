@@ -29,6 +29,10 @@ namespace Rendering {
     worldRenderer.createStaticMesh(vertices, vertexCount, indices, indexCount);
   }
 
+  void Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
+    worldRenderer.createStaticMeshInstance(mesh);
+  }
+
   Quanta::Transform& Renderer::getCameraTransform() {
     return worldRenderer.cameraTransform;
   }

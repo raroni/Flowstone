@@ -215,6 +215,8 @@ namespace MainFlow {
       indices,
       sizeof(indices)/sizeof(uint16_t)
     );
+
+    renderer.createStaticMeshInstance(mesh);
   }
 
   void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
