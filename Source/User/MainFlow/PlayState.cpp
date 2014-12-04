@@ -185,9 +185,10 @@ namespace MainFlow {
     );
 
     setupPlayer(meshIndex, skeletonID);
-    setupMonster(meshIndex, skeletonID);
-    setupMonster(meshIndex, skeletonID);
-    setupMonster(meshIndex, skeletonID);
+    setupMonster(meshIndex, skeletonID, 2, 2);
+    setupMonster(meshIndex, skeletonID, 2, -2);
+    setupMonster(meshIndex, skeletonID, -2, 2);
+    setupMonster(meshIndex, skeletonID, -2, -2);
 
     setupGround();
 
@@ -236,16 +237,19 @@ namespace MainFlow {
     renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
   }
 
-  void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
+  void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID, float x, float z) {
     Animation::PoseIndex pose = animator.createPose(skeletonID);
 
-    Physics::DynamicBodyIndex body = physics.createDynamicBody();
-    physics.createDynamicSphereCollider(body, 0.5);
+    Physics::DynamicBodyIndex bodyIndex = physics.createDynamicBody();
+    Physics::DynamicBody body = physics.getDynamicBody(bodyIndex);
+    (*body.position)[0] = x;
+    (*body.position)[2] = z;
+    physics.createDynamicSphereCollider(bodyIndex, 0.5);
 
-    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(body);
+    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(bodyIndex);
     frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
 
-    airDrag.add(body);
+    airDrag.add(bodyIndex);
 
     renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
   }
