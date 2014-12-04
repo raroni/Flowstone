@@ -12,6 +12,11 @@ namespace Rendering {
     Pose pose;
     Quanta::Matrix4 transform;
   };
+
+  struct StaticMeshDrawCall {
+    Backend::ObjectHandle object;
+    uint16_t indexCount;
+  };
 }
 
 #endif

@@ -26,7 +26,7 @@ namespace Rendering {
   }
 
   StaticMeshIndex Renderer::createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-    worldRenderer.createStaticMesh(vertices, vertexCount, indices, indexCount);
+    return worldRenderer.createStaticMesh(vertices, vertexCount, indices, indexCount);
   }
 
   void Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {

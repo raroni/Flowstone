@@ -15,6 +15,12 @@ namespace Rendering {
     position += sizeof(call);
   }
 
+  void DrawQueue::addStaticMesh(StaticMeshDrawCall call) {
+    writeType(DrawCallType::StaticMesh);
+    memcpy(buffer+position, &call, sizeof(call));
+    position += sizeof(call);
+  }
+
   void DrawQueue::reset() {
     position = 0;
     count = 0;

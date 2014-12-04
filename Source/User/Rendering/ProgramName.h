@@ -4,6 +4,7 @@
 namespace Rendering {
   enum class ProgramName {
     Bone,
+    Static,
     Merge
   };
 }

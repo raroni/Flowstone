@@ -3,7 +3,8 @@
 
 namespace Rendering {
   enum class DrawCallType {
-    BoneMesh
+    BoneMesh,
+    StaticMesh
   };
 }
 

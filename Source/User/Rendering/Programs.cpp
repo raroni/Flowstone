@@ -34,8 +34,8 @@ namespace Rendering {
     return program;
   }
 
-  static Backend::ProgramHandle initializeBoneProgram() {
-    Backend::ProgramHandle program = initializeProgram("Bone");
+  static Backend::ProgramHandle initializeGeometryProgram(const char *name) {
+    Backend::ProgramHandle program = initializeProgram(name);
     Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "global");
     Backend::setUniformBlockIndex(program, block, 0);
     return program;
@@ -45,7 +45,8 @@ namespace Rendering {
     Backend::ShaderHandle handles[16];
 
     void initialize() {
-      handles[static_cast<size_t>(ProgramName::Bone)] = initializeBoneProgram();
+      handles[static_cast<size_t>(ProgramName::Bone)] = initializeGeometryProgram("Bone");
+      handles[static_cast<size_t>(ProgramName::Static)] = initializeGeometryProgram("Static");
       handles[static_cast<size_t>(ProgramName::Merge)] = initializeProgram("Merge");
     }
   }

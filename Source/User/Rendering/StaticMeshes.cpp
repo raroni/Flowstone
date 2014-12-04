@@ -61,39 +61,39 @@ namespace Rendering {
     }
 
     static Backend::ObjectHandle upload(const BackendStaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-        Backend::ObjectHandle object = Backend::createObject();
-        Backend::setObject(object);
+      Backend::ObjectHandle object = Backend::createObject();
+      Backend::setObject(object);
 
-        Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
-        Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Normal));
+      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
+      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Normal));
 
-        Backend::BufferHandle vertexBuffer = Backend::createBuffer();
-        Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
-        Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(BackendStaticVertex)*vertexCount, vertices);
+      Backend::BufferHandle vertexBuffer = Backend::createBuffer();
+      Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
+      Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(BackendStaticVertex)*vertexCount, vertices);
 
-        Backend::BufferHandle indexBuffer = Backend::createBuffer();
-        Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
-        Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
+      Backend::BufferHandle indexBuffer = Backend::createBuffer();
+      Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
+      Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
 
-        Backend::configureAttribute(
-          static_cast<Backend::AttributeLocation>(AttributeLocation::Position),
-          3,
-          Backend::DataType::Float,
-          sizeof(BackendStaticVertex),
-          0
-        );
-        Backend::configureAttribute(
-          static_cast<Backend::AttributeLocation>(AttributeLocation::Normal),
-          3,
-          Backend::DataType::Float,
-          sizeof(BackendStaticVertex),
-          sizeof(float)*3
-        );
+      Backend::configureAttribute(
+        static_cast<Backend::AttributeLocation>(AttributeLocation::Position),
+        3,
+        Backend::DataType::Float,
+        sizeof(BackendStaticVertex),
+        0
+      );
+      Backend::configureAttribute(
+        static_cast<Backend::AttributeLocation>(AttributeLocation::Normal),
+        3,
+        Backend::DataType::Float,
+        sizeof(BackendStaticVertex),
+        sizeof(float)*3
+      );
 
-        Backend::setObject(0);
+      Backend::setObject(0);
 
-        return object;
-      }
+      return object;
+    }
 
     StaticMeshIndex create(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
       uint8_t backendVertexCount = 0;

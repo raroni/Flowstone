@@ -8,6 +8,7 @@ namespace Rendering {
   class DrawQueue {
   public:
     void addBoneMesh(BoneMeshDrawCall call);
+    void addStaticMesh(StaticMeshDrawCall call);
     void reset();
     void sort();
     const char* getBuffer(uint16_t index) const;

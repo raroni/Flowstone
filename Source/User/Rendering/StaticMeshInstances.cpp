@@ -1,4 +1,3 @@
-#include "Rendering/StaticMeshInstance.h"
 #include "Rendering/StaticMeshInstances.h"
 
 namespace Rendering {

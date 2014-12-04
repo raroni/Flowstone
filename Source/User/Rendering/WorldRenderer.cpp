@@ -95,7 +95,14 @@ namespace Rendering {
       call.transform = transforms[instance.transform];
       drawQueue.addBoneMesh(call);
     }
-    // add static draws here
+    for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
+      StaticMeshDrawCall call;
+      StaticMeshInstance &instance = StaticMeshInstances::list[i];
+      const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
+      call.object = mesh.object;
+      call.indexCount = mesh.indexCount;
+      drawQueue.addStaticMesh(call);
+    }
     drawQueue.sort();
   }
 
@@ -140,9 +147,15 @@ namespace Rendering {
             &boneMeshDrawCall->pose.joints[0].components[0]
           );
 
-          // todo: Tjek her på om objekt allerede er current
           stream.writeObjectSet(boneMeshDrawCall->object);
           stream.writeIndexedDraw(boneMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
+          break;
+        }
+        case DrawCallType::StaticMesh: {
+          const StaticMeshDrawCall *staticMeshDrawCall = reinterpret_cast<const StaticMeshDrawCall*>(drawCall);
+          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Static)]);
+          stream.writeObjectSet(staticMeshDrawCall->object);
+          stream.writeIndexedDraw(staticMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
           break;
         }
         default:

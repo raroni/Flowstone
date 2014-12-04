@@ -106,7 +106,6 @@ namespace MainFlow {
       { { 0.6, 0.2, -0.2 }, 3 },
       { { 1, -0.2, -0.2 }, 3 },
       { { 0.6, -0.2, -0.2 }, 3 },
-
       // right hand, back
       { { 1, 0.2, 0.2 }, 3 },
       { { 0.6, 0.2, 0.2 }, 3 },
@@ -200,13 +199,17 @@ namespace MainFlow {
 
   void PlayState::setupGround() {
     Rendering::StaticVertex vertices[] = {
-      { { 0, 0, 0 } },
-      { { 0, 0, 0 } },
-      { { 0, 0, 0 } }
+      { { -5, 0, 5 } },
+      { { 5, 0, 5 } },
+      { { -5, 0, -5 } },
+      { { 5, 0, -5 } },
+      { { -5, -0.2, -5 } },
+      { { 5, -0.2, -5 } }
     };
 
     uint16_t indices[] = {
-      0, 1, 2
+      0, 2, 1, 1, 2, 3, // top
+      2, 4, 3, 3, 4, 5
     };
 
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(
