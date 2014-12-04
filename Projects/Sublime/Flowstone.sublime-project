@@ -7,5 +7,27 @@
         "Build"
       ]
 		}
-	]
+	],
+  "build_systems": [
+    {
+      "name": "Flowstone-Make",
+      "selector": "source.c++",
+      "working_dir": "${project_path}/../..",
+      "cmd": ["make"],
+      "variants": [
+        {
+          "name": "Clean",
+          "cmd": ["make", "clean"]
+        },
+        {
+          "name": "Test",
+          "cmd": ["make", "test"]
+        },
+        {
+          "name": "Run",
+          "cmd": ["make", "run"]
+        }
+      ]
+    }
+  ]
 }
