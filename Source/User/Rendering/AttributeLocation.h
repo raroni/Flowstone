@@ -5,7 +5,8 @@ namespace Rendering {
   enum class AttributeLocation {
     Position = 0,
     Normal = 1,
-    JointIndex = 2
+    Color = 2,
+    JointIndex = 3
   };
 }
 

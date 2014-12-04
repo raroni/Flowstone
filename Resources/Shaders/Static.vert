@@ -2,6 +2,7 @@
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
+layout(location = 2) in vec3 color;
 
 layout(std140) uniform global {
   mat4 viewClipTransformation;
@@ -15,5 +16,5 @@ out float interpolatedLambert;
 void main() {
   gl_Position = viewClipTransformation*worldViewTransformation*vec4(position, 1);
   interpolatedLambert = dot(inverseLightDirection, normal)*0.4+0.6;
-  interpolatedColor = vec3(1, 0, 0);
+  interpolatedColor = color;
 }

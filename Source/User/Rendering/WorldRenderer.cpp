@@ -31,8 +31,8 @@ namespace Rendering {
     BoneMeshInstances::create(meshIndex, transformIndex, pose);
   }
 
-  StaticMeshIndex WorldRenderer::createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-    return StaticMeshes::create(vertices, vertexCount, indices, indexCount);
+  StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
+    return StaticMeshes::create(info, vertices, indices, shapes);
   }
 
   void WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh) {

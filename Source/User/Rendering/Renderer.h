@@ -7,6 +7,8 @@
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/MeshInfo.h"
+#include "Rendering/Shape.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/TransformIndex.h"
 
@@ -16,7 +18,7 @@ namespace Rendering {
     void initialize();
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
     void createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose);
-    StaticMeshIndex createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
+    StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     void createStaticMeshInstance(StaticMeshIndex mesh);
     void draw();
     void setTransforms(const Quanta::Matrix4 *transforms);

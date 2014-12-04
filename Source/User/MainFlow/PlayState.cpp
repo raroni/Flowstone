@@ -1,6 +1,8 @@
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
 #include "PlayerControl.h"
+#include "Rendering/MeshInfo.h"
+#include "Rendering/Shape.h"
 #include "MainFlow/PlayState.h"
 
 namespace MainFlow {
@@ -215,12 +217,18 @@ namespace MainFlow {
       2, 4, 3, 3, 4, 5
     };
 
-    Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(
-      vertices,
-      sizeof(vertices)/sizeof(Rendering::BoneVertex),
-      indices,
-      sizeof(indices)/sizeof(uint16_t)
-    );
+    // color, offset, count
+    Rendering::Shape shapes[] = {
+      { { 0.5, 0.5, 0 }, 0, 2 },
+      { { 0, 0.5, 0.5 }, 2, 2 }
+    };
+
+    Rendering::MeshInfo info;
+    info.vertexCount = sizeof(vertices)/sizeof(Rendering::BoneVertex);
+    info.indexCount = sizeof(indices)/sizeof(uint16_t);
+    info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
+
+    Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
     renderer.createStaticMeshInstance(mesh);
   }

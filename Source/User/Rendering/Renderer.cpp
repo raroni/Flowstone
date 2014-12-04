@@ -29,8 +29,8 @@ namespace Rendering {
     return worldRenderer.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }
 
-  StaticMeshIndex Renderer::createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-    return worldRenderer.createStaticMesh(vertices, vertexCount, indices, indexCount);
+  StaticMeshIndex Renderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
+    return worldRenderer.createStaticMesh(info, vertices, indices, shapes);
   }
 
   void Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
