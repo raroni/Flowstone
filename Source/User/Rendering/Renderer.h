@@ -23,6 +23,7 @@ namespace Rendering {
     void setPoses(const Pose *poses);
     Quanta::Transform& getCameraTransform();
     void updateResolution(uint16_t width, uint16_t height);
+    void setLightDirection(Quanta::Vector3 lightDirection);
   private:
     CommandStream stream;
     WorldRenderer worldRenderer;

@@ -114,12 +114,16 @@ namespace Rendering {
     float fieldOfView = M_PI/3.0f;
     Quanta::Matrix4 viewClipTransform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 0.1, 50);
     Quanta::Matrix4 worldViewTransform = cameraTransform.getInverseMatrix();
+    Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
 
-    const size_t size = sizeof(Quanta::Matrix4);
-    char data[size*2];
-    memcpy(data, &viewClipTransform, size);
-    memcpy(data+size, &worldViewTransform, size);
-    stream.writeBufferWrite(Backend::BufferTarget::Uniform, size*2, data);
+    const size_t matrixSize = sizeof(float)*16;
+    const size_t vectorSize = sizeof(float)*3;
+    const size_t totalSize = matrixSize*2+vectorSize;
+    char data[totalSize];
+    memcpy(data, &viewClipTransform.components, matrixSize);
+    memcpy(data+matrixSize, &worldViewTransform.components, matrixSize);
+    memcpy(data+matrixSize*2, &inverseLightDirection.components, vectorSize);
+    stream.writeBufferWrite(Backend::BufferTarget::Uniform, totalSize, data);
 
     stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);
   }

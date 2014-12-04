@@ -21,6 +21,10 @@ namespace Rendering {
     Backend::enableFaceCulling();
   }
 
+  void Renderer::setLightDirection(Quanta::Vector3 lightDirection) {
+    worldRenderer.lightDirection = lightDirection;
+  }
+
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return worldRenderer.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }

@@ -28,6 +28,7 @@ namespace Rendering {
     const Pose* poses;
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
+    Quanta::Vector3 lightDirection;
   private:
     struct {
       uint16_t width;

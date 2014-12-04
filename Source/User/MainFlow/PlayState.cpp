@@ -192,6 +192,8 @@ namespace MainFlow {
 
     setupGround();
 
+    renderer.setLightDirection(Quanta::Vector3(-2, -3, 1).getNormalized());
+
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
     camera.position[1] = 6;
