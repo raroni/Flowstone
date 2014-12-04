@@ -6,8 +6,10 @@
 #include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/StaticVertex.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/TransformIndex.h"
+#include "Rendering/StaticMeshIndex.h"
 #include "Rendering/DrawQueue.h"
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Config.h"
@@ -18,6 +20,7 @@ namespace Rendering {
   class WorldRenderer {
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
+    StaticMeshIndex createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
     void createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose);
     void writeCommands(CommandStream &stream);
     const Quanta::Matrix4* transforms;

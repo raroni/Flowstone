@@ -27,6 +27,7 @@ namespace MainFlow {
     Physics::DynamicBodyIndex playerBody;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose);
+    void setupGround();
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();

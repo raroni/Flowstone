@@ -190,10 +190,31 @@ namespace MainFlow {
     setupMonster(meshIndex, skeletonID);
     setupMonster(meshIndex, skeletonID);
 
+    setupGround();
+
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
     camera.position[1] = 6;
     camera.rotateX(0.5);
+  }
+
+  void PlayState::setupGround() {
+    Rendering::StaticVertex vertices[] = {
+      { { 0, 0, 0 } },
+      { { 0, 0, 0 } },
+      { { 0, 0, 0 } }
+    };
+
+    uint16_t indices[] = {
+      0, 1, 2
+    };
+
+    Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(
+      vertices,
+      sizeof(vertices)/sizeof(Rendering::BoneVertex),
+      indices,
+      sizeof(indices)/sizeof(uint16_t)
+    );
   }
 
   void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {

@@ -5,6 +5,7 @@
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/BoneMeshIndex.h"
+#include "Rendering/StaticMeshIndex.h"
 #include "Rendering/BoneVertex.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/TransformIndex.h"
@@ -14,6 +15,7 @@ namespace Rendering {
   public:
     void initialize();
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
+    StaticMeshIndex createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
     void createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose);
     void draw();
     void setTransforms(const Quanta::Matrix4 *transforms);

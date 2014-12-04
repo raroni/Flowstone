@@ -25,6 +25,10 @@ namespace Rendering {
     return worldRenderer.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }
 
+  StaticMeshIndex Renderer::createStaticMesh(const StaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
+    worldRenderer.createStaticMesh(vertices, vertexCount, indices, indexCount);
+  }
+
   Quanta::Transform& Renderer::getCameraTransform() {
     return worldRenderer.cameraTransform;
   }
