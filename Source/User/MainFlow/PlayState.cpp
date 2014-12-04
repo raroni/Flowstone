@@ -271,20 +271,6 @@ namespace MainFlow {
     }
     frameInterpolator.interpolate(stepTimeBank/Physics::Config::stepDuration);
     animator.update(timeDelta);
-
-    /*
-    Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    Rendering::Component *component = worldRenderer.getComponent(0);
-    component->transform.position[0] += deltaTime;
-    component->transform.position[1] += deltaTime*0.5;
-    //worldRenderer.cameraTransform.position[0] += deltaTime;
-    */
-
-    /*
-    Rendering::WorldRenderer &worldRenderer = renderer.getWorldRenderer();
-    Rendering::BoneMeshInstance *instance = worldRenderer.getBoneMeshInstance(0);
-    instance->transform.rotateY(deltaTime*0.1);
-    */
   }
 
   State* PlayState::checkTransition() {
