@@ -23,5 +23,5 @@ void main() {
   vec3 worldNormal = (jointWorldTransformation*vec4(normal, 0)).xyz; // assuming no scaling
   interpolatedLambert = dot(inverseLightDirection, worldNormal)*0.4+0.6;
 
-  interpolatedColor = vec3(0, 1, 0);
+  interpolatedColor = vec3(0.3, 0.6, 0.95);
 }

@@ -194,6 +194,8 @@ namespace MainFlow {
 
     setupGround();
 
+    setupRock();
+
     renderer.setLightDirection(Quanta::Vector3(-2, -3, 1).getNormalized());
 
     Quanta::Transform& camera = renderer.getCameraTransform();
@@ -219,14 +221,13 @@ namespace MainFlow {
 
     // color, offset, count
     Rendering::Shape shapes[] = {
-      { { 0.5, 0.5, 0 }, 0, 2 },
-      { { 0, 0.5, 0.5 }, 2, 2 }
+      { { 0.64, 0.83, 0.33 }, 0, 4 },
     };
 
     Rendering::MeshInfo info;
     info.vertexCount = sizeof(vertices)/sizeof(Rendering::BoneVertex);
     info.indexCount = sizeof(indices)/sizeof(uint16_t);
-    info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
+    info.shapeCount = 1;
 
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
@@ -245,6 +246,42 @@ namespace MainFlow {
     airDrag.add(playerBody);
 
     renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
+  }
+
+  void PlayState::setupRock() {
+    Rendering::StaticVertex vertices[] = {
+      { { -0.4, 1, -0.4 } },
+      { { 0.4, 1, -0.4 } },
+      { { -1, -1, -1 } },
+      { { 1, -1, -1 } },
+      { { -0.4, 1, 0.4 } },
+      { { 0.4, 1, 0.4 } },
+      { { -1, -1, 1 } },
+      { { 1, -1, 1 } }
+    };
+
+    uint16_t indices[] = {
+      0, 2, 1, 1, 2, 3, // front
+      1, 3, 7, 1, 7, 5, // right
+      4, 7, 6, 4, 5, 7, // back
+      0, 6, 2, 0, 4, 6, // right
+      2, 7, 3, 2, 6, 7,  // bottom
+      5, 0, 1, 5, 4, 0 // top
+    };
+
+    Rendering::Shape shapes[] = {
+      { { 0.5, 0.5, 0.5 }, 0, 10 },
+      { { 0.7, 0.3, 0.3 }, 10, 2 }
+    };
+
+    Rendering::MeshInfo info;
+    info.vertexCount = sizeof(vertices)/sizeof(Rendering::BoneVertex);
+    info.indexCount = sizeof(indices)/sizeof(uint16_t);
+    info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
+
+    Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
+
+    renderer.createStaticMeshInstance(mesh);
   }
 
   void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID, float x, float z) {

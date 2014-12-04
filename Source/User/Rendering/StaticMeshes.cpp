@@ -23,99 +23,49 @@ namespace Rendering {
         shape = &shapes[i];
         Quanta::Vector3 color = shape->color;
         for(uint8_t n=0; shape->count>n; n++) {
+          uint8_t indexOffset = (shape->offset+n)*3;
+          StaticVertex triangleVertices[] = {
+            vertices[indices[indexOffset]],
+            vertices[indices[indexOffset+1]],
+            vertices[indices[indexOffset+2]]
+          };
 
+          Quanta::Vector3 ab = triangleVertices[1].position-triangleVertices[0].position;
+          Quanta::Vector3 ac = triangleVertices[2].position-triangleVertices[0].position;
+          Quanta::Vector3 normal = Quanta::Vector3::cross(ac, ab).getNormalized();
 
-
-        uint8_t indexOffset = (shape->offset+n)*3;
-        StaticVertex triangleVertices[] = {
-          vertices[indices[indexOffset]],
-          vertices[indices[indexOffset+1]],
-          vertices[indices[indexOffset+2]]
-        };
-
-        Quanta::Vector3 ab = triangleVertices[1].position-triangleVertices[0].position;
-        Quanta::Vector3 ac = triangleVertices[2].position-triangleVertices[0].position;
-        Quanta::Vector3 normal = Quanta::Vector3::cross(ac, ab).getNormalized();
-
-        for(uint8_t m=0; 3>m; m++) {
-          uint16_t index;
-          bool found = false;
-          StaticVertex vertex = triangleVertices[m];
-          for(uint8_t n=0; *backendVertexCount>n; n++) {
-            BackendStaticVertex &v = backendVertices[n];
-            if(
-              v.px == vertex.position[0] && v.py == vertex.position[1] && v.pz == vertex.position[2] &&
-              v.nx == normal[0] && v.ny == normal[1] && v.nz == normal[2] &&
-              v.color[0] == color[0] && v.color[1] == color[1] && v.color[2] == color[2]
-            ) {
-              found = true;
-              index = n;
-              break;
+          for(uint8_t m=0; 3>m; m++) {
+            uint16_t index;
+            bool found = false;
+            StaticVertex vertex = triangleVertices[m];
+            for(uint8_t n=0; *backendVertexCount>n; n++) {
+              BackendStaticVertex &v = backendVertices[n];
+              if(
+                v.px == vertex.position[0] && v.py == vertex.position[1] && v.pz == vertex.position[2] &&
+                v.nx == normal[0] && v.ny == normal[1] && v.nz == normal[2] &&
+                v.color[0] == color[0] && v.color[1] == color[1] && v.color[2] == color[2]
+              ) {
+                found = true;
+                index = n;
+                break;
+              }
             }
+            if(!found) {
+              BackendStaticVertex &v = backendVertices[*backendVertexCount];
+              v.px = vertex.position[0];
+              v.py = vertex.position[1];
+              v.pz = vertex.position[2];
+              v.nx = normal[0];
+              v.ny = normal[1];
+              v.nz = normal[2];
+              v.color[0] = color[0];
+              v.color[1] = color[1];
+              v.color[2] = color[2];
+              index = (*backendVertexCount)++;
+            }
+            backendIndices[indexOffset+m] = index;
           }
-          if(!found) {
-            BackendStaticVertex &v = backendVertices[*backendVertexCount];
-            v.px = vertex.position[0];
-            v.py = vertex.position[1];
-            v.pz = vertex.position[2];
-            v.nx = normal[0];
-            v.ny = normal[1];
-            v.nz = normal[2];
-            v.color[0] = color[0];
-            v.color[1] = color[1];
-            v.color[2] = color[2];
-            index = (*backendVertexCount)++;
-          }
-          backendIndices[indexOffset+m] = index;
         }
-
-
-
-      }
-
-
-
-
-      // uint8_t triangleCount = indexCount/3;
-      // for(uint8_t i=0; triangleCount>i; i++) {
-      //   uint8_t indexOffset = i*3;
-      //   StaticVertex triangleVertices[] = {
-      //     vertices[indices[indexOffset]],
-      //     vertices[indices[indexOffset+1]],
-      //     vertices[indices[indexOffset+2]]
-      //   };
-
-      //   Quanta::Vector3 ab = triangleVertices[1].position-triangleVertices[0].position;
-      //   Quanta::Vector3 ac = triangleVertices[2].position-triangleVertices[0].position;
-      //   Quanta::Vector3 normal = Quanta::Vector3::cross(ac, ab).getNormalized();
-
-      //   for(uint8_t m=0; 3>m; m++) {
-      //     uint16_t index;
-      //     bool found = false;
-      //     StaticVertex vertex = triangleVertices[m];
-      //     for(uint8_t n=0; *backendVertexCount>n; n++) {
-      //       BackendStaticVertex &v = backendVertices[n];
-      //       if(
-      //         v.px == vertex.position[0] && v.py == vertex.position[1] && v.pz == vertex.position[2] &&
-      //         v.nx == normal[0] && v.ny == normal[1] && v.nz == normal[2]
-      //       ) {
-      //         found = true;
-      //         index = n;
-      //         break;
-      //       }
-      //     }
-      //     if(!found) {
-      //       BackendStaticVertex &v = backendVertices[*backendVertexCount];
-      //       v.px = vertex.position[0];
-      //       v.py = vertex.position[1];
-      //       v.pz = vertex.position[2];
-      //       v.nx = normal[0];
-      //       v.ny = normal[1];
-      //       v.nz = normal[2];
-      //       index = (*backendVertexCount)++;
-      //     }
-      //     backendIndices[indexOffset+m] = index;
-      //   }
       }
     }
 

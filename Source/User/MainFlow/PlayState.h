@@ -28,6 +28,7 @@ namespace MainFlow {
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
+    void setupRock();
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();
