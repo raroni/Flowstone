@@ -283,9 +283,11 @@ namespace MainFlow {
 
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
-    Physics::StaticBodyIndex body = physics.createStaticBody();
+    Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
+    Physics::StaticBody body = physics.getStaticBody(bodyIndex);
+    (*body.position)[0] = 2;
 
-    renderer.createStaticMeshInstance(mesh, body);
+    renderer.createStaticMeshInstance(mesh, bodyIndex);
   }
 
   void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID, float x, float z) {

@@ -16,6 +16,7 @@ namespace Rendering {
   struct StaticMeshDrawCall {
     Backend::ObjectHandle object;
     uint16_t indexCount;
+    Quanta::Matrix4 transform;
   };
 }
 

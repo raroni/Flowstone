@@ -13,8 +13,10 @@ layout(std140) uniform global {
 out vec3 interpolatedColor;
 out float interpolatedLambert;
 
+uniform mat4 modelWorldTransform;
+
 void main() {
-  gl_Position = viewClipTransformation*worldViewTransformation*vec4(position, 1);
+  gl_Position = viewClipTransformation*worldViewTransformation*modelWorldTransform*vec4(position, 1);
   interpolatedLambert = dot(inverseLightDirection, normal)*0.4+0.6;
   interpolatedColor = color;
 }

@@ -101,6 +101,7 @@ namespace Rendering {
       const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
+      call.transform = staticTransforms[instance.transform];
       drawQueue.addStaticMesh(call);
     }
     drawQueue.sort();
@@ -158,6 +159,11 @@ namespace Rendering {
         case DrawCallType::StaticMesh: {
           const StaticMeshDrawCall *staticMeshDrawCall = reinterpret_cast<const StaticMeshDrawCall*>(drawCall);
           stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Static)]);
+          stream.writeUniformMat4Set(
+            Uniforms::list.staticModelWorldTransform,
+            1,
+            &staticMeshDrawCall->transform.components[0]
+          );
           stream.writeObjectSet(staticMeshDrawCall->object);
           stream.writeIndexedDraw(staticMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
           break;

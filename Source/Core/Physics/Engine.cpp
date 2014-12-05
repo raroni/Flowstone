@@ -1,3 +1,4 @@
+#include "Quanta/Geometry/TransformationFactory3D.h"
 #include "Core/Physics/DynamicSphereColliderHandle.h"
 #include "Core/Physics/CollisionResolver.h"
 #include "Core/Physics/Engine.h"
@@ -12,6 +13,7 @@ namespace Physics {
 
   StaticBodyIndex Engine::createStaticBody() {
     statics.orientations[statics.count] = Quanta::Quaternion::identity();
+    statics.transforms[statics.count] = Quanta::Matrix4::identity();
     StaticBodyIndex index = statics.count++;
     return index;
   }
@@ -21,10 +23,19 @@ namespace Physics {
   }
 
   void Engine::simulate() {
+    updateStaticTransforms();
     integrator.integrate(dynamics.positions, dynamics.velocities, dynamics.forces);
     collisionDetector.detect(collisionSet, dynamics.positions);
     resolveCollisions(collisionSet, dynamics.positions, dynamics.velocities);
     collisionSet.clear();
+  }
+
+  void Engine::updateStaticTransforms() {
+    Quanta::Matrix4 transform;
+    for(uint16_t i=0; statics.count>i; i++) {
+      statics.transforms[i] = Quanta::TransformationFactory3D::translation(statics.positions[i]);
+      // todo rotation
+    }
   }
 
   const Quanta::Vector3* Engine::getDynamicPositions() const {
@@ -53,6 +64,13 @@ namespace Physics {
     body.velocity = &dynamics.velocities[index];
     body.force = &dynamics.forces[index];
     body.orientation = &dynamics.orientations[index];
+    return body;
+  }
+
+  StaticBody Engine::getStaticBody(StaticBodyIndex index) {
+    StaticBody body;
+    body.position = &statics.positions[index];
+    body.orientation = &statics.orientations[index];
     return body;
   }
 }

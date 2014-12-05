@@ -14,6 +14,9 @@ namespace Rendering {
       list.boneJointWorldTransformation = Backend::getUniform(boneProgram, "jointWorldTransformation");
       list.boneModelJointTransformation = Backend::getUniform(boneProgram, "modelJointTransformations");
 
+      Backend::ProgramHandle staticProgram = Programs::handles[static_cast<size_t>(ProgramName::Static)];
+      list.staticModelWorldTransform = Backend::getUniform(staticProgram, "modelWorldTransform");
+
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
       list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
       list.mergeLambert = Backend::getUniform(mergeProgram, "lambert");
