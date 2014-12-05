@@ -3,9 +3,10 @@
 
 namespace Rendering {
   enum class ProgramName {
-    Bone,
-    Static,
-    Merge
+    GeometryBone,
+    GeometryStatic,
+    Merge,
+    ShadowBone
   };
 }
 

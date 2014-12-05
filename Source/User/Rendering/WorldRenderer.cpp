@@ -138,16 +138,16 @@ namespace Rendering {
         case DrawCallType::BoneMesh: {
           const BoneMeshDrawCall *boneMeshDrawCall = reinterpret_cast<const BoneMeshDrawCall*>(drawCall);
 
-          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Bone)]);
+          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::GeometryBone)]);
 
           stream.writeUniformMat4Set(
-            Uniforms::list.boneJointWorldTransform,
+            Uniforms::list.geometryBoneJointWorldTransform,
             1,
             &boneMeshDrawCall->transform.components[0]
           );
 
           stream.writeUniformMat4Set(
-            Uniforms::list.boneModelJointTransform,
+            Uniforms::list.geometryBoneModelJointTransform,
             8,
             &boneMeshDrawCall->pose.joints[0].components[0]
           );
@@ -158,9 +158,9 @@ namespace Rendering {
         }
         case DrawCallType::StaticMesh: {
           const StaticMeshDrawCall *staticMeshDrawCall = reinterpret_cast<const StaticMeshDrawCall*>(drawCall);
-          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Static)]);
+          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::GeometryStatic)]);
           stream.writeUniformMat4Set(
-            Uniforms::list.staticModelWorldTransform,
+            Uniforms::list.geometryStaticModelWorldTransform,
             1,
             &staticMeshDrawCall->transform.components[0]
           );

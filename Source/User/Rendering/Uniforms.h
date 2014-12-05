@@ -6,9 +6,9 @@
 namespace Rendering {
   namespace Uniforms {
     struct List {
-      Backend::UniformHandle boneJointWorldTransform;
-      Backend::UniformHandle boneModelJointTransform;
-      Backend::UniformHandle staticModelWorldTransform;
+      Backend::UniformHandle geometryBoneJointWorldTransform;
+      Backend::UniformHandle geometryBoneModelJointTransform;
+      Backend::UniformHandle geometryStaticModelWorldTransform;
       Backend::UniformHandle mergeDiffuse;
       Backend::UniformHandle mergeLambert;
     };

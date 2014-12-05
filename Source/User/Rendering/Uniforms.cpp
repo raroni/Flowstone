@@ -10,12 +10,12 @@ namespace Rendering {
     List list;
 
     void initialize() {
-      Backend::ProgramHandle boneProgram = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-      list.boneJointWorldTransform = Backend::getUniform(boneProgram, "jointWorldTransform");
-      list.boneModelJointTransform = Backend::getUniform(boneProgram, "modelJointTransforms");
+      Backend::ProgramHandle geometryBoneProgram = Programs::handles[static_cast<size_t>(ProgramName::GeometryBone)];
+      list.geometryBoneJointWorldTransform = Backend::getUniform(geometryBoneProgram, "jointWorldTransform");
+      list.geometryBoneModelJointTransform = Backend::getUniform(geometryBoneProgram, "modelJointTransforms");
 
-      Backend::ProgramHandle staticProgram = Programs::handles[static_cast<size_t>(ProgramName::Static)];
-      list.staticModelWorldTransform = Backend::getUniform(staticProgram, "modelWorldTransform");
+      Backend::ProgramHandle geometryStaticProgram = Programs::handles[static_cast<size_t>(ProgramName::GeometryStatic)];
+      list.geometryStaticModelWorldTransform = Backend::getUniform(geometryStaticProgram, "modelWorldTransform");
 
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
       list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
