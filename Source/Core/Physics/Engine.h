@@ -13,11 +13,13 @@
 
 namespace Physics {
   class Engine {
-    Quanta::Vector3 dynamicPositions[Config::maxDynamicBodies];
-    Quanta::Quaternion dynamicOrientations[Config::maxDynamicBodies];
-    Quanta::Vector3 dynamicVelocities[Config::maxDynamicBodies];
-    Quanta::Vector3 dynamicForces[Config::maxDynamicBodies];
-    uint16_t dynamicBodyCount = 0;
+    struct {
+      Quanta::Vector3 positions[Config::maxDynamicBodies];
+      Quanta::Quaternion orientations[Config::maxDynamicBodies];
+      Quanta::Vector3 velocities[Config::maxDynamicBodies];
+      Quanta::Vector3 forces[Config::maxDynamicBodies];
+      uint16_t count = 0;
+    } dynamics;
     CollisionDetector collisionDetector;
     Integrator integrator;
     CollisionSet collisionSet;

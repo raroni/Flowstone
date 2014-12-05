@@ -4,8 +4,8 @@
 
 namespace Physics {
   DynamicBodyIndex Engine::createDynamicBody() {
-    dynamicOrientations[dynamicBodyCount] = Quanta::Quaternion::identity();
-    DynamicBodyIndex index = dynamicBodyCount++;
+    dynamics.orientations[dynamics.count] = Quanta::Quaternion::identity();
+    DynamicBodyIndex index = dynamics.count++;
     integrator.activate(index);
     return index;
   }
@@ -15,34 +15,34 @@ namespace Physics {
   }
 
   void Engine::simulate() {
-    integrator.integrate(dynamicPositions, dynamicVelocities, dynamicForces);
-    collisionDetector.detect(collisionSet, dynamicPositions);
-    resolveCollisions(collisionSet, dynamicPositions, dynamicVelocities);
+    integrator.integrate(dynamics.positions, dynamics.velocities, dynamics.forces);
+    collisionDetector.detect(collisionSet, dynamics.positions);
+    resolveCollisions(collisionSet, dynamics.positions, dynamics.velocities);
     collisionSet.clear();
   }
 
   const Quanta::Vector3* Engine::getDynamicPositions() const {
-    return dynamicPositions;
+    return dynamics.positions;
   }
 
   Quanta::Vector3* Engine::getDynamicForces() {
-    return dynamicForces;
+    return dynamics.forces;
   }
 
   const Quanta::Vector3* Engine::getDynamicVelocities() const {
-    return dynamicVelocities;
+    return dynamics.velocities;
   }
 
   const Quanta::Quaternion* Engine::getDynamicOrientations() const {
-    return dynamicOrientations;
+    return dynamics.orientations;
   }
 
   DynamicBody Engine::getDynamicBody(DynamicBodyIndex index) {
     DynamicBody body;
-    body.position = &dynamicPositions[index];
-    body.velocity = &dynamicVelocities[index];
-    body.force = &dynamicForces[index];
-    body.orientation = &dynamicOrientations[index];
+    body.position = &dynamics.positions[index];
+    body.velocity = &dynamics.velocities[index];
+    body.force = &dynamics.forces[index];
+    body.orientation = &dynamics.orientations[index];
     return body;
   }
 }
