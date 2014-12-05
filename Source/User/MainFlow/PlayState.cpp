@@ -11,7 +11,8 @@ namespace MainFlow {
 
   void PlayState::enter() {
     renderer.setPoses(animator.getWorldPoses());
-    renderer.setTransforms(frameInterpolator.getTransforms());
+    renderer.setDynamicTransforms(frameInterpolator.getTransforms());
+    renderer.setStaticTransforms(physics.getStaticTransforms());
 
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
@@ -231,7 +232,8 @@ namespace MainFlow {
 
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
-    renderer.createStaticMeshInstance(mesh);
+    Physics::StaticBodyIndex body = physics.createStaticBody();
+    renderer.createStaticMeshInstance(mesh, body);
   }
 
   void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
@@ -281,7 +283,9 @@ namespace MainFlow {
 
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
-    renderer.createStaticMeshInstance(mesh);
+    Physics::StaticBodyIndex body = physics.createStaticBody();
+
+    renderer.createStaticMeshInstance(mesh, body);
   }
 
   void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID, float x, float z) {

@@ -33,8 +33,8 @@ namespace Rendering {
     return worldRenderer.createStaticMesh(info, vertices, indices, shapes);
   }
 
-  void Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
-    worldRenderer.createStaticMeshInstance(mesh);
+  void Renderer::createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform) {
+    worldRenderer.createStaticMeshInstance(mesh, transform);
   }
 
   Quanta::Transform& Renderer::getCameraTransform() {
@@ -45,7 +45,7 @@ namespace Rendering {
     worldRenderer.updateResolution(width, height);
   }
 
-  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose) {
+  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose) {
     worldRenderer.createBoneMeshInstance(meshIndex, transformIndex, pose);
   }
 
@@ -57,8 +57,12 @@ namespace Rendering {
     stream.reset();
   }
 
-  void Renderer::setTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.transforms = transforms;
+  void Renderer::setDynamicTransforms(const Quanta::Matrix4 *transforms) {
+    worldRenderer.dynamicTransforms = transforms;
+  }
+
+  void Renderer::setStaticTransforms(const Quanta::Matrix4 *transforms) {
+    worldRenderer.staticTransforms = transforms;
   }
 
   void Renderer::setPoses(const Pose *poses) {

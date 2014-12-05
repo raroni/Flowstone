@@ -27,7 +27,7 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
-  void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, TransformIndex transformIndex, Animation::PoseIndex pose) {
+  void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose) {
     BoneMeshInstances::create(meshIndex, transformIndex, pose);
   }
 
@@ -35,8 +35,8 @@ namespace Rendering {
     return StaticMeshes::create(info, vertices, indices, shapes);
   }
 
-  void WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh) {
-    StaticMeshInstances::create(mesh);
+  void WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform) {
+    StaticMeshInstances::create(mesh, transform);
     return;
   }
 
@@ -92,7 +92,7 @@ namespace Rendering {
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
       call.pose = poses[instance.pose];
-      call.transform = transforms[instance.transform];
+      call.transform = dynamicTransforms[instance.transform];
       drawQueue.addBoneMesh(call);
     }
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {

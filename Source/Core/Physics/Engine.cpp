@@ -10,6 +10,12 @@ namespace Physics {
     return index;
   }
 
+  StaticBodyIndex Engine::createStaticBody() {
+    statics.orientations[statics.count] = Quanta::Quaternion::identity();
+    StaticBodyIndex index = statics.count++;
+    return index;
+  }
+
   DynamicSphereColliderHandle Engine::createDynamicSphereCollider(DynamicBodyIndex body, float radius) {
     return collisionDetector.createDynamicSphere(body, radius);
   }
@@ -35,6 +41,10 @@ namespace Physics {
 
   const Quanta::Quaternion* Engine::getDynamicOrientations() const {
     return dynamics.orientations;
+  }
+
+  const Quanta::Matrix4* Engine::getStaticTransforms() const {
+    return statics.transforms;
   }
 
   DynamicBody Engine::getDynamicBody(DynamicBodyIndex index) {

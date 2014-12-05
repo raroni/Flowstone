@@ -6,6 +6,7 @@
 namespace Rendering {
   struct StaticMeshInstance {
     StaticMeshIndex mesh;
+    StaticTransformIndex transform;
   };
 }
 

@@ -4,6 +4,7 @@
 namespace Physics {
   namespace Config {
     const uint16_t maxDynamicBodies = 128;
+    const uint16_t maxStaticBodies = 128;
     const double stepDuration = 0.03;
   }
 }

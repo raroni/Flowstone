@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "Quanta/Math/Vector3.h"
+#include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Core/Physics/CollisionDetector.h"
 #include "Core/Physics/DynamicBodyIndex.h"
@@ -20,6 +21,12 @@ namespace Physics {
       Quanta::Vector3 forces[Config::maxDynamicBodies];
       uint16_t count = 0;
     } dynamics;
+    struct {
+      Quanta::Vector3 positions[Config::maxStaticBodies];
+      Quanta::Quaternion orientations[Config::maxStaticBodies];
+      Quanta::Matrix4 transforms[Config::maxStaticBodies];
+      uint16_t count = 0;
+    } statics;
     CollisionDetector collisionDetector;
     Integrator integrator;
     CollisionSet collisionSet;
@@ -27,11 +34,13 @@ namespace Physics {
       DynamicBodyIndex createDynamicBody();
       DynamicSphereColliderHandle createDynamicSphereCollider(DynamicBodyIndex body, float radius);
       DynamicBody getDynamicBody(DynamicBodyIndex index);
+      StaticBodyIndex createStaticBody();
       void simulate();
       const Quanta::Vector3* getDynamicPositions() const;
       Quanta::Vector3* getDynamicForces();
       const Quanta::Vector3* getDynamicVelocities() const;
       const Quanta::Quaternion* getDynamicOrientations() const;
+      const Quanta::Matrix4* getStaticTransforms() const;
   };
 }
 

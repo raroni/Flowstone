@@ -3,12 +3,12 @@
 
 #include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshInstance.h"
-#include "Rendering/TransformIndex.h"
+#include "Rendering/DynamicTransformIndex.h"
 
 namespace Rendering {
   struct BoneMeshInstance {
     BoneMeshIndex mesh;
-    TransformIndex transform;
+    DynamicTransformIndex transform;
     Animation::PoseIndex pose;
   };
 }

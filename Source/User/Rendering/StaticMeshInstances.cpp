@@ -5,8 +5,9 @@ namespace Rendering {
     static uint16_t count = 0;
     StaticMeshInstance list[256];
 
-    void create(StaticMeshIndex mesh) {
+    void create(StaticMeshIndex mesh, StaticTransformIndex transform) {
       list[count].mesh = mesh;
+      list[count].transform = transform;
       count++;
     }
 
