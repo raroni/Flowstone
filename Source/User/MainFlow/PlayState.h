@@ -29,6 +29,7 @@ namespace MainFlow {
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
     void setupRock();
+    void setupBox();
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();

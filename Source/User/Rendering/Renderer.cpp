@@ -122,6 +122,11 @@ namespace Rendering {
           Backend::setBuffer(command.target, command.buffer);
           break;
         }
+        case CommandType::ViewportSet: {
+          ViewportSetCommand command = stream.readViewportSet();
+          Backend::setViewport(command.width, command.height);
+          break;
+        }
         case CommandType::BufferWrite: {
           const void *data;
           BufferWriteCommand command = stream.readBufferWrite(&data);

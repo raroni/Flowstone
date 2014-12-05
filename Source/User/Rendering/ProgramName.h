@@ -6,7 +6,8 @@ namespace Rendering {
     GeometryBone,
     GeometryStatic,
     Merge,
-    ShadowBone
+    ShadowBone,
+    ShadowStatic
   };
 }
 

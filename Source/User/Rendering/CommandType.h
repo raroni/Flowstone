@@ -13,7 +13,8 @@ namespace Rendering {
     TextureSet,
     EnableDepthTest,
     DisableDepthTest,
-    Clear
+    Clear,
+    ViewportSet
   };
 }
 

@@ -23,6 +23,7 @@ namespace Rendering {
     void writeRenderTargetSet(Backend::RenderTargetHandle renderTarget);
     void writeTextureSet(Backend::UniformHandle uniform, Backend::TextureHandle texture, uint8_t unit);
     void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
+    void writeViewportSet(uint16_t width, uint16_t height);
     CommandType readType();
     BufferSetCommand readBufferSet();
     BufferWriteCommand readBufferWrite(const void **data);
@@ -33,6 +34,7 @@ namespace Rendering {
     RenderTargetSetCommand readRenderTargetSet();
     TextureSetCommand readTextureSet();
     UniformMat4SetCommand readUniformMat4Set(const float **data);
+    ViewportSetCommand readViewportSet();
   private:
     void writeType(CommandType type);
     uint16_t position = 0;

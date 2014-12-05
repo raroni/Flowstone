@@ -241,5 +241,9 @@ if (Status != GL_FRAMEBUFFER_COMPLETE) {
     void enableFaceCulling() {
       glEnable(GL_CULL_FACE);
     }
+
+    void setViewport(uint16_t width, uint16_t height) {
+      glViewport(0, 0, width, height);
+    }
   }
 }

@@ -34,11 +34,26 @@ namespace Rendering {
     return program;
   }
 
-  static Backend::ProgramHandle initializeShadowProgram() {
+  static Backend::ProgramHandle initializeShadowBoneProgram() {
     Backend::ProgramHandle program = Backend::createProgram();
     loadSource("ShadowBone.vert");
     Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
     Backend::attachShader(program, vertexShader);
+    loadSource("Empty.frag");
+    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
+    Backend::attachShader(program, fragmentShader);
+    Backend::linkProgram(program);
+    return program;
+  }
+
+  static Backend::ProgramHandle initializeShadowStaticProgram() {
+    Backend::ProgramHandle program = Backend::createProgram();
+    loadSource("ShadowStatic.vert");
+    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
+    Backend::attachShader(program, vertexShader);
+    loadSource("Empty.frag");
+    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
+    Backend::attachShader(program, fragmentShader);
     Backend::linkProgram(program);
     return program;
   }
@@ -57,7 +72,8 @@ namespace Rendering {
       handles[static_cast<size_t>(ProgramName::GeometryBone)] = initializeGeometryProgram("GeometryBone");
       handles[static_cast<size_t>(ProgramName::GeometryStatic)] = initializeGeometryProgram("GeometryStatic");
       handles[static_cast<size_t>(ProgramName::Merge)] = initializeStandardProgram("Merge");
-      handles[static_cast<size_t>(ProgramName::ShadowBone)] = initializeShadowProgram();
+      handles[static_cast<size_t>(ProgramName::ShadowBone)] = initializeShadowBoneProgram();
+      handles[static_cast<size_t>(ProgramName::ShadowStatic)] = initializeShadowStaticProgram();
     }
   }
 }

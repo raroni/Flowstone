@@ -6,6 +6,7 @@
 namespace Rendering {
   namespace Config {
     const uint8_t maxBoneMeshes = 64;
+    const uint16_t shadowMapSize = 512;
   }
 }
 

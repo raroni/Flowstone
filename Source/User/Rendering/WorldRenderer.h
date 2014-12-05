@@ -40,6 +40,7 @@ namespace Rendering {
     } resolution;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    void writeShadowMap(CommandStream &stream);
     void writeMerge(CommandStream &stream);
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();

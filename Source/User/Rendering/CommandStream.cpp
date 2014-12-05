@@ -93,6 +93,15 @@ namespace Rendering {
     position += dataSize;
   }
 
+  void CommandStream::writeViewportSet(uint16_t width, uint16_t height) {
+    writeType(CommandType::ViewportSet);
+    ViewportSetCommand command;
+    command.width = width;
+    command.height = height;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeType(CommandType type) {
     count++;
     memcpy(buffer+position, &type, sizeof(type));
@@ -169,6 +178,12 @@ namespace Rendering {
     position += sizeof(command);
     *data = reinterpret_cast<const float*>(buffer+position);
     position += command.count*sizeof(float)*16;
+    return command;
+  }
+
+  ViewportSetCommand CommandStream::readViewportSet() {
+    ViewportSetCommand command = *reinterpret_cast<const ViewportSetCommand*>(buffer+position);
+    position += sizeof(command);
     return command;
   }
 }

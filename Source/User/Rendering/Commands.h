@@ -53,6 +53,11 @@ namespace Rendering {
   struct ClearCommand {
     Backend::ClearBitMask mask;
   };
+
+  struct ViewportSetCommand {
+    uint16_t width;
+    uint16_t height;
+  };
 }
 
 #endif

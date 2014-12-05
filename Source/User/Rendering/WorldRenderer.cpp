@@ -22,6 +22,9 @@
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
 
+#include "Quanta/Geometry/TransformFactory3D.h"
+#include <stdio.h>
+
 namespace Rendering {
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
@@ -37,7 +40,6 @@ namespace Rendering {
 
   void WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform) {
     StaticMeshInstances::create(mesh, transform);
-    return;
   }
 
   void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {
@@ -46,22 +48,111 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    stream.writeRenderTargetSet(RenderTargets::handles.geometry);
-
+    stream.writeEnableDepthTest();
+    stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
+    writeShadowMap(stream);
+    stream.writeViewportSet(800, 600);
     writeGlobalUniformUpdate(stream);
+    stream.writeRenderTargetSet(RenderTargets::handles.geometry);
     stream.writeClear(
       static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color) |
       static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth)
     );
     buildDrawQueue();
-    stream.writeEnableDepthTest();
     writeDrawQueueToStream(stream);
-    stream.writeDisableDepthTest();
 
     stream.writeRenderTargetSet(0);
+    stream.writeDisableDepthTest();
 
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
     writeMerge(stream);
+  }
+
+  void WorldRenderer::writeShadowMap(CommandStream &stream) {
+    stream.writeRenderTargetSet(RenderTargets::handles.shadow);
+    stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
+    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
+
+    // todo: calculate better values for this guy
+    Quanta::Matrix4 viewClip = Quanta::ProjectionFactory::ortho(-5, 5, -5, 5, 0.1, 30);
+    viewClip = Quanta::Matrix4::identity();
+
+    stream.writeUniformMat4Set(
+      Uniforms::list.shadowBoneViewClipTransform,
+      1,
+      viewClip.components
+    );
+
+    Quanta::Vector3 forward = lightDirection;
+    Quanta::Vector3 right = Quanta::Vector3::cross(Quanta::Vector3(0, 1, 0), forward).getNormalized();
+    Quanta::Vector3 up = Quanta::Vector3::cross(forward, right).getNormalized();
+    //printf("Up: %f, %f, %f\n", up[0], up[1], up[2]);
+
+    Quanta::Matrix4 worldView = Quanta::Matrix4::identity();
+    // worldView = Quanta::TransformFactory3D::translation(Quanta::Vector3(0, 0, 10));
+    /*
+    worldView[0] = right[0];
+    worldView[1] = right[1];
+    worldView[2] = right[2];
+
+    worldView[4] = up[0];
+    worldView[5] = up[1];
+    worldView[6] = up[2];
+
+    worldView[8] = forward[0];
+    worldView[9] = forward[1];
+    worldView[10] = forward[2];
+    */
+
+    //worldView = worldView * translation
+
+    stream.writeUniformMat4Set(
+      Uniforms::list.shadowBoneWorldViewTransform,
+      1,
+      worldView.components
+    );
+
+    for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
+      StaticMeshInstance &instance = StaticMeshInstances::list[i];
+      const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
+      stream.writeUniformMat4Set(
+        Uniforms::list.shadowStaticModelWorldTransform,
+        1,
+        staticTransforms[instance.transform].components
+      );
+      /*
+      for(int i=0; 16>i; i++) {
+        printf("%f, ", staticTransforms[instance.transform][i]);
+      }
+      */
+      //printf("\n\n");
+      stream.writeObjectSet(mesh.object);
+      stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
+    }
+
+    /*
+    for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
+      BoneMeshInstance &instance = BoneMeshInstances::list[i];
+      BoneMesh mesh = boneMeshRegistry.get(instance.mesh);
+
+      stream.writeUniformMat4Set(
+        Uniforms::list.shadowBoneJointWorldTransform,
+        1,
+        &dynamicTransforms[instance.transform].components[0]
+      );
+
+      stream.writeUniformMat4Set(
+        Uniforms::list.shadowBoneModelJointTransforms,
+        8,
+        &poses[instance.pose].joints[0].components[0]
+      );
+
+      stream.writeObjectSet(mesh.object);
+      stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
+    }
+    */
+
+    stream.writeRenderTargetSet(0);
   }
 
   void WorldRenderer::writeMerge(CommandStream &stream) {

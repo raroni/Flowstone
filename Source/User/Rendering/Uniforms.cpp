@@ -20,6 +20,17 @@ namespace Rendering {
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
       list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
       list.mergeLambert = Backend::getUniform(mergeProgram, "lambert");
+
+      Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
+      list.shadowBoneViewClipTransform = Backend::getUniform(shadowBone, "viewClipTransform");
+      list.shadowBoneWorldViewTransform = Backend::getUniform(shadowBone, "worldViewTransform");
+      list.shadowBoneJointWorldTransform = Backend::getUniform(shadowBone, "jointWorldTransform");
+      list.shadowBoneModelJointTransforms = Backend::getUniform(shadowBone, "modelJointTransforms");
+
+      Backend::ProgramHandle shadowStatic = Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)];
+      list.shadowStaticViewClipTransform = Backend::getUniform(shadowStatic, "viewClipTransform");
+      list.shadowStaticWorldViewTransform = Backend::getUniform(shadowStatic, "worldViewTransform");
+      list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
     }
   }
 }

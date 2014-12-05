@@ -187,17 +187,19 @@ namespace MainFlow {
       sizeof(indices)/sizeof(uint16_t)
     );
 
-    setupPlayer(meshIndex, skeletonID);
-    setupMonster(meshIndex, skeletonID, 2, 2);
-    setupMonster(meshIndex, skeletonID, 2, -2);
-    setupMonster(meshIndex, skeletonID, -2, 2);
-    setupMonster(meshIndex, skeletonID, -2, -2);
+    //setupPlayer(meshIndex, skeletonID);
+    //setupMonster(meshIndex, skeletonID, 2, 2);
+    //setupMonster(meshIndex, skeletonID, 2, -2);
+    //setupMonster(meshIndex, skeletonID, -2, 2);
+    //setupMonster(meshIndex, skeletonID, -2, -2);
 
-    setupGround();
+    //setupGround();
 
-    setupRock();
+    //setupRock();
 
-    renderer.setLightDirection(Quanta::Vector3(-2, -3, 1).getNormalized());
+    setupBox();
+
+    renderer.setLightDirection(Quanta::Vector3(-1, -2, 0).getNormalized());
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
@@ -248,6 +250,45 @@ namespace MainFlow {
     airDrag.add(playerBody);
 
     renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
+  }
+
+  void PlayState::setupBox() {
+    Rendering::StaticVertex vertices[] = {
+      { { -0.5, 0.5, -0.5 } },
+      { { 0.5, 0.5, -0.5 } },
+      { { -0.5, -0.5, -0.5 } },
+      { { 0.5, -0.5, -0.5 } },
+      { { -0.5, 0.5, 0.5 } },
+      { { 0.5, 0.5, 0.5 } },
+      { { -0.5, -0.5, 0.5 } },
+      { { 0.5, -0.5, 0.5 } }
+    };
+
+    uint16_t indices[] = {
+      0, 2, 1, 1, 2, 3, // front
+      1, 3, 7, 1, 7, 5, // right
+      4, 7, 6, 4, 5, 7, // back
+      0, 6, 2, 0, 4, 6, // right
+      2, 7, 3, 2, 6, 7,  // bottom
+      5, 0, 1, 5, 4, 0 // top
+    };
+
+
+    Rendering::Shape shapes[] = {
+      { { 0.5, 0.5, 0.5 }, 0, 12 }
+    };
+
+    Rendering::MeshInfo info;
+    info.vertexCount = sizeof(vertices)/sizeof(Rendering::BoneVertex);
+    info.indexCount = sizeof(indices)/sizeof(uint16_t);
+    info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
+
+    Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
+
+    Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
+    Physics::StaticBody body = physics.getStaticBody(bodyIndex);
+    (*body.position)[0] = 0;
+    renderer.createStaticMeshInstance(mesh, bodyIndex);
   }
 
   void PlayState::setupRock() {
