@@ -11,8 +11,8 @@ namespace Rendering {
 
     void initialize() {
       Backend::ProgramHandle boneProgram = Programs::handles[static_cast<size_t>(ProgramName::Bone)];
-      list.boneJointWorldTransformation = Backend::getUniform(boneProgram, "jointWorldTransformation");
-      list.boneModelJointTransformation = Backend::getUniform(boneProgram, "modelJointTransformations");
+      list.boneJointWorldTransform = Backend::getUniform(boneProgram, "jointWorldTransform");
+      list.boneModelJointTransform = Backend::getUniform(boneProgram, "modelJointTransforms");
 
       Backend::ProgramHandle staticProgram = Programs::handles[static_cast<size_t>(ProgramName::Static)];
       list.staticModelWorldTransform = Backend::getUniform(staticProgram, "modelWorldTransform");

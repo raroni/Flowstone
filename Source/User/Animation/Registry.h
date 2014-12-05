@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "Core/Error.h"
 #include "Animation/JointConfig.h"
-#include "Animation/JointTransformation.h"
+#include "Animation/JointTransform.h"
 
 namespace Animation {
   class Registry {
@@ -16,8 +16,8 @@ namespace Animation {
     uint8_t animationKeyCounts[512];
     uint8_t keyOffsets[64] = { 0 };
     float keyTimes[128];
-    uint8_t jointTransformationOffsets[128];
-    JointTransformation jointTransformations[128];
+    uint8_t jointTransformOffsets[128];
+    JointTransform jointTransforms[128];
     uint8_t getAccumulatedKeyCount(uint8_t skeletonID, uint8_t animation) const;
   public:
     const uint8_t* getJointParentIndices(uint8_t skeletonID) const;
@@ -25,7 +25,7 @@ namespace Animation {
     uint8_t getKeyCount(uint8_t skeletonID, uint8_t animation) const;
     float getDuration(uint8_t skeletonID, uint8_t animation);
     uint8_t getBonesCount(uint8_t skeletonID) const;
-    const JointTransformation* getJointTransformations(uint8_t skeletonID, uint8_t animation, uint8_t key) const;
+    const JointTransform* getJointTransforms(uint8_t skeletonID, uint8_t animation, uint8_t key) const;
     uint8_t createSkeleton(
       uint8_t *jointParentIndices,
       uint8_t jointParentIndicesLength,

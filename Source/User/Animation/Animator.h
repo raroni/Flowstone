@@ -30,9 +30,9 @@ namespace Animation {
     uint8_t targetKeys[32];
     uint8_t animations[32];
     uint8_t transformationOffsets[32];
-    JointTransformation originTransformations[32*8];
-    JointTransformation currentTransformations[32*8];
-    JointTransformation targetTransformations[32*8];
+    JointTransform originTransforms[32*8];
+    JointTransform currentTransforms[32*8];
+    JointTransform targetTransforms[32*8];
     Pose localPoses[32];
     Pose worldPoses[32];
     void updateLocalPoses(double timeDelta);

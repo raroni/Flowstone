@@ -3,7 +3,7 @@
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
-#include "Quanta/Geometry/TransformationFactory3D.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 #include "Pose.h"
 #include "Animation/Registry.h"
 #include "Animation/Animator.h"
@@ -20,14 +20,14 @@ namespace Animation {
       progress = Quanta::min(progress, 1.0f);
       Pose *pose = &localPoses[instanceIndex];
       for(uint8_t boneIndex=0; bonesCount>boneIndex; boneIndex++) {
-        JointTransformation &origin = originTransformations[transformationOffset+boneIndex];
-        JointTransformation &current = currentTransformations[transformationOffset+boneIndex];
-        JointTransformation &target = targetTransformations[transformationOffset+boneIndex];
+        JointTransform &origin = originTransforms[transformationOffset+boneIndex];
+        JointTransform &current = currentTransforms[transformationOffset+boneIndex];
+        JointTransform &target = targetTransforms[transformationOffset+boneIndex];
         current.translation[0] = Quanta::lerp(origin.translation[0], target.translation[0], progress);
         current.translation[1] = Quanta::lerp(origin.translation[1], target.translation[1], progress);
         current.translation[2] = Quanta::lerp(origin.translation[2], target.translation[2], progress);
         // TODO: ROTATION
-        pose->joints[boneIndex] = Quanta::TransformationFactory3D::translation(current.translation);
+        pose->joints[boneIndex] = Quanta::TransformFactory3D::translation(current.translation);
       }
 
       if(rest >= 0) {
@@ -44,10 +44,10 @@ namespace Animation {
           targetKeys[instanceIndex]++;
         }
 
-        const JointTransformation *targetTransformations = registry.getJointTransformations(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
+        const JointTransform *targetTransforms = registry.getJointTransforms(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
         for(uint8_t i=0; bonesCount>i; i++) {
-          originTransformations[transformationOffset+i] = this->targetTransformations[transformationOffset+i];
-          this->targetTransformations[transformationOffset+i] = targetTransformations[i];
+          originTransforms[transformationOffset+i] = this->targetTransforms[transformationOffset+i];
+          this->targetTransforms[transformationOffset+i] = targetTransforms[i];
         }
 
         // TODO INTERPOLATE OVER rest
@@ -105,13 +105,13 @@ namespace Animation {
     uint8_t bonesCount = registry.getBonesCount(skeletonID);
     uint8_t transformationOffset = transformationOffsets[instanceCount];
     transformationOffsets[instanceCount+1] = transformationOffset+bonesCount;
-    const JointTransformation *transformations = registry.getJointTransformations(skeletonID, animations[instanceCount], 0);
+    const JointTransform *transformations = registry.getJointTransforms(skeletonID, animations[instanceCount], 0);
     for(uint8_t i=0; bonesCount>i; i++) {
-      originTransformations[transformationOffset+i] = transformations[i];
+      originTransforms[transformationOffset+i] = transformations[i];
     }
-    transformations = registry.getJointTransformations(skeletonID, animations[instanceCount], 1);
+    transformations = registry.getJointTransforms(skeletonID, animations[instanceCount], 1);
     for(uint8_t i=0; bonesCount>i; i++) {
-      targetTransformations[transformationOffset+i] = transformations[i];
+      targetTransforms[transformationOffset+i] = transformations[i];
     }
     return instanceCount++;
   }
@@ -124,10 +124,10 @@ namespace Animation {
     uint8_t transformationOffset = transformationOffsets[instanceID];
     uint8_t skeletonID = skeletonIDs[instanceID];
     uint8_t bonesCount = registry.getBonesCount(skeletonID);
-    const JointTransformation *targetTransformations = registry.getJointTransformations(skeletonID, animation, 0);
+    const JointTransform *targetTransforms = registry.getJointTransforms(skeletonID, animation, 0);
     for(uint8_t i=0; bonesCount>i; i++) {
-      originTransformations[transformationOffset+i] = currentTransformations[transformationOffset+i];
-      this->targetTransformations[transformationOffset+i] = targetTransformations[i];
+      originTransforms[transformationOffset+i] = currentTransforms[transformationOffset+i];
+      this->targetTransforms[transformationOffset+i] = targetTransforms[i];
     }
   }
 

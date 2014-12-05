@@ -141,13 +141,13 @@ namespace Rendering {
           stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Bone)]);
 
           stream.writeUniformMat4Set(
-            Uniforms::list.boneJointWorldTransformation,
+            Uniforms::list.boneJointWorldTransform,
             1,
             &boneMeshDrawCall->transform.components[0]
           );
 
           stream.writeUniformMat4Set(
-            Uniforms::list.boneModelJointTransformation,
+            Uniforms::list.boneModelJointTransform,
             8,
             &boneMeshDrawCall->pose.joints[0].components[0]
           );

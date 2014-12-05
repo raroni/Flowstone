@@ -2,10 +2,10 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Geometry/Point3D.h"
 #include "Quanta/Math/Quaternion.h"
-#include "Quanta/Geometry/TransformationFactory3D.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 
 namespace Quanta {
-  namespace TransformationFactory3D {
+  namespace TransformFactory3D {
     Matrix4 translation(Vector3 translation) {
       Matrix4 matrix = Matrix4::identity();
       matrix[12] = translation[0];

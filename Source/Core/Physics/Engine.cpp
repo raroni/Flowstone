@@ -1,4 +1,4 @@
-#include "Quanta/Geometry/TransformationFactory3D.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 #include "Core/Physics/DynamicSphereColliderHandle.h"
 #include "Core/Physics/CollisionResolver.h"
 #include "Core/Physics/Engine.h"
@@ -33,7 +33,7 @@ namespace Physics {
   void Engine::updateStaticTransforms() {
     Quanta::Matrix4 transform;
     for(uint16_t i=0; statics.count>i; i++) {
-      statics.transforms[i] = Quanta::TransformationFactory3D::translation(statics.positions[i]);
+      statics.transforms[i] = Quanta::TransformFactory3D::translation(statics.positions[i]);
       // todo rotation
     }
   }

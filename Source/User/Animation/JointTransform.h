@@ -5,7 +5,7 @@
 #include "Quanta/Math/Quaternion.h"
 
 namespace Animation {
-  struct JointTransformation {
+  struct JointTransform {
     Quanta::Vector3 translation;
     Quanta::Quaternion orientation;
   };

@@ -8,7 +8,7 @@ USER_SOURCES_CPP =\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
-	Libraries/Quanta/Library/Source/Geometry/TransformationFactory3D.cpp\
+	Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Point3D.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Error.cpp\
@@ -80,7 +80,7 @@ TEST_SOURCES =\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
-	Libraries/Quanta/Library/Source/Geometry/TransformationFactory3D.cpp\
+	Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Point3D.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Physics/Engine.cpp\

@@ -3,7 +3,7 @@
 
 #include <math.h>
 #include "Core/Physics/DynamicBody.h"
-#include "Quanta/Geometry/TransformationFactory3D.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 #include "Bro/Bro.h"
 #include "Animation/Animator.h"
 
@@ -34,7 +34,7 @@ static void updateOrientation(Physics::DynamicBody &body) {
   Quanta::Vector3 direction = body.velocity->getNormalized();
   float angle = atan2(direction[0]*-1, direction[2]);
   Quanta::Vector3 up(0, 1, 0);
-  (*body.orientation) = Quanta::TransformationFactory3D::rotation(up, -angle);
+  (*body.orientation) = Quanta::TransformFactory3D::rotation(up, -angle);
 }
 
 static void updateAnimation(Physics::DynamicBody &body, Animation::Animator &animator) {

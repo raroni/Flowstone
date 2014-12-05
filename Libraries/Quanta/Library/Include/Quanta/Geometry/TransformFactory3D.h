@@ -3,7 +3,7 @@ namespace Quanta {
   class Matrix4;
   class Quaternion;
 
-  namespace TransformationFactory3D {
+  namespace TransformFactory3D {
     Matrix4 translation(Vector3 position);
     Quaternion rotation(Vector3 axis, float angle);
   }

@@ -41,11 +41,11 @@ namespace Animation {
     return jointParentIndicesOffsets[skeletonID+1]-jointParentIndicesOffsets[skeletonID]+1;
   }
 
-  const JointTransformation* Registry::getJointTransformations(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
-    uint8_t offset = jointTransformationOffsets[skeletonID];
+  const JointTransform* Registry::getJointTransforms(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
+    uint8_t offset = jointTransformOffsets[skeletonID];
     uint8_t bonesCount = getBonesCount(skeletonID);
     uint8_t keyCount = getAccumulatedKeyCount(skeletonID, animation);
-    return &jointTransformations[offset+(keyCount+key)*bonesCount];
+    return &jointTransforms[offset+(keyCount+key)*bonesCount];
   }
 
   uint8_t Registry::createSkeleton(
@@ -80,12 +80,12 @@ namespace Animation {
       this->keyTimes[keyOffset+i] = keyTimes[i];
     }
 
-    uint8_t jointTransformationOffset = jointTransformationOffsets[skeletonCount];
-    uint8_t jointTransformationCount = (jointParentIndicesLength+1)*keyCount;
-    jointTransformationOffsets[skeletonCount+1] = jointTransformationOffset+jointTransformationCount;
-    for(uint8_t i=0; jointTransformationCount>i; i++) {
+    uint8_t jointTransformOffset = jointTransformOffsets[skeletonCount];
+    uint8_t jointTransformCount = (jointParentIndicesLength+1)*keyCount;
+    jointTransformOffsets[skeletonCount+1] = jointTransformOffset+jointTransformCount;
+    for(uint8_t i=0; jointTransformCount>i; i++) {
       JointConfig *config = &jointConfigs[i];
-      JointTransformation *transformation = &jointTransformations[jointTransformationOffset+i];
+      JointTransform *transformation = &jointTransforms[jointTransformOffset+i];
       transformation->translation[0] = config->translationX;
       transformation->translation[1] = config->translationY;
       transformation->translation[2] = config->translationZ;

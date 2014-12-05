@@ -6,7 +6,7 @@
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Core/Physics/DynamicBodyIndex.h"
-#include "Quanta/Geometry/TransformationFactory3D.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 
 class FrameInterpolator {
 public:

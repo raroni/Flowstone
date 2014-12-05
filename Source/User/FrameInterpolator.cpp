@@ -14,7 +14,7 @@ void FrameInterpolator::initialize(const Quanta::Vector3 *positions, const Quant
 void FrameInterpolator::interpolate(double progress) {
   for(uint8_t i=0; bodyCount>i; i++) {
     Quanta::Vector3 position = oldPositions[i] + (newPositions[i]-oldPositions[i])*progress;
-    Quanta::Matrix4 translation = Quanta::TransformationFactory3D::translation(position);
+    Quanta::Matrix4 translation = Quanta::TransformFactory3D::translation(position);
     Quanta::Quaternion orientation = Quanta::Quaternion::slerp(oldOrientations[i], newOrientations[i], progress);
     transforms[i] = translation * static_cast<Quanta::Matrix4>(orientation);
   }
