@@ -4,7 +4,8 @@ namespace Rendering {
   namespace Backend {
     enum class TextureFormat {
       RGB = GL_RGB,
-      RED = GL_RED
+      Red = GL_RED,
+      Depth = GL_DEPTH_COMPONENT
     };
   }
 }

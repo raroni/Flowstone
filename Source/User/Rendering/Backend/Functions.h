@@ -43,7 +43,8 @@ namespace Rendering {
     void setRenderTarget(RenderTargetHandle renderTarget);
     void setRenderBuffer(RenderBufferHandle renderBuffer);
     TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format);
-    void attachTexture(TextureHandle texture, uint8_t location);
+    void attachColorTexture(TextureHandle texture, uint8_t location);
+    void attachDepthTexture(TextureHandle texture);
     void attachRenderBuffer(RenderBufferHandle renderBuffer);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
@@ -51,6 +52,7 @@ namespace Rendering {
     void enableDepthTest();
     void enableFaceCulling();
     void disableDepthTest();
+    void disableDrawBuffer();
     RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height);
   }
 }
