@@ -13,6 +13,7 @@ USER_SOURCES_CPP =\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Error.cpp\
 	Source/Core/Physics/Engine.cpp\
+	Source/Core/Physics/CollisionDetector.cpp\
 	Source/Core/Physics/CollisionResolver.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\

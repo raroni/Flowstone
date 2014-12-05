@@ -22,10 +22,14 @@ namespace Physics {
     return collisionDetector.createDynamicSphere(body, radius);
   }
 
+  StaticSphereColliderHandle Engine::createStaticSphereCollider(StaticBodyIndex body, float radius) {
+    return collisionDetector.createStaticSphere(body, radius);
+  }
+
   void Engine::simulate() {
     updateStaticTransforms();
     integrator.integrate(dynamics.positions, dynamics.velocities, dynamics.forces);
-    collisionDetector.detect(collisionSet, dynamics.positions);
+    collisionDetector.detect(collisionSet, dynamics.positions, statics.positions);
     resolveCollisions(collisionSet, dynamics.positions, dynamics.velocities);
     collisionSet.clear();
   }

@@ -18,6 +18,7 @@ namespace Physics {
     public:
       DynamicBodyIndex createDynamicBody();
       DynamicSphereColliderHandle createDynamicSphereCollider(DynamicBodyIndex body, float radius);
+      StaticSphereColliderHandle createStaticSphereCollider(StaticBodyIndex body, float radius);
       DynamicBody getDynamicBody(DynamicBodyIndex index);
       StaticBody getStaticBody(StaticBodyIndex index);
       StaticBodyIndex createStaticBody();

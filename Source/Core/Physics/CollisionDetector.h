@@ -3,6 +3,7 @@
 
 #include "Core/Physics/DynamicBodyIndex.h"
 #include "Core/Physics/DynamicSphereColliderHandle.h"
+#include "Core/Physics/StaticSphereColliderHandle.h"
 #include "Core/Physics/FreeList.h"
 #include "Quanta/Math/Vector3.h"
 #include "Core/Physics/CollisionSet.h"
@@ -10,53 +11,22 @@
 
 namespace Physics {
   class CollisionDetector {
-    SphereColliderList<DynamicSphereColliderHandle, DynamicBodyIndex> dynamicSphereColliders;
   public:
     DynamicSphereColliderHandle createDynamicSphere(DynamicBodyIndex body, float radius) {
       return dynamicSphereColliders.create(body, radius);
     }
+    StaticSphereColliderHandle createStaticSphere(StaticBodyIndex body, float radius) {
+      return staticSphereColliders.create(body, radius);
+    }
     void destroyDynamicSphere(DynamicSphereColliderHandle handle) {
       dynamicSphereColliders.destroy(handle);
     }
-    void detect(CollisionSet &set, const Quanta::Vector3 *positions) {
-      detectDynamics(set.getDynamics(), positions);
-      detectStatics(set.getStatics(), positions);
-    }
+    void detect(CollisionSet &set, const Quanta::Vector3 *dynamicPositions, const Quanta::Vector3 *staticPositions);
   private:
-    void detectDynamics(CollisionSet::DynamicList &collisions, const Quanta::Vector3 *positions) {
-      uint8_t count = dynamicSphereColliders.getCount();
-      const DynamicBodyIndex *bodyIndices = dynamicSphereColliders.getBodyIndices();
-      const float *radii = dynamicSphereColliders.getRadii();
-      uint8_t substart = 1;
-      for(uint8_t i=0; count-1>i; i++) {
-        for(uint8_t n=substart; count>n; n++) {
-          DynamicBodyIndex body1 = bodyIndices[i];
-          DynamicBodyIndex body2 = bodyIndices[n];
-          Quanta::Vector3 difference = positions[body2]-positions[body1];
-          float radiiSum = radii[i] + radii[n];
-          float differenceSquaredLength = difference.getSquaredLength();
-          if(differenceSquaredLength < radiiSum*radiiSum) {
-            Quanta::Vector3 direction;
-            if(differenceSquaredLength < 0.001) {
-              direction[0] = 1;
-            } else {
-              direction = difference.getNormalized();
-            }
-            Quanta::Vector3 separation = direction*(radiiSum-difference.getLength());
-            collisions.add({
-              body1,
-              body2,
-              separation
-            });
-            if(collisions.full()) return;
-          }
-        }
-        substart++;
-      }
-    }
-    void detectStatics(CollisionSet::StaticList &collisions, const Quanta::Vector3 *positions) {
-      // not impl yet
-    }
+    SphereColliderList<DynamicSphereColliderHandle, DynamicBodyIndex> dynamicSphereColliders;
+    SphereColliderList<StaticSphereColliderHandle, StaticBodyIndex> staticSphereColliders;
+    void detectDynamics(CollisionSet::DynamicList &collisions, const Quanta::Vector3 *positions);
+    void detectStatics(CollisionSet::StaticList &collisions, const Quanta::Vector3 *staticPositions, const Quanta::Vector3 *dynamicPositions);
   };
 }
 

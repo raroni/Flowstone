@@ -284,6 +284,7 @@ namespace MainFlow {
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
     Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
+    physics.createStaticSphereCollider(bodyIndex, 0.8);
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
     (*body.position)[0] = 2;
 
@@ -297,7 +298,7 @@ namespace MainFlow {
     Physics::DynamicBody body = physics.getDynamicBody(bodyIndex);
     (*body.position)[0] = x;
     (*body.position)[2] = z;
-    physics.createDynamicSphereCollider(bodyIndex, 0.5);
+    physics.createDynamicSphereCollider(bodyIndex, 0.6);
 
     uint8_t interpolationTransformID = frameInterpolator.createInterpolation(bodyIndex);
     frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());

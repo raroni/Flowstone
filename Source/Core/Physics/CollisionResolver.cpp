@@ -12,5 +12,11 @@ namespace Physics {
       positions[bodyA] -= halfSeparation;
       positions[bodyB] += halfSeparation;
     }
+
+    CollisionSet::StaticList &statics = set.getStatics();
+    for(uint8_t i=0; statics.getCount()>i; i++) {
+      DynamicBodyIndex dynamicBody = statics[i].dynamicBody;
+      positions[dynamicBody] += statics[i].separation;
+    }
   }
 }
