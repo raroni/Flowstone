@@ -150,6 +150,11 @@ namespace Rendering {
       Textures::list.geometryLambert,
       1
     );
+    stream.writeTextureSet(
+      Uniforms::list.mergeShadow,
+      Textures::list.shadow,
+      2
+    );
 
     stream.writeObjectSet(FullscreenQuad::object);
     stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);

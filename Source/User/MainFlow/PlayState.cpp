@@ -193,7 +193,7 @@ namespace MainFlow {
     //setupMonster(meshIndex, skeletonID, -2, 2);
     //setupMonster(meshIndex, skeletonID, -2, -2);
 
-    //setupGround();
+    setupGround();
 
     //setupRock();
 
