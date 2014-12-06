@@ -7,5 +7,5 @@ uniform mat4 worldViewTransform;
 uniform mat4 modelWorldTransform;
 
 void main() {
-  gl_Position = vec4(position, 1);
+  gl_Position = viewClipTransform*worldViewTransform*vec4(position, 1);
 }
