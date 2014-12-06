@@ -21,11 +21,9 @@ namespace Rendering {
     static void initializeGeometry() {
       handles.geometry = Backend::createRenderTarget();
       Backend::setRenderTarget(handles.geometry);
-      Backend::RenderBufferHandle depthBuffer = Backend::createRenderBuffer(800, 600);
-      Backend::setRenderBuffer(depthBuffer);
-      Backend::attachRenderBuffer(depthBuffer);
       Backend::attachColorTexture(Textures::list.geometryDiffuse, 0);
       Backend::attachColorTexture(Textures::list.geometryLambert, 1);
+      Backend::attachDepthTexture(Textures::list.geometryDepth);
       Backend::setDrawBufferCount(2);
       if(!Backend::checkRenderTarget()) {
         fatalError("Render target not configured propertly.");

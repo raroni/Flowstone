@@ -191,7 +191,7 @@ namespace Rendering {
 
     float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
     float fieldOfView = M_PI/3.0f;
-    Quanta::Matrix4 viewClipTransform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 0.1, 50);
+    Quanta::Matrix4 viewClipTransform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 7, 25);
     Quanta::Matrix4 worldViewTransform = cameraTransform.getInverseMatrix();
     Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
 
