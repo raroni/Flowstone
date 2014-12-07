@@ -187,16 +187,14 @@ namespace MainFlow {
       sizeof(indices)/sizeof(uint16_t)
     );
 
-    //setupPlayer(meshIndex, skeletonID);
-    //setupMonster(meshIndex, skeletonID, 2, 2);
-    //setupMonster(meshIndex, skeletonID, 2, -2);
-    //setupMonster(meshIndex, skeletonID, -2, 2);
-    //setupMonster(meshIndex, skeletonID, -2, -2);
+    setupPlayer(meshIndex, skeletonID);
+    setupMonster(meshIndex, skeletonID, 2, 2);
+    setupMonster(meshIndex, skeletonID, 2, -2);
+    setupMonster(meshIndex, skeletonID, -2, 2);
+    setupMonster(meshIndex, skeletonID, -2, -2);
 
     setupGround();
-
     setupRock();
-
     setupBox();
 
     renderer.setLightDirection(Quanta::Vector3(-1, -2, 0).getNormalized());

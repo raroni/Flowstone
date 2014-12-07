@@ -70,15 +70,14 @@ namespace Rendering {
   void WorldRenderer::writeShadowMap(CommandStream &stream) {
     stream.writeRenderTargetSet(RenderTargets::handles.shadow);
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
-    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
 
     // todo: calculate better values for this guy
     Quanta::Matrix4 viewClip = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, viewClip.components);
-
     Quanta::Matrix4 worldView = calcLightWorldViewTransform();
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, worldView.components);
 
+    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
+    stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, viewClip.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, worldView.components);
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
       StaticMeshInstance &instance = StaticMeshInstances::list[i];
       const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
@@ -91,7 +90,9 @@ namespace Rendering {
       stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
     }
 
-    /*
+    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)]);
+    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, viewClip.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, worldView.components);
     for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
       BoneMeshInstance &instance = BoneMeshInstances::list[i];
       BoneMesh mesh = boneMeshRegistry.get(instance.mesh);
@@ -111,7 +112,6 @@ namespace Rendering {
       stream.writeObjectSet(mesh.object);
       stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
     }
-    */
 
     stream.writeRenderTargetSet(0);
   }
