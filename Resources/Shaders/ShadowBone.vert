@@ -10,5 +10,5 @@ uniform mat4 modelJointTransforms[8];
 
 void main() {
   vec4 jointPosition = modelJointTransforms[jointIndex] * vec4(position, 1);
-  gl_Position = viewClipTransform * worldViewTransform * jointWorldTransform*vec4(position, 1);
+  gl_Position = viewClipTransform * worldViewTransform * jointWorldTransform * jointPosition;
 }
