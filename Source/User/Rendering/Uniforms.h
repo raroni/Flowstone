@@ -18,7 +18,10 @@ namespace Rendering {
       Backend::UniformHandle geometryStaticModelWorldTransform;
       Backend::UniformHandle mergeDiffuse;
       Backend::UniformHandle mergeLambert;
+      Backend::UniformHandle mergeDepth;
       Backend::UniformHandle mergeShadow;
+      Backend::UniformHandle mergeGeometryClipWorldTransform;
+      Backend::UniformHandle mergeLightWorldClipTransform;
     };
     extern List list;
 

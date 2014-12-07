@@ -20,7 +20,10 @@ namespace Rendering {
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
       list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
       list.mergeLambert = Backend::getUniform(mergeProgram, "lambert");
+      list.mergeDepth = Backend::getUniform(mergeProgram, "depth");
       list.mergeShadow = Backend::getUniform(mergeProgram, "shadow");
+      list.mergeGeometryClipWorldTransform = Backend::getUniform(mergeProgram, "geometryClipWorldTransform");
+      list.mergeLightWorldClipTransform = Backend::getUniform(mergeProgram, "lightWorldClipTransform");
 
       Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
       list.shadowBoneViewClipTransform = Backend::getUniform(shadowBone, "viewClipTransform");

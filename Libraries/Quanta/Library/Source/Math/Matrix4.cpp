@@ -19,6 +19,129 @@ namespace Quanta {
     return matrix;
   }
 
+  // borrowed from http://www.mesa3d.org/
+  void Matrix4::invert() {
+    float inv[16];
+
+    inv[0] = components[5]  * components[10] * components[15] -
+             components[5]  * components[11] * components[14] -
+             components[9]  * components[6]  * components[15] +
+             components[9]  * components[7]  * components[14] +
+             components[13] * components[6]  * components[11] -
+             components[13] * components[7]  * components[10];
+
+    inv[4] = -components[4]  * components[10] * components[15] +
+              components[4]  * components[11] * components[14] +
+              components[8]  * components[6]  * components[15] -
+              components[8]  * components[7]  * components[14] -
+              components[12] * components[6]  * components[11] +
+              components[12] * components[7]  * components[10];
+
+    inv[8] = components[4]  * components[9] * components[15] -
+             components[4]  * components[11] * components[13] -
+             components[8]  * components[5] * components[15] +
+             components[8]  * components[7] * components[13] +
+             components[12] * components[5] * components[11] -
+             components[12] * components[7] * components[9];
+
+    inv[12] = -components[4]  * components[9] * components[14] +
+               components[4]  * components[10] * components[13] +
+               components[8]  * components[5] * components[14] -
+               components[8]  * components[6] * components[13] -
+               components[12] * components[5] * components[10] +
+               components[12] * components[6] * components[9];
+
+    inv[1] = -components[1]  * components[10] * components[15] +
+              components[1]  * components[11] * components[14] +
+              components[9]  * components[2] * components[15] -
+              components[9]  * components[3] * components[14] -
+              components[13] * components[2] * components[11] +
+              components[13] * components[3] * components[10];
+
+    inv[5] = components[0]  * components[10] * components[15] -
+             components[0]  * components[11] * components[14] -
+             components[8]  * components[2] * components[15] +
+             components[8]  * components[3] * components[14] +
+             components[12] * components[2] * components[11] -
+             components[12] * components[3] * components[10];
+
+    inv[9] = -components[0]  * components[9] * components[15] +
+              components[0]  * components[11] * components[13] +
+              components[8]  * components[1] * components[15] -
+              components[8]  * components[3] * components[13] -
+              components[12] * components[1] * components[11] +
+              components[12] * components[3] * components[9];
+
+    inv[13] = components[0]  * components[9] * components[14] -
+              components[0]  * components[10] * components[13] -
+              components[8]  * components[1] * components[14] +
+              components[8]  * components[2] * components[13] +
+              components[12] * components[1] * components[10] -
+              components[12] * components[2] * components[9];
+
+    inv[2] = components[1]  * components[6] * components[15] -
+             components[1]  * components[7] * components[14] -
+             components[5]  * components[2] * components[15] +
+             components[5]  * components[3] * components[14] +
+             components[13] * components[2] * components[7] -
+             components[13] * components[3] * components[6];
+
+    inv[6] = -components[0]  * components[6] * components[15] +
+              components[0]  * components[7] * components[14] +
+              components[4]  * components[2] * components[15] -
+              components[4]  * components[3] * components[14] -
+              components[12] * components[2] * components[7] +
+              components[12] * components[3] * components[6];
+
+    inv[10] = components[0]  * components[5] * components[15] -
+              components[0]  * components[7] * components[13] -
+              components[4]  * components[1] * components[15] +
+              components[4]  * components[3] * components[13] +
+              components[12] * components[1] * components[7] -
+              components[12] * components[3] * components[5];
+
+    inv[14] = -components[0]  * components[5] * components[14] +
+               components[0]  * components[6] * components[13] +
+               components[4]  * components[1] * components[14] -
+               components[4]  * components[2] * components[13] -
+               components[12] * components[1] * components[6] +
+               components[12] * components[2] * components[5];
+
+    inv[3] = -components[1] * components[6] * components[11] +
+              components[1] * components[7] * components[10] +
+              components[5] * components[2] * components[11] -
+              components[5] * components[3] * components[10] -
+              components[9] * components[2] * components[7] +
+              components[9] * components[3] * components[6];
+
+    inv[7] = components[0] * components[6] * components[11] -
+             components[0] * components[7] * components[10] -
+             components[4] * components[2] * components[11] +
+             components[4] * components[3] * components[10] +
+             components[8] * components[2] * components[7] -
+             components[8] * components[3] * components[6];
+
+    inv[11] = -components[0] * components[5] * components[11] +
+               components[0] * components[7] * components[9] +
+               components[4] * components[1] * components[11] -
+               components[4] * components[3] * components[9] -
+               components[8] * components[1] * components[7] +
+               components[8] * components[3] * components[5];
+
+    inv[15] = components[0] * components[5] * components[10] -
+              components[0] * components[6] * components[9] -
+              components[4] * components[1] * components[10] +
+              components[4] * components[2] * components[9] +
+              components[8] * components[1] * components[6] -
+              components[8] * components[2] * components[5];
+
+    float det = components[0] * inv[0] + components[1] * inv[4] + components[2] * inv[8] + components[3] * inv[12];
+    det = 1.0 / det;
+    for(int i = 0; i < 16; i++) {
+      components[i] = inv[i] * det;
+    }
+  }
+
   Matrix4& Matrix4::operator*=(Matrix4 other) {
     Matrix4 original = *this;
     reset();

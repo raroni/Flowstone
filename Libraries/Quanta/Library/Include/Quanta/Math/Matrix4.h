@@ -11,6 +11,7 @@ namespace Quanta {
         Matrix4 operator*(Matrix4 matrix);
         Matrix4& operator*=(Matrix4 matrix);
         void reset();
+        void invert();
     };
 }
 

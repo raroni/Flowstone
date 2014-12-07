@@ -40,6 +40,8 @@ namespace Rendering {
     } resolution;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    Quanta::Matrix4 calcViewClipTransform() const;
+    Quanta::Matrix4 calcLightWorldViewTransform() const;
     void writeShadowMap(CommandStream &stream);
     void writeMerge(CommandStream &stream);
     void writeDrawQueueToStream(CommandStream &stream);

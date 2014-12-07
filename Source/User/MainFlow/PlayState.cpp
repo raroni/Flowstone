@@ -195,7 +195,7 @@ namespace MainFlow {
 
     setupGround();
 
-    //setupRock();
+    setupRock();
 
     setupBox();
 
@@ -328,6 +328,7 @@ namespace MainFlow {
     physics.createStaticSphereCollider(bodyIndex, 0.8);
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
     (*body.position)[0] = 2;
+    (*body.position)[2] = 2;
 
     renderer.createStaticMeshInstance(mesh, bodyIndex);
   }

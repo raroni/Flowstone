@@ -23,7 +23,6 @@
 #include "Rendering/WorldRenderer.h"
 
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include <stdio.h>
 
 namespace Rendering {
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -74,30 +73,10 @@ namespace Rendering {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
 
     // todo: calculate better values for this guy
-    Quanta::Matrix4 viewClip = Quanta::ProjectionFactory::ortho(-5, 5, -5, 5, 0, 5);
-
+    Quanta::Matrix4 viewClip = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15);
     stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, viewClip.components);
 
-    Quanta::Vector3 forward = lightDirection;
-    Quanta::Vector3 right = Quanta::Vector3::cross(Quanta::Vector3(0, 1, 0), forward).getNormalized();
-    Quanta::Vector3 up = Quanta::Vector3::cross(forward, right).getNormalized();
-
-    Quanta::Matrix4 worldView = Quanta::Matrix4::identity();
-
-    worldView[0] = right[0];
-    worldView[4] = right[1];
-    worldView[8] = right[2];
-
-    worldView[1] = up[0];
-    worldView[5] = up[1];
-    worldView[9] = up[2];
-
-    worldView[2] = forward[0];
-    worldView[6] = forward[1];
-    worldView[10] = forward[2];
-
-    worldView *= Quanta::TransformFactory3D::translation(lightDirection*2);
-
+    Quanta::Matrix4 worldView = calcLightWorldViewTransform();
     stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, worldView.components);
 
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
@@ -137,8 +116,41 @@ namespace Rendering {
     stream.writeRenderTargetSet(0);
   }
 
+  Quanta::Matrix4 WorldRenderer::calcLightWorldViewTransform() const {
+    Quanta::Vector3 forward = lightDirection;
+    Quanta::Vector3 right = Quanta::Vector3::cross(Quanta::Vector3(0, 1, 0), forward).getNormalized();
+    Quanta::Vector3 up = Quanta::Vector3::cross(forward, right).getNormalized();
+
+    Quanta::Matrix4 worldView = Quanta::Matrix4::identity();
+
+    worldView[0] = right[0];
+    worldView[4] = right[1];
+    worldView[8] = right[2];
+
+    worldView[1] = up[0];
+    worldView[5] = up[1];
+    worldView[9] = up[2];
+
+    worldView[2] = forward[0];
+    worldView[6] = forward[1];
+    worldView[10] = forward[2];
+
+    worldView *= Quanta::TransformFactory3D::translation(lightDirection*5);
+
+    return worldView;
+  }
+
   void WorldRenderer::writeMerge(CommandStream &stream) {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+
+    Quanta::Matrix4 geometryClipWorldTransform = calcViewClipTransform()*cameraTransform.getInverseMatrix();
+
+    geometryClipWorldTransform.invert();
+
+    stream.writeUniformMat4Set(Uniforms::list.mergeGeometryClipWorldTransform, 1, geometryClipWorldTransform.components);
+
+    Quanta::Matrix4 lightWorldClipTransform = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15)*calcLightWorldViewTransform();
+    stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
 
     stream.writeTextureSet(
       Uniforms::list.mergeDiffuse,
@@ -151,9 +163,14 @@ namespace Rendering {
       1
     );
     stream.writeTextureSet(
+      Uniforms::list.mergeDepth,
+      Textures::list.geometryDepth,
+      2
+    );
+    stream.writeTextureSet(
       Uniforms::list.mergeShadow,
       Textures::list.shadow,
-      2
+      3
     );
 
     stream.writeObjectSet(FullscreenQuad::object);
@@ -189,11 +206,9 @@ namespace Rendering {
     Backend::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
     stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
 
-    float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
-    float fieldOfView = M_PI/3.0f;
-    Quanta::Matrix4 viewClipTransform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 7, 25);
-    Quanta::Matrix4 worldViewTransform = cameraTransform.getInverseMatrix();
     Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
+    Quanta::Matrix4 worldViewTransform = cameraTransform.getInverseMatrix();
+    Quanta::Matrix4 viewClipTransform = calcViewClipTransform();
 
     const size_t matrixSize = sizeof(float)*16;
     const size_t vectorSize = sizeof(float)*3;
@@ -205,6 +220,13 @@ namespace Rendering {
     stream.writeBufferWrite(Backend::BufferTarget::Uniform, totalSize, data);
 
     stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);
+  }
+
+  Quanta::Matrix4 WorldRenderer::calcViewClipTransform() const {
+    float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
+    float fieldOfView = M_PI/3.0f;
+    Quanta::Matrix4 transform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 7, 25);
+    return transform;
   }
 
   void WorldRenderer::writeDrawQueueToStream(CommandStream &stream) {
