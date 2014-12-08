@@ -5,6 +5,7 @@ in vec2 texCoords;
 
 uniform sampler2D diffuse;
 uniform sampler2D lambert;
+uniform sampler2D normal;
 uniform sampler2D depth;
 uniform sampler2D shadow;
 

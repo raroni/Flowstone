@@ -163,14 +163,19 @@ namespace Rendering {
       1
     );
     stream.writeTextureSet(
+      Uniforms::list.mergeNormal,
+      Textures::list.geometryNormal,
+      2
+    );
+    stream.writeTextureSet(
       Uniforms::list.mergeDepth,
       Textures::list.geometryDepth,
-      2
+      3
     );
     stream.writeTextureSet(
       Uniforms::list.mergeShadow,
       Textures::list.shadow,
-      3
+      4
     );
 
     stream.writeObjectSet(FullscreenQuad::object);
