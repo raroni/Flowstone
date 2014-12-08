@@ -9,6 +9,7 @@ namespace Rendering {
       Backend::TextureHandle geometryDiffuse;
       Backend::TextureHandle geometryLambert;
       Backend::TextureHandle geometryDepth;
+      Backend::TextureHandle geometryNormal;
       Backend::TextureHandle shadow;
     };
 

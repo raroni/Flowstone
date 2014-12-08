@@ -131,6 +131,10 @@ namespace Rendering {
       if(format == TextureFormat::Depth) {
         dataType = GL_FLOAT;
       }
+      GLenum dataFormat = static_cast<GLint>(format);
+      if(format == TextureFormat::SignedNormalizedRGB) {
+        dataFormat = GL_RGB;
+      }
 
       GLuint texture;
       glGenTextures(1, &texture);
@@ -142,7 +146,7 @@ namespace Rendering {
         width,
         height,
         0,
-        static_cast<GLint>(format),
+        dataFormat,
         dataType,
         NULL
       );

@@ -23,8 +23,9 @@ namespace Rendering {
       Backend::setRenderTarget(handles.geometry);
       Backend::attachColorTexture(Textures::list.geometryDiffuse, 0);
       Backend::attachColorTexture(Textures::list.geometryLambert, 1);
+      Backend::attachColorTexture(Textures::list.geometryNormal, 2);
       Backend::attachDepthTexture(Textures::list.geometryDepth);
-      Backend::setDrawBufferCount(2);
+      Backend::setDrawBufferCount(3);
       if(!Backend::checkRenderTarget()) {
         fatalError("Render target not configured propertly.");
       }
