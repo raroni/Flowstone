@@ -197,12 +197,12 @@ namespace MainFlow {
     setupRock();
     setupBox();
 
-    renderer.setLightDirection(Quanta::Vector3(-1, -2, 1).getNormalized());
+    renderer.setLightDirection(Quanta::Vector3(1, -2, 1.5).getNormalized());
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
-    camera.position[1] = 6;
-    camera.rotateX(0.5);
+    camera.position[1] = 12;
+    camera.rotateX(0.8);
   }
 
   void PlayState::setupGround() {
