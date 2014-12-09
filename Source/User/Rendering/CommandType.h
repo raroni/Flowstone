@@ -5,6 +5,7 @@ namespace Rendering {
   enum class CommandType {
     ProgramSet,
     UniformMat4Set,
+    UniformVec3Set,
     ObjectSet,
     IndexedDraw,
     BufferSet,

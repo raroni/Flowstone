@@ -25,6 +25,11 @@ namespace Rendering {
     uint16_t count;
   };
 
+  struct UniformVec3SetCommand {
+    Backend::UniformHandle uniform;
+    uint16_t count;
+  };
+
   struct IndexedDrawCommand {
     uint16_t indexCount;
     Backend::DataType dataType;
