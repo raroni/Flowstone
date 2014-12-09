@@ -11,8 +11,9 @@ uniform sampler2D shadow;
 
 uniform mat4 geometryClipWorldTransform;
 uniform mat4 lightWorldClipTransform;
+uniform vec3 lightDirection;
 
-const float shadowBias = 0.01;
+const float shadowBias = 0.005;
 
 void main() {
   float depth = texture(depth, texCoords).r;
@@ -27,10 +28,16 @@ void main() {
   vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
   vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
 
-  float shadowModifier = 1.0f;
-  if(lightNDCPosition.z*0.5+0.5-shadowBias > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
-    shadowModifier = 0.5f;
+  float inShadow = 0;
+  vec3 worldNormal = texture(normal, texCoords).xyz;
+  if(dot(lightDirection, worldNormal) > -0.1) {
+    inShadow = 1;
   }
+  else if(lightNDCPosition.z*0.5+0.5-shadowBias > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
+    inShadow = 1;
+  }
+
+  float shadowModifier = 0.5+(1-inShadow)*0.5;
 
   fragColor = texture(diffuse, texCoords).rgb * texture(lambert, texCoords).r * shadowModifier;
 }

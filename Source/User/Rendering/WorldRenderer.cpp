@@ -152,6 +152,8 @@ namespace Rendering {
     Quanta::Matrix4 lightWorldClipTransform = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15)*calcLightWorldViewTransform();
     stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
 
+    stream.writeUniformVec3Set(Uniforms::list.mergeLightDirection, 1, lightDirection.components);
+
     stream.writeTextureSet(
       Uniforms::list.mergeDiffuse,
       Textures::list.geometryDiffuse,

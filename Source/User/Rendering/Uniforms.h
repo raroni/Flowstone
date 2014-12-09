@@ -23,6 +23,7 @@ namespace Rendering {
       Backend::UniformHandle mergeShadow;
       Backend::UniformHandle mergeGeometryClipWorldTransform;
       Backend::UniformHandle mergeLightWorldClipTransform;
+      Backend::UniformHandle mergeLightDirection;
     };
     extern List list;
 
