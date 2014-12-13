@@ -3,7 +3,7 @@
 namespace Rendering {
   namespace StaticMeshInstances {
     static uint16_t count = 0;
-    StaticMeshInstance list[256];
+    StaticMeshInstance list[Config::maxStaticMeshInstances];
 
     void create(StaticMeshIndex mesh, StaticTransformIndex transform) {
       list[count].mesh = mesh;

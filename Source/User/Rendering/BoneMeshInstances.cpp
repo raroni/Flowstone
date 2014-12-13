@@ -3,7 +3,7 @@
 namespace Rendering {
   namespace BoneMeshInstances {
     static uint16_t count = 0;
-    BoneMeshInstance list[256];
+    BoneMeshInstance list[Config::maxBoneMeshInstances];
 
     BoneMeshInstanceIndex create(BoneMeshIndex mesh, DynamicTransformIndex transform, Animation::PoseIndex pose) {
       list[count].mesh = mesh;

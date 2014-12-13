@@ -4,6 +4,7 @@
 #include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
 #include "Quanta/Math/Matrix4.h"
+#include "Quanta/Geometry/Transformer.h"
 #include "Rendering/BoneMeshInstances.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/Commands.h"
@@ -30,7 +31,8 @@ namespace Rendering {
   }
 
   void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose) {
-    BoneMeshInstances::create(meshIndex, transformIndex, pose);
+    BoneMeshInstanceIndex instance = BoneMeshInstances::create(meshIndex, transformIndex, pose);
+    culler.addBone(instance, 1.0); // TODO: make real bounding sphere radius
   }
 
   StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
@@ -46,7 +48,46 @@ namespace Rendering {
     resolution.height = height;
   }
 
+  // TODO: No need to calculate this over and over
+  Quanta::Frustum WorldRenderer::calcFrustum() const {
+    Quanta::Frustum frustum;
+
+    float nearWidth = tan(Config::perspective.fieldOfView/2)*2*Config::perspective.near;
+    float nearHeight = nearWidth/(800.0/600.0); // TODO: replace with real aspect ratio
+    Quanta::Vector3 up(0, 1, 0);
+    Quanta::Vector3 right(1, 0, 0);
+
+    Quanta::Plane &nearPlane = frustum.planes[Quanta::Frustum::Near];
+    nearPlane.position = Quanta::Vector3(0, 0, Config::perspective.near);
+    nearPlane.normal = Quanta::Vector3(0, 0, 1);
+
+    Quanta::Plane &farPlane = frustum.planes[Quanta::Frustum::Far];
+    farPlane.position = Quanta::Vector3(0, 0, Config::perspective.far);
+    farPlane.normal = Quanta::Vector3(0, 0, 1);
+
+    Quanta::Plane &topPlane = frustum.planes[Quanta::Frustum::Top];
+    topPlane.position = Quanta::Vector3::zero();
+    topPlane.normal = Quanta::Vector3::cross(right, Quanta::Vector3(0, nearHeight/2, Config::perspective.near).getNormalized());
+
+    Quanta::Plane &bottomPlane = frustum.planes[Quanta::Frustum::Bottom];
+    bottomPlane.position = Quanta::Vector3::zero();
+    bottomPlane.normal = Quanta::Vector3(topPlane.normal[0], topPlane.normal[1]*-1, topPlane.normal[2]);
+
+    Quanta::Plane &leftPlane = frustum.planes[Quanta::Frustum::Left];
+    leftPlane.position = Quanta::Vector3::zero();
+    leftPlane.normal = Quanta::Vector3::cross(up, Quanta::Vector3(-nearWidth/2, 0, Config::perspective.near).getNormalized());
+
+    Quanta::Plane &rightPlane = frustum.planes[Quanta::Frustum::Right];
+    rightPlane.position = Quanta::Vector3::zero();
+    rightPlane.normal = Quanta::Vector3(leftPlane.normal[0]*-1, leftPlane.normal[1], leftPlane.normal[2]);
+
+    Quanta::Transformer::updateFrustum(frustum, cameraTransform.getMatrix());
+    return frustum;
+  }
+
   void WorldRenderer::writeCommands(CommandStream &stream) {
+    culler.cull(calcFrustum(), cullResult);
+
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
@@ -185,6 +226,16 @@ namespace Rendering {
     stream.writeObjectSet(0);
   }
 
+  void WorldRenderer::setDynamicTransforms(const Quanta::Matrix4* transforms) {
+    dynamicTransforms = transforms;
+    culler.dynamicTransforms = transforms;
+  }
+
+  void WorldRenderer::setStaticTransforms(const Quanta::Matrix4* transforms) {
+    staticTransforms = transforms;
+    culler.staticTransforms = transforms;
+  }
+
   void WorldRenderer::buildDrawQueue() {
     drawQueue.reset();
     for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
@@ -231,8 +282,7 @@ namespace Rendering {
 
   Quanta::Matrix4 WorldRenderer::calcViewClipTransform() const {
     float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
-    float fieldOfView = M_PI/3.0f;
-    Quanta::Matrix4 transform = Quanta::ProjectionFactory::perspective(fieldOfView, aspectRatio, 7, 25);
+    Quanta::Matrix4 transform = Quanta::ProjectionFactory::perspective(Config::perspective.fieldOfView, aspectRatio, Config::perspective.near, Config::perspective.far);
     return transform;
   }
 

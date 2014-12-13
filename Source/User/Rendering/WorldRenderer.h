@@ -3,6 +3,7 @@
 
 #include "Pose.h"
 #include "Quanta/Geometry/Transform.h"
+#include "Quanta/Geometry/Frustum.h"
 #include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
@@ -11,6 +12,8 @@
 #include "Rendering/StaticTransformIndex.h"
 #include "Rendering/DynamicTransformIndex.h"
 #include "Rendering/MeshInfo.h"
+#include "Rendering/Culler.h"
+#include "Rendering/CullResult.h"
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Rendering/DrawQueue.h"
@@ -27,17 +30,21 @@ namespace Rendering {
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     void createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform);
     void writeCommands(CommandStream &stream);
-    const Quanta::Matrix4* dynamicTransforms;
-    const Quanta::Matrix4* staticTransforms;
     const Pose* poses;
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
     Quanta::Vector3 lightDirection;
+    void setDynamicTransforms(const Quanta::Matrix4* transforms);
+    void setStaticTransforms(const Quanta::Matrix4* transforms);
   private:
+    const Quanta::Matrix4* dynamicTransforms;
+    const Quanta::Matrix4* staticTransforms;
     struct {
       uint16_t width;
       uint16_t height;
     } resolution;
+    Culler culler;
+    CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
     Quanta::Matrix4 calcViewClipTransform() const;
@@ -47,6 +54,7 @@ namespace Rendering {
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();
     void writeGlobalUniformUpdate(CommandStream &stream);
+    Quanta::Frustum calcFrustum() const;
   };
 }
 

@@ -10,6 +10,7 @@ USER_SOURCES_CPP =\
 	Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
 	Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Point3D.cpp\
+	Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Error.cpp\
 	Source/Core/Physics/Engine.cpp\
@@ -30,6 +31,8 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/DrawQueue.cpp\
 	Source/User/Rendering/Uniforms.cpp\
 	Source/User/Rendering/Buffers.cpp\
+	Source/User/Rendering/Culler.cpp\
+	Source/User/Rendering/CullResult.cpp\
 	Source/User/Rendering/RenderTargets.cpp\
 	Source/User/Rendering/FullscreenQuad.cpp\
 	Source/User/Rendering/Textures.cpp\

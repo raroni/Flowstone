@@ -1,3 +1,4 @@
+#include "Rendering/Config.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/AttributeLocation.h"
 #include "Rendering/StaticMeshes.h"
@@ -10,7 +11,7 @@ namespace Rendering {
         float nx, ny, nz;
         float color[3];
       };
-      StaticMesh list[128];
+      StaticMesh list[Config::maxStaticMeshes];
       uint8_t count = 0;
     }
 

@@ -12,7 +12,7 @@ namespace Quanta {
         Point3D(float x, float y, float z);
         Point3D(Vector3 vector);
         Point3D();
-        Vector3& getVector();
+        const Vector3& getVector() const;
         float& operator[](const int index);
         const float& operator[](const int index) const;
         Point3D operator-(Vector3 other);

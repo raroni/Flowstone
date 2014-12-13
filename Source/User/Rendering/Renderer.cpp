@@ -58,11 +58,11 @@ namespace Rendering {
   }
 
   void Renderer::setDynamicTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.dynamicTransforms = transforms;
+    worldRenderer.setDynamicTransforms(transforms);
   }
 
   void Renderer::setStaticTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.staticTransforms = transforms;
+    worldRenderer.setStaticTransforms(transforms);
   }
 
   void Renderer::setPoses(const Pose *poses) {

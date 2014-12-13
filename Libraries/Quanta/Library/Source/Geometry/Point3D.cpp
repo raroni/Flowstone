@@ -8,7 +8,7 @@ namespace Quanta {
 
   Point3D::Point3D(float x, float y, float z) : vector(x, y, z) { }
 
-  Vector3& Point3D::getVector() {
+  const Vector3& Point3D::getVector() const {
     return vector;
   }
 

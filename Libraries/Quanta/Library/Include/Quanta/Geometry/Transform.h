@@ -12,7 +12,7 @@ namespace Quanta {
   public:
     Quaternion orientation = Quaternion::identity();;
     Point3D position;
-    Matrix4 getMatrix();
+    Matrix4 getMatrix() const;
     Matrix4 getInverseMatrix();
     Quaternion getOrientation();
     void rotateX(float angle);

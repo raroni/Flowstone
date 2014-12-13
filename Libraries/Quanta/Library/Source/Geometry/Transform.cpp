@@ -3,7 +3,7 @@
 #include "Quanta/Geometry/Transform.h"
 
 namespace Quanta {
-  Matrix4 Transform::getMatrix() {
+  Matrix4 Transform::getMatrix() const {
     Matrix4 orientationMatrix = orientation;
     auto translationMatrix = TransformFactory3D::translation(position.getVector());
     return translationMatrix*orientationMatrix;

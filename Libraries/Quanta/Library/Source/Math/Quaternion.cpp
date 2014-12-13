@@ -33,7 +33,7 @@ namespace Quanta {
     return conjugate;
   }
 
-  Quaternion::operator Matrix4() {
+  Quaternion::operator Matrix4() const {
     auto matrix = Matrix4::identity();
     matrix[0] = 2*(pow(real, 2.0f) + pow(imaginaries[0], 2))-1;
     matrix[1] = 2*(imaginaries[0]*imaginaries[1]+real*imaginaries[2]);
