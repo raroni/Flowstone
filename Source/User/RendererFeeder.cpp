@@ -4,14 +4,14 @@
 #include "FrameInterpolator.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
-#include "PhysicsRenderingLink.h"
+#include "RendererFeeder.h"
 
-PhysicsRenderingLink::PhysicsRenderingLink(const Physics::Engine &physicsEngine, Rendering::Renderer &renderer, const FrameInterpolator &interpolator) :
+RendererFeeder::RendererFeeder(const Physics::Engine &physicsEngine, Rendering::Renderer &renderer, const FrameInterpolator &interpolator) :
 physicsEngine(physicsEngine),
 interpolator(interpolator),
 renderer(renderer) { }
 
-void PhysicsRenderingLink::update() {
+void RendererFeeder::update() {
   const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
   for(uint8_t i=0; dynamicBoneBindings.count>i; i++) {
     DynamicBoneBinding &binding = dynamicBoneBindings.list[i];
@@ -25,7 +25,7 @@ void PhysicsRenderingLink::update() {
   }
 }
 
-void PhysicsRenderingLink::bindDynamicBone(uint8_t interpolation, Rendering::BoneMeshInstanceIndex mesh) {
+void RendererFeeder::bindDynamicBone(uint8_t interpolation, Rendering::BoneMeshInstanceIndex mesh) {
   DynamicBoneBinding binding;
   binding.interpolation = interpolation;
   binding.mesh = mesh;
@@ -33,7 +33,7 @@ void PhysicsRenderingLink::bindDynamicBone(uint8_t interpolation, Rendering::Bon
   dynamicBoneBindings.count++;
 }
 
-void PhysicsRenderingLink::bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh) {
+void RendererFeeder::bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh) {
   StaticStaticBinding binding;
   binding.body = body;
   binding.mesh = mesh;

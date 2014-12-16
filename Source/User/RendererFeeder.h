@@ -1,5 +1,5 @@
-#ifndef PHYSICS_RENDERING_LINK_H
-#define PHYSICS_RENDERING_LINK_H
+#ifndef RENDERER_FEEDER_H
+#define RENDERER_FEEDER_H
 
 #include "Core/Physics/StaticBodyIndex.h"
 #include "Core/Physics/DynamicBodyIndex.h"
@@ -16,9 +16,9 @@ namespace Rendering {
 
 class FrameInterpolator;
 
-class PhysicsRenderingLink {
+class RendererFeeder {
 public:
-  PhysicsRenderingLink(const Physics::Engine &physicsEngine, Rendering::Renderer &renderer, const FrameInterpolator &interpolator);
+  RendererFeeder(const Physics::Engine &physicsEngine, Rendering::Renderer &renderer, const FrameInterpolator &interpolator);
   void bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh);
   void bindDynamicBone(uint8_t interpolation, Rendering::BoneMeshInstanceIndex mesh);
   void update();
