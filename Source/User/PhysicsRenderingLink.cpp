@@ -12,10 +12,10 @@ interpolator(interpolator),
 renderer(renderer) { }
 
 void PhysicsRenderingLink::update() {
-  const Quanta::Matrix4* transforms = interpolator.getTransforms();
+  const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
   for(uint8_t i=0; dynamicBoneBindings.count>i; i++) {
     DynamicBoneBinding &binding = dynamicBoneBindings.list[i];
-    renderer.updateBoneMeshTransform(binding.mesh, transforms[binding.interpolation]);
+    renderer.updateBoneMeshTransform(binding.mesh, interpolatedTransforms[binding.interpolation]);
   }
 
   const Quanta::Matrix4 *staticTransforms = physicsEngine.getStaticTransforms();
