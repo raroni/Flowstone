@@ -3,8 +3,6 @@
 #include "Core/Error.h"
 #include "Rendering/Backend/Functions.h"
 
-#include <stdio.h>
-
 namespace Rendering {
   namespace Backend {
     ShaderHandle createShader(ShaderType type, const char *source) {
@@ -201,12 +199,6 @@ namespace Rendering {
     }
 
     bool checkRenderTarget() {
-GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
-if (Status != GL_FRAMEBUFFER_COMPLETE) {
-    printf("FB error, status: 0x%x\n", Status);
-}
-
       GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
       return status == GL_FRAMEBUFFER_COMPLETE;
     }
