@@ -2,6 +2,7 @@
 #include "Core/Physics/DynamicBody.h"
 #include "Core/Physics/StaticBody.h"
 #include "FrameInterpolator.h"
+#include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "RendererFeeder.h"
@@ -18,11 +19,12 @@ renderer(renderer) { }
 
 void RendererFeeder::update() {
   const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
+  const Pose *poses = animator.getWorldPoses();
   for(uint8_t i=0; dynamicBoneBindings.count>i; i++) {
     DynamicBoneBinding &binding = dynamicBoneBindings.list[i];
     Rendering::BoneMeshInstance &instance = renderer.getBoneMeshInstance(binding.mesh);
     instance.transform = interpolatedTransforms[binding.interpolation];
-    // instance.pose = x; TODO
+    instance.pose = poses[binding.pose];
   }
 
   const Quanta::Matrix4 *staticTransforms = physicsEngine.getStaticTransforms();
@@ -32,10 +34,11 @@ void RendererFeeder::update() {
   }
 }
 
-void RendererFeeder::bindDynamicBone(uint8_t interpolation, Rendering::BoneMeshInstanceIndex mesh) {
+void RendererFeeder::setupBoneMesh(uint8_t interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh) {
   DynamicBoneBinding binding;
   binding.interpolation = interpolation;
   binding.mesh = mesh;
+  binding.pose = pose;
   dynamicBoneBindings.list[dynamicBoneBindings.count] = binding;
   dynamicBoneBindings.count++;
 }

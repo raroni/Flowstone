@@ -5,9 +5,8 @@ namespace Rendering {
     static uint16_t count = 0;
     BoneMeshInstance list[Config::maxBoneMeshInstances];
 
-    BoneMeshInstanceIndex create(BoneMeshIndex mesh, Animation::PoseIndex pose) {
+    BoneMeshInstanceIndex create(BoneMeshIndex mesh) {
       list[count].mesh = mesh;
-      list[count].pose = pose;
       list[count].transform = Quanta::Matrix4::identity();
       return count++;
     }

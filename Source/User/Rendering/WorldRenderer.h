@@ -1,7 +1,6 @@
 #ifndef RENDERING_WORLD_RENDERER_H
 #define RENDERING_WORLD_RENDERER_H
 
-#include "Pose.h"
 #include "Quanta/Geometry/Transform.h"
 #include "Quanta/Geometry/Frustum.h"
 #include "Animation/PoseIndex.h"
@@ -25,12 +24,11 @@ namespace Rendering {
   class WorldRenderer {
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex BoneMeshIndex, Animation::PoseIndex pose);
+    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex BoneMeshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void writeCommands(CommandStream &stream);
-    const Pose* poses;
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
     BoneMeshInstance& getBoneMeshInstance(BoneMeshInstanceIndex index);

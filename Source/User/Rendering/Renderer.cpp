@@ -53,8 +53,8 @@ namespace Rendering {
     worldRenderer.updateResolution(width, height);
   }
 
-  BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, Animation::PoseIndex pose) {
-    return worldRenderer.createBoneMeshInstance(meshIndex, pose);
+  BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
+    return worldRenderer.createBoneMeshInstance(meshIndex);
   }
 
   void Renderer::draw() {
@@ -63,10 +63,6 @@ namespace Rendering {
     stream.rewind();
     dispatch();
     stream.reset();
-  }
-
-  void Renderer::setPoses(const Pose *poses) {
-    worldRenderer.poses = poses;
   }
 
   void Renderer::dispatch() {

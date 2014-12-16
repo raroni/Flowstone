@@ -30,8 +30,8 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
-  BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, Animation::PoseIndex pose) {
-    BoneMeshInstanceIndex instance = BoneMeshInstances::create(meshIndex, pose);
+  BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
+    BoneMeshInstanceIndex instance = BoneMeshInstances::create(meshIndex);
     culler.addBone(instance, 1.0); // TODO: make real bounding sphere radius
     return instance;
   }
@@ -156,7 +156,7 @@ namespace Rendering {
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneModelJointTransforms,
         8,
-        &poses[instance.pose].joints[0].components[0]
+        instance.pose.joints[0].components
       );
 
       stream.writeObjectSet(mesh.object);
@@ -243,7 +243,7 @@ namespace Rendering {
       BoneMesh mesh = boneMeshRegistry.get(instance.mesh);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.pose = poses[instance.pose];
+      call.pose = instance.pose;
       call.transform = instance.transform;
       drawQueue.addBoneMesh(call);
     }

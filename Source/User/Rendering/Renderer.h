@@ -16,13 +16,12 @@ namespace Rendering {
   public:
     void initialize();
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex meshIndex, Animation::PoseIndex pose);
+    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex meshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
     BoneMeshInstance& getBoneMeshInstance(BoneMeshInstanceIndex index);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void draw();
-    void setPoses(const Pose *poses);
     Quanta::Transform& getCameraTransform();
     void updateResolution(uint16_t width, uint16_t height);
     void setLightDirection(Quanta::Vector3 lightDirection);

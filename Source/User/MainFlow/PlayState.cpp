@@ -11,8 +11,6 @@ namespace MainFlow {
   physicsRenderingLink(physics, frameInterpolator, animator, renderer) { }
 
   void PlayState::enter() {
-    renderer.setPoses(animator.getWorldPoses());
-
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
     float animationDurations[] = { 3.0f, 1.0f };
@@ -248,9 +246,9 @@ namespace MainFlow {
 
     airDrag.add(playerBody);
 
-    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh, pose);
+    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh);
 
-    physicsRenderingLink.bindDynamicBone(interpolationTransformID, meshInstance);
+    physicsRenderingLink.setupBoneMesh(interpolationTransformID, pose, meshInstance);
   }
 
   void PlayState::setupBox() {
@@ -351,9 +349,9 @@ namespace MainFlow {
 
     airDrag.add(bodyIndex);
 
-    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh, pose);
+    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh);
 
-    physicsRenderingLink.bindDynamicBone(interpolationTransformID, meshInstance);
+    physicsRenderingLink.setupBoneMesh(interpolationTransformID, pose, meshInstance);
   }
 
   void PlayState::update(double timeDelta) {

@@ -29,11 +29,12 @@ public:
     Rendering::Renderer &renderer
   );
   void bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh);
-  void bindDynamicBone(uint8_t interpolation, Rendering::BoneMeshInstanceIndex mesh);
+  void setupBoneMesh(uint8_t interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh);
   void update();
 private:
   struct DynamicBoneBinding {
     uint8_t interpolation;
+    Animation::PoseIndex pose;
     Rendering::BoneMeshInstanceIndex mesh;
   };
   struct {
@@ -49,8 +50,8 @@ private:
     uint8_t count = 0;
   } staticStaticBindings;
   const Physics::Engine &physicsEngine;
-  const Animation::Animator &animator;
   const FrameInterpolator &interpolator;
+  const Animation::Animator &animator;
   Rendering::Renderer &renderer;
 };
 
