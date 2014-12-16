@@ -17,15 +17,15 @@ namespace Rendering {
   }
 
   void Culler::cull(const Quanta::Frustum &frustum, CullResult &result) const {
+    /*
     for(uint16_t i=0; staticInstances.count>i; i++) {
       StaticMeshInstanceIndex index = staticInstances.indices[i];
       StaticMeshInstance &instance = StaticMeshInstances::list[index];
-      /*
       if(check(frustum, staticTransforms[instance.transform], staticInstances.radii[i])) {
         result.addStaticInstance(index);
       }
-      */
     }
+    */
   }
 
   bool Culler::check(const Quanta::Frustum &frustum, const Quanta::Matrix4 &transform, float radius) const {

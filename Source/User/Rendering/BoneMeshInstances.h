@@ -10,7 +10,7 @@ namespace Rendering {
   namespace BoneMeshInstances {
     extern BoneMeshInstance list[Config::maxBoneMeshInstances];
     BoneMeshInstanceIndex create(BoneMeshIndex boneMesh, Animation::PoseIndex pose);
-    void updateTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform);
+    BoneMeshInstance& get(BoneMeshInstanceIndex index);
     uint16_t getCount();
   }
 }

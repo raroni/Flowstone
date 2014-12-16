@@ -25,8 +25,8 @@ namespace Rendering {
     worldRenderer.lightDirection = lightDirection;
   }
 
-  void Renderer::updateBoneMeshTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
-    worldRenderer.updateBoneMeshTransform(index, transform);
+  BoneMeshInstance& Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
+    return worldRenderer.getBoneMeshInstance(index);
   }
 
   void Renderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {

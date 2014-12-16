@@ -7,6 +7,7 @@
 #include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/BoneMeshInstance.h"
 #include "Rendering/StaticVertex.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/MeshInfo.h"
@@ -27,12 +28,12 @@ namespace Rendering {
     BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex BoneMeshIndex, Animation::PoseIndex pose);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
-    void updateBoneMeshTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void writeCommands(CommandStream &stream);
     const Pose* poses;
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
+    BoneMeshInstance& getBoneMeshInstance(BoneMeshInstanceIndex index);
     Quanta::Vector3 lightDirection;
   private:
     struct {

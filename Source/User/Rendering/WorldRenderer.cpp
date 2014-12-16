@@ -36,12 +36,12 @@ namespace Rendering {
     return instance;
   }
 
-  StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
-    return StaticMeshes::create(info, vertices, indices, shapes);
+  BoneMeshInstance& WorldRenderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
+    return BoneMeshInstances::get(index);
   }
 
-  void WorldRenderer::updateBoneMeshTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
-    BoneMeshInstances::updateTransform(index, transform);
+  StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
+    return StaticMeshes::create(info, vertices, indices, shapes);
   }
 
   void WorldRenderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {

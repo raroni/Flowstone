@@ -16,8 +16,8 @@ namespace Rendering {
       return count;
     }
 
-    void updateTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
-      list[index].transform = transform;
+    BoneMeshInstance& get(BoneMeshInstanceIndex index) {
+      return list[index];
     }
   }
 }

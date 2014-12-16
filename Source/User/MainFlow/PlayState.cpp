@@ -8,7 +8,7 @@
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer),
-  physicsRenderingLink(physics, renderer, frameInterpolator) { }
+  physicsRenderingLink(physics, frameInterpolator, animator, renderer) { }
 
   void PlayState::enter() {
     renderer.setPoses(animator.getWorldPoses());

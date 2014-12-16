@@ -14,11 +14,20 @@ namespace Rendering {
   class Renderer;
 }
 
+namespace Animation {
+  class Animator;
+}
+
 class FrameInterpolator;
 
 class RendererFeeder {
 public:
-  RendererFeeder(const Physics::Engine &physicsEngine, Rendering::Renderer &renderer, const FrameInterpolator &interpolator);
+  RendererFeeder(
+    const Physics::Engine &physicsEngine,
+    const FrameInterpolator &interpolator,
+    const Animation::Animator &animator,
+    Rendering::Renderer &renderer
+  );
   void bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh);
   void bindDynamicBone(uint8_t interpolation, Rendering::BoneMeshInstanceIndex mesh);
   void update();
@@ -40,6 +49,7 @@ private:
     uint8_t count = 0;
   } staticStaticBindings;
   const Physics::Engine &physicsEngine;
+  const Animation::Animator &animator;
   const FrameInterpolator &interpolator;
   Rendering::Renderer &renderer;
 };
