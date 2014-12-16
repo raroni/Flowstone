@@ -30,17 +30,26 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
-  void WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose) {
-    BoneMeshInstanceIndex instance = BoneMeshInstances::create(meshIndex, transformIndex, pose);
+  BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex, Animation::PoseIndex pose) {
+    BoneMeshInstanceIndex instance = BoneMeshInstances::create(meshIndex, pose);
     culler.addBone(instance, 1.0); // TODO: make real bounding sphere radius
+    return instance;
   }
 
   StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
     return StaticMeshes::create(info, vertices, indices, shapes);
   }
 
-  void WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform) {
-    StaticMeshInstances::create(mesh, transform);
+  void WorldRenderer::updateBoneMeshTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+    BoneMeshInstances::updateTransform(index, transform);
+  }
+
+  void WorldRenderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+    StaticMeshInstances::updateTransform(index, transform);
+  }
+
+  StaticMeshInstanceIndex WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh) {
+    return StaticMeshInstances::create(mesh);
   }
 
   void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {
@@ -125,7 +134,7 @@ namespace Rendering {
       stream.writeUniformMat4Set(
         Uniforms::list.shadowStaticModelWorldTransform,
         1,
-        staticTransforms[instance.transform].components
+        instance.transform.components
       );
       stream.writeObjectSet(mesh.object);
       stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
@@ -141,7 +150,7 @@ namespace Rendering {
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneJointWorldTransform,
         1,
-        &dynamicTransforms[instance.transform].components[0]
+        instance.transform.components
       );
 
       stream.writeUniformMat4Set(
@@ -226,16 +235,6 @@ namespace Rendering {
     stream.writeObjectSet(0);
   }
 
-  void WorldRenderer::setDynamicTransforms(const Quanta::Matrix4* transforms) {
-    dynamicTransforms = transforms;
-    culler.dynamicTransforms = transforms;
-  }
-
-  void WorldRenderer::setStaticTransforms(const Quanta::Matrix4* transforms) {
-    staticTransforms = transforms;
-    culler.staticTransforms = transforms;
-  }
-
   void WorldRenderer::buildDrawQueue() {
     drawQueue.reset();
     for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
@@ -245,7 +244,7 @@ namespace Rendering {
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
       call.pose = poses[instance.pose];
-      call.transform = dynamicTransforms[instance.transform];
+      call.transform = instance.transform;
       drawQueue.addBoneMesh(call);
     }
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
@@ -254,7 +253,7 @@ namespace Rendering {
       const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.transform = staticTransforms[instance.transform];
+      call.transform = instance.transform;
       drawQueue.addStaticMesh(call);
     }
     drawQueue.sort();

@@ -1,13 +1,13 @@
 #ifndef RENDERING_STATIC_MESH_INSTANCE_H
 #define RENDERING_STATIC_MESH_INSTANCE_H
 
-#include "Rendering/StaticTransformIndex.h"
 #include "Rendering/StaticMeshIndex.h"
+#include "Quanta/Math/Matrix4.h"
 
 namespace Rendering {
   struct StaticMeshInstance {
     StaticMeshIndex mesh;
-    StaticTransformIndex transform;
+    Quanta::Matrix4 transform;
   };
 }
 

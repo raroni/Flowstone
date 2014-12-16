@@ -9,8 +9,6 @@
 #include "Rendering/BoneVertex.h"
 #include "Rendering/StaticVertex.h"
 #include "Rendering/BoneMeshRegistry.h"
-#include "Rendering/StaticTransformIndex.h"
-#include "Rendering/DynamicTransformIndex.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Culler.h"
 #include "Rendering/CullResult.h"
@@ -26,19 +24,17 @@ namespace Rendering {
   class WorldRenderer {
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    void createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose);
+    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex BoneMeshIndex, Animation::PoseIndex pose);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
-    void createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform);
+    StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
+    void updateBoneMeshTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform);
+    void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void writeCommands(CommandStream &stream);
     const Pose* poses;
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
     Quanta::Vector3 lightDirection;
-    void setDynamicTransforms(const Quanta::Matrix4* transforms);
-    void setStaticTransforms(const Quanta::Matrix4* transforms);
   private:
-    const Quanta::Matrix4* dynamicTransforms;
-    const Quanta::Matrix4* staticTransforms;
     struct {
       uint16_t width;
       uint16_t height;

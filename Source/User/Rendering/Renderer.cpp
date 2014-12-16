@@ -25,6 +25,14 @@ namespace Rendering {
     worldRenderer.lightDirection = lightDirection;
   }
 
+  void Renderer::updateBoneMeshTransform(BoneMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+    worldRenderer.updateBoneMeshTransform(index, transform);
+  }
+
+  void Renderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+    worldRenderer.updateStaticMeshTransform(index, transform);
+  }
+
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return worldRenderer.createBoneMesh(vertices, vertexCount, indices, indexCount);
   }
@@ -33,8 +41,8 @@ namespace Rendering {
     return worldRenderer.createStaticMesh(info, vertices, indices, shapes);
   }
 
-  void Renderer::createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform) {
-    worldRenderer.createStaticMeshInstance(mesh, transform);
+  StaticMeshInstanceIndex Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
+    return worldRenderer.createStaticMeshInstance(mesh);
   }
 
   Quanta::Transform& Renderer::getCameraTransform() {
@@ -45,8 +53,8 @@ namespace Rendering {
     worldRenderer.updateResolution(width, height);
   }
 
-  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose) {
-    worldRenderer.createBoneMeshInstance(meshIndex, transformIndex, pose);
+  BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, Animation::PoseIndex pose) {
+    return worldRenderer.createBoneMeshInstance(meshIndex, pose);
   }
 
   void Renderer::draw() {
@@ -55,14 +63,6 @@ namespace Rendering {
     stream.rewind();
     dispatch();
     stream.reset();
-  }
-
-  void Renderer::setDynamicTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.setDynamicTransforms(transforms);
-  }
-
-  void Renderer::setStaticTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.setStaticTransforms(transforms);
   }
 
   void Renderer::setPoses(const Pose *poses) {

@@ -7,12 +7,11 @@
 
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :
-  renderer(renderer) { }
+  renderer(renderer),
+  physicsRenderingLink(physics, renderer, frameInterpolator) { }
 
   void PlayState::enter() {
     renderer.setPoses(animator.getWorldPoses());
-    renderer.setDynamicTransforms(frameInterpolator.getTransforms());
-    renderer.setStaticTransforms(physics.getStaticTransforms());
 
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
@@ -233,7 +232,9 @@ namespace MainFlow {
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
     Physics::StaticBodyIndex body = physics.createStaticBody();
-    renderer.createStaticMeshInstance(mesh, body);
+    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+
+    physicsRenderingLink.bindStaticStatic(body, meshInstance);
   }
 
   void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
@@ -247,7 +248,9 @@ namespace MainFlow {
 
     airDrag.add(playerBody);
 
-    renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
+    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh, pose);
+
+    physicsRenderingLink.bindDynamicBone(interpolationTransformID, meshInstance);
   }
 
   void PlayState::setupBox() {
@@ -286,7 +289,8 @@ namespace MainFlow {
     Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
     (*body.position)[0] = 0;
-    renderer.createStaticMeshInstance(mesh, bodyIndex);
+    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+    physicsRenderingLink.bindStaticStatic(bodyIndex, meshInstance);
   }
 
   void PlayState::setupRock() {
@@ -328,7 +332,9 @@ namespace MainFlow {
     (*body.position)[0] = 2;
     (*body.position)[2] = 2;
 
-    renderer.createStaticMeshInstance(mesh, bodyIndex);
+    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+
+    physicsRenderingLink.bindStaticStatic(bodyIndex, meshInstance);
   }
 
   void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID, float x, float z) {
@@ -345,7 +351,9 @@ namespace MainFlow {
 
     airDrag.add(bodyIndex);
 
-    renderer.createBoneMeshInstance(mesh, interpolationTransformID, pose);
+    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh, pose);
+
+    physicsRenderingLink.bindDynamicBone(interpolationTransformID, meshInstance);
   }
 
   void PlayState::update(double timeDelta) {
@@ -362,6 +370,7 @@ namespace MainFlow {
       frameInterpolator.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
     }
     frameInterpolator.interpolate(stepTimeBank/Physics::Config::stepDuration);
+    physicsRenderingLink.update();
     animator.update(timeDelta);
   }
 

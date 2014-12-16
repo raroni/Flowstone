@@ -6,6 +6,7 @@
 #include "MainFlow/State.h"
 #include "Animation/Animator.h"
 #include "Rendering/BoneMeshIndex.h"
+#include "PhysicsRenderingLink.h"
 #include "AirDrag.h"
 #include "Core/Physics/Engine.h"
 #include "FrameInterpolator.h"
@@ -25,6 +26,7 @@ namespace MainFlow {
     AirDrag airDrag;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBody;
+    PhysicsRenderingLink physicsRenderingLink;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();

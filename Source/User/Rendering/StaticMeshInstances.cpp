@@ -5,10 +5,14 @@ namespace Rendering {
     static uint16_t count = 0;
     StaticMeshInstance list[Config::maxStaticMeshInstances];
 
-    void create(StaticMeshIndex mesh, StaticTransformIndex transform) {
+    StaticMeshInstanceIndex create(StaticMeshIndex mesh) {
       list[count].mesh = mesh;
-      list[count].transform = transform;
-      count++;
+      list[count].transform = Quanta::Matrix4::identity();
+      return count++;
+    }
+
+    void updateTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+      list[index].transform = transform;
     }
 
     uint16_t getCount() {

@@ -26,8 +26,6 @@ namespace Rendering {
     void cull(const Quanta::Frustum &frustum, CullResult &result) const;
     void addStatic(StaticMeshInstanceIndex instance, float radius);
     void addBone(BoneMeshInstanceIndex instance, float radius);
-    const Quanta::Matrix4* dynamicTransforms;
-    const Quanta::Matrix4* staticTransforms;
   };
 }
 

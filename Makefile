@@ -38,7 +38,8 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/Textures.cpp\
 	Source/User/Rendering/StaticMeshes.cpp\
 	Source/User/Rendering/StaticMeshInstances.cpp\
-	Source/User/FrameInterpolator.cpp
+	Source/User/FrameInterpolator.cpp\
+	Source/User/PhysicsRenderingLink.cpp
 
 USER_SOURCES_OBJC = \
 	Libraries/Bro/Library/Source/OSX/Bro.mm\
