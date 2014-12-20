@@ -129,12 +129,11 @@ namespace Rendering {
     stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, viewClip.components);
     stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, worldView.components);
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
-      StaticMeshInstance &instance = StaticMeshInstances::list[i];
-      const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
+      const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
       stream.writeUniformMat4Set(
         Uniforms::list.shadowStaticModelWorldTransform,
         1,
-        instance.transform.components
+        StaticMeshInstances::transforms[i].components
       );
       stream.writeObjectSet(mesh.object);
       stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
@@ -249,11 +248,10 @@ namespace Rendering {
     }
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
       StaticMeshDrawCall call;
-      StaticMeshInstance &instance = StaticMeshInstances::list[i];
-      const StaticMesh& mesh = StaticMeshes::get(instance.mesh);
+      const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.transform = instance.transform;
+      call.transform = StaticMeshInstances::transforms[i];
       drawQueue.addStaticMesh(call);
     }
     drawQueue.sort();
