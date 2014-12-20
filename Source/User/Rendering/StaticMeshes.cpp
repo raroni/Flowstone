@@ -1,6 +1,8 @@
+#include "Quanta/Math/Vector3.h"
 #include "Rendering/Config.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/AttributeLocation.h"
+#include "Rendering/MeshHelper.h"
 #include "Rendering/StaticMeshes.h"
 
 namespace Rendering {
@@ -114,16 +116,11 @@ namespace Rendering {
     }
 
     static float calculateBoundingRadius(const StaticVertex *vertices, uint16_t count) {
-      uint16_t maxIndex = 0;
-      float maxSquaredLength = 0;
+      Quanta::Vector3 positions[count];
       for(uint16_t i=0; count>i; i++) {
-        float squaredLength = vertices[i].position.getSquaredLength();
-        if(squaredLength > maxSquaredLength) {
-          maxSquaredLength = squaredLength;
-          maxIndex = i;
-        }
+        positions[i] = vertices[i].position;
       }
-      return vertices[maxIndex].position.getLength();
+      return MeshHelper::calcBoundingRadius(positions, count);
     }
 
     StaticMeshIndex create(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {

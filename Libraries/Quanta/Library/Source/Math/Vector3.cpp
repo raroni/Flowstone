@@ -2,12 +2,6 @@
 #include "Quanta/Math/Vector3.h"
 
 namespace Quanta {
-  Vector3::Vector3() {
-    components[0] = 0;
-    components[1] = 0;
-    components[2] = 0;
-  }
-
   Vector3::Vector3(float x, float y, float z) {
     components[0] = x;
     components[1] = y;

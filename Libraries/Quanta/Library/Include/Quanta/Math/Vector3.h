@@ -5,7 +5,7 @@ namespace Quanta {
   class Vector3 {
   public:
     float components[3];
-    Vector3();
+    Vector3() = default;
     Vector3(float x, float y, float z);
     float& operator[](const int index);
     const float& operator[](const int index) const;
