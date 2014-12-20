@@ -5,9 +5,11 @@ namespace Rendering {
     static uint16_t count = 0;
     Quanta::Matrix4 transforms[Config::maxStaticMeshInstances];
     StaticMeshIndex meshes[Config::maxStaticMeshInstances];
+    StaticMeshIndex boundingRadii[Config::maxStaticMeshInstances];
 
-    StaticMeshInstanceIndex create(StaticMeshIndex mesh) {
+    StaticMeshInstanceIndex create(StaticMeshIndex mesh, float boundingRadius) {
       meshes[count] = mesh;
+      boundingRadii[count] = boundingRadius;
       transforms[count] = Quanta::Matrix4::identity();
       return count++;
     }

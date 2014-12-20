@@ -48,8 +48,9 @@ namespace Rendering {
     StaticMeshInstances::updateTransform(index, transform);
   }
 
-  StaticMeshInstanceIndex WorldRenderer::createStaticMeshInstance(StaticMeshIndex mesh) {
-    return StaticMeshInstances::create(mesh);
+  StaticMeshInstanceIndex WorldRenderer::createStaticMeshInstance(StaticMeshIndex index) {
+    const StaticMesh& mesh = StaticMeshes::get(index);
+    return StaticMeshInstances::create(index, mesh.boundingRadius);
   }
 
   void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {

@@ -10,7 +10,7 @@ namespace Rendering {
   namespace StaticMeshInstances {
     extern Quanta::Matrix4 transforms[Config::maxStaticMeshInstances];
     extern StaticMeshIndex meshes[Config::maxStaticMeshInstances];
-    StaticMeshInstanceIndex create(StaticMeshIndex mesh);
+    StaticMeshInstanceIndex create(StaticMeshIndex mesh, float boundingRadius);
     void updateTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     uint16_t getCount();
   }
