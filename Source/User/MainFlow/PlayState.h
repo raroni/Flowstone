@@ -9,7 +9,7 @@
 #include "RendererFeeder.h"
 #include "AirDrag.h"
 #include "Core/Physics/Engine.h"
-#include "FrameInterpolator.h"
+#include "Interpolation/Interpolater.h"
 
 namespace Rendering {
   class Renderer;
@@ -22,7 +22,7 @@ namespace MainFlow {
     Animation::Animator animator;
     Physics::Engine physics;
     Rendering::Renderer &renderer;
-    FrameInterpolator frameInterpolator;
+    Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBody;

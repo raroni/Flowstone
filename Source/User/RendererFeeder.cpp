@@ -1,7 +1,7 @@
 #include "Core/Physics/Engine.h"
 #include "Core/Physics/DynamicBody.h"
 #include "Core/Physics/StaticBody.h"
-#include "FrameInterpolator.h"
+#include "Interpolation/Interpolater.h"
 #include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
@@ -9,7 +9,7 @@
 
 RendererFeeder::RendererFeeder(
   const Physics::Engine &physicsEngine,
-  const FrameInterpolator &interpolator,
+  const Interpolation::Interpolater &interpolator,
   const Animation::Animator &animator,
   Rendering::Renderer &renderer) :
 physicsEngine(physicsEngine),
@@ -34,7 +34,7 @@ void RendererFeeder::update() {
   }
 }
 
-void RendererFeeder::setupBoneMesh(uint8_t interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh) {
+void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh) {
   DynamicBoneBinding binding;
   binding.interpolation = interpolation;
   binding.mesh = mesh;

@@ -3,6 +3,7 @@
 
 #include "Core/Physics/StaticBodyIndex.h"
 #include "Core/Physics/DynamicBodyIndex.h"
+#include "Interpolation/Index.h"
 #include "Rendering/StaticMeshInstanceIndex.h"
 #include "Rendering/BoneMeshInstanceIndex.h"
 
@@ -18,18 +19,20 @@ namespace Animation {
   class Animator;
 }
 
-class FrameInterpolator;
+namespace Interpolation {
+  class Interpolater;
+}
 
 class RendererFeeder {
 public:
   RendererFeeder(
     const Physics::Engine &physicsEngine,
-    const FrameInterpolator &interpolator,
+    const Interpolation::Interpolater &interpolator,
     const Animation::Animator &animator,
     Rendering::Renderer &renderer
   );
   void bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh);
-  void setupBoneMesh(uint8_t interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh);
+  void setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh);
   void update();
 private:
   struct DynamicBoneBinding {
@@ -50,7 +53,7 @@ private:
     uint8_t count = 0;
   } staticStaticBindings;
   const Physics::Engine &physicsEngine;
-  const FrameInterpolator &interpolator;
+  const Interpolation::Interpolater &interpolator;
   const Animation::Animator &animator;
   Rendering::Renderer &renderer;
 };

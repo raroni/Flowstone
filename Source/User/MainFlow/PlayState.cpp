@@ -8,7 +8,7 @@
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer),
-  physicsRenderingLink(physics, frameInterpolator, animator, renderer) { }
+  physicsRenderingLink(physics, interpolater, animator, renderer) { }
 
   void PlayState::enter() {
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
@@ -241,14 +241,14 @@ namespace MainFlow {
     playerBody = physics.createDynamicBody();
     physics.createDynamicSphereCollider(playerBody, 0.5);
 
-    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(playerBody);
-    frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
+    Interpolation::Index interpolation = interpolater.createInterpolation(playerBody);
+    interpolater.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
 
     airDrag.add(playerBody);
 
     Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh);
 
-    physicsRenderingLink.setupBoneMesh(interpolationTransformID, pose, meshInstance);
+    physicsRenderingLink.setupBoneMesh(interpolation, pose, meshInstance);
   }
 
   void PlayState::setupBox() {
@@ -344,8 +344,8 @@ namespace MainFlow {
     (*body.position)[2] = z;
     physics.createDynamicSphereCollider(bodyIndex, 0.6);
 
-    uint8_t interpolationTransformID = frameInterpolator.createInterpolation(bodyIndex);
-    frameInterpolator.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
+    uint8_t interpolationTransformID = interpolater.createInterpolation(bodyIndex);
+    interpolater.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
 
     airDrag.add(bodyIndex);
 
@@ -365,9 +365,9 @@ namespace MainFlow {
         stepTimeBank -= Physics::Config::stepDuration;
       } while(stepTimeBank >= Physics::Config::stepDuration);
       playerControlReact(body, animator);
-      frameInterpolator.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
+      interpolater.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
     }
-    frameInterpolator.interpolate(stepTimeBank/Physics::Config::stepDuration);
+    interpolater.interpolate(stepTimeBank/Physics::Config::stepDuration);
     physicsRenderingLink.update();
     animator.update(timeDelta);
   }
