@@ -3,11 +3,13 @@
 namespace Rendering {
   namespace BoneMeshInstances {
     static uint16_t count = 0;
-    BoneMeshInstance list[Config::maxBoneMeshInstances];
+    Pose poses[Config::maxBoneMeshInstances];
+    BoneMeshIndex meshes[Config::maxBoneMeshInstances];
+    Quanta::Matrix4 transforms[Config::maxBoneMeshInstances];
 
     BoneMeshInstanceIndex create(BoneMeshIndex mesh) {
-      list[count].mesh = mesh;
-      list[count].transform = Quanta::Matrix4::identity();
+      meshes[count] = mesh;
+      transforms[count] = Quanta::Matrix4::identity();
       return count++;
     }
 
@@ -15,8 +17,12 @@ namespace Rendering {
       return count;
     }
 
-    BoneMeshInstance& get(BoneMeshInstanceIndex index) {
-      return list[index];
+    BoneMeshInstance get(BoneMeshInstanceIndex index) {
+      BoneMeshInstance instance;
+      instance.transform = &transforms[index];
+      instance.mesh = &meshes[index];
+      instance.pose = &poses[index];
+      return instance;
     }
   }
 }

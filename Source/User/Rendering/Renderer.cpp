@@ -25,7 +25,7 @@ namespace Rendering {
     worldRenderer.lightDirection = lightDirection;
   }
 
-  BoneMeshInstance& Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
+  BoneMeshInstance Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
     return worldRenderer.getBoneMeshInstance(index);
   }
 

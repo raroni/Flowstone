@@ -22,9 +22,9 @@ void RendererFeeder::update() {
   const Pose *poses = animator.getWorldPoses();
   for(uint8_t i=0; dynamicBoneBindings.count>i; i++) {
     DynamicBoneBinding &binding = dynamicBoneBindings.list[i];
-    Rendering::BoneMeshInstance &instance = renderer.getBoneMeshInstance(binding.mesh);
-    instance.transform = interpolatedTransforms[binding.interpolation];
-    instance.pose = poses[binding.pose];
+    Rendering::BoneMeshInstance instance = renderer.getBoneMeshInstance(binding.mesh);
+    (*instance.transform) = interpolatedTransforms[binding.interpolation];
+    (*instance.pose) = poses[binding.pose];
   }
 
   const Quanta::Matrix4 *staticTransforms = physicsEngine.getStaticTransforms();

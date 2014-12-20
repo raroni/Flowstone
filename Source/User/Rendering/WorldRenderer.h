@@ -31,7 +31,7 @@ namespace Rendering {
     void writeCommands(CommandStream &stream);
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
-    BoneMeshInstance& getBoneMeshInstance(BoneMeshInstanceIndex index);
+    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     Quanta::Vector3 lightDirection;
   private:
     struct {

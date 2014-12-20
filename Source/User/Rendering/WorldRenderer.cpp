@@ -36,7 +36,7 @@ namespace Rendering {
     return instance;
   }
 
-  BoneMeshInstance& WorldRenderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
+  BoneMeshInstance WorldRenderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
     return BoneMeshInstances::get(index);
   }
 
@@ -143,19 +143,18 @@ namespace Rendering {
     stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, viewClip.components);
     stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, worldView.components);
     for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
-      BoneMeshInstance &instance = BoneMeshInstances::list[i];
-      BoneMesh mesh = boneMeshRegistry.get(instance.mesh);
+      BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
 
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneJointWorldTransform,
         1,
-        instance.transform.components
+        BoneMeshInstances::transforms[i].components
       );
 
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneModelJointTransforms,
         8,
-        instance.pose.joints[0].components
+        BoneMeshInstances::poses[i].joints[0].components
       );
 
       stream.writeObjectSet(mesh.object);
@@ -238,12 +237,11 @@ namespace Rendering {
     drawQueue.reset();
     for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
       BoneMeshDrawCall call;
-      BoneMeshInstance &instance = BoneMeshInstances::list[i];
-      BoneMesh mesh = boneMeshRegistry.get(instance.mesh);
+      BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.pose = instance.pose;
-      call.transform = instance.transform;
+      call.pose = BoneMeshInstances::poses[i];
+      call.transform = BoneMeshInstances::transforms[i];
       drawQueue.addBoneMesh(call);
     }
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {

@@ -19,7 +19,7 @@ namespace Rendering {
     BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex meshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
-    BoneMeshInstance& getBoneMeshInstance(BoneMeshInstanceIndex index);
+    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void draw();
     Quanta::Transform& getCameraTransform();
