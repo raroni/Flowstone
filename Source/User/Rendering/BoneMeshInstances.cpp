@@ -5,11 +5,13 @@ namespace Rendering {
     static uint16_t count = 0;
     Pose poses[Config::maxBoneMeshInstances];
     BoneMeshIndex meshes[Config::maxBoneMeshInstances];
+    float boundingRadii[Config::maxBoneMeshInstances];
     Quanta::Matrix4 transforms[Config::maxBoneMeshInstances];
 
-    BoneMeshInstanceIndex create(BoneMeshIndex mesh) {
+    BoneMeshInstanceIndex create(BoneMeshIndex mesh, float boundingRadius) {
       meshes[count] = mesh;
       transforms[count] = Quanta::Matrix4::identity();
+      boundingRadii[count] = boundingRadius;
       return count++;
     }
 

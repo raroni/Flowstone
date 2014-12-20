@@ -31,9 +31,8 @@ namespace Rendering {
   }
 
   BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
-    BoneMeshInstanceIndex instance = BoneMeshInstances::create(meshIndex);
-    culler.addBone(instance, 1.0); // TODO: make real bounding sphere radius
-    return instance;
+    BoneMesh mesh = boneMeshRegistry.get(meshIndex);
+    return BoneMeshInstances::create(meshIndex, mesh.boundingRadius);
   }
 
   BoneMeshInstance WorldRenderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {

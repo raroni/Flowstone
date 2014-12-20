@@ -130,6 +130,7 @@ namespace Rendering {
     BoneMesh mesh;
     mesh.object = handles[index];
     mesh.indexCount = indexCounts[index];
+    mesh.boundingRadius = boundingRadii[index];
     return mesh;
   }
 }
