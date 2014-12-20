@@ -1,5 +1,6 @@
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/AttributeLocation.h"
+#include "Rendering/MeshHelper.h"
 #include "Rendering/Backend/AttributeLocation.h"
 #include "Rendering/Backend/BufferTarget.h"
 #include "Rendering/Backend/ObjectHandle.h"
@@ -106,12 +107,21 @@ namespace Rendering {
     return object;
   }
 
+  static float calcBoundingRadius(const BoneVertex *vertices, uint16_t count) {
+    Quanta::Vector3 positions[count];
+    for(uint16_t i=0; count>i; i++) {
+      positions[i] = vertices[i].position;
+    }
+    return MeshHelper::calcBoundingRadius(positions, count);
+  }
+
   BoneMeshIndex BoneMeshRegistry::create(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     uint8_t backendVertexCount = 0;
     BackendBoneVertex backendVertices[indexCount];
     uint16_t backendIndices[indexCount];
     buildBackendMesh(vertices, vertexCount, indices, indexCount, &backendVertexCount, backendVertices, backendIndices);
     handles[count] = upload(backendVertices, backendVertexCount, backendIndices, indexCount);
+    boundingRadii[count] = calcBoundingRadius(vertices, vertexCount);
     indexCounts[count] = indexCount;
     return count++;
   }
