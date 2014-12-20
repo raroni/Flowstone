@@ -115,7 +115,7 @@ namespace Rendering {
       return object;
     }
 
-    static float calculateBoundingRadius(const StaticVertex *vertices, uint16_t count) {
+    static float calcBoundingRadius(const StaticVertex *vertices, uint16_t count) {
       Quanta::Vector3 positions[count];
       for(uint16_t i=0; count>i; i++) {
         positions[i] = vertices[i].position;
@@ -131,7 +131,7 @@ namespace Rendering {
       StaticMesh &mesh = list[count];
       mesh.object = upload(backendVertices, backendVertexCount, backendIndices, info.indexCount);;
       mesh.indexCount = info.indexCount;
-      mesh.boundingRadius = calculateBoundingRadius(vertices, info.vertexCount);
+      mesh.boundingRadius = calcBoundingRadius(vertices, info.vertexCount);
       return count++;
     }
 
