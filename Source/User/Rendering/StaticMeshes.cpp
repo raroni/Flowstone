@@ -113,6 +113,19 @@ namespace Rendering {
       return object;
     }
 
+    static float calculateBoundingRadius(const StaticVertex *vertices, uint16_t count) {
+      uint16_t maxIndex = 0;
+      float maxSquaredLength = 0;
+      for(uint16_t i=0; count>i; i++) {
+        float squaredLength = vertices[i].position.getSquaredLength();
+        if(squaredLength > maxSquaredLength) {
+          maxSquaredLength = squaredLength;
+          maxIndex = i;
+        }
+      }
+      return vertices[maxIndex].position.getLength();
+    }
+
     StaticMeshIndex create(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
       uint8_t backendVertexCount = 0;
       BackendStaticVertex backendVertices[info.indexCount];
@@ -121,6 +134,7 @@ namespace Rendering {
       StaticMesh &mesh = list[count];
       mesh.object = upload(backendVertices, backendVertexCount, backendIndices, info.indexCount);;
       mesh.indexCount = info.indexCount;
+      mesh.boundingRadius = calculateBoundingRadius(vertices, info.vertexCount);
       return count++;
     }
 
