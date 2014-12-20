@@ -26,7 +26,7 @@ namespace MainFlow {
     AirDrag airDrag;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBody;
-    RendererFeeder physicsRenderingLink;
+    RendererFeeder rendererFeeder;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
