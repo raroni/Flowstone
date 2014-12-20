@@ -5,13 +5,13 @@
 namespace Quanta {
   Matrix4 Transform::getMatrix() const {
     Matrix4 orientationMatrix = orientation;
-    auto translationMatrix = TransformFactory3D::translation(position.getVector());
+    auto translationMatrix = TransformFactory3D::translation(position);
     return translationMatrix*orientationMatrix;
   }
 
   Matrix4 Transform::getInverseMatrix() {
     Matrix4 orientationMatrix = orientation.getConjugate();
-    auto negatedTranslation = position.getVector().getNegated();
+    auto negatedTranslation = position.getNegated();
     auto translationMatrix = TransformFactory3D::translation(negatedTranslation);
 
     return orientationMatrix*translationMatrix;

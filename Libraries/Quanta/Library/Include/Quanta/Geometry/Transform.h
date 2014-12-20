@@ -2,16 +2,15 @@
 #define QUANTA_TRANSFORM_H
 
 #include "Quanta/Math/Quaternion.h"
-#include "Quanta/Geometry/Point3D.h"
+#include "Quanta/Math/Vector3.h"
 
 namespace Quanta {
   class Matrix4;
-  class Point3D;
 
   class Transform {
   public:
     Quaternion orientation = Quaternion::identity();;
-    Point3D position;
+    Vector3 position;
     Matrix4 getMatrix() const;
     Matrix4 getInverseMatrix();
     Quaternion getOrientation();

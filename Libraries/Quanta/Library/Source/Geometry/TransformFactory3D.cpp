@@ -1,6 +1,5 @@
 #include <math.h>
 #include "Quanta/Math/Matrix4.h"
-#include "Quanta/Geometry/Point3D.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 
