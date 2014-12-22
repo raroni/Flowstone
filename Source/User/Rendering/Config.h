@@ -15,8 +15,8 @@ namespace Rendering {
     const uint8_t maxCulledStaticInstances = 64;
     const uint8_t cullGroupsCount = 2;
     struct {
-      const float near = 7;
-      const float far = 25;
+      const float near = 12;
+      const float far = 22;
       const float fieldOfView = M_PI/3.0f;
     } perspective;
   }
