@@ -13,6 +13,7 @@ namespace Rendering {
     const uint16_t shadowMapSize = 512;
     const uint8_t maxCulledBoneInstances = 128;
     const uint8_t maxCulledStaticInstances = 64;
+    const uint8_t cullGroupsCount = 2;
     struct {
       const float near = 7;
       const float far = 25;

@@ -3,23 +3,20 @@
 
 #include "Rendering/BoneMeshInstanceIndex.h"
 #include "Rendering/StaticMeshInstanceIndex.h"
+#include "Rendering/CullResultRange.h"
+#include "Rendering/CullGroupIndex.h"
 #include "Rendering/Config.h"
 
 namespace Rendering {
-  class CullResult {
-  public:
-    void addBoneInstance(BoneMeshInstanceIndex boneInstance);
-    void addStaticInstance(StaticMeshInstanceIndex staticInstance);
+  struct CullResult {
+    uint16_t indices[256];
+    uint16_t count;
+    CullResultRange ranges[Config::cullGroupsCount];
     void clear();
-    struct {
-      BoneMeshInstanceIndex list[Config::maxCulledBoneInstances];
-      uint16_t count;
-    } boneInstances;
-    struct {
-      StaticMeshInstanceIndex list[Config::maxCulledStaticInstances];
-      uint16_t count;
-    } staticInstances;
+    void addIndex(uint16_t index);
+    const CullResultRange& getRange(CullGroupIndex group);
+    void storeRange(CullGroupIndex group, uint16_t start, uint16_t end);
   };
-}
+};
 
 #endif

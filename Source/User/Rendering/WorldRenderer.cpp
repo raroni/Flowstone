@@ -18,14 +18,19 @@
 #include "Rendering/ProgramName.h"
 #include "Rendering/Backend/ClearBit.h"
 #include "Rendering/Buffers.h"
+#include "Rendering/CullGroupNames.h"
 #include "Rendering/BufferName.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
-
 #include "Quanta/Geometry/TransformFactory3D.h"
 
 namespace Rendering {
+  void WorldRenderer::initialize() {
+    culler.configureGroup(CullGroupNames::Bone, BoneMeshInstances::transforms, BoneMeshInstances::boundingRadii);
+    culler.configureGroup(CullGroupNames::Static, StaticMeshInstances::transforms, StaticMeshInstances::boundingRadii);
+  }
+
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
@@ -95,8 +100,7 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    culler.cull(calcFrustum(), cullResult);
-
+    buildVisibleSet();
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
@@ -325,5 +329,15 @@ namespace Rendering {
           break;
       }
     }
+  }
+
+  void WorldRenderer::buildVisibleSet() {
+    Quanta::Frustum frustum = calcFrustum();
+    uint16_t counts[Config::cullGroupsCount];
+    counts[CullGroupNames::Bone] = BoneMeshInstances::getCount();
+    counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
+    culler.cull(frustum, cullResult, counts);
+    // buildVisibleSet here
+    cullResult.clear();
   }
 }

@@ -6,11 +6,11 @@
 #include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/Culler.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/StaticVertex.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/MeshInfo.h"
-#include "Rendering/Culler.h"
 #include "Rendering/CullResult.h"
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
@@ -33,11 +33,13 @@ namespace Rendering {
     void updateResolution(uint16_t width, uint16_t height);
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     Quanta::Vector3 lightDirection;
+    void initialize();
   private:
     struct {
       uint16_t width;
       uint16_t height;
     } resolution;
+    void buildVisibleSet();
     Culler culler;
     CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
