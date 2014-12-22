@@ -77,7 +77,7 @@ namespace Rendering {
 
     Quanta::Plane &farPlane = frustum.planes[Quanta::Frustum::Far];
     farPlane.position = Quanta::Vector3(0, 0, Config::perspective.far);
-    farPlane.normal = Quanta::Vector3(0, 0, 1);
+    farPlane.normal = Quanta::Vector3(0, 0, -1);
 
     Quanta::Plane &topPlane = frustum.planes[Quanta::Frustum::Top];
     topPlane.position = Quanta::Vector3::zero();
@@ -89,7 +89,7 @@ namespace Rendering {
 
     Quanta::Plane &leftPlane = frustum.planes[Quanta::Frustum::Left];
     leftPlane.position = Quanta::Vector3::zero();
-    leftPlane.normal = Quanta::Vector3::cross(up, Quanta::Vector3(-nearWidth/2, 0, Config::perspective.near).getNormalized());
+    leftPlane.normal = Quanta::Vector3::cross(up, Quanta::Vector3(-nearWidth/2, 0, Config::perspective.near)).getNormalized();
 
     Quanta::Plane &rightPlane = frustum.planes[Quanta::Frustum::Right];
     rightPlane.position = Quanta::Vector3::zero();
@@ -338,6 +338,7 @@ namespace Rendering {
     counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
     culler.cull(frustum, cullResult, counts);
     // buildVisibleSet here
+
     cullResult.clear();
   }
 }

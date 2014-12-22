@@ -1,3 +1,4 @@
+#include "Quanta/Math/Vector4.h"
 #include "Quanta/Math/Matrix4.h"
 
 namespace Quanta {
@@ -17,6 +18,18 @@ namespace Quanta {
     matrix[15] = 1;
 
     return matrix;
+  }
+
+  Vector4 Matrix4::operator*(Vector4 vector) const {
+    Vector4 result = Vector4::zero();
+
+    for(int row=0; 4>row; row++) {
+      for(int step=0; 4>step; step++) {
+        result[row] += components[step*4+row] * vector[step];
+      }
+    }
+
+    return result;
   }
 
   // borrowed from http://www.mesa3d.org/
