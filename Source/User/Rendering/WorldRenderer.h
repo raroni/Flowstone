@@ -39,13 +39,17 @@ namespace Rendering {
       uint16_t width;
       uint16_t height;
     } resolution;
+    struct {
+      Quanta::Matrix4 worldView;
+      Quanta::Matrix4 viewClip;
+    } lightTransforms;
     void buildVisibleSet();
     Culler culler;
     CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    void calcLightTransforms();
     Quanta::Matrix4 calcViewClipTransform() const;
-    Quanta::Matrix4 calcLightWorldViewTransform() const;
     void writeShadowMap(CommandStream &stream);
     void writeMerge(CommandStream &stream);
     void writeDrawQueueToStream(CommandStream &stream);

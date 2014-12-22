@@ -100,6 +100,7 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
+    calcLightTransforms();
     buildVisibleSet();
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
@@ -125,13 +126,9 @@ namespace Rendering {
     stream.writeRenderTargetSet(RenderTargets::handles.shadow);
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
 
-    // todo: calculate better values for this guy
-    Quanta::Matrix4 viewClip = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15);
-    Quanta::Matrix4 worldView = calcLightWorldViewTransform();
-
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, viewClip.components);
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, worldView.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, lightTransforms.viewClip.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, lightTransforms.worldView.components);
     for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
       const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
       stream.writeUniformMat4Set(
@@ -144,8 +141,8 @@ namespace Rendering {
     }
 
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)]);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, viewClip.components);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, worldView.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, lightTransforms.viewClip.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, lightTransforms.worldView.components);
     for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
       BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
 
@@ -168,7 +165,7 @@ namespace Rendering {
     stream.writeRenderTargetSet(0);
   }
 
-  Quanta::Matrix4 WorldRenderer::calcLightWorldViewTransform() const {
+  void WorldRenderer::calcLightTransforms() {
     Quanta::Vector3 forward = lightDirection;
     Quanta::Vector3 right = Quanta::Vector3::cross(Quanta::Vector3(0, 1, 0), forward).getNormalized();
     Quanta::Vector3 up = Quanta::Vector3::cross(forward, right).getNormalized();
@@ -189,7 +186,8 @@ namespace Rendering {
 
     worldView *= Quanta::TransformFactory3D::translation(lightDirection*5);
 
-    return worldView;
+    lightTransforms.worldView = worldView;
+    lightTransforms.viewClip = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15);
   }
 
   void WorldRenderer::writeMerge(CommandStream &stream) {
@@ -201,7 +199,7 @@ namespace Rendering {
 
     stream.writeUniformMat4Set(Uniforms::list.mergeGeometryClipWorldTransform, 1, geometryClipWorldTransform.components);
 
-    Quanta::Matrix4 lightWorldClipTransform = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15)*calcLightWorldViewTransform();
+    Quanta::Matrix4 lightWorldClipTransform = lightTransforms.viewClip*lightTransforms.worldView;
     stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
 
     stream.writeUniformVec3Set(Uniforms::list.mergeLightDirection, 1, lightDirection.components);
