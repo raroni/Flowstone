@@ -4,11 +4,13 @@ CC = clang++
 CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
+	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
+	Libraries/Quanta/Library/Source/Math/Vector4.cpp\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
 	Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
-	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
 	Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
+	Libraries/Quanta/Library/Source/Geometry/Plane.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Error.cpp\
@@ -30,7 +32,6 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/DrawQueue.cpp\
 	Source/User/Rendering/Uniforms.cpp\
 	Source/User/Rendering/Buffers.cpp\
-	Source/User/Rendering/Culler.cpp\
 	Source/User/Rendering/CullResult.cpp\
 	Source/User/Rendering/RenderTargets.cpp\
 	Source/User/Rendering/FullscreenQuad.cpp\
@@ -38,6 +39,10 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/StaticMeshes.cpp\
 	Source/User/Rendering/StaticMeshInstances.cpp\
 	Source/User/Rendering/MeshHelper.cpp\
+	Source/User/Rendering/Culler.cpp\
+	Source/User/Rendering/DrawSet.cpp\
+	Source/User/Rendering/BoneDrawSet.cpp\
+	Source/User/Rendering/StaticDrawSet.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
 

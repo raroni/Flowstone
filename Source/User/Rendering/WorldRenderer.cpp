@@ -4,6 +4,7 @@
 #include "Quanta/ProjectionFactory.h"
 #include "Core/Error.h"
 #include "Quanta/Math/Matrix4.h"
+#include "Quanta/Math/Vector4.h"
 #include "Quanta/Geometry/Transformer.h"
 #include "Rendering/BoneMeshInstances.h"
 #include "Rendering/BoneMeshInstance.h"
@@ -18,14 +19,19 @@
 #include "Rendering/ProgramName.h"
 #include "Rendering/Backend/ClearBit.h"
 #include "Rendering/Buffers.h"
+#include "Rendering/CullGroupNames.h"
 #include "Rendering/BufferName.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
-
 #include "Quanta/Geometry/TransformFactory3D.h"
 
 namespace Rendering {
+  void WorldRenderer::initialize() {
+    culler.configureGroup(CullGroupNames::Bone, BoneMeshInstances::transforms, BoneMeshInstances::boundingRadii);
+    culler.configureGroup(CullGroupNames::Static, StaticMeshInstances::transforms, StaticMeshInstances::boundingRadii);
+  }
+
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
@@ -72,7 +78,7 @@ namespace Rendering {
 
     Quanta::Plane &farPlane = frustum.planes[Quanta::Frustum::Far];
     farPlane.position = Quanta::Vector3(0, 0, Config::perspective.far);
-    farPlane.normal = Quanta::Vector3(0, 0, 1);
+    farPlane.normal = Quanta::Vector3(0, 0, -1);
 
     Quanta::Plane &topPlane = frustum.planes[Quanta::Frustum::Top];
     topPlane.position = Quanta::Vector3::zero();
@@ -84,7 +90,7 @@ namespace Rendering {
 
     Quanta::Plane &leftPlane = frustum.planes[Quanta::Frustum::Left];
     leftPlane.position = Quanta::Vector3::zero();
-    leftPlane.normal = Quanta::Vector3::cross(up, Quanta::Vector3(-nearWidth/2, 0, Config::perspective.near).getNormalized());
+    leftPlane.normal = Quanta::Vector3::cross(up, Quanta::Vector3(-nearWidth/2, 0, Config::perspective.near)).getNormalized();
 
     Quanta::Plane &rightPlane = frustum.planes[Quanta::Frustum::Right];
     rightPlane.position = Quanta::Vector3::zero();
@@ -95,8 +101,8 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    culler.cull(calcFrustum(), cullResult);
-
+    calcLightTransforms();
+    buildDrawSet();
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
@@ -121,40 +127,38 @@ namespace Rendering {
     stream.writeRenderTargetSet(RenderTargets::handles.shadow);
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
 
-    // todo: calculate better values for this guy
-    Quanta::Matrix4 viewClip = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15);
-    Quanta::Matrix4 worldView = calcLightWorldViewTransform();
-
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, viewClip.components);
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, worldView.components);
-    for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
-      const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
+    stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, lightTransforms.viewClip.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, lightTransforms.worldView.components);
+    const StaticDrawSet &staticSet = drawSet.staticSet;
+    for(uint16_t i=0; staticSet.count>i; i++) {
+      const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
       stream.writeUniformMat4Set(
         Uniforms::list.shadowStaticModelWorldTransform,
         1,
-        StaticMeshInstances::transforms[i].components
+        staticSet.transforms[i].components
       );
       stream.writeObjectSet(mesh.object);
       stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
     }
 
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)]);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, viewClip.components);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, worldView.components);
-    for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
-      BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
+    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, lightTransforms.viewClip.components);
+    stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, lightTransforms.worldView.components);
+    const BoneDrawSet &boneSet = drawSet.boneSet;
+    for(uint16_t i=0; boneSet.count>i; i++) {
+      BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
 
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneJointWorldTransform,
         1,
-        BoneMeshInstances::transforms[i].components
+        boneSet.transforms[i].components
       );
 
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneModelJointTransforms,
         8,
-        BoneMeshInstances::poses[i].joints[0].components
+        boneSet.poses[i].joints[0].components
       );
 
       stream.writeObjectSet(mesh.object);
@@ -164,28 +168,81 @@ namespace Rendering {
     stream.writeRenderTargetSet(0);
   }
 
-  Quanta::Matrix4 WorldRenderer::calcLightWorldViewTransform() const {
+  void WorldRenderer::calcLightTransforms() {
+    // todo: move this (and probably also corner calc) to calcFrustumMetadata() - it is also used in calcFrustum
+    float aspectRatio = (800.0/600.0); // todo replace with real aspect ratio
+    float nearWidth = tan(Config::perspective.fieldOfView/2)*2*Config::perspective.near;
+    float nearHeight = nearWidth/aspectRatio;
+    float farWidth = nearWidth*(Config::perspective.far/Config::perspective.near);
+    float farHeight = farWidth/aspectRatio;
+
+    enum Corners { // todo move this enum declaration out of runtime
+      NearTopLeft,
+      NearTopRight,
+      NearBottomLeft,
+      NearBottomRight,
+      FarTopLeft,
+      FarTopRight,
+      FarBottomLeft,
+      FarBottomRight
+    };
+    Quanta::Vector3 corners[8];
+    corners[NearTopLeft] = Quanta::Vector3(-nearWidth*0.5, nearHeight*0.5, Config::perspective.near);
+    corners[NearTopRight] = Quanta::Vector3(corners[NearTopLeft][0]*-1, corners[NearTopLeft][1], corners[NearTopLeft][2]);
+    corners[NearBottomLeft] = Quanta::Vector3(corners[NearTopLeft][0], corners[NearTopLeft][1]*-1, corners[NearTopLeft][2]);
+    corners[NearBottomRight] = Quanta::Vector3(corners[NearBottomLeft][0]*-1, corners[NearBottomLeft][1], corners[NearBottomLeft][2]);
+    corners[FarTopLeft] = Quanta::Vector3(farWidth*0.5, farHeight*0.5, Config::perspective.far);
+    corners[FarTopRight] = Quanta::Vector3(corners[FarTopLeft][0]*-1, corners[FarTopLeft][1], corners[FarTopLeft][2]);
+    corners[FarBottomLeft] = Quanta::Vector3(corners[FarTopLeft][0], corners[FarTopLeft][1]*-1, corners[FarTopLeft][2]);
+    corners[FarBottomRight] = Quanta::Vector3(corners[FarBottomLeft][0]*-1, corners[FarBottomLeft][1], corners[FarBottomLeft][2]);
+    Quanta::Matrix4 cameraModelWorld = cameraTransform.getMatrix();
+    Quanta::Vector3 centroid = Quanta::Vector3::zero();
+    for(uint8_t i=0; 8>i; i++) {
+      Quanta::Vector4 temp(corners[i][0], corners[i][1], corners[i][2], 1);
+      Quanta::Transformer::updateVector4(temp, cameraModelWorld);
+      corners[i] = Quanta::Vector3(temp[0], temp[1], temp[2]);
+      centroid += corners[i];
+    }
+    centroid *= 0.125;
+
     Quanta::Vector3 forward = lightDirection;
     Quanta::Vector3 right = Quanta::Vector3::cross(Quanta::Vector3(0, 1, 0), forward).getNormalized();
     Quanta::Vector3 up = Quanta::Vector3::cross(forward, right).getNormalized();
 
     Quanta::Matrix4 worldView = Quanta::Matrix4::identity();
-
     worldView[0] = right[0];
     worldView[4] = right[1];
     worldView[8] = right[2];
-
     worldView[1] = up[0];
     worldView[5] = up[1];
     worldView[9] = up[2];
-
     worldView[2] = forward[0];
     worldView[6] = forward[1];
     worldView[10] = forward[2];
 
-    worldView *= Quanta::TransformFactory3D::translation(lightDirection*5);
+    Quanta::Vector3 position = centroid - lightDirection*Config::perspective.far;
+    worldView *= Quanta::TransformFactory3D::translation(position*-1);
 
-    return worldView;
+    lightTransforms.worldView = worldView;
+
+    for(uint8_t i=0; 8>i; i++) {
+      Quanta::Vector4 temp(corners[i][0], corners[i][1], corners[i][2], 1);
+      Quanta::Transformer::updateVector4(temp, worldView);
+      corners[i] = Quanta::Vector3(temp[0], temp[1], temp[2]);
+    }
+
+    Quanta::Vector3 mins = corners[0];
+    Quanta::Vector3 maxes = corners[0];
+    for(uint8_t i=0; 8>i; i++) { // change i=0 to i=1?
+      mins[0] = fminf(mins[0], corners[i][0]);
+      mins[1] = fminf(mins[1], corners[i][1]);
+      mins[2] = fminf(mins[2], corners[i][2]);
+      maxes[0] = fmaxf(maxes[0], corners[i][0]);
+      maxes[1] = fmaxf(maxes[1], corners[i][1]);
+      maxes[2] = fmaxf(maxes[2], corners[i][2]);
+    }
+
+    lightTransforms.viewClip = Quanta::ProjectionFactory::ortho(mins[0], maxes[0], mins[1], maxes[1], mins[2]-5.0, maxes[2]);
   }
 
   void WorldRenderer::writeMerge(CommandStream &stream) {
@@ -197,7 +254,7 @@ namespace Rendering {
 
     stream.writeUniformMat4Set(Uniforms::list.mergeGeometryClipWorldTransform, 1, geometryClipWorldTransform.components);
 
-    Quanta::Matrix4 lightWorldClipTransform = Quanta::ProjectionFactory::ortho(-8, 8, -8, 8, 0, 15)*calcLightWorldViewTransform();
+    Quanta::Matrix4 lightWorldClipTransform = lightTransforms.viewClip*lightTransforms.worldView;
     stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
 
     stream.writeUniformVec3Set(Uniforms::list.mergeLightDirection, 1, lightDirection.components);
@@ -235,21 +292,23 @@ namespace Rendering {
 
   void WorldRenderer::buildDrawQueue() {
     drawQueue.reset();
-    for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
+    const BoneDrawSet &boneSet = drawSet.boneSet;
+    for(uint16_t i=0; boneSet.count>i; i++) {
       BoneMeshDrawCall call;
-      BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
+      BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.pose = BoneMeshInstances::poses[i];
-      call.transform = BoneMeshInstances::transforms[i];
+      call.pose = boneSet.poses[i];
+      call.transform = boneSet.transforms[i];
       drawQueue.addBoneMesh(call);
     }
-    for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
+    const StaticDrawSet &staticSet = drawSet.staticSet;
+    for(uint16_t i=0; staticSet.count>i; i++) {
       StaticMeshDrawCall call;
-      const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
+      const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.transform = StaticMeshInstances::transforms[i];
+      call.transform = staticSet.transforms[i];
       drawQueue.addStaticMesh(call);
     }
     drawQueue.sort();
@@ -324,6 +383,34 @@ namespace Rendering {
           fatalError("Unknown draw call type.");
           break;
       }
+    }
+  }
+
+  void WorldRenderer::buildDrawSet() {
+    cullResult.clear();
+    Quanta::Frustum frustum = calcFrustum();
+    uint16_t counts[Config::cullGroupsCount];
+    counts[CullGroupNames::Bone] = BoneMeshInstances::getCount();
+    counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
+    culler.cull(frustum, cullResult, counts);
+
+    drawSet.clear();
+    CullResultRange boneRange = cullResult.getRange(CullGroupNames::Bone);
+    for(uint16_t i=boneRange.start; boneRange.end>i; i++) {
+      uint16_t index = cullResult.indices[i];
+      drawSet.boneSet.add(
+        BoneMeshInstances::transforms[index],
+        BoneMeshInstances::meshes[index],
+        BoneMeshInstances::poses[index]
+      );
+    }
+    CullResultRange staticRange = cullResult.getRange(CullGroupNames::Static);
+    for(uint16_t i=staticRange.start; staticRange.end>i; i++) {
+      uint16_t index = cullResult.indices[i];
+      drawSet.staticSet.add(
+        StaticMeshInstances::transforms[index],
+        StaticMeshInstances::meshes[index]
+      );
     }
   }
 }

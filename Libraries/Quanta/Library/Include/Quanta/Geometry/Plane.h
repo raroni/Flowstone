@@ -7,6 +7,7 @@ namespace Quanta {
   struct Plane {
     Vector3 position;
     Vector3 normal;
+    float calcDistance(const Quanta::Vector3 &position) const;
   };
 }
 

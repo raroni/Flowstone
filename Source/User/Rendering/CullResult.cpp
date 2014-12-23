@@ -2,18 +2,20 @@
 #include "Rendering/CullResult.h"
 
 namespace Rendering {
-  void CullResult::addBoneInstance(BoneMeshInstanceIndex meshInstance) {
-    assert(boneInstances.count != Config::maxCulledBoneInstances);
-    boneInstances.list[boneInstances.count++] = meshInstance;
-  }
-
-  void CullResult::addStaticInstance(StaticMeshInstanceIndex meshInstance) {
-    assert(staticInstances.count != Config::maxCulledStaticInstances);
-    staticInstances.list[staticInstances.count++] = meshInstance;
-  }
-
   void CullResult::clear() {
-    staticInstances.count = 0;
-    boneInstances.count = 0;
+    count = 0;
+  }
+
+  void CullResult::addIndex(uint16_t index) {
+    indices[count++] = index;
+  }
+
+  void CullResult::storeRange(CullGroupIndex group, uint16_t start, uint16_t end) {
+    ranges[group].start = start;
+    ranges[group].end = end;
+  }
+
+  const CullResultRange& CullResult::getRange(CullGroupIndex group) const {
+    return ranges[group];
   }
 }

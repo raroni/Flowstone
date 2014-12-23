@@ -6,11 +6,12 @@
 #include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/Culler.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/StaticVertex.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/MeshInfo.h"
-#include "Rendering/Culler.h"
+#include "Rendering/DrawSet.h"
 #include "Rendering/CullResult.h"
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
@@ -33,17 +34,24 @@ namespace Rendering {
     void updateResolution(uint16_t width, uint16_t height);
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     Quanta::Vector3 lightDirection;
+    void initialize();
   private:
     struct {
       uint16_t width;
       uint16_t height;
     } resolution;
+    struct {
+      Quanta::Matrix4 worldView;
+      Quanta::Matrix4 viewClip;
+    } lightTransforms;
+    void buildDrawSet();
     Culler culler;
     CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    DrawSet drawSet;
+    void calcLightTransforms();
     Quanta::Matrix4 calcViewClipTransform() const;
-    Quanta::Matrix4 calcLightWorldViewTransform() const;
     void writeShadowMap(CommandStream &stream);
     void writeMerge(CommandStream &stream);
     void writeDrawQueueToStream(CommandStream &stream);
