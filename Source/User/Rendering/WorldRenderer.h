@@ -3,7 +3,6 @@
 
 #include "Quanta/Geometry/Transform.h"
 #include "Quanta/Geometry/Frustum.h"
-#include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
 #include "Rendering/Culler.h"
