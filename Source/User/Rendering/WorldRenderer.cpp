@@ -20,7 +20,6 @@
 #include "Rendering/ProgramName.h"
 #include "Rendering/Backend/ClearBit.h"
 #include "Rendering/Buffers.h"
-#include "Rendering/CullGroupNames.h"
 #include "Rendering/BufferName.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
@@ -29,9 +28,6 @@
 
 namespace Rendering {
   void WorldRenderer::initialize() {
-    culler.configureGroup(CullGroupNames::Bone, BoneMeshInstances::transforms, BoneMeshInstances::boundingRadii);
-    culler.configureGroup(CullGroupNames::Static, StaticMeshInstances::transforms, StaticMeshInstances::boundingRadii);
-
     Frustum::calcInfo(frustumInfo);
     Frustum::calcFrustum(frustumInfo, localFrustum);
   }
@@ -72,7 +68,7 @@ namespace Rendering {
     Quanta::Transformer::updateFrustum(frustum, cameraTransform.calcMatrix());
 
     calcLightTransforms();
-    buildDrawSet(frustum);
+    culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
@@ -91,6 +87,8 @@ namespace Rendering {
 
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
     writeMerge(stream);
+
+    drawSet.clear();
   }
 
   void WorldRenderer::writeShadowMap(CommandStream &stream) {
@@ -346,33 +344,6 @@ namespace Rendering {
           fatalError("Unknown draw call type.");
           break;
       }
-    }
-  }
-
-  void WorldRenderer::buildDrawSet(const Quanta::Frustum &frustum) {
-    cullResult.clear();
-    uint16_t counts[Config::cullGroupsCount];
-    counts[CullGroupNames::Bone] = BoneMeshInstances::getCount();
-    counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
-    culler.cull(frustum, cullResult, counts);
-
-    drawSet.clear();
-    CullResultRange boneRange = cullResult.getRange(CullGroupNames::Bone);
-    for(uint16_t i=boneRange.start; boneRange.end>i; i++) {
-      uint16_t index = cullResult.indices[i];
-      drawSet.boneSet.add(
-        BoneMeshInstances::transforms[index],
-        BoneMeshInstances::meshes[index],
-        BoneMeshInstances::poses[index]
-      );
-    }
-    CullResultRange staticRange = cullResult.getRange(CullGroupNames::Static);
-    for(uint16_t i=staticRange.start; staticRange.end>i; i++) {
-      uint16_t index = cullResult.indices[i];
-      drawSet.staticSet.add(
-        StaticMeshInstances::transforms[index],
-        StaticMeshInstances::meshes[index]
-      );
     }
   }
 }
