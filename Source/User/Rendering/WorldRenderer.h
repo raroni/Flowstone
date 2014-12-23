@@ -46,7 +46,7 @@ namespace Rendering {
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
     DrawSet drawSet;
-    void calcLightTransforms();
+    void calcLightTransforms(const Quanta::Matrix4 &cameraModelWorldTransform);
     Quanta::Matrix4 calcViewClipTransform() const;
     void writeShadowMap(CommandStream &stream);
     void writeMerge(CommandStream &stream);

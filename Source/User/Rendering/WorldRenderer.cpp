@@ -59,10 +59,12 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    Quanta::Frustum frustum = localFrustum;
-    Quanta::Transformer::updateFrustum(frustum, cameraTransform.calcMatrix());
+    Quanta::Matrix4 viewWorldTransform = cameraTransform.calcMatrix();
 
-    calcLightTransforms();
+    Quanta::Frustum frustum = localFrustum;
+    Quanta::Transformer::updateFrustum(frustum, viewWorldTransform);
+
+    calcLightTransforms(viewWorldTransform);
     culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
@@ -131,7 +133,7 @@ namespace Rendering {
     stream.writeRenderTargetSet(0);
   }
 
-  void WorldRenderer::calcLightTransforms() {
+  void WorldRenderer::calcLightTransforms(const Quanta::Matrix4 &viewWorldTransform) {
     enum Corners { // todo move this enum declaration out of runtime
       NearTopLeft,
       NearTopRight,
@@ -151,11 +153,10 @@ namespace Rendering {
     corners[FarTopRight] = Quanta::Vector3(corners[FarTopLeft][0]*-1, corners[FarTopLeft][1], corners[FarTopLeft][2]);
     corners[FarBottomLeft] = Quanta::Vector3(corners[FarTopLeft][0], corners[FarTopLeft][1]*-1, corners[FarTopLeft][2]);
     corners[FarBottomRight] = Quanta::Vector3(corners[FarBottomLeft][0]*-1, corners[FarBottomLeft][1], corners[FarBottomLeft][2]);
-    Quanta::Matrix4 cameraModelWorld = cameraTransform.calcMatrix();
     Quanta::Vector3 centroid = Quanta::Vector3::zero();
     for(uint8_t i=0; 8>i; i++) {
       Quanta::Vector4 temp(corners[i][0], corners[i][1], corners[i][2], 1);
-      Quanta::Transformer::updateVector4(temp, cameraModelWorld);
+      Quanta::Transformer::updateVector4(temp, viewWorldTransform);
       corners[i] = Quanta::Vector3(temp[0], temp[1], temp[2]);
       centroid += corners[i];
     }
