@@ -6,6 +6,7 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Vector4.h"
 #include "Quanta/Geometry/Transformer.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 #include "Rendering/BoneMeshInstances.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/Commands.h"
@@ -21,10 +22,8 @@
 #include "Rendering/Backend/ClearBit.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
-#include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/WorldRenderer.h"
-#include "Quanta/Geometry/TransformFactory3D.h"
 
 namespace Rendering {
   void WorldRenderer::initialize() {
