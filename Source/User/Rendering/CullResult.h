@@ -14,7 +14,7 @@ namespace Rendering {
     CullResultRange ranges[Config::cullGroupsCount];
     void clear();
     void addIndex(uint16_t index);
-    const CullResultRange& getRange(CullGroupIndex group);
+    const CullResultRange& getRange(CullGroupIndex group) const;
     void storeRange(CullGroupIndex group, uint16_t start, uint16_t end);
   };
 };

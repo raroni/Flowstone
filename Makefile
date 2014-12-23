@@ -40,6 +40,9 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/StaticMeshInstances.cpp\
 	Source/User/Rendering/MeshHelper.cpp\
 	Source/User/Rendering/Culler.cpp\
+	Source/User/Rendering/DrawSet.cpp\
+	Source/User/Rendering/BoneDrawSet.cpp\
+	Source/User/Rendering/StaticDrawSet.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
 

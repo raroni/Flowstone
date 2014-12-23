@@ -102,7 +102,7 @@ namespace Rendering {
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
     calcLightTransforms();
-    buildVisibleSet();
+    buildDrawSet();
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
@@ -382,14 +382,32 @@ namespace Rendering {
     }
   }
 
-  void WorldRenderer::buildVisibleSet() {
+  void WorldRenderer::buildDrawSet() {
+    cullResult.clear();
     Quanta::Frustum frustum = calcFrustum();
     uint16_t counts[Config::cullGroupsCount];
     counts[CullGroupNames::Bone] = BoneMeshInstances::getCount();
     counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
     culler.cull(frustum, cullResult, counts);
     // buildVisibleSet here
+    drawSet.clear();
 
-    cullResult.clear();
+    CullResultRange boneRange = cullResult.getRange(CullGroupNames::Bone);
+    for(uint16_t i=boneRange.start; boneRange.end>i; i++) {
+      uint16_t index = cullResult.indices[i];
+      drawSet.boneSet.add(
+        BoneMeshInstances::transforms[index],
+        BoneMeshInstances::meshes[index],
+        BoneMeshInstances::poses[index]
+      );
+    }
+    CullResultRange staticRange = cullResult.getRange(CullGroupNames::Static);
+    for(uint16_t i=staticRange.start; staticRange.end>i; i++) {
+      uint16_t index = cullResult.indices[i];
+      drawSet.staticSet.add(
+        StaticMeshInstances::transforms[index],
+        StaticMeshInstances::meshes[index]
+      );
+    }
   }
 }

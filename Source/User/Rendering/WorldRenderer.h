@@ -11,6 +11,7 @@
 #include "Rendering/StaticVertex.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/MeshInfo.h"
+#include "Rendering/DrawSet.h"
 #include "Rendering/CullResult.h"
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
@@ -43,11 +44,12 @@ namespace Rendering {
       Quanta::Matrix4 worldView;
       Quanta::Matrix4 viewClip;
     } lightTransforms;
-    void buildVisibleSet();
+    void buildDrawSet();
     Culler culler;
     CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
     DrawQueue drawQueue;
+    DrawSet drawSet;
     void calcLightTransforms();
     Quanta::Matrix4 calcViewClipTransform() const;
     void writeShadowMap(CommandStream &stream);

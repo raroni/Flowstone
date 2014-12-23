@@ -14,6 +14,12 @@ namespace Rendering {
     const uint8_t maxCulledBoneInstances = 128;
     const uint8_t maxCulledStaticInstances = 64;
     const uint8_t cullGroupsCount = 2;
+
+    namespace DrawSet {
+      const uint16_t boneCount = 128;
+      const uint16_t staticCount = 128;
+    }
+
     struct {
       const float near = 12;
       const float far = 22;

@@ -14,4 +14,8 @@ namespace Rendering {
     ranges[group].start = start;
     ranges[group].end = end;
   }
+
+  const CullResultRange& CullResult::getRange(CullGroupIndex group) const {
+    return ranges[group];
+  }
 }
