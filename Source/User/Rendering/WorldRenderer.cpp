@@ -393,9 +393,8 @@ namespace Rendering {
     counts[CullGroupNames::Bone] = BoneMeshInstances::getCount();
     counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
     culler.cull(frustum, cullResult, counts);
-    // buildVisibleSet here
-    drawSet.clear();
 
+    drawSet.clear();
     CullResultRange boneRange = cullResult.getRange(CullGroupNames::Bone);
     for(uint16_t i=boneRange.start; boneRange.end>i; i++) {
       uint16_t index = cullResult.indices[i];
