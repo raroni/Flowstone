@@ -25,6 +25,7 @@ namespace Rendering {
   void WorldRenderer::initialize() {
     Frustum::calcInfo(frustumInfo);
     Frustum::calcFrustum(frustumInfo, localFrustum);
+    calcViewClipTransform();
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -205,7 +206,7 @@ namespace Rendering {
   void WorldRenderer::writeMerge(CommandStream &stream) {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
 
-    Quanta::Matrix4 geometryClipWorldTransform = calcViewClipTransform()*cameraTransform.calcInverseMatrix();
+    Quanta::Matrix4 geometryClipWorldTransform = viewClipTransform*cameraTransform.calcInverseMatrix();
 
     geometryClipWorldTransform.invert();
 
@@ -277,7 +278,6 @@ namespace Rendering {
 
     Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
     Quanta::Matrix4 worldViewTransform = cameraTransform.calcInverseMatrix();
-    Quanta::Matrix4 viewClipTransform = calcViewClipTransform();
 
     const size_t matrixSize = sizeof(float)*16;
     const size_t vectorSize = sizeof(float)*3;
@@ -291,10 +291,9 @@ namespace Rendering {
     stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);
   }
 
-  Quanta::Matrix4 WorldRenderer::calcViewClipTransform() const {
+  void WorldRenderer::calcViewClipTransform() {
     float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
-    Quanta::Matrix4 transform = Quanta::ProjectionFactory::perspective(Config::perspective.fieldOfView, aspectRatio, Config::perspective.near, Config::perspective.far);
-    return transform;
+    viewClipTransform = Quanta::ProjectionFactory::perspective(Config::perspective.fieldOfView, aspectRatio, Config::perspective.near, Config::perspective.far);
   }
 
   void WorldRenderer::writeDrawQueueToStream(CommandStream &stream) {
