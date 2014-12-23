@@ -12,6 +12,7 @@ layout(std140) uniform global {
 
 out vec3 interpolatedColor;
 out float interpolatedLambert;
+out vec3 interpolatedNormal;
 
 uniform mat4 jointWorldTransform;
 uniform mat4 modelJointTransforms[8];
@@ -24,4 +25,5 @@ void main() {
   interpolatedLambert = dot(inverseLightDirection, worldNormal)*0.4+0.6;
 
   interpolatedColor = vec3(0.3, 0.6, 0.95);
+  interpolatedNormal = worldNormal;
 }

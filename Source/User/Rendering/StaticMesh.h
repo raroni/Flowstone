@@ -7,6 +7,7 @@ namespace Rendering {
   struct StaticMesh {
     Backend::ObjectHandle object;
     uint16_t indexCount;
+    float boundingRadius;
   };
 }
 

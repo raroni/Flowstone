@@ -3,12 +3,19 @@
 namespace Rendering {
   namespace StaticMeshInstances {
     static uint16_t count = 0;
-    StaticMeshInstance list[256];
+    Quanta::Matrix4 transforms[Config::maxStaticMeshInstances];
+    StaticMeshIndex meshes[Config::maxStaticMeshInstances];
+    float boundingRadii[Config::maxStaticMeshInstances];
 
-    void create(StaticMeshIndex mesh, StaticTransformIndex transform) {
-      list[count].mesh = mesh;
-      list[count].transform = transform;
-      count++;
+    StaticMeshInstanceIndex create(StaticMeshIndex mesh, float boundingRadius) {
+      meshes[count] = mesh;
+      boundingRadii[count] = boundingRadius;
+      transforms[count] = Quanta::Matrix4::identity();
+      return count++;
+    }
+
+    void updateTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+      transforms[index] = transform;
     }
 
     uint16_t getCount() {

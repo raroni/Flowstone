@@ -6,9 +6,10 @@
 #include "MainFlow/State.h"
 #include "Animation/Animator.h"
 #include "Rendering/BoneMeshIndex.h"
+#include "RendererFeeder.h"
 #include "AirDrag.h"
 #include "Core/Physics/Engine.h"
-#include "FrameInterpolator.h"
+#include "Interpolation/Interpolater.h"
 
 namespace Rendering {
   class Renderer;
@@ -21,14 +22,16 @@ namespace MainFlow {
     Animation::Animator animator;
     Physics::Engine physics;
     Rendering::Renderer &renderer;
-    FrameInterpolator frameInterpolator;
+    Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
     Physics::DynamicBodyIndex playerBody;
+    RendererFeeder rendererFeeder;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
     void setupRock();
+    void setupBox();
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();

@@ -17,7 +17,7 @@ namespace Rendering {
     cabiReadFile(path, sourceBuffer, sourceBufferLength);
   }
 
-  static Backend::ProgramHandle initializeProgram(const char *name) {
+  static Backend::ProgramHandle initializeStandardProgram(const char *name) {
     char pathBuffer[128];
     strcpy(pathBuffer, name);
     strcat(pathBuffer, ".vert");
@@ -34,8 +34,32 @@ namespace Rendering {
     return program;
   }
 
+  static Backend::ProgramHandle initializeShadowBoneProgram() {
+    Backend::ProgramHandle program = Backend::createProgram();
+    loadSource("ShadowBone.vert");
+    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
+    Backend::attachShader(program, vertexShader);
+    loadSource("Empty.frag");
+    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
+    Backend::attachShader(program, fragmentShader);
+    Backend::linkProgram(program);
+    return program;
+  }
+
+  static Backend::ProgramHandle initializeShadowStaticProgram() {
+    Backend::ProgramHandle program = Backend::createProgram();
+    loadSource("ShadowStatic.vert");
+    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
+    Backend::attachShader(program, vertexShader);
+    loadSource("Empty.frag");
+    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
+    Backend::attachShader(program, fragmentShader);
+    Backend::linkProgram(program);
+    return program;
+  }
+
   static Backend::ProgramHandle initializeGeometryProgram(const char *name) {
-    Backend::ProgramHandle program = initializeProgram(name);
+    Backend::ProgramHandle program = initializeStandardProgram(name);
     Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "global");
     Backend::setUniformBlockIndex(program, block, 0);
     return program;
@@ -45,9 +69,11 @@ namespace Rendering {
     Backend::ShaderHandle handles[16];
 
     void initialize() {
-      handles[static_cast<size_t>(ProgramName::Bone)] = initializeGeometryProgram("Bone");
-      handles[static_cast<size_t>(ProgramName::Static)] = initializeGeometryProgram("Static");
-      handles[static_cast<size_t>(ProgramName::Merge)] = initializeProgram("Merge");
+      handles[static_cast<size_t>(ProgramName::GeometryBone)] = initializeGeometryProgram("GeometryBone");
+      handles[static_cast<size_t>(ProgramName::GeometryStatic)] = initializeGeometryProgram("GeometryStatic");
+      handles[static_cast<size_t>(ProgramName::Merge)] = initializeStandardProgram("Merge");
+      handles[static_cast<size_t>(ProgramName::ShadowBone)] = initializeShadowBoneProgram();
+      handles[static_cast<size_t>(ProgramName::ShadowStatic)] = initializeShadowStaticProgram();
     }
   }
 }

@@ -15,7 +15,6 @@ namespace Animation {
     exit(1);
   }
 
-
   const uint8_t* Registry::getJointParentIndices(uint8_t skeletonID) const {
     uint8_t offset = jointParentIndicesOffsets[skeletonID];
     return &jointParentIndices[offset];

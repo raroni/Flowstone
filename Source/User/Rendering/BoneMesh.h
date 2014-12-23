@@ -5,6 +5,7 @@ namespace Rendering {
   struct BoneMesh {
     Backend::ObjectHandle object;
     uint16_t indexCount;
+    float boundingRadius;
   };
 }
 

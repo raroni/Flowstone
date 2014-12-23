@@ -18,5 +18,21 @@ namespace Quanta {
 
       return matrix;
     }
+    static Matrix4 ortho(float left, float right, float bottom, float top, float near, float far) {
+      Matrix4 matrix;
+
+      matrix[0] = 2/(right-left);
+      matrix[13] = -(right+left)/(right-left);
+
+      matrix[5] = 2/(top-bottom);
+      matrix[13] = -(top+bottom)/(top-bottom);
+
+      matrix[10] = 2/(far-near);
+      matrix[14] = -(far+near)/(far-near);
+
+      matrix[15] = 1;
+
+      return matrix;
+    }
   };
 }

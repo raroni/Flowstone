@@ -29,6 +29,7 @@ namespace Rendering {
     void clear(ClearBitMask mask);
     void setClearColor(float r, float g, float b);
     void setUniformMat4(UniformHandle uniform, uint8_t count, const float *data);
+    void setUniformVec3(UniformHandle uniform, uint8_t count, const float *data);
     ObjectHandle createObject();
     void enableAttributeLocation(AttributeLocation location);
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);
@@ -43,7 +44,8 @@ namespace Rendering {
     void setRenderTarget(RenderTargetHandle renderTarget);
     void setRenderBuffer(RenderBufferHandle renderBuffer);
     TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format);
-    void attachTexture(TextureHandle texture, uint8_t location);
+    void attachColorTexture(TextureHandle texture, uint8_t location);
+    void attachDepthTexture(TextureHandle texture);
     void attachRenderBuffer(RenderBufferHandle renderBuffer);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
@@ -51,7 +53,9 @@ namespace Rendering {
     void enableDepthTest();
     void enableFaceCulling();
     void disableDepthTest();
+    void disableDrawBuffer();
     RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height);
+    void setViewport(uint16_t width, uint16_t height);
   }
 }
 

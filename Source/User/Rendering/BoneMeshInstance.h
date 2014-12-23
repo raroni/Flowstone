@@ -1,15 +1,16 @@
 #ifndef RENDERING_BONE_MESH_INSTANCE_H
 #define RENDERING_BONE_MESH_INSTANCE_H
 
+#include "Pose.h"
+#include "Quanta/Math/Matrix4.h"
 #include "Animation/PoseIndex.h"
-#include "Rendering/BoneMeshInstance.h"
-#include "Rendering/DynamicTransformIndex.h"
+#include "Rendering/BoneMeshIndex.h"
 
 namespace Rendering {
   struct BoneMeshInstance {
-    BoneMeshIndex mesh;
-    DynamicTransformIndex transform;
-    Animation::PoseIndex pose;
+    BoneMeshIndex *mesh;
+    Quanta::Matrix4 *transform;
+    Pose *pose;
   };
 }
 

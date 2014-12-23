@@ -5,6 +5,7 @@ namespace Rendering {
   enum class CommandType {
     ProgramSet,
     UniformMat4Set,
+    UniformVec3Set,
     ObjectSet,
     IndexedDraw,
     BufferSet,
@@ -13,7 +14,8 @@ namespace Rendering {
     TextureSet,
     EnableDepthTest,
     DisableDepthTest,
-    Clear
+    Clear,
+    ViewportSet
   };
 }
 

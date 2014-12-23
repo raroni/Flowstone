@@ -25,6 +25,11 @@ namespace Rendering {
     uint16_t count;
   };
 
+  struct UniformVec3SetCommand {
+    Backend::UniformHandle uniform;
+    uint16_t count;
+  };
+
   struct IndexedDrawCommand {
     uint16_t indexCount;
     Backend::DataType dataType;
@@ -52,6 +57,11 @@ namespace Rendering {
 
   struct ClearCommand {
     Backend::ClearBitMask mask;
+  };
+
+  struct ViewportSetCommand {
+    uint16_t width;
+    uint16_t height;
   };
 }
 

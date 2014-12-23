@@ -19,10 +19,19 @@ namespace Rendering {
     FullscreenQuad::initialize();
     Backend::setClearColor(0, 0, 1);
     Backend::enableFaceCulling();
+    worldRenderer.initialize();
   }
 
   void Renderer::setLightDirection(Quanta::Vector3 lightDirection) {
     worldRenderer.lightDirection = lightDirection;
+  }
+
+  BoneMeshInstance Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
+    return worldRenderer.getBoneMeshInstance(index);
+  }
+
+  void Renderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
+    worldRenderer.updateStaticMeshTransform(index, transform);
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -33,8 +42,8 @@ namespace Rendering {
     return worldRenderer.createStaticMesh(info, vertices, indices, shapes);
   }
 
-  void Renderer::createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform) {
-    worldRenderer.createStaticMeshInstance(mesh, transform);
+  StaticMeshInstanceIndex Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
+    return worldRenderer.createStaticMeshInstance(mesh);
   }
 
   Quanta::Transform& Renderer::getCameraTransform() {
@@ -45,8 +54,8 @@ namespace Rendering {
     worldRenderer.updateResolution(width, height);
   }
 
-  void Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose) {
-    worldRenderer.createBoneMeshInstance(meshIndex, transformIndex, pose);
+  BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
+    return worldRenderer.createBoneMeshInstance(meshIndex);
   }
 
   void Renderer::draw() {
@@ -55,18 +64,6 @@ namespace Rendering {
     stream.rewind();
     dispatch();
     stream.reset();
-  }
-
-  void Renderer::setDynamicTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.dynamicTransforms = transforms;
-  }
-
-  void Renderer::setStaticTransforms(const Quanta::Matrix4 *transforms) {
-    worldRenderer.staticTransforms = transforms;
-  }
-
-  void Renderer::setPoses(const Pose *poses) {
-    worldRenderer.poses = poses;
   }
 
   void Renderer::dispatch() {
@@ -82,6 +79,12 @@ namespace Rendering {
           const float *data;
           UniformMat4SetCommand command = stream.readUniformMat4Set(&data);
           Backend::setUniformMat4(command.uniform, command.count, data);
+          break;
+        }
+        case CommandType::UniformVec3Set: {
+          const float *data;
+          UniformVec3SetCommand command = stream.readUniformVec3Set(&data);
+          Backend::setUniformVec3(command.uniform, command.count, data);
           break;
         }
         case CommandType::ObjectSet: {
@@ -120,6 +123,11 @@ namespace Rendering {
         case CommandType::BufferSet: {
           BufferSetCommand command = stream.readBufferSet();
           Backend::setBuffer(command.target, command.buffer);
+          break;
+        }
+        case CommandType::ViewportSet: {
+          ViewportSetCommand command = stream.readViewportSet();
+          Backend::setViewport(command.width, command.height);
           break;
         }
         case CommandType::BufferWrite: {

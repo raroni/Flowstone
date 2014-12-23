@@ -94,6 +94,10 @@ namespace Rendering {
       glUniformMatrix4fv(uniform, count, GL_FALSE, data);
     }
 
+    void setUniformVec3(UniformHandle uniform, uint8_t count, const float *data) {
+      glUniform3fv(uniform, count, data);
+    }
+
     void setObject(ObjectHandle object) {
       glBindVertexArray(object);
     }
@@ -125,6 +129,15 @@ namespace Rendering {
     }
 
     TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format) {
+      GLenum dataType = GL_UNSIGNED_BYTE;
+      if(format == TextureFormat::Depth) {
+        dataType = GL_FLOAT;
+      }
+      GLenum dataFormat = static_cast<GLint>(format);
+      if(format == TextureFormat::SignedNormalizedRGB) {
+        dataFormat = GL_RGB;
+      }
+
       GLuint texture;
       glGenTextures(1, &texture);
       glBindTexture(GL_TEXTURE_2D, texture);
@@ -135,12 +148,12 @@ namespace Rendering {
         width,
         height,
         0,
-        GL_RGB,
-        GL_UNSIGNED_BYTE,
+        dataFormat,
+        dataType,
         NULL
       );
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
       glBindTexture(GL_TEXTURE_2D, 0);
@@ -148,12 +161,16 @@ namespace Rendering {
       return texture;
     }
 
-    void attachTexture(TextureHandle texture, uint8_t location) {
+    void disableDrawBuffer() {
+      glDrawBuffer(GL_NONE);
+    }
+
+    void attachColorTexture(TextureHandle texture, uint8_t location) {
       glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+location, texture, 0);
     }
 
-    void attachDepthBuffer(RenderBufferHandle renderBuffer) {
-
+    void attachDepthTexture(TextureHandle texture) {
+      glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture, 0);
     }
 
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset) {
@@ -223,6 +240,10 @@ namespace Rendering {
 
     void enableFaceCulling() {
       glEnable(GL_CULL_FACE);
+    }
+
+    void setViewport(uint16_t width, uint16_t height) {
+      glViewport(0, 0, width, height);
     }
   }
 }

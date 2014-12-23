@@ -11,6 +11,7 @@ namespace Rendering {
   class BoneMeshRegistry {
     Backend::ObjectHandle handles[Config::maxBoneMeshes];
     uint16_t indexCounts[Config::maxBoneMeshes];
+    float boundingRadii[Config::maxBoneMeshes];
     uint16_t count = 0;
   public:
     BoneMeshIndex create(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);

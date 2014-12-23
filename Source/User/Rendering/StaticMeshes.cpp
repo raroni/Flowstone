@@ -1,5 +1,8 @@
+#include "Quanta/Math/Vector3.h"
+#include "Rendering/Config.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/AttributeLocation.h"
+#include "Rendering/MeshHelper.h"
 #include "Rendering/StaticMeshes.h"
 
 namespace Rendering {
@@ -10,7 +13,7 @@ namespace Rendering {
         float nx, ny, nz;
         float color[3];
       };
-      StaticMesh list[128];
+      StaticMesh list[Config::maxStaticMeshes];
       uint8_t count = 0;
     }
 
@@ -112,6 +115,14 @@ namespace Rendering {
       return object;
     }
 
+    static float calcBoundingRadius(const StaticVertex *vertices, uint16_t count) {
+      Quanta::Vector3 positions[count];
+      for(uint16_t i=0; count>i; i++) {
+        positions[i] = vertices[i].position;
+      }
+      return MeshHelper::calcBoundingRadius(positions, count);
+    }
+
     StaticMeshIndex create(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
       uint8_t backendVertexCount = 0;
       BackendStaticVertex backendVertices[info.indexCount];
@@ -120,6 +131,7 @@ namespace Rendering {
       StaticMesh &mesh = list[count];
       mesh.object = upload(backendVertices, backendVertexCount, backendIndices, info.indexCount);;
       mesh.indexCount = info.indexCount;
+      mesh.boundingRadius = calcBoundingRadius(vertices, info.vertexCount);
       return count++;
     }
 

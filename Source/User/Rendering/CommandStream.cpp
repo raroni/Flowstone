@@ -93,6 +93,27 @@ namespace Rendering {
     position += dataSize;
   }
 
+  void CommandStream::writeUniformVec3Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+    writeType(CommandType::UniformVec3Set);
+    UniformVec3SetCommand command;
+    command.uniform = uniform;
+    command.count = count;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+    size_t dataSize = count*sizeof(float)*3;
+    memcpy(buffer+position, data, dataSize);
+    position += dataSize;
+  }
+
+  void CommandStream::writeViewportSet(uint16_t width, uint16_t height) {
+    writeType(CommandType::ViewportSet);
+    ViewportSetCommand command;
+    command.width = width;
+    command.height = height;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeType(CommandType type) {
     count++;
     memcpy(buffer+position, &type, sizeof(type));
@@ -169,6 +190,20 @@ namespace Rendering {
     position += sizeof(command);
     *data = reinterpret_cast<const float*>(buffer+position);
     position += command.count*sizeof(float)*16;
+    return command;
+  }
+
+  UniformVec3SetCommand CommandStream::readUniformVec3Set(const float **data) {
+    UniformVec3SetCommand command = *reinterpret_cast<const UniformVec3SetCommand*>(buffer+position);
+    position += sizeof(command);
+    *data = reinterpret_cast<const float*>(buffer+position);
+    position += command.count*sizeof(float)*3;
+    return command;
+  }
+
+  ViewportSetCommand CommandStream::readViewportSet() {
+    ViewportSetCommand command = *reinterpret_cast<const ViewportSetCommand*>(buffer+position);
+    position += sizeof(command);
     return command;
   }
 }

@@ -10,21 +10,18 @@
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Rendering/CommandStream.h"
-#include "Rendering/DynamicTransformIndex.h"
-#include "Rendering/StaticTransformIndex.h"
 
 namespace Rendering {
   class Renderer {
   public:
     void initialize();
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    void createBoneMeshInstance(BoneMeshIndex meshIndex, DynamicTransformIndex transformIndex, Animation::PoseIndex pose);
+    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex meshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
-    void createStaticMeshInstance(StaticMeshIndex mesh, StaticTransformIndex transform);
+    StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
+    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
+    void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void draw();
-    void setDynamicTransforms(const Quanta::Matrix4 *transforms);
-    void setStaticTransforms(const Quanta::Matrix4 *transforms);
-    void setPoses(const Pose *poses);
     Quanta::Transform& getCameraTransform();
     void updateResolution(uint16_t width, uint16_t height);
     void setLightDirection(Quanta::Vector3 lightDirection);
