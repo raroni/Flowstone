@@ -9,6 +9,7 @@
 #include "Rendering/Culler.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/StaticVertex.h"
+#include "Rendering/FrustumInfo.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/DrawSet.h"
@@ -44,7 +45,7 @@ namespace Rendering {
       Quanta::Matrix4 worldView;
       Quanta::Matrix4 viewClip;
     } lightTransforms;
-    void buildDrawSet();
+    void buildDrawSet(const Quanta::Frustum &frustum);
     Culler culler;
     CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
@@ -57,7 +58,8 @@ namespace Rendering {
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();
     void writeGlobalUniformUpdate(CommandStream &stream);
-    Quanta::Frustum calcFrustum() const;
+    Quanta::Frustum localFrustum;
+    FrustumInfo frustumInfo;
   };
 }
 

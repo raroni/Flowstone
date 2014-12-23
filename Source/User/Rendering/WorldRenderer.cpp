@@ -12,6 +12,7 @@
 #include "Rendering/StaticMeshes.h"
 #include "Rendering/StaticMeshInstances.h"
 #include "Rendering/Programs.h"
+#include "Rendering/Frustum.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/Textures.h"
@@ -30,6 +31,9 @@ namespace Rendering {
   void WorldRenderer::initialize() {
     culler.configureGroup(CullGroupNames::Bone, BoneMeshInstances::transforms, BoneMeshInstances::boundingRadii);
     culler.configureGroup(CullGroupNames::Static, StaticMeshInstances::transforms, StaticMeshInstances::boundingRadii);
+
+    Frustum::calcInfo(frustumInfo);
+    Frustum::calcFrustum(frustumInfo, localFrustum);
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -63,46 +67,12 @@ namespace Rendering {
     resolution.height = height;
   }
 
-  // TODO: No need to calculate this over and over
-  Quanta::Frustum WorldRenderer::calcFrustum() const {
-    Quanta::Frustum frustum;
-
-    float nearWidth = tan(Config::perspective.fieldOfView/2)*2*Config::perspective.near;
-    float nearHeight = nearWidth/(800.0/600.0); // TODO: replace with real aspect ratio
-    Quanta::Vector3 up(0, 1, 0);
-    Quanta::Vector3 right(1, 0, 0);
-
-    Quanta::Plane &nearPlane = frustum.planes[Quanta::Frustum::Near];
-    nearPlane.position = Quanta::Vector3(0, 0, Config::perspective.near);
-    nearPlane.normal = Quanta::Vector3(0, 0, 1);
-
-    Quanta::Plane &farPlane = frustum.planes[Quanta::Frustum::Far];
-    farPlane.position = Quanta::Vector3(0, 0, Config::perspective.far);
-    farPlane.normal = Quanta::Vector3(0, 0, -1);
-
-    Quanta::Plane &topPlane = frustum.planes[Quanta::Frustum::Top];
-    topPlane.position = Quanta::Vector3::zero();
-    topPlane.normal = Quanta::Vector3::cross(right, Quanta::Vector3(0, nearHeight/2, Config::perspective.near).getNormalized());
-
-    Quanta::Plane &bottomPlane = frustum.planes[Quanta::Frustum::Bottom];
-    bottomPlane.position = Quanta::Vector3::zero();
-    bottomPlane.normal = Quanta::Vector3(topPlane.normal[0], topPlane.normal[1]*-1, topPlane.normal[2]);
-
-    Quanta::Plane &leftPlane = frustum.planes[Quanta::Frustum::Left];
-    leftPlane.position = Quanta::Vector3::zero();
-    leftPlane.normal = Quanta::Vector3::cross(up, Quanta::Vector3(-nearWidth/2, 0, Config::perspective.near)).getNormalized();
-
-    Quanta::Plane &rightPlane = frustum.planes[Quanta::Frustum::Right];
-    rightPlane.position = Quanta::Vector3::zero();
-    rightPlane.normal = Quanta::Vector3(leftPlane.normal[0]*-1, leftPlane.normal[1], leftPlane.normal[2]);
-
-    Quanta::Transformer::updateFrustum(frustum, cameraTransform.calcMatrix());
-    return frustum;
-  }
-
   void WorldRenderer::writeCommands(CommandStream &stream) {
+    Quanta::Frustum frustum = localFrustum;
+    Quanta::Transformer::updateFrustum(frustum, cameraTransform.calcMatrix());
+
     calcLightTransforms();
-    buildDrawSet();
+    buildDrawSet(frustum);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
@@ -169,13 +139,6 @@ namespace Rendering {
   }
 
   void WorldRenderer::calcLightTransforms() {
-    // todo: move this (and probably also corner calc) to calcFrustumMetadata() - it is also used in calcFrustum
-    float aspectRatio = (800.0/600.0); // todo replace with real aspect ratio
-    float nearWidth = tan(Config::perspective.fieldOfView/2)*2*Config::perspective.near;
-    float nearHeight = nearWidth/aspectRatio;
-    float farWidth = nearWidth*(Config::perspective.far/Config::perspective.near);
-    float farHeight = farWidth/aspectRatio;
-
     enum Corners { // todo move this enum declaration out of runtime
       NearTopLeft,
       NearTopRight,
@@ -187,11 +150,11 @@ namespace Rendering {
       FarBottomRight
     };
     Quanta::Vector3 corners[8];
-    corners[NearTopLeft] = Quanta::Vector3(-nearWidth*0.5, nearHeight*0.5, Config::perspective.near);
+    corners[NearTopLeft] = Quanta::Vector3(-frustumInfo.nearWidth*0.5, frustumInfo.nearHeight*0.5, Config::perspective.near);
     corners[NearTopRight] = Quanta::Vector3(corners[NearTopLeft][0]*-1, corners[NearTopLeft][1], corners[NearTopLeft][2]);
     corners[NearBottomLeft] = Quanta::Vector3(corners[NearTopLeft][0], corners[NearTopLeft][1]*-1, corners[NearTopLeft][2]);
     corners[NearBottomRight] = Quanta::Vector3(corners[NearBottomLeft][0]*-1, corners[NearBottomLeft][1], corners[NearBottomLeft][2]);
-    corners[FarTopLeft] = Quanta::Vector3(farWidth*0.5, farHeight*0.5, Config::perspective.far);
+    corners[FarTopLeft] = Quanta::Vector3(frustumInfo.farWidth*0.5, frustumInfo.farHeight*0.5, Config::perspective.far);
     corners[FarTopRight] = Quanta::Vector3(corners[FarTopLeft][0]*-1, corners[FarTopLeft][1], corners[FarTopLeft][2]);
     corners[FarBottomLeft] = Quanta::Vector3(corners[FarTopLeft][0], corners[FarTopLeft][1]*-1, corners[FarTopLeft][2]);
     corners[FarBottomRight] = Quanta::Vector3(corners[FarBottomLeft][0]*-1, corners[FarBottomLeft][1], corners[FarBottomLeft][2]);
@@ -386,9 +349,8 @@ namespace Rendering {
     }
   }
 
-  void WorldRenderer::buildDrawSet() {
+  void WorldRenderer::buildDrawSet(const Quanta::Frustum &frustum) {
     cullResult.clear();
-    Quanta::Frustum frustum = calcFrustum();
     uint16_t counts[Config::cullGroupsCount];
     counts[CullGroupNames::Bone] = BoneMeshInstances::getCount();
     counts[CullGroupNames::Static] = StaticMeshInstances::getCount();
