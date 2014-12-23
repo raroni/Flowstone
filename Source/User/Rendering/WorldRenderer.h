@@ -1,23 +1,19 @@
 #ifndef RENDERING_WORLD_RENDERER_H
 #define RENDERING_WORLD_RENDERER_H
 
-#include "Quanta/Geometry/Transform.h"
 #include "Quanta/Geometry/Frustum.h"
-#include "Rendering/BoneMeshIndex.h"
+#include "Quanta/Geometry/Transform.h"
+#include "Rendering/BoneMeshInstance.h"
+#include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/BoneVertex.h"
 #include "Rendering/Culler.h"
-#include "Rendering/BoneMeshInstance.h"
-#include "Rendering/StaticVertex.h"
-#include "Rendering/FrustumInfo.h"
-#include "Rendering/BoneMeshRegistry.h"
-#include "Rendering/MeshInfo.h"
 #include "Rendering/DrawSet.h"
-#include "Rendering/CullResult.h"
+#include "Rendering/DrawQueue.h"
+#include "Rendering/FrustumInfo.h"
+#include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
-#include "Rendering/DrawQueue.h"
-#include "Rendering/Backend/BufferHandle.h"
-#include "Rendering/Config.h"
+#include "Rendering/StaticVertex.h"
 
 namespace Rendering {
   class CommandStream;
