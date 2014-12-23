@@ -11,8 +11,8 @@ namespace Quanta {
   public:
     Quaternion orientation = Quaternion::identity();;
     Vector3 position;
-    Matrix4 getMatrix() const;
-    Matrix4 getInverseMatrix();
+    Matrix4 calcMatrix() const;
+    Matrix4 calcInverseMatrix();
     Quaternion getOrientation();
     void rotateX(float angle);
     void rotateY(float angle);

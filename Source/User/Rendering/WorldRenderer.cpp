@@ -96,7 +96,7 @@ namespace Rendering {
     rightPlane.position = Quanta::Vector3::zero();
     rightPlane.normal = Quanta::Vector3(leftPlane.normal[0]*-1, leftPlane.normal[1], leftPlane.normal[2]);
 
-    Quanta::Transformer::updateFrustum(frustum, cameraTransform.getMatrix());
+    Quanta::Transformer::updateFrustum(frustum, cameraTransform.calcMatrix());
     return frustum;
   }
 
@@ -195,7 +195,7 @@ namespace Rendering {
     corners[FarTopRight] = Quanta::Vector3(corners[FarTopLeft][0]*-1, corners[FarTopLeft][1], corners[FarTopLeft][2]);
     corners[FarBottomLeft] = Quanta::Vector3(corners[FarTopLeft][0], corners[FarTopLeft][1]*-1, corners[FarTopLeft][2]);
     corners[FarBottomRight] = Quanta::Vector3(corners[FarBottomLeft][0]*-1, corners[FarBottomLeft][1], corners[FarBottomLeft][2]);
-    Quanta::Matrix4 cameraModelWorld = cameraTransform.getMatrix();
+    Quanta::Matrix4 cameraModelWorld = cameraTransform.calcMatrix();
     Quanta::Vector3 centroid = Quanta::Vector3::zero();
     for(uint8_t i=0; 8>i; i++) {
       Quanta::Vector4 temp(corners[i][0], corners[i][1], corners[i][2], 1);
@@ -248,7 +248,7 @@ namespace Rendering {
   void WorldRenderer::writeMerge(CommandStream &stream) {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
 
-    Quanta::Matrix4 geometryClipWorldTransform = calcViewClipTransform()*cameraTransform.getInverseMatrix();
+    Quanta::Matrix4 geometryClipWorldTransform = calcViewClipTransform()*cameraTransform.calcInverseMatrix();
 
     geometryClipWorldTransform.invert();
 
@@ -319,7 +319,7 @@ namespace Rendering {
     stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
 
     Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
-    Quanta::Matrix4 worldViewTransform = cameraTransform.getInverseMatrix();
+    Quanta::Matrix4 worldViewTransform = cameraTransform.calcInverseMatrix();
     Quanta::Matrix4 viewClipTransform = calcViewClipTransform();
 
     const size_t matrixSize = sizeof(float)*16;

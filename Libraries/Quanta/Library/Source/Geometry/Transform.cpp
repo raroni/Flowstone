@@ -3,13 +3,13 @@
 #include "Quanta/Geometry/Transform.h"
 
 namespace Quanta {
-  Matrix4 Transform::getMatrix() const {
+  Matrix4 Transform::calcMatrix() const {
     Matrix4 orientationMatrix = orientation;
     auto translationMatrix = TransformFactory3D::translation(position);
     return translationMatrix*orientationMatrix;
   }
 
-  Matrix4 Transform::getInverseMatrix() {
+  Matrix4 Transform::calcInverseMatrix() {
     Matrix4 orientationMatrix = orientation.getConjugate();
     auto negatedTranslation = position.getNegated();
     auto translationMatrix = TransformFactory3D::translation(negatedTranslation);
