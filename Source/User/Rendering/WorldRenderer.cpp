@@ -61,6 +61,7 @@ namespace Rendering {
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
     Quanta::Matrix4 viewWorldTransform = cameraTransform.calcMatrix();
+    Quanta::Matrix4 worldViewTransform = cameraTransform.calcInverseMatrix();
 
     Quanta::Frustum frustum = localFrustum;
     Quanta::Transformer::updateFrustum(frustum, viewWorldTransform);
@@ -71,7 +72,7 @@ namespace Rendering {
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     writeShadowMap(stream);
     stream.writeViewportSet(800, 600);
-    writeGlobalUniformUpdate(stream);
+    writeGlobalUniformUpdate(stream, worldViewTransform);
     stream.writeRenderTargetSet(RenderTargets::handles.geometry);
     stream.writeClear(
       static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color) |
@@ -84,7 +85,7 @@ namespace Rendering {
     stream.writeDisableDepthTest();
 
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
-    writeMerge(stream);
+    writeMerge(stream, worldViewTransform);
 
     drawSet.clear();
   }
@@ -203,10 +204,10 @@ namespace Rendering {
     lightTransforms.viewClip = Quanta::ProjectionFactory::ortho(mins[0], maxes[0], mins[1], maxes[1], mins[2]-5.0, maxes[2]);
   }
 
-  void WorldRenderer::writeMerge(CommandStream &stream) {
+  void WorldRenderer::writeMerge(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform) {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
 
-    Quanta::Matrix4 geometryClipWorldTransform = viewClipTransform*cameraTransform.calcInverseMatrix();
+    Quanta::Matrix4 geometryClipWorldTransform = viewClipTransform*worldViewTransform;
 
     geometryClipWorldTransform.invert();
 
@@ -272,12 +273,11 @@ namespace Rendering {
     drawQueue.sort();
   }
 
-  void WorldRenderer::writeGlobalUniformUpdate(CommandStream &stream) {
+  void WorldRenderer::writeGlobalUniformUpdate(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform) {
     Backend::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
     stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
 
     Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
-    Quanta::Matrix4 worldViewTransform = cameraTransform.calcInverseMatrix();
 
     const size_t matrixSize = sizeof(float)*16;
     const size_t vectorSize = sizeof(float)*3;

@@ -50,10 +50,10 @@ namespace Rendering {
     void calcLightTransforms(const Quanta::Matrix4 &cameraModelWorldTransform);
     void calcViewClipTransform();
     void writeShadowMap(CommandStream &stream);
-    void writeMerge(CommandStream &stream);
+    void writeMerge(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform);
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();
-    void writeGlobalUniformUpdate(CommandStream &stream);
+    void writeGlobalUniformUpdate(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform);
     Quanta::Frustum localFrustum;
     FrustumInfo frustumInfo;
   };
