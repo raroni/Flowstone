@@ -130,12 +130,13 @@ namespace Rendering {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
     stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, lightTransforms.viewClip.components);
     stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, lightTransforms.worldView.components);
-    for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
-      const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
+    const StaticDrawSet &staticSet = drawSet.staticSet;
+    for(uint16_t i=0; staticSet.count>i; i++) {
+      const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
       stream.writeUniformMat4Set(
         Uniforms::list.shadowStaticModelWorldTransform,
         1,
-        StaticMeshInstances::transforms[i].components
+        staticSet.transforms[i].components
       );
       stream.writeObjectSet(mesh.object);
       stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
@@ -144,19 +145,20 @@ namespace Rendering {
     stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)]);
     stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, lightTransforms.viewClip.components);
     stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, lightTransforms.worldView.components);
-    for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
-      BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
+    const BoneDrawSet &boneSet = drawSet.boneSet;
+    for(uint16_t i=0; boneSet.count>i; i++) {
+      BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
 
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneJointWorldTransform,
         1,
-        BoneMeshInstances::transforms[i].components
+        boneSet.transforms[i].components
       );
 
       stream.writeUniformMat4Set(
         Uniforms::list.shadowBoneModelJointTransforms,
         8,
-        BoneMeshInstances::poses[i].joints[0].components
+        boneSet.poses[i].joints[0].components
       );
 
       stream.writeObjectSet(mesh.object);
@@ -290,21 +292,23 @@ namespace Rendering {
 
   void WorldRenderer::buildDrawQueue() {
     drawQueue.reset();
-    for(uint16_t i=0; BoneMeshInstances::getCount()>i; i++) {
+    const BoneDrawSet &boneSet = drawSet.boneSet;
+    for(uint16_t i=0; boneSet.count>i; i++) {
       BoneMeshDrawCall call;
-      BoneMesh mesh = boneMeshRegistry.get(BoneMeshInstances::meshes[i]);
+      BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.pose = BoneMeshInstances::poses[i];
-      call.transform = BoneMeshInstances::transforms[i];
+      call.pose = boneSet.poses[i];
+      call.transform = boneSet.transforms[i];
       drawQueue.addBoneMesh(call);
     }
-    for(uint16_t i=0; StaticMeshInstances::getCount()>i; i++) {
+    const StaticDrawSet &staticSet = drawSet.staticSet;
+    for(uint16_t i=0; staticSet.count>i; i++) {
       StaticMeshDrawCall call;
-      const StaticMesh& mesh = StaticMeshes::get(StaticMeshInstances::meshes[i]);
+      const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
       call.object = mesh.object;
       call.indexCount = mesh.indexCount;
-      call.transform = StaticMeshInstances::transforms[i];
+      call.transform = staticSet.transforms[i];
       drawQueue.addStaticMesh(call);
     }
     drawQueue.sort();
