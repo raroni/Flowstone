@@ -192,7 +192,7 @@ namespace Rendering {
 
     Quanta::Vector3 mins = corners[0];
     Quanta::Vector3 maxes = corners[0];
-    for(uint8_t i=0; 8>i; i++) { // change i=0 to i=1?
+    for(uint8_t i=1; 8>i; i++) {
       mins[0] = fminf(mins[0], corners[i][0]);
       mins[1] = fminf(mins[1], corners[i][1]);
       mins[2] = fminf(mins[2], corners[i][2]);
