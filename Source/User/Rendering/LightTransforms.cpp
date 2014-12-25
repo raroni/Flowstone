@@ -8,6 +8,17 @@
 
 namespace Rendering {
   namespace LightTransforms {
+    enum CornerNames {
+      NearTopLeft,
+      NearTopRight,
+      NearBottomLeft,
+      NearBottomRight,
+      FarTopLeft,
+      FarTopRight,
+      FarBottomLeft,
+      FarBottomRight
+    };
+
     void calc(
       const FrustumInfo &frustumInfo,
       const Quanta::Matrix4 &cameraViewWorldTransform,
@@ -15,16 +26,6 @@ namespace Rendering {
       Quanta::Matrix4 &lightWorldView,
       Quanta::Matrix4 &lightViewClipTransform
     ) {
-      enum Corners { // todo move this enum declaration out of runtime
-        NearTopLeft,
-        NearTopRight,
-        NearBottomLeft,
-        NearBottomRight,
-        FarTopLeft,
-        FarTopRight,
-        FarBottomLeft,
-        FarBottomRight
-      };
       Quanta::Vector3 corners[8];
       corners[NearTopLeft] = Quanta::Vector3(-frustumInfo.nearWidth*0.5, frustumInfo.nearHeight*0.5, Config::perspective.near);
       corners[NearTopRight] = Quanta::Vector3(corners[NearTopLeft][0]*-1, corners[NearTopLeft][1], corners[NearTopLeft][2]);
