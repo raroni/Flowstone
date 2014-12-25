@@ -67,7 +67,7 @@ namespace Rendering {
     culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
-    ShadowPass::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip, lightTransforms.worldView);
+    ShadowPass::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip*lightTransforms.worldView);
     stream.writeViewportSet(800, 600);
     writeGlobalUniformUpdate(stream, worldViewTransform);
     GeometryPass::write(stream, drawSet, boneMeshRegistry);
