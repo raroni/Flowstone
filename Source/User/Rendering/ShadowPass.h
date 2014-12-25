@@ -8,7 +8,7 @@ namespace Rendering {
   class BoneMeshRegistry;
   struct DrawSet;
 
-  namespace ShadowMap {
+  namespace ShadowPass {
     void write(
       CommandStream &stream,
       const BoneMeshRegistry &boneMeshRegistry,

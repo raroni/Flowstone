@@ -5,7 +5,7 @@
 #include "Quanta/ProjectionFactory.h"
 #include "Quanta/Math/Vector4.h"
 #include "Core/Error.h"
-#include "Rendering/ShadowMap.h"
+#include "Rendering/ShadowPass.h"
 #include "Rendering/Textures.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/CommandStream.h"
@@ -72,7 +72,7 @@ namespace Rendering {
     culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
-    ShadowMap::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip, lightTransforms.worldView);
+    ShadowPass::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip, lightTransforms.worldView);
     stream.writeViewportSet(800, 600);
     writeGlobalUniformUpdate(stream, worldViewTransform);
     stream.writeRenderTargetSet(RenderTargets::handles.geometry);
