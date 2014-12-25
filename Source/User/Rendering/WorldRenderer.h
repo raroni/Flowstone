@@ -47,7 +47,6 @@ namespace Rendering {
     DrawQueue drawQueue;
     DrawSet drawSet;
     Quanta::Matrix4 viewClipTransform;
-    void calcLightTransforms(const Quanta::Matrix4 &cameraModelWorldTransform);
     void calcViewClipTransform();
     void writeShadowMap(CommandStream &stream);
     void writeMerge(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform);
