@@ -68,7 +68,7 @@ namespace Rendering {
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     ShadowPass::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip*lightTransforms.worldView);
-    stream.writeViewportSet(800, 600);
+    stream.writeViewportSet(resolution.width, resolution.height);
     writeGlobalUniformUpdate(stream, worldViewTransform);
     GeometryPass::write(stream, drawSet, boneMeshRegistry);
 
