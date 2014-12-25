@@ -48,7 +48,6 @@ namespace Rendering {
     DrawSet drawSet;
     Quanta::Matrix4 viewClipTransform;
     void calcViewClipTransform();
-    void writeMerge(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform);
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();
     void writeGlobalUniformUpdate(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform);

@@ -6,8 +6,8 @@
 #include "Quanta/Math/Vector4.h"
 #include "Core/Error.h"
 #include "Rendering/ShadowPass.h"
+#include "Rendering/MergePass.h"
 #include "Rendering/Textures.h"
-#include "Rendering/FullscreenQuad.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/LightTransforms.h"
 #include "Rendering/Buffers.h"
@@ -87,54 +87,15 @@ namespace Rendering {
     stream.writeDisableDepthTest();
 
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
-    writeMerge(stream, worldViewTransform);
+
+    MergePass::write(
+      stream,
+      viewClipTransform*worldViewTransform,
+      lightTransforms.viewClip*lightTransforms.worldView,
+      lightDirection
+    );
 
     drawSet.clear();
-  }
-
-  void WorldRenderer::writeMerge(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform) {
-    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
-
-    Quanta::Matrix4 geometryClipWorldTransform = viewClipTransform*worldViewTransform;
-
-    geometryClipWorldTransform.invert();
-
-    stream.writeUniformMat4Set(Uniforms::list.mergeGeometryClipWorldTransform, 1, geometryClipWorldTransform.components);
-
-    Quanta::Matrix4 lightWorldClipTransform = lightTransforms.viewClip*lightTransforms.worldView;
-    stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
-
-    stream.writeUniformVec3Set(Uniforms::list.mergeLightDirection, 1, lightDirection.components);
-
-    stream.writeTextureSet(
-      Uniforms::list.mergeDiffuse,
-      Textures::list.geometryDiffuse,
-      0
-    );
-    stream.writeTextureSet(
-      Uniforms::list.mergeLambert,
-      Textures::list.geometryLambert,
-      1
-    );
-    stream.writeTextureSet(
-      Uniforms::list.mergeNormal,
-      Textures::list.geometryNormal,
-      2
-    );
-    stream.writeTextureSet(
-      Uniforms::list.mergeDepth,
-      Textures::list.geometryDepth,
-      3
-    );
-    stream.writeTextureSet(
-      Uniforms::list.mergeShadow,
-      Textures::list.shadow,
-      4
-    );
-
-    stream.writeObjectSet(FullscreenQuad::object);
-    stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
-    stream.writeObjectSet(0);
   }
 
   void WorldRenderer::buildDrawQueue() {

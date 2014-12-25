@@ -46,6 +46,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/StaticDrawSet.cpp\
 	Source/User/Rendering/Frustum.cpp\
 	Source/User/Rendering/ShadowPass.cpp\
+	Source/User/Rendering/MergePass.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
 
