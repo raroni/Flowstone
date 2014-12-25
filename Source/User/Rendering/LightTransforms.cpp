@@ -42,23 +42,9 @@ namespace Rendering {
         centroid += corners[i];
       }
       centroid *= 0.125;
-
-      Quanta::Vector3 right = Quanta::Vector3::cross(Quanta::Vector3(0, 1, 0), lightDirection).getNormalized();
-      Quanta::Vector3 up = Quanta::Vector3::cross(lightDirection, right).getNormalized();
-
-      lightWorldView = Quanta::Matrix4::identity();
-      lightWorldView[0] = right[0];
-      lightWorldView[4] = right[1];
-      lightWorldView[8] = right[2];
-      lightWorldView[1] = up[0];
-      lightWorldView[5] = up[1];
-      lightWorldView[9] = up[2];
-      lightWorldView[2] = lightDirection[0];
-      lightWorldView[6] = lightDirection[1];
-      lightWorldView[10] = lightDirection[2];
-
       Quanta::Vector3 position = centroid - lightDirection*Config::perspective.far;
-      lightWorldView *= Quanta::TransformFactory3D::translation(position*-1);
+      Quanta::Vector3 up(0, 1, 0);
+      lightWorldView = Quanta::TransformFactory3D::lookAt(position, centroid, up);
 
       for(uint8_t i=0; 8>i; i++) {
         Quanta::Vector4 temp(corners[i][0], corners[i][1], corners[i][2], 1);
