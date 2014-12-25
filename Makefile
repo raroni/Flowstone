@@ -45,6 +45,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/BoneDrawSet.cpp\
 	Source/User/Rendering/StaticDrawSet.cpp\
 	Source/User/Rendering/Frustum.cpp\
+	Source/User/Rendering/ShadowMap.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
 

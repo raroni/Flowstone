@@ -5,6 +5,7 @@
 #include "Quanta/ProjectionFactory.h"
 #include "Quanta/Math/Vector4.h"
 #include "Core/Error.h"
+#include "Rendering/ShadowMap.h"
 #include "Rendering/Textures.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/CommandStream.h"
@@ -71,7 +72,7 @@ namespace Rendering {
     culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
-    writeShadowMap(stream);
+    ShadowMap::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip, lightTransforms.worldView);
     stream.writeViewportSet(800, 600);
     writeGlobalUniformUpdate(stream, worldViewTransform);
     stream.writeRenderTargetSet(RenderTargets::handles.geometry);
@@ -89,51 +90,6 @@ namespace Rendering {
     writeMerge(stream, worldViewTransform);
 
     drawSet.clear();
-  }
-
-  void WorldRenderer::writeShadowMap(CommandStream &stream) {
-    stream.writeRenderTargetSet(RenderTargets::handles.shadow);
-    stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
-
-    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticViewClipTransform, 1, lightTransforms.viewClip.components);
-    stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldViewTransform, 1, lightTransforms.worldView.components);
-    const StaticDrawSet &staticSet = drawSet.staticSet;
-    for(uint16_t i=0; staticSet.count>i; i++) {
-      const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
-      stream.writeUniformMat4Set(
-        Uniforms::list.shadowStaticModelWorldTransform,
-        1,
-        staticSet.transforms[i].components
-      );
-      stream.writeObjectSet(mesh.object);
-      stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
-    }
-
-    stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)]);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneViewClipTransform, 1, lightTransforms.viewClip.components);
-    stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldViewTransform, 1, lightTransforms.worldView.components);
-    const BoneDrawSet &boneSet = drawSet.boneSet;
-    for(uint16_t i=0; boneSet.count>i; i++) {
-      BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
-
-      stream.writeUniformMat4Set(
-        Uniforms::list.shadowBoneJointWorldTransform,
-        1,
-        boneSet.transforms[i].components
-      );
-
-      stream.writeUniformMat4Set(
-        Uniforms::list.shadowBoneModelJointTransforms,
-        8,
-        boneSet.poses[i].joints[0].components
-      );
-
-      stream.writeObjectSet(mesh.object);
-      stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
-    }
-
-    stream.writeRenderTargetSet(0);
   }
 
   void WorldRenderer::writeMerge(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform) {
