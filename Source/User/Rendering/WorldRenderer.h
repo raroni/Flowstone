@@ -41,7 +41,6 @@ namespace Rendering {
     } lightTransforms;
     void buildDrawSet(const Quanta::Frustum &frustum);
     Culler culler;
-    CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
     DrawSet drawSet;
     Quanta::Matrix4 viewClipTransform;
