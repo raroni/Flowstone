@@ -1,3 +1,4 @@
+#include <math.h>
 #include "Quanta/Math/Matrix4.h"
 
 namespace Quanta {

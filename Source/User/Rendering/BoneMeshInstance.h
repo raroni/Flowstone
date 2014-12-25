@@ -3,7 +3,6 @@
 
 #include "Pose.h"
 #include "Quanta/Math/Matrix4.h"
-#include "Animation/PoseIndex.h"
 #include "Rendering/BoneMeshIndex.h"
 
 namespace Rendering {

@@ -2,24 +2,25 @@
 #define RENDERING_CULLER_H
 
 #include "Quanta/Geometry/Frustum.h"
-#include "Quanta/Math/Matrix4.h"
-#include "Rendering/Config.h"
-#include "Rendering/StaticMeshInstanceIndex.h"
-#include "Rendering/CullGroupIndex.h"
-#include "Rendering/BoneMeshInstanceIndex.h"
+#include "Rendering/CullResult.h"
 
 namespace Rendering {
-  struct CullResult;
+  struct DrawSet;
 
   class Culler {
-    struct Group {
-      const Quanta::Matrix4 *transforms;
-      const float *boundingRadii;
-    };
-    Group groups[Config::cullGroupsCount];
   public:
-    void configureGroup(CullGroupIndex group, const Quanta::Matrix4 *transforms, const float *boundingRadii);
-    void cull(const Quanta::Frustum &frustum, CullResult &result, const uint16_t *counts);
+    void cull(const Quanta::Frustum &frustum, DrawSet &drawSet);
+  private:
+    CullResult result;
+    void fillCullResult(const Quanta::Frustum &frustum);
+    void fillDrawSet(DrawSet &drawSet) const;
+    void cullGroup(
+      const Quanta::Frustum &frustum,
+      const Quanta::Matrix4 *transforms,
+      const float *boundingRadii,
+      uint16_t count,
+      CullGroupIndex group
+    );
   };
 }
 
