@@ -8,7 +8,6 @@
 #include "Rendering/BoneVertex.h"
 #include "Rendering/Culler.h"
 #include "Rendering/DrawSet.h"
-#include "Rendering/DrawQueue.h"
 #include "Rendering/FrustumInfo.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
@@ -44,7 +43,6 @@ namespace Rendering {
     Culler culler;
     CullResult cullResult;
     BoneMeshRegistry boneMeshRegistry;
-    DrawQueue drawQueue;
     DrawSet drawSet;
     Quanta::Matrix4 viewClipTransform;
     void calcViewClipTransform();

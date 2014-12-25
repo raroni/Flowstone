@@ -6,6 +6,7 @@
 #include "Quanta/Math/Vector4.h"
 #include "Core/Error.h"
 #include "Rendering/ShadowPass.h"
+#include "Rendering/GeometryPass.h"
 #include "Rendering/MergePass.h"
 #include "Rendering/Textures.h"
 #include "Rendering/CommandStream.h"
@@ -75,13 +76,7 @@ namespace Rendering {
     ShadowPass::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip, lightTransforms.worldView);
     stream.writeViewportSet(800, 600);
     writeGlobalUniformUpdate(stream, worldViewTransform);
-    stream.writeRenderTargetSet(RenderTargets::handles.geometry);
-    stream.writeClear(
-      static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color) |
-      static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth)
-    );
-    buildDrawQueue();
-    writeDrawQueueToStream(stream);
+    GeometryPass::write(stream, drawSet, boneMeshRegistry);
 
     stream.writeRenderTargetSet(0);
     stream.writeDisableDepthTest();
@@ -96,30 +91,6 @@ namespace Rendering {
     );
 
     drawSet.clear();
-  }
-
-  void WorldRenderer::buildDrawQueue() {
-    drawQueue.reset();
-    const BoneDrawSet &boneSet = drawSet.boneSet;
-    for(uint16_t i=0; boneSet.count>i; i++) {
-      BoneMeshDrawCall call;
-      BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
-      call.object = mesh.object;
-      call.indexCount = mesh.indexCount;
-      call.pose = boneSet.poses[i];
-      call.transform = boneSet.transforms[i];
-      drawQueue.addBoneMesh(call);
-    }
-    const StaticDrawSet &staticSet = drawSet.staticSet;
-    for(uint16_t i=0; staticSet.count>i; i++) {
-      StaticMeshDrawCall call;
-      const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
-      call.object = mesh.object;
-      call.indexCount = mesh.indexCount;
-      call.transform = staticSet.transforms[i];
-      drawQueue.addStaticMesh(call);
-    }
-    drawQueue.sort();
   }
 
   void WorldRenderer::writeGlobalUniformUpdate(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform) {
@@ -143,51 +114,5 @@ namespace Rendering {
   void WorldRenderer::calcViewClipTransform() {
     float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
     viewClipTransform = Quanta::ProjectionFactory::perspective(Config::perspective.fieldOfView, aspectRatio, Config::perspective.near, Config::perspective.far);
-  }
-
-  void WorldRenderer::writeDrawQueueToStream(CommandStream &stream) {
-    for(uint16_t i=0; drawQueue.getCount()>i; i++) {
-      const char *buffer = drawQueue.getBuffer(i);
-      DrawCallType type = *reinterpret_cast<const DrawCallType*>(buffer);
-      const char *drawCall = buffer+sizeof(type);
-      switch(type) {
-        case DrawCallType::BoneMesh: {
-          const BoneMeshDrawCall *boneMeshDrawCall = reinterpret_cast<const BoneMeshDrawCall*>(drawCall);
-
-          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::GeometryBone)]);
-
-          stream.writeUniformMat4Set(
-            Uniforms::list.geometryBoneJointWorldTransform,
-            1,
-            &boneMeshDrawCall->transform.components[0]
-          );
-
-          stream.writeUniformMat4Set(
-            Uniforms::list.geometryBoneModelJointTransform,
-            8,
-            &boneMeshDrawCall->pose.joints[0].components[0]
-          );
-
-          stream.writeObjectSet(boneMeshDrawCall->object);
-          stream.writeIndexedDraw(boneMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
-          break;
-        }
-        case DrawCallType::StaticMesh: {
-          const StaticMeshDrawCall *staticMeshDrawCall = reinterpret_cast<const StaticMeshDrawCall*>(drawCall);
-          stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::GeometryStatic)]);
-          stream.writeUniformMat4Set(
-            Uniforms::list.geometryStaticModelWorldTransform,
-            1,
-            &staticMeshDrawCall->transform.components[0]
-          );
-          stream.writeObjectSet(staticMeshDrawCall->object);
-          stream.writeIndexedDraw(staticMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
-          break;
-        }
-        default:
-          fatalError("Unknown draw call type.");
-          break;
-      }
-    }
   }
 }

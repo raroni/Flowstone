@@ -47,6 +47,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/Frustum.cpp\
 	Source/User/Rendering/ShadowPass.cpp\
 	Source/User/Rendering/MergePass.cpp\
+	Source/User/Rendering/GeometryPass.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
 
