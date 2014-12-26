@@ -12,6 +12,7 @@ uniform sampler2D shadow;
 uniform mat4 geometryClipWorldTransform;
 uniform mat4 lightWorldClipTransform;
 uniform vec3 lightDirection;
+uniform vec3 atmosphereColor;
 
 const float shadowBias = 0.005;
 
@@ -39,5 +40,7 @@ void main() {
     luminosity = texture(lambert, texCoords).r;
   }
 
-  fragColor = texture(diffuse, texCoords).rgb * (0.5 + luminosity*0.5);
+  vec3 atmosphereInfluence = atmosphereColor * (0.5 + luminosity*0.5);
+
+  fragColor = texture(diffuse, texCoords).rgb * atmosphereInfluence;
 }

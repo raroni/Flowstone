@@ -26,6 +26,7 @@ namespace Rendering {
       list.mergeGeometryClipWorldTransform = Backend::getUniform(mergeProgram, "geometryClipWorldTransform");
       list.mergeLightWorldClipTransform = Backend::getUniform(mergeProgram, "lightWorldClipTransform");
       list.mergeLightDirection = Backend::getUniform(mergeProgram, "lightDirection");
+      list.mergeAtmosphereColor = Backend::getUniform(mergeProgram, "atmosphereColor");
 
       Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
       list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");

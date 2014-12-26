@@ -8,6 +8,8 @@ namespace Rendering {
   class CommandStream;
 
   namespace MergePass {
+    extern Quanta::Vector3 atmosphereColor;
+
     void write(
       CommandStream &stream,
       Quanta::Matrix4 geometryClipWorldTransform,

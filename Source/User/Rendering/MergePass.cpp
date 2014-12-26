@@ -9,6 +9,8 @@
 
 namespace Rendering {
   namespace MergePass {
+    Quanta::Vector3 atmosphereColor(1, 1, 1);
+
     void write(
       CommandStream &stream,
       Quanta::Matrix4 geometryClipWorldTransform,
@@ -22,6 +24,7 @@ namespace Rendering {
       stream.writeUniformMat4Set(Uniforms::list.mergeGeometryClipWorldTransform, 1, geometryClipWorldTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeLightDirection, 1, lightDirection.components);
+      stream.writeUniformVec3Set(Uniforms::list.mergeAtmosphereColor, 1, atmosphereColor.components);
 
       stream.writeTextureSet(
         Uniforms::list.mergeDiffuse,
