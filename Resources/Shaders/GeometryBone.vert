@@ -22,7 +22,7 @@ void main() {
   gl_Position = viewClipTransform*worldViewTransform*jointWorldTransform*jointPosition;
 
   vec3 worldNormal = (jointWorldTransform*vec4(normal, 0)).xyz; // assuming no scaling
-  interpolatedLambert = dot(inverseLightDirection, worldNormal)*0.4+0.6;
+  interpolatedLambert = dot(inverseLightDirection, worldNormal);
 
   interpolatedColor = vec3(0.3, 0.6, 0.95);
   interpolatedNormal = worldNormal;

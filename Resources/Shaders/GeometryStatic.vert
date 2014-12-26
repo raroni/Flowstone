@@ -21,7 +21,7 @@ void main() {
 
   vec3 worldNormal = (modelWorldTransform*vec4(normal, 0)).xyz; // assuming no scaling
 
-  interpolatedLambert = dot(inverseLightDirection, worldNormal)*0.4+0.6;
+  interpolatedLambert = dot(inverseLightDirection, worldNormal);
   interpolatedColor = color;
   interpolatedNormal = worldNormal;
 }

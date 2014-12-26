@@ -28,16 +28,16 @@ void main() {
   vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
   vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
 
-  float inShadow = 0;
+  float luminosity;
   vec3 worldNormal = texture(normal, texCoords).xyz;
   if(dot(lightDirection, worldNormal) > -0.1) {
-    inShadow = 1;
+    luminosity = 0;
   }
   else if(lightNDCPosition.z*0.5+0.5-shadowBias > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
-    inShadow = 1;
+    luminosity = 0;
+  } else {
+    luminosity = texture(lambert, texCoords).r;
   }
 
-  float shadowModifier = 0.5+(1-inShadow)*0.5;
-
-  fragColor = texture(diffuse, texCoords).rgb * texture(lambert, texCoords).r * shadowModifier;
+  fragColor = texture(diffuse, texCoords).rgb * (0.5 + luminosity*0.5);
 }
