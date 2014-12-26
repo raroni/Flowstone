@@ -29,6 +29,10 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
+  void WorldRenderer::setAtmosphereColor(Quanta::Vector3 color) {
+    MergePass::atmosphereColor = color;
+  }
+
   BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
     BoneMesh mesh = boneMeshRegistry.get(meshIndex);
     return BoneMeshInstances::create(meshIndex, mesh.boundingRadius);

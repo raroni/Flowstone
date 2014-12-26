@@ -30,6 +30,7 @@ namespace Rendering {
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     Quanta::Vector3 lightDirection;
     void initialize();
+    void setAtmosphereColor(Quanta::Vector3 color);
   private:
     struct {
       uint16_t width;

@@ -25,6 +25,7 @@ namespace MainFlow {
     Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
+    float timeOfDay = 0;
     Physics::DynamicBodyIndex playerBody;
     RendererFeeder rendererFeeder;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
@@ -32,6 +33,7 @@ namespace MainFlow {
     void setupGround();
     void setupRock();
     void setupBox();
+    void updateAtmosphereColor();
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();
