@@ -199,19 +199,19 @@ namespace MainFlow {
     setupBox();
 
     Quanta::Transform& camera = renderer.getCameraTransform();
-    camera.position[2] = -12;
+    camera.position[2] = -7.5;
     camera.position[1] = 12;
-    camera.rotateX(0.8);
+    camera.rotateX(1);
   }
 
   void PlayState::setupGround() {
     Rendering::StaticVertex vertices[] = {
-      { { -5, 0, 5 } },
-      { { 5, 0, 5 } },
-      { { -5, 0, -5 } },
-      { { 5, 0, -5 } },
-      { { -5, -0.2, -5 } },
-      { { 5, -0.2, -5 } }
+      { { -15, 0, 15 } },
+      { { 15, 0, 15 } },
+      { { -15, 0, -15 } },
+      { { 15, 0, -15 } },
+      { { -15, -0.2, -15 } },
+      { { 15, -0.2, -15 } }
     };
 
     uint16_t indices[] = {
@@ -357,8 +357,8 @@ namespace MainFlow {
   }
 
   void PlayState::update(double timeDelta) {
-    timeOfDay += timeDelta*0.01;
-    timeOfDay = fmod(timeOfDay, 1.0);
+    //timeOfDay += timeDelta*0.01;
+    //timeOfDay = fmod(timeOfDay, 1.0);
 
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {
