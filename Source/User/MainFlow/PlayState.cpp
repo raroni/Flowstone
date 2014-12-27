@@ -84,59 +84,59 @@ namespace MainFlow {
 
     Rendering::BoneVertex vertices[] = {
       // body, front
-      { { -0.5, 1.6, -0.5 }, 1 }, // the 1 is the joint number this vertex will follow
-      { { 0.5, 1.6, -0.5 }, 1 },
-      { { -0.5, 0.6, -0.5 }, 1 },
-      { { 0.5, 0.6, -0.5 }, 1 },
+      { { -0.25, 0.8, -0.25 }, 1 }, // the 1 is the joint number this vertex will follow
+      { { 0.25, 0.8, -0.25 }, 1 },
+      { { -0.25, 0.3, -0.25 }, 1 },
+      { { 0.25, 0.3, -0.25 }, 1 },
       // body, back
-      { { -0.5, 1.6, 0.5 }, 1 },
-      { { 0.5, 1.6, 0.5 }, 1 },
-      { { -0.5, 0.6, 0.5 }, 1 },
-      { { 0.5, 0.6, 0.5 }, 1 },
+      { { -0.25, 0.8, 0.25 }, 1 },
+      { { 0.25, 0.8, 0.25 }, 1 },
+      { { -0.25, 0.3, 0.25 }, 1 },
+      { { 0.25, 0.3, 0.25 }, 1 },
 
       // left hand, front
-      { { -1, 1.3, -0.2 }, 2 },
-      { { -0.6, 1.3, -0.2 }, 2 },
-      { { -1, 0.9, -0.2 }, 2 },
-      { { -0.6, 0.9, -0.2 }, 2 },
+      { { -0.5, 0.65, -0.1 }, 2 },
+      { { -0.3, 0.65, -0.1 }, 2 },
+      { { -0.5, 0.45, -0.1 }, 2 },
+      { { -0.3, 0.45, -0.1 }, 2 },
       // left hand, back
-      { { -1, 1.3, 0.2 }, 2 },
-      { { -0.6, 1.3, 0.2 }, 2 },
-      { { -1, 0.9, 0.2 }, 2 },
-      { { -0.6, 0.9, 0.2 }, 2 },
+      { { -0.5, 0.65, 0.1 }, 2 },
+      { { -0.3, 0.65, 0.1 }, 2 },
+      { { -0.5, 0.45, 0.1 }, 2 },
+      { { -0.3, 0.45, 0.1 }, 2 },
 
       // right hand, front
-      { { 1, 1.3, -0.2 }, 3 },
-      { { 0.6, 1.3, -0.2 }, 3 },
-      { { 1, 0.9, -0.2 }, 3 },
-      { { 0.6, 0.9, -0.2 }, 3 },
+      { { 0.5, 0.65, -0.1 }, 3 },
+      { { 0.3, 0.65, -0.1 }, 3 },
+      { { 0.5, 0.45, -0.1 }, 3 },
+      { { 0.3, 0.45, -0.1 }, 3 },
       // right hand, back
-      { { 1, 1.3, 0.2 }, 3 },
-      { { 0.6, 1.3, 0.2 }, 3 },
-      { { 1, 0.9, 0.2 }, 3 },
-      { { 0.6, 0.9, 0.2 }, 3 },
+      { { 0.5, 0.65, 0.1 }, 3 },
+      { { 0.3, 0.65, 0.1 }, 3 },
+      { { 0.5, 0.45, 0.1 }, 3 },
+      { { 0.3, 0.45, 0.1 }, 3 },
 
       // left foot, front
-      { { -0.5, 0.4, -0.2 }, 4 },
-      { { -0.1, 0.4, -0.2 }, 4 },
-      { { -0.5, 0, -0.2 }, 4 },
-      { { -0.1, 0, -0.2 }, 4 },
+      { { -0.25, 0.2, -0.1}, 4 },
+      { { -0.1, 0.2, -0.1}, 4 },
+      { { -0.25, 0, -0.1}, 4 },
+      { { -0.1, 0, -0.1}, 4 },
       // left foot, back
-      { { -0.5, 0.4, 0.2 }, 4 },
-      { { -0.1, 0.4, 0.2 }, 4 },
-      { { -0.5, 0, 0.2 }, 4 },
-      { { -0.1, 0, 0.2 }, 4 },
+      { { -0.25, 0.2, 0.1}, 4 },
+      { { -0.1, 0.2, 0.1}, 4 },
+      { { -0.25, 0, 0.1}, 4 },
+      { { -0.1, 0, 0.1}, 4 },
 
       // right foot, front
-      { { 0.5, 0.4, -0.2 }, 5 },
-      { { 0.1, 0.4, -0.2 }, 5 },
-      { { 0.5, 0, -0.2 }, 5 },
-      { { 0.1, 0, -0.2 }, 5 },
+      { { 0.25, 0.2, -0.1}, 5 },
+      { { 0.1, 0.2, -0.1}, 5 },
+      { { 0.25, 0, -0.1}, 5 },
+      { { 0.1, 0, -0.1}, 5 },
       // right foot, back
-      { { 0.5, 0.4, 0.2 }, 5 },
-      { { 0.1, 0.4, 0.2 }, 5 },
-      { { 0.5, 0, 0.2 }, 5 },
-      { { 0.1, 0, 0.2 }, 5 },
+      { { 0.25, 0.2, 0.1}, 5 },
+      { { 0.1, 0.2, 0.1}, 5 },
+      { { 0.25, 0, 0.1}, 5 },
+      { { 0.1, 0, 0.1}, 5 }
     };
 
     uint16_t indices[] = {
@@ -190,38 +190,40 @@ namespace MainFlow {
 
     setupPlayer(meshIndex, skeletonID);
     setupMonster(meshIndex, skeletonID, 2, 2);
-    setupMonster(meshIndex, skeletonID, 2, -2);
-    setupMonster(meshIndex, skeletonID, -2, -2);
+    setupMonster(meshIndex, skeletonID, 1, -1);
+    setupMonster(meshIndex, skeletonID, -1, -1);
 
     configureTree();
-    setupTree(-4, 2);
-    setupTree(-2, 2);
-    setupTree(0, 2);
 
-    setupTree(-6, 5);
-    setupTree(-4, 5);
-    setupTree(0, 5);
-    setupTree(2, 5);
-    setupTree(4, 5);
+    setupTree(-3, 0);
+    setupTree(-3, -1);
+    setupTree(-3, -2);
 
-    setupTree(4, 7);
+    setupTree(-2, 1);
+    setupTree(-1, 1);
+    setupTree(0, 1);
 
+    setupTree(-3, 3);
+    setupTree(-2, 3);
+    setupTree(0, 3);
+    setupTree(1, 3);
+    setupTree(2, 3);
 
     setupGround();
     setupRock();
     setupBox();
 
     Quanta::Transform& camera = renderer.getCameraTransform();
-    camera.position[2] = -7.5;
-    camera.position[1] = 12;
+    camera.position[2] = -3.75;
+    camera.position[1] = 6;
     camera.rotateX(1);
   }
 
   void PlayState::configureTree() {
-    float trunkWidth = 0.5;
-    float trunkHeight = 1.2;
-    float crownWidth = 1.5;
-    float crownHeight = 1.5;
+    float trunkWidth = 0.25;
+    float trunkHeight = 0.6;
+    float crownWidth = 0.75;
+    float crownHeight = 0.5;
 
     float halfTrunkWidth = trunkWidth*0.5;
     float halfCrownWidth = crownWidth*0.5;
@@ -281,7 +283,7 @@ namespace MainFlow {
 
   void PlayState::setupTree(float x, float z) {
     Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
-    physics.createStaticSphereCollider(bodyIndex, 0.8);
+    physics.createStaticSphereCollider(bodyIndex, 0.4);
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
     (*body.position)[0] = x;
     (*body.position)[2] = z;
@@ -327,7 +329,7 @@ namespace MainFlow {
     Animation::PoseIndex pose = animator.createPose(skeletonID);
 
     playerBody = physics.createDynamicBody();
-    physics.createDynamicSphereCollider(playerBody, 0.5);
+    physics.createDynamicSphereCollider(playerBody, 0.25);
 
     Interpolation::Index interpolation = interpolater.createInterpolation(playerBody);
     interpolater.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
@@ -373,8 +375,9 @@ namespace MainFlow {
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
     Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
+    physics.createStaticSphereCollider(bodyIndex, 0.5);
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
-    (*body.position)[0] = 0;
+    (*body.position)[0] = 4;
     Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
     rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
   }
@@ -430,7 +433,7 @@ namespace MainFlow {
     Physics::DynamicBody body = physics.getDynamicBody(bodyIndex);
     (*body.position)[0] = x;
     (*body.position)[2] = z;
-    physics.createDynamicSphereCollider(bodyIndex, 0.6);
+    physics.createDynamicSphereCollider(bodyIndex, 0.25);
 
     uint8_t interpolationTransformID = interpolater.createInterpolation(bodyIndex);
     interpolater.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());

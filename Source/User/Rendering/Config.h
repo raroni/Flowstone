@@ -21,8 +21,8 @@ namespace Rendering {
     }
 
     struct {
-      const float near = 9;
-      const float far = 20;
+      const float near = 4.5;
+      const float far = 10;
       const float fieldOfView = M_PI/3.0f;
     } perspective;
   }
