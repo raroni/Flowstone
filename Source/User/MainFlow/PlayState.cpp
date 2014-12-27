@@ -359,7 +359,7 @@ namespace MainFlow {
   }
 
   void PlayState::update(double timeDelta) {
-    timeOfDay += timeDelta*0.1;
+    timeOfDay += timeDelta*0.01;
     timeOfDay = fmod(timeOfDay, 1.0);
 
     stepTimeBank += timeDelta;
@@ -385,7 +385,6 @@ namespace MainFlow {
   }
 
   void PlayState::updateAtmosphereColor() {
-    float c = 1-fabs(0.5-timeOfDay)*1.5;
-    renderer.setAtmosphereColor({ c, c, c });
+    renderer.setAtmosphereColor(atmosphereColor.get(timeOfDay));
   }
 }
