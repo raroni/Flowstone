@@ -189,25 +189,26 @@ namespace MainFlow {
     );
 
     setupPlayer(meshIndex, skeletonID);
-    setupMonster(meshIndex, skeletonID, 2, 2);
+    setupMonster(meshIndex, skeletonID, 2, 1);
     setupMonster(meshIndex, skeletonID, 1, -1);
     setupMonster(meshIndex, skeletonID, -1, -1);
 
-    configureTree();
+    configureRedTree();
+    configureGreenTree();
 
-    setupTree(-3, 0);
-    setupTree(-3, -1);
-    setupTree(-3, -2);
+    setupTree(-3, 0, greenTreeMesh);
+    setupTree(-3, -1, greenTreeMesh);
+    setupTree(-3, -2, redTreeMesh);
 
-    setupTree(-2, 1);
-    setupTree(-1, 1);
-    setupTree(0, 1);
+    setupTree(-2, 1, redTreeMesh);
+    setupTree(-1, 1, redTreeMesh);
+    setupTree(0, 1, redTreeMesh);
 
-    setupTree(-3, 3);
-    setupTree(-2, 3);
-    setupTree(0, 3);
-    setupTree(1, 3);
-    setupTree(2, 3);
+    setupTree(-3, 3, greenTreeMesh);
+    setupTree(-2, 3, redTreeMesh);
+    setupTree(0, 3, redTreeMesh);
+    setupTree(1, 3, greenTreeMesh);
+    setupTree(2, 3, greenTreeMesh);
 
     setupGround();
     setupRock();
@@ -219,11 +220,73 @@ namespace MainFlow {
     camera.rotateX(1);
   }
 
-  void PlayState::configureTree() {
+  void PlayState::configureGreenTree() {
     float trunkWidth = 0.25;
     float trunkHeight = 0.6;
     float crownWidth = 0.75;
     float crownHeight = 0.5;
+
+    float halfTrunkWidth = trunkWidth*0.5;
+    float halfCrownWidth = crownWidth*0.5;
+
+    Rendering::StaticVertex vertices[] = {
+      // trunk
+      { { -halfTrunkWidth, trunkHeight, -halfTrunkWidth } },
+      { { halfTrunkWidth, trunkHeight, -halfTrunkWidth } },
+      { { -halfTrunkWidth, 0, -halfTrunkWidth } },
+      { { halfTrunkWidth, 0, -halfTrunkWidth } },
+      { { -halfTrunkWidth, trunkHeight, halfTrunkWidth } },
+      { { halfTrunkWidth, trunkHeight, halfTrunkWidth } },
+      { { -halfTrunkWidth, 0, halfTrunkWidth } },
+      { { halfTrunkWidth, 0, halfTrunkWidth } },
+
+      // crown
+      { { -halfCrownWidth, trunkHeight+crownHeight, -halfCrownWidth } },
+      { { halfCrownWidth, trunkHeight+crownHeight, -halfCrownWidth } },
+      { { -halfCrownWidth, trunkHeight, -halfCrownWidth } },
+      { { halfCrownWidth, trunkHeight, -halfCrownWidth } },
+      { { -halfCrownWidth, trunkHeight+crownHeight, halfCrownWidth } },
+      { { halfCrownWidth, trunkHeight+crownHeight, halfCrownWidth } },
+      { { -halfCrownWidth, trunkHeight, halfCrownWidth } },
+      { { halfCrownWidth, trunkHeight, halfCrownWidth } }
+    };
+
+    uint16_t indices[] = {
+      // trunk
+      0, 2, 1, 1, 2, 3,
+      1, 3, 7, 1, 7, 5,
+      4, 7, 6, 4, 5, 7, // back
+      0, 6, 2, 0, 4, 6, // right
+      2, 7, 3, 2, 6, 7,  // bottom
+      5, 0, 1, 5, 4, 0, // top
+
+      // crown
+      8, 10, 9, 9, 10, 11,
+      9, 11, 15, 9, 15, 13,
+      12, 15, 14, 12, 13, 15,
+      8, 14, 10, 8, 12, 14,
+      10, 15, 11, 10, 14, 15,
+      13, 8, 9, 13, 12, 8,
+    };
+
+    Rendering::Shape shapes[] = {
+      { { 0.56, 0.36, 0.20 }, 0, 12 },
+      { { 0.41, 0.61, 0.21 }, 12, 12 }
+    };
+
+    Rendering::MeshInfo info;
+    info.vertexCount = sizeof(vertices)/sizeof(Rendering::StaticVertex);
+    info.indexCount = sizeof(indices)/sizeof(uint16_t);
+    info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
+
+    greenTreeMesh = renderer.createStaticMesh(info, vertices, indices, shapes);
+  }
+
+  void PlayState::configureRedTree() {
+    float trunkWidth = 0.35;
+    float trunkHeight = 0.5;
+    float crownWidth = 0.6;
+    float crownHeight = 0.75;
 
     float halfTrunkWidth = trunkWidth*0.5;
     float halfCrownWidth = crownWidth*0.5;
@@ -278,17 +341,17 @@ namespace MainFlow {
     info.indexCount = sizeof(indices)/sizeof(uint16_t);
     info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
 
-    treeMesh = renderer.createStaticMesh(info, vertices, indices, shapes);
+    redTreeMesh = renderer.createStaticMesh(info, vertices, indices, shapes);
   }
 
-  void PlayState::setupTree(float x, float z) {
+  void PlayState::setupTree(float x, float z, Rendering::StaticMeshIndex mesh) {
     Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
     physics.createStaticSphereCollider(bodyIndex, 0.4);
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
     (*body.position)[0] = x;
     (*body.position)[2] = z;
 
-    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(treeMesh);
+    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
     rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
   }
 
@@ -405,7 +468,7 @@ namespace MainFlow {
 
     Rendering::Shape shapes[] = {
       { { 0.5, 0.5, 0.5 }, 0, 10 },
-      { { 0.7, 0.3, 0.3 }, 10, 2 }
+      { { 0.3, 0.3, 0.3 }, 10, 2 }
     };
 
     Rendering::MeshInfo info;

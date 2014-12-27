@@ -27,11 +27,12 @@ namespace MainFlow {
     Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
-    float timeOfDay = 0.3;
+    float timeOfDay = 0;
     Physics::DynamicBodyIndex playerBody;
     RendererFeeder rendererFeeder;
     AtmosphereColor atmosphereColor;
-    Rendering::StaticMeshIndex treeMesh;
+    Rendering::StaticMeshIndex greenTreeMesh;
+    Rendering::StaticMeshIndex redTreeMesh;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
@@ -39,8 +40,9 @@ namespace MainFlow {
     void setupBox();
     void updateAtmosphereColor();
     void updateLightDirection();
-    void configureTree();
-    void setupTree(float x, float z);
+    void configureGreenTree();
+    void configureRedTree();
+    void setupTree(float x, float z, Rendering::StaticMeshIndex mesh);
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();
