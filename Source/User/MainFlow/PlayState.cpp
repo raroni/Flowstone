@@ -5,8 +5,6 @@
 #include "Rendering/Shape.h"
 #include "MainFlow/PlayState.h"
 
-#include <stdio.h>
-
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer),
