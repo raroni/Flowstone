@@ -7,9 +7,9 @@ struct Step {
 };
 
 AtmosphereColor::AtmosphereColor() {
-  Quanta::Vector3 darkBlue(0, 0, 0.7);
-  Quanta::Vector3 lightBlue(0, 0, 1);
-  Quanta::Vector3 orange(0.87, 0.34, 0.14);
+  Quanta::Vector3 darkBlue(0.1, 0.1, 0.7);
+  Quanta::Vector3 lightBlue(0.2, 0.2, 1);
+  Quanta::Vector3 orange(1, 0.24, 0.24);
   Quanta::Vector3 white(1, 1, 1);
 
   Step steps[] = {
