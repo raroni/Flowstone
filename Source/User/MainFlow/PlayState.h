@@ -7,6 +7,7 @@
 #include "AtmosphereColor.h"
 #include "Animation/Animator.h"
 #include "Rendering/BoneMeshIndex.h"
+#include "Rendering/StaticMeshIndex.h"
 #include "RendererFeeder.h"
 #include "AirDrag.h"
 #include "Core/Physics/Engine.h"
@@ -26,10 +27,11 @@ namespace MainFlow {
     Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
-    float timeOfDay = 0.5;
+    float timeOfDay = 0.3;
     Physics::DynamicBodyIndex playerBody;
     RendererFeeder rendererFeeder;
     AtmosphereColor atmosphereColor;
+    Rendering::StaticMeshIndex treeMesh;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
@@ -37,6 +39,8 @@ namespace MainFlow {
     void setupBox();
     void updateAtmosphereColor();
     void updateLightDirection();
+    void configureTree();
+    void setupTree(float x, float z);
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();
