@@ -26,6 +26,10 @@ namespace Rendering {
     worldRenderer.lightDirection = lightDirection;
   }
 
+  void Renderer::setAtmosphereColor(Quanta::Vector3 color) {
+    worldRenderer.setAtmosphereColor(color);
+  }
+
   BoneMeshInstance Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
     return worldRenderer.getBoneMeshInstance(index);
   }

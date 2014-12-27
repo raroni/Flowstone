@@ -5,6 +5,8 @@
 #include "Rendering/Shape.h"
 #include "MainFlow/PlayState.h"
 
+#include <stdio.h>
+
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer),
@@ -17,6 +19,8 @@ namespace MainFlow {
     uint8_t animationKeyCounts[] = { 2, 4 };
 
     float keyTimes[] = { 0, 1.5f, 0, 0.25f, 0.5f, 0.75f };
+
+    updateAtmosphereColor();
 
     Animation::JointConfig keyJointConfigs[] = {
       // idle standard
@@ -355,6 +359,9 @@ namespace MainFlow {
   }
 
   void PlayState::update(double timeDelta) {
+    timeOfDay += timeDelta*0.01;
+    timeOfDay = fmod(timeOfDay, 1.0);
+
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {
       Physics::DynamicBody body = physics.getDynamicBody(playerBody);
@@ -368,11 +375,16 @@ namespace MainFlow {
       interpolater.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
     }
     interpolater.interpolate(stepTimeBank/Physics::Config::stepDuration);
+    updateAtmosphereColor();
     rendererFeeder.update();
     animator.update(timeDelta);
   }
 
   State* PlayState::checkTransition() {
     return nullptr;
+  }
+
+  void PlayState::updateAtmosphereColor() {
+    renderer.setAtmosphereColor(atmosphereColor.get(timeOfDay));
   }
 }
