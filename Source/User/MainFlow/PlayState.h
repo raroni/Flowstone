@@ -36,6 +36,7 @@ namespace MainFlow {
     void setupRock();
     void setupBox();
     void updateAtmosphereColor();
+    void updateLightDirection();
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();

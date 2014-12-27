@@ -20,7 +20,7 @@ namespace Quanta {
     Quaternion& operator/=(float divisor);
     static Quaternion identity();
     operator Matrix4() const;
-    Quaternion getConjugate();
+    Quaternion getConjugate() const;
     static Quaternion slerpWithLimit(Quaternion &origin, Quaternion &destination, float angleLimit);
     static Quaternion slerp(Quaternion origin, const Quaternion &destination, float progress);
     static Quaternion lerp(const Quaternion &origin, const Quaternion &destination, float progress);

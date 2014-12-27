@@ -28,7 +28,7 @@ namespace Quanta {
     return *this;
   }
 
-  Quaternion Quaternion::getConjugate() {
+  Quaternion Quaternion::getConjugate() const {
     Quaternion conjugate(real, imaginaries.getNegated());
     return conjugate;
   }

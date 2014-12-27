@@ -1,3 +1,4 @@
+#include "Quanta/Geometry/Transformer.h"
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
 #include "PlayerControl.h"
@@ -19,6 +20,7 @@ namespace MainFlow {
     float keyTimes[] = { 0, 1.5f, 0, 0.25f, 0.5f, 0.75f };
 
     updateAtmosphereColor();
+    updateLightDirection();
 
     Animation::JointConfig keyJointConfigs[] = {
       // idle standard
@@ -196,8 +198,6 @@ namespace MainFlow {
     setupRock();
     setupBox();
 
-    renderer.setLightDirection(Quanta::Vector3(1.5, -2, 1).getNormalized());
-
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -12;
     camera.position[1] = 12;
@@ -374,6 +374,7 @@ namespace MainFlow {
     }
     interpolater.interpolate(stepTimeBank/Physics::Config::stepDuration);
     updateAtmosphereColor();
+    updateLightDirection();
     rendererFeeder.update();
     animator.update(timeDelta);
   }
@@ -384,5 +385,16 @@ namespace MainFlow {
 
   void PlayState::updateAtmosphereColor() {
     renderer.setAtmosphereColor(atmosphereColor.get(timeOfDay));
+  }
+
+  void PlayState::updateLightDirection() {
+    if(timeOfDay > 0.25 && timeOfDay < 0.75) {
+      float angle = (timeOfDay-0.25)*2*M_PI;
+      Quanta::Vector3 axis(1, 0, -1);
+      Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle); // todo: no need to calc this every frame?
+      Quanta::Vector3 sunrise(-1, 0, -1);
+      Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
+      renderer.setLightDirection(sunPosition*-1);
+    }
   }
 }

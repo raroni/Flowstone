@@ -1,7 +1,9 @@
 #include <stdint.h>
 #include "Quanta/Geometry/Frustum.h"
 #include "Quanta/Math/Matrix4.h"
+#include "Quanta/Math/Quaternion.h"
 #include "Quanta/Math/Vector4.h"
+#include "Quanta/Math/Vector3.h"
 #include "Quanta/Geometry/Transformer.h"
 
 namespace Quanta {
@@ -28,6 +30,13 @@ namespace Quanta {
       for(uint8_t i=0; 6>i; i++) {
         updatePlane(frustum.planes[i], transform);
       }
+    }
+
+    Vector3 createRotatedVector3(const Vector3 &vector, const Quaternion &rotation) {
+      Quaternion qVector(0, vector);
+      Quaternion result = rotation*qVector;
+      result *= rotation.getConjugate();
+      return result.imaginaries;
     }
   }
 }
