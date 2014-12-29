@@ -31,7 +31,7 @@ void main() {
 
   float luminosity;
   vec3 worldNormal = texture(normal, texCoords).xyz;
-  if(dot(lightDirection, worldNormal) > -0.1) {
+  if(dot(lightDirection, worldNormal) > -0.01) {
     luminosity = 0;
   }
   else if(lightNDCPosition.z*0.5+0.5-shadowBias > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
