@@ -550,7 +550,7 @@ namespace MainFlow {
       float angle = M_PI*-offset + M_PI*(1+offset*2)*progress;
 
       Quanta::Vector3 axis(0, 0, -1);
-      Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle); // todo: no need to calc this every frame?
+      Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
       Quanta::Vector3 sunrise(-1, 0, -0.5);
       Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
       renderer.setLightDirection(sunPosition*-1);
@@ -564,7 +564,7 @@ namespace MainFlow {
       float angle = M_PI*-offset + M_PI*(1+offset*2)*progress;
 
       Quanta::Vector3 axis(0, 0, -1);
-      Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle); // todo: no need to calc this every frame?
+      Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
       Quanta::Vector3 sunrise(-1, 0, -0.5);
       Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
       renderer.setLightDirection(sunPosition*-1);
