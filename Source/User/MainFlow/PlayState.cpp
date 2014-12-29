@@ -544,13 +544,15 @@ namespace MainFlow {
   }
 
   void PlayState::updateLightDirection() {
-    if(timeOfDay > 0.25 && timeOfDay < 0.75) {
+    if(timeOfDay >= 0.22 && timeOfDay < 0.78) {
       float angle = (timeOfDay-0.25)*2*M_PI;
       Quanta::Vector3 axis(1, 0, -1);
       Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle); // todo: no need to calc this every frame?
-      Quanta::Vector3 sunrise(-1, 0, -1);
+      Quanta::Vector3 sunrise(-1, 0, -1.5);
       Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
       renderer.setLightDirection(sunPosition*-1);
+    } else {
+      // todo: update moon light direction
     }
   }
 }
