@@ -210,8 +210,8 @@ namespace MainFlow {
     setupTree(1, 3, greenTreeMesh);
     setupTree(2, 3, greenTreeMesh);
 
-    setupGround();
     setupRock();
+    setupGround();
     setupBox();
 
     Quanta::Transform& camera = renderer.getCameraTransform();
@@ -357,22 +357,27 @@ namespace MainFlow {
 
   void PlayState::setupGround() {
     Rendering::StaticVertex vertices[] = {
-      { { -15, 0, 15 } },
-      { { 15, 0, 15 } },
       { { -15, 0, -15 } },
       { { 15, 0, -15 } },
-      { { -15, -0.2, -15 } },
-      { { 15, -0.2, -15 } }
+      { { -15, -0.5, -15 } },
+      { { 15, -0.5, -15 } },
+      { { -15, 0, 15 } },
+      { { 15, 0, 15 } },
+      { { -15, -0.5, 15 } },
+      { { 15, -0.5, 15 } }
     };
 
     uint16_t indices[] = {
-      0, 2, 1, 1, 2, 3, // top
-      2, 4, 3, 3, 4, 5
+      0, 2, 1, 1, 2, 3, // front
+      1, 3, 7, 1, 7, 5, // right
+      4, 7, 6, 4, 5, 7, // back
+      0, 6, 2, 0, 4, 6, // right
+      2, 7, 3, 2, 6, 7,  // bottom
+      5, 0, 1, 5, 4, 0 // top
     };
 
-    // color, offset, count
     Rendering::Shape shapes[] = {
-      { { 0.64, 0.83, 0.33 }, 0, 4 },
+      { { 0.64, 0.83, 0.33 }, 0, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -424,7 +429,6 @@ namespace MainFlow {
       2, 7, 3, 2, 6, 7,  // bottom
       5, 0, 1, 5, 4, 0 // top
     };
-
 
     Rendering::Shape shapes[] = {
       { { 0.5, 0.5, 0.5 }, 0, 12 }
