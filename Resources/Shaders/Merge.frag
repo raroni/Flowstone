@@ -14,8 +14,6 @@ uniform mat4 lightWorldClipTransform;
 uniform vec3 lightDirection;
 uniform vec3 atmosphereColor;
 
-const float shadowBias = 0.005;
-
 void main() {
   float depth = texture(depth, texCoords).r;
   if(depth == 1.0) {
@@ -34,7 +32,7 @@ void main() {
   if(dot(lightDirection, worldNormal) > -0.01) {
     luminosity = 0;
   }
-  else if(lightNDCPosition.z*0.5+0.5-shadowBias > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
+  else if(lightNDCPosition.z*0.5+0.5 > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
     luminosity = 0;
   } else {
     luminosity = texture(lambert, texCoords).r;

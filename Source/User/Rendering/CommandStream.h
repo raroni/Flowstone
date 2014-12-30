@@ -15,6 +15,7 @@ namespace Rendering {
     void writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer);
     void writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data);
     void writeClear(Backend::ClearBitMask mask);
+    void writeCullFaceSet(Backend::CullFace face);
     void writeDisableDepthTest();
     void writeEnableDepthTest();
     void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
@@ -29,6 +30,7 @@ namespace Rendering {
     BufferSetCommand readBufferSet();
     BufferWriteCommand readBufferWrite(const void **data);
     ClearCommand readClear();
+    CullFaceSetCommand readCullFaceSet();
     IndexedDrawCommand readIndexedDraw();
     ObjectSetCommand readObjectSet();
     ProgramSetCommand readProgramSet();

@@ -30,6 +30,14 @@ namespace Rendering {
     position += sizeof(command);
   }
 
+  void CommandStream::writeCullFaceSet(Backend::CullFace face) {
+    writeType(CommandType::CullFaceSet);
+    CullFaceSetCommand command;
+    command.face = face;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeDisableDepthTest() {
     writeType(CommandType::DisableDepthTest);
   }
@@ -151,6 +159,12 @@ namespace Rendering {
 
   ClearCommand CommandStream::readClear() {
     ClearCommand command = *reinterpret_cast<const ClearCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
+  CullFaceSetCommand CommandStream::readCullFaceSet() {
+    CullFaceSetCommand command = *reinterpret_cast<const CullFaceSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

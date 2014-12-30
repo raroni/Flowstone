@@ -140,6 +140,11 @@ namespace Rendering {
           Backend::writeBuffer(command.target, command.size, data);
           break;
         }
+        case CommandType::CullFaceSet: {
+          CullFaceSetCommand command = stream.readCullFaceSet();
+          Backend::setCullFace(command.face);
+          break;
+        }
         default:
           fatalError("Unknown command type.");
           break;

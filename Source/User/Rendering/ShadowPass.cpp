@@ -4,6 +4,7 @@
 #include "Rendering/ProgramName.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Backend/ClearBit.h"
+#include "Rendering/Backend/CullFace.h"
 #include "Rendering/Programs.h"
 #include "Rendering/DrawSet.h"
 #include "Rendering/BoneDrawSet.h"
@@ -17,6 +18,7 @@
 namespace Rendering {
   namespace ShadowPass {
     void write(CommandStream &stream, const BoneMeshRegistry &boneMeshRegistry, const DrawSet &drawSet, const Quanta::Matrix4 &lightWorldClipTransform) {
+      stream.writeCullFaceSet(Backend::CullFace::Front);
       stream.writeRenderTargetSet(RenderTargets::handles.shadow);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
 
@@ -57,6 +59,7 @@ namespace Rendering {
       }
 
       stream.writeRenderTargetSet(0);
+      stream.writeCullFaceSet(Backend::CullFace::Back);
     }
   }
 }

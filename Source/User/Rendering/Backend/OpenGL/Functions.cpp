@@ -229,6 +229,10 @@ namespace Rendering {
       glDisable(GL_DEPTH_TEST);
     }
 
+    void setCullFace(CullFace face) {
+      glCullFace(static_cast<GLenum>(face));
+    }
+
     RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height) {
       GLuint buffer;
       glGenRenderbuffers(1, &buffer);

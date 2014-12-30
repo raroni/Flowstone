@@ -9,6 +9,7 @@
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/UniformHandle.h"
 #include "Rendering/Backend/ClearBitMask.h"
+#include "Rendering/Backend/CullFace.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
 
 namespace Rendering {
@@ -62,6 +63,10 @@ namespace Rendering {
   struct ViewportSetCommand {
     uint16_t width;
     uint16_t height;
+  };
+
+  struct CullFaceSetCommand {
+    Backend::CullFace face;
   };
 }
 

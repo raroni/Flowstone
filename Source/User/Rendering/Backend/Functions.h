@@ -8,6 +8,7 @@
 #include "Rendering/Backend/AttributeLocation.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/ClearBitMask.h"
+#include "Rendering/Backend/CullFace.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
@@ -56,6 +57,7 @@ namespace Rendering {
     void disableDrawBuffer();
     RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height);
     void setViewport(uint16_t width, uint16_t height);
+    void setCullFace(CullFace face);
   }
 }
 
