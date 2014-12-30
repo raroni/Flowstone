@@ -20,12 +20,13 @@ namespace Rendering {
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
-    void setAtmosphereColor(Quanta::Vector3 color);
+    void setPrimaryLightColor(Quanta::Vector3 color);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void draw();
     Quanta::Transform& getCameraTransform();
     void updateResolution(uint16_t width, uint16_t height);
-    void setLightDirection(Quanta::Vector3 lightDirection);
+    void setPrimaryLightDirection(Quanta::Vector3 lightDirection);
+    void setSecondaryLightDirection(Quanta::Vector3 lightDirection);
   private:
     CommandStream stream;
     WorldRenderer worldRenderer;

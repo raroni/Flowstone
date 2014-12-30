@@ -28,9 +28,10 @@ namespace Rendering {
     Quanta::Transform cameraTransform;
     void updateResolution(uint16_t width, uint16_t height);
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
-    Quanta::Vector3 lightDirection;
+    Quanta::Vector3 primaryLightDirection;
+    Quanta::Vector3 secondaryLightDirection;
     void initialize();
-    void setAtmosphereColor(Quanta::Vector3 color);
+    void setPrimaryLightColor(Quanta::Vector3 color);
   private:
     struct {
       uint16_t width;
@@ -39,7 +40,7 @@ namespace Rendering {
     struct {
       Quanta::Matrix4 worldView;
       Quanta::Matrix4 viewClip;
-    } lightTransforms;
+    } primaryLightTransforms;
     void buildDrawSet(const Quanta::Frustum &frustum);
     Culler culler;
     BoneMeshRegistry boneMeshRegistry;

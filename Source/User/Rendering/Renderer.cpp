@@ -22,12 +22,16 @@ namespace Rendering {
     worldRenderer.initialize();
   }
 
-  void Renderer::setLightDirection(Quanta::Vector3 lightDirection) {
-    worldRenderer.lightDirection = lightDirection;
+  void Renderer::setPrimaryLightDirection(Quanta::Vector3 lightDirection) {
+    worldRenderer.primaryLightDirection = lightDirection;
   }
 
-  void Renderer::setAtmosphereColor(Quanta::Vector3 color) {
-    worldRenderer.setAtmosphereColor(color);
+  void Renderer::setSecondaryLightDirection(Quanta::Vector3 lightDirection) {
+    worldRenderer.secondaryLightDirection = lightDirection;
+  }
+
+  void Renderer::setPrimaryLightColor(Quanta::Vector3 color) {
+    worldRenderer.setPrimaryLightColor(color);
   }
 
   BoneMeshInstance Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {

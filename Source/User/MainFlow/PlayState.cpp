@@ -22,6 +22,9 @@ namespace MainFlow {
     updateAtmosphereColor();
     updateLightDirection();
 
+    Quanta::Vector3 secondaryLightDirection = Quanta::Vector3(2, 1, 5).getNormalized()*-1;
+    renderer.setSecondaryLightDirection(secondaryLightDirection);
+
     Animation::JointConfig keyJointConfigs[] = {
       // idle standard
       { 0, 0, 0, 1, 0, 0, 0 },
@@ -540,7 +543,7 @@ namespace MainFlow {
   }
 
   void PlayState::updateAtmosphereColor() {
-    renderer.setAtmosphereColor(atmosphereColor.get(timeOfDay));
+    renderer.setPrimaryLightColor(atmosphereColor.get(timeOfDay));
   }
 
   void PlayState::updateLightDirection() {
@@ -553,7 +556,7 @@ namespace MainFlow {
       Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
       Quanta::Vector3 sunrise(-1, 0, -0.5);
       Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
-      renderer.setLightDirection(sunPosition*-1);
+      renderer.setPrimaryLightDirection(sunPosition*-1);
     } else {
       float progress;
       if(timeOfDay < 0.5) {
@@ -567,7 +570,7 @@ namespace MainFlow {
       Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
       Quanta::Vector3 sunrise(-1, 0, -0.5);
       Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
-      renderer.setLightDirection(sunPosition*-1);
+      renderer.setPrimaryLightDirection(sunPosition*-1);
     }
   }
 }

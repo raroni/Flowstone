@@ -10,8 +10,9 @@ uniform sampler2D shadow;
 
 uniform mat4 geometryClipWorldTransform;
 uniform mat4 lightWorldClipTransform;
-uniform vec3 lightDirection;
-uniform vec3 atmosphereColor;
+uniform vec3 inversePrimaryLightDirection;
+uniform vec3 primaryLightColor;
+uniform vec3 inverseSecondaryLightDirection;
 
 void main() {
   float depth = texture(depth, texCoords).r;
@@ -26,18 +27,20 @@ void main() {
   vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
   vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
 
-  float luminosity;
+  float primaryLuminosity;
   vec3 worldNormal = texture(normal, texCoords).xyz;
-  if(dot(lightDirection, worldNormal) > -0.01) {
-    luminosity = 0;
+  if(dot(inversePrimaryLightDirection, worldNormal) < 0.01) {
+    primaryLuminosity = 0;
   }
   else if(lightNDCPosition.z*0.5+0.5 > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
-    luminosity = 0;
+    primaryLuminosity = 0;
   } else {
-    luminosity = dot(lightDirection*-1, worldNormal);
+    primaryLuminosity = dot(inversePrimaryLightDirection, worldNormal);
   }
 
-  vec3 atmosphereInfluence = atmosphereColor * (0.5 + luminosity*0.5);
+  float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);
+
+  vec3 atmosphereInfluence = primaryLightColor * (0.5 + primaryLuminosity*0.4 + secondaryLuminosity*0.1);
 
   fragColor = texture(diffuse, texCoords).rgb * atmosphereInfluence;
 }

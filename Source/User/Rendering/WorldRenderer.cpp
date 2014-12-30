@@ -29,8 +29,8 @@ namespace Rendering {
     return boneMeshRegistry.create(vertices, vertexCount, indices, indexCount);
   }
 
-  void WorldRenderer::setAtmosphereColor(Quanta::Vector3 color) {
-    MergePass::atmosphereColor = color;
+  void WorldRenderer::setPrimaryLightColor(Quanta::Vector3 color) {
+    MergePass::primaryLightColor = color;
   }
 
   BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
@@ -67,11 +67,17 @@ namespace Rendering {
     Quanta::Frustum frustum = localFrustum;
     Quanta::Transformer::updateFrustum(frustum, viewWorldTransform);
 
-    LightTransforms::calc(frustumInfo, viewWorldTransform, lightDirection, lightTransforms.worldView, lightTransforms.viewClip);
+    LightTransforms::calc(
+      frustumInfo,
+      viewWorldTransform,
+      primaryLightDirection,
+      primaryLightTransforms.worldView,
+      primaryLightTransforms.viewClip
+    );
     culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
-    ShadowPass::write(stream, boneMeshRegistry, drawSet, lightTransforms.viewClip*lightTransforms.worldView);
+    ShadowPass::write(stream, boneMeshRegistry, drawSet, primaryLightTransforms.viewClip*primaryLightTransforms.worldView);
     stream.writeViewportSet(resolution.width, resolution.height);
     writeGlobalUniformUpdate(stream, worldViewTransform);
     GeometryPass::write(stream, drawSet, boneMeshRegistry);
@@ -84,8 +90,9 @@ namespace Rendering {
     MergePass::write(
       stream,
       viewClipTransform*worldViewTransform,
-      lightTransforms.viewClip*lightTransforms.worldView,
-      lightDirection
+      primaryLightTransforms.viewClip*primaryLightTransforms.worldView,
+      primaryLightDirection,
+      secondaryLightDirection
     );
 
     drawSet.clear();
