@@ -75,29 +75,29 @@ namespace Rendering {
       CommandType type = stream.readType();
       switch(type) {
         case CommandType::ProgramSet: {
-          ProgramSetCommand command = stream.readProgramSet();
+          const ProgramSetCommand &command = stream.readProgramSet();
           Backend::setProgram(command.program);
           break;
         }
         case CommandType::UniformMat4Set: {
           const float *data;
-          UniformMat4SetCommand command = stream.readUniformMat4Set(&data);
+          const UniformMat4SetCommand &command = stream.readUniformMat4Set(&data);
           Backend::setUniformMat4(command.uniform, command.count, data);
           break;
         }
         case CommandType::UniformVec3Set: {
           const float *data;
-          UniformVec3SetCommand command = stream.readUniformVec3Set(&data);
+          const UniformVec3SetCommand &command = stream.readUniformVec3Set(&data);
           Backend::setUniformVec3(command.uniform, command.count, data);
           break;
         }
         case CommandType::ObjectSet: {
-          ObjectSetCommand command = stream.readObjectSet();
+          const ObjectSetCommand &command = stream.readObjectSet();
           Backend::setObject(command.object);
           break;
         }
         case CommandType::Clear: {
-          ClearCommand command = stream.readClear();
+          const ClearCommand &command = stream.readClear();
           Backend::clear(command.mask);
           break;
         }
@@ -110,38 +110,38 @@ namespace Rendering {
           break;
         }
         case CommandType::IndexedDraw: {
-          IndexedDrawCommand command = stream.readIndexedDraw();
+          const IndexedDrawCommand &command = stream.readIndexedDraw();
           Backend::drawIndexed(command.indexCount, command.dataType);
           break;
         }
         case CommandType::RenderTargetSet: {
-          RenderTargetSetCommand command = stream.readRenderTargetSet();
+          const RenderTargetSetCommand &command = stream.readRenderTargetSet();
           Backend::setRenderTarget(command.renderTarget);
           break;
         }
         case CommandType::TextureSet: {
-          TextureSetCommand command = stream.readTextureSet();
+          const TextureSetCommand &command = stream.readTextureSet();
           Backend::setTexture(command.uniform, command.texture, command.unit);
           break;
         }
         case CommandType::BufferSet: {
-          BufferSetCommand command = stream.readBufferSet();
+          const BufferSetCommand &command = stream.readBufferSet();
           Backend::setBuffer(command.target, command.buffer);
           break;
         }
         case CommandType::ViewportSet: {
-          ViewportSetCommand command = stream.readViewportSet();
+          const ViewportSetCommand &command = stream.readViewportSet();
           Backend::setViewport(command.width, command.height);
           break;
         }
         case CommandType::BufferWrite: {
           const void *data;
-          BufferWriteCommand command = stream.readBufferWrite(&data);
+          const BufferWriteCommand &command = stream.readBufferWrite(&data);
           Backend::writeBuffer(command.target, command.size, data);
           break;
         }
         case CommandType::CullFaceSet: {
-          CullFaceSetCommand command = stream.readCullFaceSet();
+          const CullFaceSetCommand &command = stream.readCullFaceSet();
           Backend::setCullFace(command.face);
           break;
         }

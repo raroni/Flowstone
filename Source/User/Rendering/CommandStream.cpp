@@ -143,80 +143,80 @@ namespace Rendering {
     return type;
   }
 
-  BufferSetCommand CommandStream::readBufferSet() {
-    BufferSetCommand command = *reinterpret_cast<const BufferSetCommand*>(buffer+position);
+  const BufferSetCommand& CommandStream::readBufferSet() {
+    const BufferSetCommand &command = *reinterpret_cast<const BufferSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  BufferWriteCommand CommandStream::readBufferWrite(const void **data) {
-    BufferWriteCommand command = *reinterpret_cast<const BufferWriteCommand*>(buffer+position);
+  const BufferWriteCommand& CommandStream::readBufferWrite(const void **data) {
+    const BufferWriteCommand &command = *reinterpret_cast<const BufferWriteCommand*>(buffer+position);
     position += sizeof(command);
     *data = reinterpret_cast<const void*>(buffer+position);
     position += command.size;
     return command;
   }
 
-  ClearCommand CommandStream::readClear() {
-    ClearCommand command = *reinterpret_cast<const ClearCommand*>(buffer+position);
+  const ClearCommand& CommandStream::readClear() {
+    const ClearCommand &command = *reinterpret_cast<const ClearCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  CullFaceSetCommand CommandStream::readCullFaceSet() {
-    CullFaceSetCommand command = *reinterpret_cast<const CullFaceSetCommand*>(buffer+position);
+  const CullFaceSetCommand& CommandStream::readCullFaceSet() {
+    const CullFaceSetCommand &command = *reinterpret_cast<const CullFaceSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  IndexedDrawCommand CommandStream::readIndexedDraw() {
-    IndexedDrawCommand command = *reinterpret_cast<const IndexedDrawCommand*>(buffer+position);
+  const IndexedDrawCommand& CommandStream::readIndexedDraw() {
+    const IndexedDrawCommand& command = *reinterpret_cast<const IndexedDrawCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  ObjectSetCommand CommandStream::readObjectSet() {
-    ObjectSetCommand command = *reinterpret_cast<const ObjectSetCommand*>(buffer+position);
+  const ObjectSetCommand& CommandStream::readObjectSet() {
+    const ObjectSetCommand &command = *reinterpret_cast<const ObjectSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  ProgramSetCommand CommandStream::readProgramSet() {
-    ProgramSetCommand command = *reinterpret_cast<const ProgramSetCommand*>(buffer+position);
+  const ProgramSetCommand& CommandStream::readProgramSet() {
+    const ProgramSetCommand &command = *reinterpret_cast<const ProgramSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  RenderTargetSetCommand CommandStream::readRenderTargetSet() {
-    RenderTargetSetCommand command = *reinterpret_cast<const RenderTargetSetCommand*>(buffer+position);
+  const RenderTargetSetCommand& CommandStream::readRenderTargetSet() {
+    const RenderTargetSetCommand &command = *reinterpret_cast<const RenderTargetSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  TextureSetCommand CommandStream::readTextureSet() {
-    TextureSetCommand command = *reinterpret_cast<const TextureSetCommand*>(buffer+position);
+  const TextureSetCommand& CommandStream::readTextureSet() {
+    const TextureSetCommand &command = *reinterpret_cast<const TextureSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
 
-  UniformMat4SetCommand CommandStream::readUniformMat4Set(const float **data) {
-    UniformMat4SetCommand command = *reinterpret_cast<const UniformMat4SetCommand*>(buffer+position);
+  const UniformMat4SetCommand& CommandStream::readUniformMat4Set(const float **data) {
+    const UniformMat4SetCommand &command = *reinterpret_cast<const UniformMat4SetCommand*>(buffer+position);
     position += sizeof(command);
     *data = reinterpret_cast<const float*>(buffer+position);
     position += command.count*sizeof(float)*16;
     return command;
   }
 
-  UniformVec3SetCommand CommandStream::readUniformVec3Set(const float **data) {
-    UniformVec3SetCommand command = *reinterpret_cast<const UniformVec3SetCommand*>(buffer+position);
+  const UniformVec3SetCommand& CommandStream::readUniformVec3Set(const float **data) {
+    const UniformVec3SetCommand &command = *reinterpret_cast<const UniformVec3SetCommand*>(buffer+position);
     position += sizeof(command);
     *data = reinterpret_cast<const float*>(buffer+position);
     position += command.count*sizeof(float)*3;
     return command;
   }
 
-  ViewportSetCommand CommandStream::readViewportSet() {
-    ViewportSetCommand command = *reinterpret_cast<const ViewportSetCommand*>(buffer+position);
+  const ViewportSetCommand& CommandStream::readViewportSet() {
+    const ViewportSetCommand &command = *reinterpret_cast<const ViewportSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }
