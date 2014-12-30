@@ -95,15 +95,11 @@ namespace Rendering {
     Backend::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
     stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
 
-    Quanta::Vector3 inverseLightDirection = lightDirection.getNegated();
-
     const size_t matrixSize = sizeof(float)*16;
-    const size_t vectorSize = sizeof(float)*3;
-    const size_t totalSize = matrixSize*2+vectorSize;
+    const size_t totalSize = matrixSize*2;
     char data[totalSize];
     memcpy(data, &viewClipTransform.components, matrixSize);
     memcpy(data+matrixSize, &worldViewTransform.components, matrixSize);
-    memcpy(data+matrixSize*2, &inverseLightDirection.components, vectorSize);
     stream.writeBufferWrite(Backend::BufferTarget::Uniform, totalSize, data);
 
     stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);

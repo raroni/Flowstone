@@ -7,7 +7,6 @@ namespace Rendering {
   namespace Textures {
     struct List {
       Backend::TextureHandle geometryDiffuse;
-      Backend::TextureHandle geometryLambert;
       Backend::TextureHandle geometryDepth;
       Backend::TextureHandle geometryNormal;
       Backend::TextureHandle shadow;

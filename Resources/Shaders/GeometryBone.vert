@@ -7,11 +7,9 @@ layout(location = 3) in uint jointIndex;
 layout(std140) uniform global {
   mat4 viewClipTransform;
   mat4 worldViewTransform;
-  vec3 inverseLightDirection;
 };
 
 out vec3 interpolatedColor;
-out float interpolatedLambert;
 out vec3 interpolatedNormal;
 
 uniform mat4 jointWorldTransform;
@@ -22,7 +20,6 @@ void main() {
   gl_Position = viewClipTransform*worldViewTransform*jointWorldTransform*jointPosition;
 
   vec3 worldNormal = (jointWorldTransform*vec4(normal, 0)).xyz; // assuming no scaling
-  interpolatedLambert = dot(inverseLightDirection, worldNormal);
 
   interpolatedColor = vec3(0.3, 0.6, 0.95);
   interpolatedNormal = worldNormal;

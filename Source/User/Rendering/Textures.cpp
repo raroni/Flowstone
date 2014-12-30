@@ -8,7 +8,6 @@ namespace Rendering {
 
     void initialize() {
       list.geometryDiffuse = Backend::createTexture(800, 600, Backend::TextureFormat::RGB);
-      list.geometryLambert = Backend::createTexture(800, 600, Backend::TextureFormat::Red);
       list.geometryNormal = Backend::createTexture(800, 600, Backend::TextureFormat::SignedNormalizedRGB);
       list.geometryDepth = Backend::createTexture(800, 600, Backend::TextureFormat::Depth);
       list.shadow = Backend::createTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::Depth);

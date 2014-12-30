@@ -15,7 +15,6 @@ namespace Rendering {
       Backend::UniformHandle geometryBoneModelJointTransform;
       Backend::UniformHandle geometryStaticModelWorldTransform;
       Backend::UniformHandle mergeDiffuse;
-      Backend::UniformHandle mergeLambert;
       Backend::UniformHandle mergeNormal;
       Backend::UniformHandle mergeDepth;
       Backend::UniformHandle mergeShadow;

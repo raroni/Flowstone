@@ -4,7 +4,6 @@ out vec3 fragColor;
 in vec2 texCoords;
 
 uniform sampler2D diffuse;
-uniform sampler2D lambert;
 uniform sampler2D normal;
 uniform sampler2D depth;
 uniform sampler2D shadow;
@@ -35,7 +34,7 @@ void main() {
   else if(lightNDCPosition.z*0.5+0.5 > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
     luminosity = 0;
   } else {
-    luminosity = texture(lambert, texCoords).r;
+    luminosity = dot(lightDirection*-1, worldNormal);
   }
 
   vec3 atmosphereInfluence = atmosphereColor * (0.5 + luminosity*0.5);

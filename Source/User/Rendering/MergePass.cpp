@@ -32,24 +32,19 @@ namespace Rendering {
         0
       );
       stream.writeTextureSet(
-        Uniforms::list.mergeLambert,
-        Textures::list.geometryLambert,
-        1
-      );
-      stream.writeTextureSet(
         Uniforms::list.mergeNormal,
         Textures::list.geometryNormal,
-        2
+        1
       );
       stream.writeTextureSet(
         Uniforms::list.mergeDepth,
         Textures::list.geometryDepth,
-        3
+        2
       );
       stream.writeTextureSet(
         Uniforms::list.mergeShadow,
         Textures::list.shadow,
-        4
+        3
       );
 
       stream.writeObjectSet(FullscreenQuad::object);

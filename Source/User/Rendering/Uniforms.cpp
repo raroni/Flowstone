@@ -19,7 +19,6 @@ namespace Rendering {
 
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
       list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
-      list.mergeLambert = Backend::getUniform(mergeProgram, "lambert");
       list.mergeNormal = Backend::getUniform(mergeProgram, "normal");
       list.mergeDepth = Backend::getUniform(mergeProgram, "depth");
       list.mergeShadow = Backend::getUniform(mergeProgram, "shadow");
