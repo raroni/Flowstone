@@ -16,11 +16,6 @@ uniform vec3 inverseSecondaryLightDirection;
 
 void main() {
   float depth = texture(depth, texCoords).r;
-  if(depth == 1.0) {
-    fragColor = vec3(1, 1, 1); // TODO: presumably not needed in final version
-    return;
-  }
-
   vec3 fragmentNDCPosition = vec3(texCoords, depth)*2-1;
   vec4 a = geometryClipWorldTransform * vec4(fragmentNDCPosition, 1.0);
   vec4 fragmentWorldPosition = vec4(a.xyz/a.w, 1);
