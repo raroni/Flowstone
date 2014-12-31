@@ -22,7 +22,7 @@ namespace Rendering {
       list.mergeNormal = Backend::getUniform(mergeProgram, "normal");
       list.mergeDepth = Backend::getUniform(mergeProgram, "depth");
       list.mergeShadow = Backend::getUniform(mergeProgram, "shadow");
-      list.mergeGeometryClipWorldTransform = Backend::getUniform(mergeProgram, "geometryClipWorldTransform");
+      list.mergeCameraClipWorldTransform = Backend::getUniform(mergeProgram, "cameraClipWorldTransform");
       list.mergeLightWorldClipTransform = Backend::getUniform(mergeProgram, "lightWorldClipTransform");
       list.mergeInversePrimaryLightDirection = Backend::getUniform(mergeProgram, "inversePrimaryLightDirection");
       list.mergePrimaryLightColor = Backend::getUniform(mergeProgram, "primaryLightColor");
