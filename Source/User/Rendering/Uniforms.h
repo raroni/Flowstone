@@ -19,6 +19,7 @@ namespace Rendering {
       Backend::UniformHandle mergeDepth;
       Backend::UniformHandle mergeShadow;
       Backend::UniformHandle mergeNoise;
+      Backend::UniformHandle mergeSampleKernel;
       Backend::UniformHandle mergeCameraClipWorldTransform;
       Backend::UniformHandle mergeLightWorldClipTransform;
       Backend::UniformHandle mergeInversePrimaryLightDirection;

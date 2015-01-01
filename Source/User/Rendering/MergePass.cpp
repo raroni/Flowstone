@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <math.h>
-#include <stdlib.h>
+#include "Quanta/Util.h"
 #include "Rendering/Config.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
@@ -10,6 +10,10 @@
 #include "Rendering/Textures.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/MergePass.h"
+
+// todo:
+// change all random generation to make the kernel generations deterministic
+// for example by using a instance-based random generator
 
 namespace Rendering {
   namespace MergePass {
@@ -21,10 +25,10 @@ namespace Rendering {
       Quanta::Vector3 kernel[count];
       for(uint8_t i=0; count>i; i++) {
         kernel[i] = {
-          rand()*2.0f-1,
-          rand()*2.0f-1,
+          Quanta::random()*2-1,
+          Quanta::random()*2-1,
           0
-        }; // todo: make deterministic instance based (so not affected by any outside changes to srand())
+        };
         kernel[i].normalize();
       }
       Backend::setTexture(Textures::list.mergeNoise);
@@ -32,8 +36,27 @@ namespace Rendering {
       Backend::setTexture(0);
     }
 
+    void uploadSampleKernel() {
+      uint8_t size = Config::SSAO::sampleSize;
+      Quanta::Vector3 kernel[size];
+      for(uint8_t i=0; size>i; i++) {
+        kernel[i] = {
+          Quanta::random()*2-1,
+          Quanta::random()*2-1,
+          Quanta::random()
+        };
+        kernel[i].normalize();
+        float scale = static_cast<float>(i)/size;
+        kernel[i] *= Quanta::lerp(0.1, 1, pow(scale, 2));
+      }
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::GeometryStatic)]);
+      Backend::setUniformVec3(Uniforms::list.mergeSampleKernel, size, kernel[0].components);
+      Backend::setProgram(0);
+    }
+
     void initialize() {
       uploadNoiseKernel();
+      uploadSampleKernel();
     }
 
     void write(

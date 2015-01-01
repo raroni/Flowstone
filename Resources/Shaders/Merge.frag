@@ -14,6 +14,7 @@ uniform mat4 lightWorldClipTransform;
 uniform vec3 inversePrimaryLightDirection;
 uniform vec3 primaryLightColor;
 uniform vec3 inverseSecondaryLightDirection;
+uniform vec3 sampleKernel[16];
 
 void main() {
   float depth = texture(depth, texCoords).r;
