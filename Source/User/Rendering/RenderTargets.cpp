@@ -13,9 +13,8 @@ namespace Rendering {
       Backend::attachDepthTexture(Textures::list.shadow);
       Backend::disableDrawBuffer();
       if(!Backend::checkRenderTarget()) {
-        fatalError("Render target not configured propertly.");
+        fatalError("Shadow render target not configured propertly.");
       }
-      Backend::setRenderTarget(0);
     }
 
     static void initializeGeometry() {
@@ -26,14 +25,24 @@ namespace Rendering {
       Backend::attachDepthTexture(Textures::list.geometryDepth);
       Backend::setDrawBufferCount(2);
       if(!Backend::checkRenderTarget()) {
-        fatalError("Render target not configured propertly.");
+        fatalError("Geometry render target not configured propertly.");
       }
-      Backend::setRenderTarget(0);
+    }
+
+    static void initializeSSAO() {
+      handles.ssao = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.ssao);
+      Backend::attachColorTexture(Textures::list.ssaoResult, 0);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("SSAO render target not configured propertly.");
+      }
     }
 
     void initialize() {
       initializeGeometry();
+      initializeSSAO();
       initializeShadow();
+      Backend::setRenderTarget(0);
     }
   }
 }

@@ -7,7 +7,8 @@ namespace Rendering {
     GeometryStatic,
     Merge,
     ShadowBone,
-    ShadowStatic
+    ShadowStatic,
+    SSAO
   };
 }
 

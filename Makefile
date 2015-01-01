@@ -48,6 +48,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/ShadowPass.cpp\
 	Source/User/Rendering/MergePass.cpp\
 	Source/User/Rendering/GeometryPass.cpp\
+	Source/User/Rendering/SSAOPass.cpp\
 	Source/User/AtmosphereColor.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
