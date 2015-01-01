@@ -12,8 +12,8 @@ namespace Rendering {
 
     void write(
       CommandStream &stream,
-      Quanta::Matrix4 cameraClipWorldTransform,
-      Quanta::Matrix4 lightWorldClipTransform,
+      const Quanta::Matrix4 &cameraClipWorldTransform,
+      const Quanta::Matrix4 &lightWorldClipTransform,
       const Quanta::Vector3 &primaryLightDirection,
       const Quanta::Vector3 &secondaryLightDirection
     );

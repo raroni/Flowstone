@@ -13,6 +13,7 @@ namespace Quanta {
     const float& operator[](const int index) const;
     Matrix4 operator*(Matrix4 matrix);
     Matrix4& operator*=(Matrix4 matrix);
+    Matrix4 getInverted() const;
     void reset();
     void invert();
   };

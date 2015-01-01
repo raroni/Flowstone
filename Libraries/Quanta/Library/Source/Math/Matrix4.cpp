@@ -32,6 +32,12 @@ namespace Quanta {
     return result;
   }
 
+  Matrix4 Matrix4::getInverted() const {
+    Matrix4 result = *this;
+    result.invert();
+    return result;
+  }
+
   // borrowed from http://www.mesa3d.org/
   void Matrix4::invert() {
     float inv[16];
