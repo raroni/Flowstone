@@ -39,7 +39,7 @@ namespace Rendering {
     void uploadSampleKernel() {
       uint8_t size = Config::SSAO::sampleSize;
       Quanta::Vector3 kernel[size];
-      for(uint8_t i=0; size>i; i++) {
+      for(uint8_t i=0; i<size; ++i) {
         kernel[i] = {
           Quanta::random()*2-1,
           Quanta::random()*2-1,
@@ -49,7 +49,7 @@ namespace Rendering {
         float scale = static_cast<float>(i)/size;
         kernel[i] *= Quanta::lerp(0.1, 1, pow(scale, 2));
       }
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::GeometryStatic)]);
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
       Backend::setUniformVec3(Uniforms::list.mergeSampleKernel, size, kernel[0].components);
       Backend::setProgram(0);
     }
@@ -62,6 +62,8 @@ namespace Rendering {
     void write(
       CommandStream &stream,
       const Quanta::Matrix4 &cameraClipWorldTransform,
+      const Quanta::Matrix4 &cameraWorldViewTransform,
+      const Quanta::Matrix4 &cameraViewClipTransform,
       const Quanta::Matrix4 &lightWorldClipTransform,
       const Quanta::Vector3 &primaryLightDirection,
       const Quanta::Vector3 &secondaryLightDirection
@@ -69,6 +71,8 @@ namespace Rendering {
       stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
 
       stream.writeUniformMat4Set(Uniforms::list.mergeCameraClipWorldTransform, 1, cameraClipWorldTransform.getInverted().components);
+      stream.writeUniformMat4Set(Uniforms::list.mergeCameraWorldViewTransform, 1, cameraWorldViewTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.mergeCameraViewClipTransform, 1, cameraViewClipTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeInversePrimaryLightDirection, 1, primaryLightDirection.getNegated().components);
       stream.writeUniformVec3Set(Uniforms::list.mergePrimaryLightColor, 1, primaryLightColor.components);
