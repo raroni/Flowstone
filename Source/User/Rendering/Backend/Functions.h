@@ -8,6 +8,7 @@
 #include "Rendering/Backend/AttributeLocation.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/ClearBitMask.h"
+#include "Rendering/Backend/TextureWrap.h"
 #include "Rendering/Backend/CullFace.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
@@ -44,7 +45,10 @@ namespace Rendering {
     RenderTargetHandle createRenderTarget();
     void setRenderTarget(RenderTargetHandle renderTarget);
     void setRenderBuffer(RenderBufferHandle renderBuffer);
-    TextureHandle createTexture(uint16_t width, uint16_t height, TextureFormat format);
+    TextureHandle createTexture();
+    void setTextureWrap(Backend::TextureWrap wrap);
+    void setTexture(TextureHandle texture);
+    void writeTexture(uint16_t width, uint16_t height, TextureFormat format, const void *data);
     void attachColorTexture(TextureHandle texture, uint8_t location);
     void attachDepthTexture(TextureHandle texture);
     void attachRenderBuffer(RenderBufferHandle renderBuffer);
