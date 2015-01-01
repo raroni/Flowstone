@@ -7,6 +7,7 @@ uniform sampler2D diffuse;
 uniform sampler2D normal;
 uniform sampler2D depth;
 uniform sampler2D shadow;
+uniform sampler2D noise;
 
 uniform mat4 cameraClipWorldTransform;
 uniform mat4 lightWorldClipTransform;
@@ -36,6 +37,9 @@ void main() {
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);
 
   vec3 atmosphereInfluence = primaryLightColor * (0.5 + primaryLuminosity*0.4 + secondaryLuminosity*0.1);
+
+  // noise ready for use at
+  // texture(noise, texCoords * vec2(800.0/4.0, 600.0/4.0));
 
   fragColor = texture(diffuse, texCoords).rgb * atmosphereInfluence;
 }

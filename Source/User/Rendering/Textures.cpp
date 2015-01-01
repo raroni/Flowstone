@@ -35,11 +35,19 @@ namespace Rendering {
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
+    void initializeMergeNoise() {
+      list.mergeNoise = Backend::createTexture();
+      Backend::setTexture(list.mergeNoise);
+      Backend::setTextureWrap(Backend::TextureWrap::Repeat);
+    }
+
     void initialize() {
       initializeGeometryDiffuse();
       initializeGeometryNormal();
       initializeGeometryDepth();
       initializeShadow();
+      initializeMergeNoise();
+      Backend::setTexture(0);
     }
   }
 }

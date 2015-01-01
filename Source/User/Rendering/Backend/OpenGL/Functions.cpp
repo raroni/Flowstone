@@ -133,13 +133,11 @@ namespace Rendering {
     }
 
     void writeTexture(uint16_t width, uint16_t height, TextureFormat format, const void *data) {
-      GLenum dataType = GL_UNSIGNED_BYTE;
+      GLenum dataFormat = GL_RGB;
+      GLenum dataType = GL_FLOAT;
       if(format == TextureFormat::Depth) {
+        dataFormat = GL_DEPTH_COMPONENT;
         dataType = GL_FLOAT;
-      }
-      GLenum dataFormat = static_cast<GLint>(format);
-      if(format == TextureFormat::SignedNormalizedRGB) {
-        dataFormat = GL_RGB;
       }
 
       glTexImage2D(

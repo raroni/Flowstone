@@ -23,6 +23,7 @@ namespace Rendering {
     Frustum::calcInfo(frustumInfo);
     Frustum::calcFrustum(frustumInfo, localFrustum);
     calcViewClipTransform();
+    MergePass::initialize();
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {

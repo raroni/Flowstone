@@ -10,6 +10,7 @@ namespace Rendering {
       Backend::TextureHandle geometryDepth;
       Backend::TextureHandle geometryNormal;
       Backend::TextureHandle shadow;
+      Backend::TextureHandle mergeNoise;
     };
 
     extern List list;

@@ -1,4 +1,8 @@
 #include <stddef.h>
+#include <math.h>
+#include <stdlib.h>
+#include "Rendering/Config.h"
+#include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/ProgramName.h"
 #include "Rendering/Programs.h"
@@ -10,6 +14,27 @@
 namespace Rendering {
   namespace MergePass {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
+
+    void uploadNoiseKernel() {
+      uint8_t size = Config::SSAO::noiseSize;
+      uint8_t count = pow(size, 2);
+      Quanta::Vector3 kernel[count];
+      for(uint8_t i=0; count>i; i++) {
+        kernel[i] = {
+          rand()*2.0f-1,
+          rand()*2.0f-1,
+          0
+        }; // todo: make deterministic instance based (so not affected by any outside changes to srand())
+        kernel[i].normalize();
+      }
+      Backend::setTexture(Textures::list.mergeNoise);
+      Backend::writeTexture(size, size, Backend::TextureFormat::SignedNormalizedRGB, kernel);
+      Backend::setTexture(0);
+    }
+
+    void initialize() {
+      uploadNoiseKernel();
+    }
 
     void write(
       CommandStream &stream,
@@ -45,6 +70,11 @@ namespace Rendering {
         Uniforms::list.mergeShadow,
         Textures::list.shadow,
         3
+      );
+      stream.writeTextureSet(
+        Uniforms::list.mergeNoise,
+        Textures::list.mergeNoise,
+        4
       );
 
       stream.writeObjectSet(FullscreenQuad::object);
