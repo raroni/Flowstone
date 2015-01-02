@@ -96,8 +96,6 @@ namespace Rendering {
     MergePass::write(
       stream,
       viewClipTransform*worldViewTransform,
-      worldViewTransform,
-      viewClipTransform,
       primaryLightTransforms.viewClip*primaryLightTransforms.worldView,
       primaryLightDirection,
       secondaryLightDirection
