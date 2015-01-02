@@ -41,12 +41,6 @@ namespace Rendering {
       Backend::setTextureWrap(Backend::TextureWrap::Repeat);
     }
 
-    void initializeMergeNoise() {
-      list.mergeNoise = Backend::createTexture();
-      Backend::setTexture(list.mergeNoise);
-      Backend::setTextureWrap(Backend::TextureWrap::Repeat);
-    }
-
     void initializeSSAOResult() {
       list.ssaoResult = Backend::createTexture();
       Backend::setTexture(list.ssaoResult);
@@ -59,7 +53,6 @@ namespace Rendering {
       initializeGeometryNormal();
       initializeGeometryDepth();
       initializeShadow();
-      initializeMergeNoise();
       initializeSSAONoise();
       initializeSSAOResult();
       Backend::setTexture(0);

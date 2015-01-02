@@ -12,7 +12,6 @@ namespace Rendering {
       Backend::TextureHandle shadow;
       Backend::TextureHandle ssaoResult;
       Backend::TextureHandle ssaoNoise;
-      Backend::TextureHandle mergeNoise;
     };
 
     extern List list;
