@@ -21,6 +21,7 @@ namespace Rendering {
       Backend::UniformHandle ssaoViewClipTransform;
       Backend::UniformHandle ssaoClipWorldTransform;
       Backend::UniformHandle ssaoSampleKernel;
+      Backend::UniformHandle ssaoNoiseScale;
       Backend::UniformHandle mergeDiffuse;
       Backend::UniformHandle mergeNormal;
       Backend::UniformHandle mergeDepth;

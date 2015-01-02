@@ -10,6 +10,7 @@ uniform sampler2D normal;
 uniform mat4 worldViewTransform;
 uniform mat4 viewClipTransform;
 uniform mat4 clipWorldTransform;
+uniform vec2 noiseScale;
 
 const int sampleKernelSize = 16;
 uniform vec3 sampleKernel[sampleKernelSize];
@@ -24,7 +25,6 @@ void main() {
   vec3 viewPosition = (worldViewTransform * worldPosition).xyz;
   vec3 viewNormal = (worldViewTransform * vec4(worldNormal, 0)).xyz; // assuming no scaling
 
-  vec2 noiseScale = vec2(800.0/4.0, 600.0/4.0); // todo: precalc this
   vec3 randomVector = texture(noise, texCoords * noiseScale).xyz;
   vec3 tangent = normalize(randomVector - viewNormal * dot(randomVector, viewNormal));
   vec3 bitangent = cross(viewNormal, tangent);

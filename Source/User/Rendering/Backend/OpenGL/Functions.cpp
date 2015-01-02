@@ -98,6 +98,10 @@ namespace Rendering {
       glUniform3fv(uniform, count, data);
     }
 
+    void setUniformVec2(UniformHandle uniform, uint8_t count, const float *data) {
+      glUniform2fv(uniform, count, data);
+    }
+
     void setObject(ObjectHandle object) {
       glBindVertexArray(object);
     }

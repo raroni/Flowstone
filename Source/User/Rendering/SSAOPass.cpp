@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
+#include "Quanta/Math/Vector2.h"
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Util.h"
 #include "Rendering/Backend/Functions.h"
@@ -50,14 +51,21 @@ namespace Rendering {
         float scale = static_cast<float>(i)/size;
         kernel[i] *= Quanta::lerp(0.1, 1, pow(scale, 2));
       }
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
       Backend::setUniformVec3(Uniforms::list.ssaoSampleKernel, size, kernel[0].components);
-      Backend::setProgram(0);
+    }
+
+    void uploadNoiseScale() {
+      Quanta::Vector2 noiseScale(800, 600);
+      noiseScale /= static_cast<float>(Config::SSAO::noiseSize);
+      Backend::setUniformVec2(Uniforms::list.ssaoNoiseScale, 1, noiseScale.components);
     }
 
     void initialize() {
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
       uploadNoiseKernel();
       uploadSampleKernel();
+      uploadNoiseScale();
+      Backend::setProgram(0);
     }
 
     void write(

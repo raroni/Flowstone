@@ -32,6 +32,7 @@ namespace Rendering {
     void setClearColor(float r, float g, float b);
     void setUniformMat4(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformVec3(UniformHandle uniform, uint8_t count, const float *data);
+    void setUniformVec2(UniformHandle uniform, uint8_t count, const float *data);
     ObjectHandle createObject();
     void enableAttributeLocation(AttributeLocation location);
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);
