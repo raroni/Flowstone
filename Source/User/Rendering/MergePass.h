@@ -12,7 +12,7 @@ namespace Rendering {
 
     void write(
       CommandStream &stream,
-      const Quanta::Matrix4 &cameraClipWorldTransform,
+      const Quanta::Matrix4 &cameraWorldClipTransform,
       const Quanta::Matrix4 &cameraWorldViewTransform,
       const Quanta::Matrix4 &cameraViewClipTransform,
       const Quanta::Matrix4 &lightWorldClipTransform,
