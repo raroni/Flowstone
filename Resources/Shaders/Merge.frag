@@ -14,16 +14,16 @@ uniform mat4 lightWorldClipTransform;
 uniform vec3 inversePrimaryLightDirection;
 uniform vec3 primaryLightColor;
 uniform vec3 inverseSecondaryLightDirection;
+uniform vec2 ssaoTexelSize;
 
 const int ssaoBlurSize = 4;
 
 float blurSSAO(in vec2 texCoord) {
   float occlusion = 0;
-  vec2 texelSize = 1.0/vec2(800, 600); // todo: precalc this
   vec2 hlim = vec2(float(-ssaoBlurSize) * 0.5 + 0.5);
   for(int x=0; x<ssaoBlurSize; ++x) {
     for(int y=0; y<ssaoBlurSize; ++y) {
-      vec2 offset = (hlim + vec2(float(x), float(y))) * texelSize;
+      vec2 offset = (hlim + vec2(float(x), float(y))) * ssaoTexelSize;
       occlusion += texture(ssao, texCoords + offset).r;
     }
   }

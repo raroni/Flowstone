@@ -32,6 +32,7 @@ namespace Rendering {
       Backend::UniformHandle mergeInversePrimaryLightDirection;
       Backend::UniformHandle mergePrimaryLightColor;
       Backend::UniformHandle mergeInverseSecondaryLightDirection;
+      Backend::UniformHandle mergeSSAOTexelSize;
     };
     extern List list;
 

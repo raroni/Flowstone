@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include "Rendering/Backend/Functions.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/ProgramName.h"
 #include "Rendering/Programs.h"
@@ -10,6 +11,13 @@
 namespace Rendering {
   namespace MergePass {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
+
+    void initialize() {
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+      float ssaoTexelSize[] = { 1.0/800, 1.0/600 };
+      Backend::setUniformVec2(Uniforms::list.mergeSSAOTexelSize, 1, ssaoTexelSize);
+      Backend::setProgram(0);
+    }
 
     void write(
       CommandStream &stream,
