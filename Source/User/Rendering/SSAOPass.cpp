@@ -60,11 +60,17 @@ namespace Rendering {
       Backend::setUniformVec2(Uniforms::list.ssaoNoiseScale, 1, noiseScale.components);
     }
 
+    void uploadSampleRadius() {
+      float data[] = { Config::SSAO::sampleRadius };
+      Backend::setUniformFloat(Uniforms::list.ssaoSampleRadius, 1, data);
+    }
+
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
       uploadNoiseKernel();
       uploadSampleKernel();
       uploadNoiseScale();
+      uploadSampleRadius();
       Backend::setProgram(0);
     }
 

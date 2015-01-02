@@ -48,6 +48,7 @@ namespace Rendering {
       list.ssaoClipWorldTransform = Backend::getUniform(ssao, "clipWorldTransform");
       list.ssaoSampleKernel = Backend::getUniform(ssao, "sampleKernel");
       list.ssaoNoiseScale = Backend::getUniform(ssao, "noiseScale");
+      list.ssaoSampleRadius = Backend::getUniform(ssao, "sampleRadius");
     }
   }
 }

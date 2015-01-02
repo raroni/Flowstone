@@ -102,6 +102,10 @@ namespace Rendering {
       glUniform2fv(uniform, count, data);
     }
 
+    void setUniformFloat(UniformHandle uniform, uint8_t count, const float *data) {
+      glUniform1fv(uniform, count, data);
+    }
+
     void setObject(ObjectHandle object) {
       glBindVertexArray(object);
     }

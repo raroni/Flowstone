@@ -11,6 +11,7 @@ uniform mat4 worldViewTransform;
 uniform mat4 viewClipTransform;
 uniform mat4 clipWorldTransform;
 uniform vec2 noiseScale;
+uniform float sampleRadius;
 
 const int sampleKernelSize = 16;
 uniform vec3 sampleKernel[sampleKernelSize];
@@ -30,7 +31,6 @@ void main() {
   vec3 bitangent = cross(viewNormal, tangent);
   mat3 normalOrthoBasis = mat3(tangent, bitangent, viewNormal);
 
-  float sampleRadius = 1.0f; // todo: is this required or not? If yes, convert to uniform
   float occlusion = 0.0;
   for(int i=0; i<sampleKernelSize; ++i) {
     vec3 sample = normalOrthoBasis * sampleKernel[i];
