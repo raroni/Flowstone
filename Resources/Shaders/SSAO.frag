@@ -30,7 +30,7 @@ void main() {
   vec3 bitangent = cross(viewNormal, tangent);
   mat3 normalOrthoBasis = mat3(tangent, bitangent, viewNormal);
 
-  float sampleRadius = 0.5f; // todo: is this required or not? If yes, convert to uniform
+  float sampleRadius = 1.0f; // todo: is this required or not? If yes, convert to uniform
   float occlusion = 0.0;
   for(int i=0; i<sampleKernelSize; ++i) {
     vec3 sample = normalOrthoBasis * sampleKernel[i];
