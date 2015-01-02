@@ -39,6 +39,11 @@ void main() {
     vec4 offset = vec4(sample, 1.0);
     offset = viewClipTransform * offset;
     offset.xy /= offset.w;
+
+    // The depth texture comparison only work for coordinates inside the NDC unit square.
+    // In practice this was only an issue for pixels near the top of the screen.
+    if(offset.y > 1) continue;
+
     offset.xy = offset.xy * 0.5 + 0.5;
 
     float sampleNDCDepth = texture(depth, offset.xy).r*2-1;
