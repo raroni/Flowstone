@@ -29,6 +29,7 @@ namespace Rendering {
       list.mergePrimaryLightColor = Backend::getUniform(mergeProgram, "primaryLightColor");
       list.mergeInverseSecondaryLightDirection = Backend::getUniform(mergeProgram, "inverseSecondaryLightDirection");
       list.mergeSSAOTexelSize = Backend::getUniform(mergeProgram, "ssaoTexelSize");
+      list.mergeSSAODepthDifferenceLimit = Backend::getUniform(mergeProgram, "ssaoDepthDifferenceLimit");
 
       Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
       list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");
