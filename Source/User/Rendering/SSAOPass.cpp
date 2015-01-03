@@ -65,12 +65,18 @@ namespace Rendering {
       Backend::setUniformFloat(Uniforms::list.ssaoSampleRadius, 1, data);
     }
 
+    void uploadSampleDifferenceLimit() {
+      float data[] = { Config::SSAO::sampleDifferenceLimit };
+      Backend::setUniformFloat(Uniforms::list.ssaoSampleDifferenceLimit, 1, data);
+    }
+
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
       uploadNoiseKernel();
       uploadSampleKernel();
       uploadNoiseScale();
       uploadSampleRadius();
+      uploadSampleDifferenceLimit();
       Backend::setProgram(0);
     }
 

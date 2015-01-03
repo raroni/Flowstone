@@ -12,6 +12,7 @@ uniform mat4 viewClipTransform;
 uniform mat4 clipWorldTransform;
 uniform vec2 noiseScale;
 uniform float sampleRadius;
+uniform float sampleDifferenceLimit;
 
 const int sampleKernelSize = 16;
 uniform vec3 sampleKernel[sampleKernelSize];
@@ -51,7 +52,7 @@ void main() {
     float zFar = 10.0;
     float sampleViewDepth = 2.0 * zNear * zFar / (zFar + zNear - sampleNDCDepth * (zFar - zNear));
 
-    if(abs(viewPosition.z - sampleViewDepth) < sampleRadius && sampleViewDepth <= sample.z) {
+    if(abs(viewPosition.z - sampleViewDepth) <= sampleDifferenceLimit && sampleViewDepth <= sample.z) {
       occlusion += 1;
     }
   }

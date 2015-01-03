@@ -23,6 +23,7 @@ namespace Rendering {
       Backend::UniformHandle ssaoSampleKernel;
       Backend::UniformHandle ssaoNoiseScale;
       Backend::UniformHandle ssaoSampleRadius;
+      Backend::UniformHandle ssaoSampleDifferenceLimit;
       Backend::UniformHandle mergeDiffuse;
       Backend::UniformHandle mergeNormal;
       Backend::UniformHandle mergeDepth;

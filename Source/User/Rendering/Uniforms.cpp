@@ -49,6 +49,7 @@ namespace Rendering {
       list.ssaoSampleKernel = Backend::getUniform(ssao, "sampleKernel");
       list.ssaoNoiseScale = Backend::getUniform(ssao, "noiseScale");
       list.ssaoSampleRadius = Backend::getUniform(ssao, "sampleRadius");
+      list.ssaoSampleDifferenceLimit = Backend::getUniform(ssao, "sampleDifferenceLimit");
     }
   }
 }
