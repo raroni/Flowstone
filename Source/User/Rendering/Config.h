@@ -20,6 +20,17 @@ namespace Rendering {
       const uint16_t staticCount = 128;
     }
 
+    namespace SSAO {
+      const uint8_t noiseSize = 4;
+      const uint8_t sampleSize = 16; // also hardcoded in SSAO fragment shader
+      const float sampleRadius = 0.4f;
+      const float sampleDifferenceLimit = 0.8f;
+    }
+
+    namespace Merge {
+      const float ssaoDepthDifferenceLimit = 0.01;
+    }
+
     struct {
       const float near = 4.5;
       const float far = 10;

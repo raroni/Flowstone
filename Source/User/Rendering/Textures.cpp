@@ -35,11 +35,27 @@ namespace Rendering {
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
+    void initializeSSAONoise() {
+      list.ssaoNoise = Backend::createTexture();
+      Backend::setTexture(list.ssaoNoise);
+      Backend::setTextureWrap(Backend::TextureWrap::Repeat);
+    }
+
+    void initializeSSAOResult() {
+      list.ssaoResult = Backend::createTexture();
+      Backend::setTexture(list.ssaoResult);
+      Backend::writeTexture(800, 600, Backend::TextureFormat::Red, NULL);
+      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
+    }
+
     void initialize() {
       initializeGeometryDiffuse();
       initializeGeometryNormal();
       initializeGeometryDepth();
       initializeShadow();
+      initializeSSAONoise();
+      initializeSSAOResult();
+      Backend::setTexture(0);
     }
   }
 }

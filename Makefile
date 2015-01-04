@@ -4,6 +4,7 @@ CC = clang++
 CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
+	Libraries/Quanta/Library/Source/Math/Vector2.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	Libraries/Quanta/Library/Source/Math/Vector4.cpp\
 	Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
@@ -48,6 +49,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/ShadowPass.cpp\
 	Source/User/Rendering/MergePass.cpp\
 	Source/User/Rendering/GeometryPass.cpp\
+	Source/User/Rendering/SSAOPass.cpp\
 	Source/User/AtmosphereColor.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp

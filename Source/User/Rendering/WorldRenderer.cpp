@@ -6,6 +6,7 @@
 #include "Core/Error.h"
 #include "Rendering/ShadowPass.h"
 #include "Rendering/GeometryPass.h"
+#include "Rendering/SSAOPass.h"
 #include "Rendering/MergePass.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/LightTransforms.h"
@@ -23,6 +24,8 @@ namespace Rendering {
     Frustum::calcInfo(frustumInfo);
     Frustum::calcFrustum(frustumInfo, localFrustum);
     calcViewClipTransform();
+    SSAOPass::initialize();
+    MergePass::initialize();
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -63,6 +66,7 @@ namespace Rendering {
   void WorldRenderer::writeCommands(CommandStream &stream) {
     Quanta::Matrix4 viewWorldTransform = cameraTransform.calcMatrix();
     Quanta::Matrix4 worldViewTransform = cameraTransform.calcInverseMatrix();
+    Quanta::Matrix4 clipWorldTransform = (viewClipTransform*worldViewTransform).getInverted();
 
     Quanta::Frustum frustum = localFrustum;
     Quanta::Transformer::updateFrustum(frustum, viewWorldTransform);
@@ -82,14 +86,17 @@ namespace Rendering {
     writeGlobalUniformUpdate(stream, worldViewTransform);
     GeometryPass::write(stream, drawSet, boneMeshRegistry);
 
-    stream.writeRenderTargetSet(0);
     stream.writeDisableDepthTest();
+
+    SSAOPass::write(stream, worldViewTransform, viewClipTransform, clipWorldTransform);
+
+    stream.writeRenderTargetSet(0);
 
     stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
 
     MergePass::write(
       stream,
-      viewClipTransform*worldViewTransform,
+      (viewClipTransform*worldViewTransform).getInverted(),
       primaryLightTransforms.viewClip*primaryLightTransforms.worldView,
       primaryLightDirection,
       secondaryLightDirection
