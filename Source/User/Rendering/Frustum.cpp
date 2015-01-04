@@ -7,8 +7,7 @@
 
 namespace Rendering {
   namespace Frustum {
-    void calcInfo(FrustumInfo &info) {
-      float aspectRatio = (800.0/600.0); // todo replace with real aspect ratio
+    void calcInfo(FrustumInfo &info, float aspectRatio) {
       info.nearWidth = tan(Config::perspective.fieldOfView/2)*2*Config::perspective.near;
       info.nearHeight = info.nearWidth/aspectRatio;
       info.farWidth = info.nearWidth*(Config::perspective.far/Config::perspective.near);

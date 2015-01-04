@@ -9,7 +9,7 @@ namespace Rendering {
   struct FrustumInfo;
 
   namespace Frustum {
-    void calcInfo(FrustumInfo &info);
+    void calcInfo(FrustumInfo &info, float aspectRatio);
     void calcFrustum(const FrustumInfo &info, Quanta::Frustum &frustum);
   }
 }

@@ -21,8 +21,6 @@
 
 namespace Rendering {
   void WorldRenderer::initialize() {
-    Frustum::calcInfo(frustumInfo);
-    Frustum::calcFrustum(frustumInfo, localFrustum);
     SSAOPass::initialize();
     MergePass::initialize();
   }
@@ -59,6 +57,9 @@ namespace Rendering {
 
   void WorldRenderer::updateResolution(Resolution resolution) {
     this->resolution = resolution;
+    float aspectRatio = static_cast<float>(resolution.width)/resolution.height;
+    Frustum::calcInfo(frustumInfo, aspectRatio);
+    Frustum::calcFrustum(frustumInfo, localFrustum);
     calcViewClipTransform();
   }
 
