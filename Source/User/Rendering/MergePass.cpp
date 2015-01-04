@@ -13,19 +13,16 @@ namespace Rendering {
   namespace MergePass {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
 
-    static void uploadSSAOTexelSize() {
-      float ssaoTexelSize[] = { 1.0/800, 1.0/600 };
-      Backend::setUniformVec2(Uniforms::list.mergeSSAOTexelSize, 1, ssaoTexelSize);
-    }
-
-    static void uploadSSAODepthDifferenceLimit() {
-      Backend::setUniformFloat(Uniforms::list.mergeSSAODepthDifferenceLimit, 1, &Config::Merge::ssaoDepthDifferenceLimit);
-    }
-
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
-      uploadSSAOTexelSize();
-      uploadSSAODepthDifferenceLimit();
+      Backend::setUniformFloat(Uniforms::list.mergeSSAODepthDifferenceLimit, 1, &Config::Merge::ssaoDepthDifferenceLimit);
+      Backend::setProgram(0);
+    }
+
+    void handleResolutionChange(Resolution resolution) {
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+      float ssaoTexelSize[] = { 1.0f/resolution.width, 1.0f/resolution.height };
+      Backend::setUniformVec2(Uniforms::list.mergeSSAOTexelSize, 1, ssaoTexelSize);
       Backend::setProgram(0);
     }
 
