@@ -74,7 +74,8 @@ namespace Rendering {
       handles[static_cast<size_t>(ProgramName::Merge)] = initializeStandardProgram("Merge");
       handles[static_cast<size_t>(ProgramName::ShadowBone)] = initializeShadowBoneProgram();
       handles[static_cast<size_t>(ProgramName::ShadowStatic)] = initializeShadowStaticProgram();
-      handles[static_cast<size_t>(ProgramName::SSAO)] = initializeStandardProgram("SSAO");
+      handles[static_cast<size_t>(ProgramName::SSAOGrain)] = initializeStandardProgram("SSAOGrain");
+      handles[static_cast<size_t>(ProgramName::SSAOBlur)] = initializeStandardProgram("SSAOBlur");
     }
   }
 }

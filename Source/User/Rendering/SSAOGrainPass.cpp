@@ -13,14 +13,14 @@
 #include "Rendering/CommandStream.h"
 #include "Rendering/ProgramName.h"
 #include "Rendering/Config.h"
-#include "Rendering/SSAOPass.h"
+#include "Rendering/SSAOGrainPass.h"
 
 // todo:
 // change all random generation to make the kernel generations deterministic
 // for example by using a instance-based random generator
 
 namespace Rendering {
-  namespace SSAOPass {
+  namespace SSAOGrainPass {
     static void uploadNoiseKernel() {
       uint8_t size = Config::SSAO::noiseSize;
       uint8_t count = pow(size, 2);
@@ -33,7 +33,7 @@ namespace Rendering {
         };
         kernel[i].normalize();
       }
-      Backend::setTexture(Textures::list.ssaoNoise);
+      Backend::setTexture(Textures::list.ssaoGrainNoise);
       Backend::writeTexture(size, size, Backend::TextureFormat::SignedNormalizedRGB, kernel);
       Backend::setTexture(0);
     }
@@ -51,21 +51,21 @@ namespace Rendering {
         float scale = static_cast<float>(i)/size;
         kernel[i] *= Quanta::lerp(0.1, 1, pow(scale, 2));
       }
-      Backend::setUniformVec3(Uniforms::list.ssaoSampleKernel, size, kernel[0].components);
+      Backend::setUniformVec3(Uniforms::list.ssaoGrainSampleKernel, size, kernel[0].components);
     }
 
     void uploadSampleRadius() {
       float data[] = { Config::SSAO::sampleRadius };
-      Backend::setUniformFloat(Uniforms::list.ssaoSampleRadius, 1, data);
+      Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleRadius, 1, data);
     }
 
     void uploadSampleDifferenceLimit() {
       float data[] = { Config::SSAO::sampleDifferenceLimit };
-      Backend::setUniformFloat(Uniforms::list.ssaoSampleDifferenceLimit, 1, data);
+      Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleDifferenceLimit, 1, data);
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
       uploadNoiseKernel();
       uploadSampleKernel();
       uploadSampleRadius();
@@ -74,38 +74,34 @@ namespace Rendering {
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
       Quanta::Vector2 noiseScale(resolution.width, resolution.height);
       noiseScale /= static_cast<float>(Config::SSAO::noiseSize);
-      Backend::setUniformVec2(Uniforms::list.ssaoNoiseScale, 1, noiseScale.components);
+      Backend::setUniformVec2(Uniforms::list.ssaoGrainNoiseScale, 1, noiseScale.components);
       Backend::setProgram(0);
     }
 
     void write(
       CommandStream &stream,
-      Resolution resolution,
       const Quanta::Matrix4 &worldViewTransform,
       const Quanta::Matrix4 &viewClipTransform,
       const Quanta::Matrix4 &clipWorldTransform
     ) {
-      stream.writeRenderTargetSet(RenderTargets::handles.ssao);
-      stream.writeViewportSet(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling);
+      stream.writeRenderTargetSet(RenderTargets::handles.ssaoGrain);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
+      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
 
-      stream.writeUniformMat4Set(Uniforms::list.ssaoWorldViewTransform, 1, worldViewTransform.components);
-      stream.writeUniformMat4Set(Uniforms::list.ssaoViewClipTransform, 1, viewClipTransform.components);
-      stream.writeUniformMat4Set(Uniforms::list.ssaoClipWorldTransform, 1, clipWorldTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.ssaoGrainWorldViewTransform, 1, worldViewTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.ssaoGrainViewClipTransform, 1, viewClipTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.ssaoGrainClipWorldTransform, 1, clipWorldTransform.components);
 
-      stream.writeTextureSet(Uniforms::list.ssaoDepth, Textures::list.geometryDepth, 0);
-      stream.writeTextureSet(Uniforms::list.ssaoNoise, Textures::list.ssaoNoise, 1);
-      stream.writeTextureSet(Uniforms::list.ssaoNormal, Textures::list.geometryNormal, 2);
+      stream.writeTextureSet(Uniforms::list.ssaoGrainDepth, Textures::list.geometryDepth, 0);
+      stream.writeTextureSet(Uniforms::list.ssaoGrainNoise, Textures::list.ssaoGrainNoise, 1);
+      stream.writeTextureSet(Uniforms::list.ssaoGrainNormal, Textures::list.geometryNormal, 2);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
       stream.writeObjectSet(0);
-
-      stream.writeViewportSet(resolution.width, resolution.height);
     }
   }
 }

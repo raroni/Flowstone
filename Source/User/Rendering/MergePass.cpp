@@ -45,7 +45,7 @@ namespace Rendering {
       stream.writeTextureSet(Uniforms::list.mergeNormal, Textures::list.geometryNormal, 1);
       stream.writeTextureSet(Uniforms::list.mergeDepth, Textures::list.geometryDepth, 2);
       stream.writeTextureSet(Uniforms::list.mergeShadow, Textures::list.shadow, 3);
-      stream.writeTextureSet(Uniforms::list.mergeSSAO, Textures::list.ssaoResult, 4);
+      stream.writeTextureSet(Uniforms::list.mergeSSAO, Textures::list.ssaoGrainResult, 4);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);

@@ -40,17 +40,23 @@ namespace Rendering {
       list.shadowStaticWorldClipTransform = Backend::getUniform(shadowStatic, "worldClipTransform");
       list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
 
-      Backend::ProgramHandle ssao = Programs::handles[static_cast<size_t>(ProgramName::SSAO)];
-      list.ssaoNoise = Backend::getUniform(ssao, "noise");
-      list.ssaoNormal = Backend::getUniform(ssao, "normal");
-      list.ssaoDepth = Backend::getUniform(ssao, "depth");
-      list.ssaoWorldViewTransform = Backend::getUniform(ssao, "worldViewTransform");
-      list.ssaoViewClipTransform = Backend::getUniform(ssao, "viewClipTransform");
-      list.ssaoClipWorldTransform = Backend::getUniform(ssao, "clipWorldTransform");
-      list.ssaoSampleKernel = Backend::getUniform(ssao, "sampleKernel");
-      list.ssaoNoiseScale = Backend::getUniform(ssao, "noiseScale");
-      list.ssaoSampleRadius = Backend::getUniform(ssao, "sampleRadius");
-      list.ssaoSampleDifferenceLimit = Backend::getUniform(ssao, "sampleDifferenceLimit");
+      Backend::ProgramHandle ssaoGrain = Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)];
+      list.ssaoGrainNoise = Backend::getUniform(ssaoGrain, "noise");
+      list.ssaoGrainNormal = Backend::getUniform(ssaoGrain, "normal");
+      list.ssaoGrainDepth = Backend::getUniform(ssaoGrain, "depth");
+      list.ssaoGrainWorldViewTransform = Backend::getUniform(ssaoGrain, "worldViewTransform");
+      list.ssaoGrainViewClipTransform = Backend::getUniform(ssaoGrain, "viewClipTransform");
+      list.ssaoGrainClipWorldTransform = Backend::getUniform(ssaoGrain, "clipWorldTransform");
+      list.ssaoGrainSampleKernel = Backend::getUniform(ssaoGrain, "sampleKernel");
+      list.ssaoGrainNoiseScale = Backend::getUniform(ssaoGrain, "noiseScale");
+      list.ssaoGrainSampleRadius = Backend::getUniform(ssaoGrain, "sampleRadius");
+      list.ssaoGrainSampleDifferenceLimit = Backend::getUniform(ssaoGrain, "sampleDifferenceLimit");
+
+      Backend::ProgramHandle ssaoBlur = Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)];
+      list.ssaoBlurGrainTexture = Backend::getUniform(ssaoBlur, "grainTexture");
+      list.ssaoBlurGrainTexelSize = Backend::getUniform(ssaoBlur, "grainTexelSize");
+      list.ssaoBlurDepthDifferenceLimit = Backend::getUniform(ssaoBlur, "depthDifferenceLimit");
+      list.ssaoBlurDepthTexture = Backend::getUniform(ssaoBlur, "depthTexture");
     }
   }
 }

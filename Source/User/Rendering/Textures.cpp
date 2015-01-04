@@ -32,15 +32,21 @@ namespace Rendering {
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
-    void initializeSSAONoise() {
-      list.ssaoNoise = Backend::createTexture();
-      Backend::setTexture(list.ssaoNoise);
+    void initializeSSAOGrainNoise() {
+      list.ssaoGrainNoise = Backend::createTexture();
+      Backend::setTexture(list.ssaoGrainNoise);
       Backend::setTextureWrap(Backend::TextureWrap::Repeat);
     }
 
-    void initializeSSAOResult() {
-      list.ssaoResult = Backend::createTexture();
-      Backend::setTexture(list.ssaoResult);
+    void initializeSSAOGrainResult() {
+      list.ssaoGrainResult = Backend::createTexture();
+      Backend::setTexture(list.ssaoGrainResult);
+      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
+    }
+
+    void initializeSSAOBlur() {
+      list.ssaoBlur = Backend::createTexture();
+      Backend::setTexture(list.ssaoBlur);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
@@ -49,8 +55,9 @@ namespace Rendering {
       initializeGeometryNormal();
       initializeGeometryDepth();
       initializeShadow();
-      initializeSSAONoise();
-      initializeSSAOResult();
+      initializeSSAOGrainNoise();
+      initializeSSAOGrainResult();
+      initializeSSAOBlur();
       Backend::setTexture(0);
     }
 
@@ -64,7 +71,10 @@ namespace Rendering {
       Backend::setTexture(list.geometryDepth);
       Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::Depth, NULL);
 
-      Backend::setTexture(list.ssaoResult);
+      Backend::setTexture(list.ssaoGrainResult);
+      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::Red, NULL);
+
+      Backend::setTexture(list.ssaoBlur);
       Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::Red, NULL);
 
       Backend::setTexture(0);

@@ -6,7 +6,7 @@
 #include "Core/Error.h"
 #include "Rendering/ShadowPass.h"
 #include "Rendering/GeometryPass.h"
-#include "Rendering/SSAOPass.h"
+#include "Rendering/SSAO.h"
 #include "Rendering/MergePass.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/LightTransforms.h"
@@ -21,7 +21,7 @@
 
 namespace Rendering {
   void WorldRenderer::initialize() {
-    SSAOPass::initialize();
+    SSAO::initialize();
     MergePass::initialize();
   }
 
@@ -62,7 +62,7 @@ namespace Rendering {
     Frustum::calcFrustum(frustumInfo, localFrustum);
     calcViewClipTransform();
     MergePass::handleResolutionChange(resolution);
-    SSAOPass::handleResolutionChange(resolution);
+    SSAO::handleResolutionChange(resolution);
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
@@ -90,7 +90,7 @@ namespace Rendering {
 
     stream.writeDisableDepthTest();
 
-    SSAOPass::write(stream, resolution, worldViewTransform, viewClipTransform, clipWorldTransform);
+    SSAO::write(stream, resolution, worldViewTransform, viewClipTransform, clipWorldTransform);
 
     stream.writeRenderTargetSet(0);
 

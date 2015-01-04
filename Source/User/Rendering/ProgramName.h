@@ -8,7 +8,8 @@ namespace Rendering {
     Merge,
     ShadowBone,
     ShadowStatic,
-    SSAO
+    SSAOGrain,
+    SSAOBlur
   };
 }
 
