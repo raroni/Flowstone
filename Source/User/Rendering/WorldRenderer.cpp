@@ -58,9 +58,8 @@ namespace Rendering {
     return StaticMeshInstances::create(index, mesh.boundingRadius);
   }
 
-  void WorldRenderer::updateResolution(uint16_t width, uint16_t height) {
-    resolution.width = width;
-    resolution.height = height;
+  void WorldRenderer::updateResolution(Resolution resolution) {
+    this->resolution = resolution;
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {

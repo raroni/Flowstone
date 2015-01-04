@@ -6,6 +6,7 @@
 #include "Rendering/BoneMeshInstance.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/BoneVertex.h"
+#include "Rendering/Resolution.h"
 #include "Rendering/Culler.h"
 #include "Rendering/DrawSet.h"
 #include "Rendering/FrustumInfo.h"
@@ -26,17 +27,14 @@ namespace Rendering {
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void writeCommands(CommandStream &stream);
     Quanta::Transform cameraTransform;
-    void updateResolution(uint16_t width, uint16_t height);
+    void updateResolution(Resolution resolution);
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     Quanta::Vector3 primaryLightDirection;
     Quanta::Vector3 secondaryLightDirection;
     void initialize();
     void setPrimaryLightColor(Quanta::Vector3 color);
   private:
-    struct {
-      uint16_t width;
-      uint16_t height;
-    } resolution;
+    Resolution resolution;
     struct {
       Quanta::Matrix4 worldView;
       Quanta::Matrix4 viewClip;

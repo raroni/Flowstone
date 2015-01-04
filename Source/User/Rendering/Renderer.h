@@ -5,6 +5,7 @@
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/BoneMeshIndex.h"
+#include "Rendering/Resolution.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Rendering/BoneVertex.h"
 #include "Rendering/MeshInfo.h"
@@ -24,7 +25,7 @@ namespace Rendering {
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void draw();
     Quanta::Transform& getCameraTransform();
-    void updateResolution(uint16_t width, uint16_t height);
+    void updateResolution(Resolution resolution);
     void setPrimaryLightDirection(Quanta::Vector3 lightDirection);
     void setSecondaryLightDirection(Quanta::Vector3 lightDirection);
   private:

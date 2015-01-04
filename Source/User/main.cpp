@@ -1,6 +1,7 @@
 #include "Bro/Bro.h"
 #include "MainFlow/Manager.h"
 #include "Rendering/Renderer.h"
+#include "Rendering/Resolution.h"
 #include "Config.h"
 #include "Timing.h"
 
@@ -8,8 +9,9 @@ static Rendering::Renderer renderer;
 static MainFlow::Manager flow;
 
 static void updateResolution() {
-  BroResolution resolution = broGetResolution();
-  renderer.updateResolution(resolution.width, resolution.height);
+  BroResolution broResolution = broGetResolution();
+  Rendering::Resolution renderingResolution = { broResolution.width, broResolution.height };
+  renderer.updateResolution(renderingResolution);
 }
 
 void handleKeyDown(BroKey key) {

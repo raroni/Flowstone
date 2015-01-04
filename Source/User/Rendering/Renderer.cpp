@@ -58,8 +58,8 @@ namespace Rendering {
     return worldRenderer.cameraTransform;
   }
 
-  void Renderer::updateResolution(uint16_t width, uint16_t height) {
-    worldRenderer.updateResolution(width, height);
+  void Renderer::updateResolution(Resolution resolution) {
+    worldRenderer.updateResolution(resolution);
   }
 
   BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
