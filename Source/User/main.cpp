@@ -7,12 +7,10 @@
 
 static Rendering::Renderer renderer;
 static MainFlow::Manager flow;
-
-static void updateResolution() {
-  BroResolution broResolution = broGetResolution();
-  Rendering::Resolution renderingResolution = { broResolution.width, broResolution.height };
-  renderer.updateResolution(renderingResolution);
-}
+static struct {
+  const uint16_t width = 800;
+  const uint16_t height = 600;
+} resolution;
 
 void handleKeyDown(BroKey key) {
   if(key == BroKeyA) {
@@ -30,10 +28,10 @@ int main() {
   broSetKeyDownCallback(handleKeyDown);
   broSetKeyUpCallback(handleKeyUp);
   //broSetEventCallback(handleEvent);
-  broInitialize();
+  broInitialize({ resolution.width, resolution.height });
   timingInitialize();
-  updateResolution();
   renderer.initialize();
+  renderer.updateResolution({ resolution.width, resolution.height });
   flow.initialize(renderer);
   while(!broShouldTerminate()) {
     timingStartFrame();

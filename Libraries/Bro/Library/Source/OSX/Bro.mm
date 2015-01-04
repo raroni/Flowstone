@@ -78,10 +78,10 @@ static void createContext() {
   [pixelFormat release];
 }
 
-static void createWindow() {
+static void createWindow(BroResolution resolution) {
   unsigned int styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
 
-  bro.window = [[BroWindow alloc] initWithContentRect:NSMakeRect(0, 0, 800, 600)
+  bro.window = [[BroWindow alloc] initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
                                                  styleMask:styleMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
@@ -102,7 +102,7 @@ static void createWindow() {
   [bro.window makeKeyAndOrderFront:nil];
 }
 
-void broInitialize() {
+void broInitialize(BroResolution resolution) {
   bro.shouldTerminate = false;
   bro.autoreleasePool = [[NSAutoreleasePool alloc] init];
 
@@ -125,7 +125,7 @@ void broInitialize() {
   bro.appDelegate = [[BroAppDelegate alloc] init];
   [NSApp setDelegate:bro.appDelegate];
 
-  createWindow();
+  createWindow(resolution);
   createContext();
   [bro.context makeCurrentContext];
   [bro.context setView:bro.view];

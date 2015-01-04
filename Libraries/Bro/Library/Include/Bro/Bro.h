@@ -12,7 +12,7 @@ struct BroResolution {
   uint16_t height;
 };
 
-void broInitialize();
+void broInitialize(BroResolution resolution);
 void broSetEventCallback(BroEventCallback callback);
 void broSetKeyDownCallback(BroKeyCallback callback);
 void broSetKeyUpCallback(BroKeyCallback callback);
