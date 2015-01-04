@@ -54,12 +54,6 @@ namespace Rendering {
       Backend::setUniformVec3(Uniforms::list.ssaoSampleKernel, size, kernel[0].components);
     }
 
-    void uploadNoiseScale() {
-      Quanta::Vector2 noiseScale(800, 600);
-      noiseScale /= static_cast<float>(Config::SSAO::noiseSize);
-      Backend::setUniformVec2(Uniforms::list.ssaoNoiseScale, 1, noiseScale.components);
-    }
-
     void uploadSampleRadius() {
       float data[] = { Config::SSAO::sampleRadius };
       Backend::setUniformFloat(Uniforms::list.ssaoSampleRadius, 1, data);
@@ -74,9 +68,16 @@ namespace Rendering {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
       uploadNoiseKernel();
       uploadSampleKernel();
-      uploadNoiseScale();
       uploadSampleRadius();
       uploadSampleDifferenceLimit();
+      Backend::setProgram(0);
+    }
+
+    void handleResolutionChange(Resolution resolution) {
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
+      Quanta::Vector2 noiseScale(resolution.width, resolution.height);
+      noiseScale /= static_cast<float>(Config::SSAO::noiseSize);
+      Backend::setUniformVec2(Uniforms::list.ssaoNoiseScale, 1, noiseScale.components);
       Backend::setProgram(0);
     }
 
