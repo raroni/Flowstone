@@ -2,6 +2,7 @@
 #define RENDERING_TEXTURES_H
 
 #include "Rendering/Backend/TextureHandle.h"
+#include "Rendering/Resolution.h"
 
 namespace Rendering {
   namespace Textures {
@@ -17,6 +18,7 @@ namespace Rendering {
     extern List list;
 
     void initialize();
+    void handleResolutionChange(Resolution resolution);
   }
 }
 

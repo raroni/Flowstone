@@ -10,21 +10,18 @@ namespace Rendering {
     void initializeGeometryDiffuse() {
       list.geometryDiffuse = Backend::createTexture();
       Backend::setTexture(list.geometryDiffuse);
-      Backend::writeTexture(800, 600, Backend::TextureFormat::RGB, NULL);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
     void initializeGeometryNormal() {
       list.geometryNormal = Backend::createTexture();
       Backend::setTexture(list.geometryNormal);
-      Backend::writeTexture(800, 600, Backend::TextureFormat::SignedNormalizedRGB, NULL);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
     void initializeGeometryDepth() {
       list.geometryDepth = Backend::createTexture();
       Backend::setTexture(list.geometryDepth);
-      Backend::writeTexture(800, 600, Backend::TextureFormat::Depth, NULL);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
@@ -44,7 +41,6 @@ namespace Rendering {
     void initializeSSAOResult() {
       list.ssaoResult = Backend::createTexture();
       Backend::setTexture(list.ssaoResult);
-      Backend::writeTexture(800, 600, Backend::TextureFormat::Red, NULL);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
@@ -55,6 +51,22 @@ namespace Rendering {
       initializeShadow();
       initializeSSAONoise();
       initializeSSAOResult();
+      Backend::setTexture(0);
+    }
+
+    void handleResolutionChange(Resolution resolution) {
+      Backend::setTexture(list.geometryDiffuse);
+      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::RGB, NULL);
+
+      Backend::setTexture(list.geometryNormal);
+      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::SignedNormalizedRGB, NULL);
+
+      Backend::setTexture(list.geometryDepth);
+      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::Depth, NULL);
+
+      Backend::setTexture(list.ssaoResult);
+      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::Red, NULL);
+
       Backend::setTexture(0);
     }
   }

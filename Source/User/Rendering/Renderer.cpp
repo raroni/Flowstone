@@ -60,6 +60,7 @@ namespace Rendering {
 
   void Renderer::updateResolution(Resolution resolution) {
     worldRenderer.updateResolution(resolution);
+    Textures::handleResolutionChange(resolution);
   }
 
   BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {

@@ -12,9 +12,6 @@ namespace Rendering {
       Backend::setRenderTarget(handles.shadow);
       Backend::attachDepthTexture(Textures::list.shadow);
       Backend::disableDrawBuffer();
-      if(!Backend::checkRenderTarget()) {
-        fatalError("Shadow render target not configured propertly.");
-      }
     }
 
     static void initializeGeometry() {
@@ -24,24 +21,37 @@ namespace Rendering {
       Backend::attachColorTexture(Textures::list.geometryNormal, 1);
       Backend::attachDepthTexture(Textures::list.geometryDepth);
       Backend::setDrawBufferCount(2);
-      if(!Backend::checkRenderTarget()) {
-        fatalError("Geometry render target not configured propertly.");
-      }
     }
 
     static void initializeSSAO() {
       handles.ssao = Backend::createRenderTarget();
       Backend::setRenderTarget(handles.ssao);
       Backend::attachColorTexture(Textures::list.ssaoResult, 0);
-      if(!Backend::checkRenderTarget()) {
-        fatalError("SSAO render target not configured propertly.");
-      }
     }
 
     void initialize() {
       initializeGeometry();
       initializeSSAO();
       initializeShadow();
+      Backend::setRenderTarget(0);
+    }
+
+    void handleResolutionChange() {
+      Backend::setRenderTarget(handles.shadow);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("Shadow render target not configured propertly.");
+      }
+
+      Backend::setRenderTarget(handles.geometry);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("Geometry render target not configured propertly.");
+      }
+
+      Backend::setRenderTarget(handles.ssao);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("SSAO render target not configured propertly.");
+      }
+
       Backend::setRenderTarget(0);
     }
   }
