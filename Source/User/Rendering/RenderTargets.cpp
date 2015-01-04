@@ -1,6 +1,7 @@
 #include "Core/Error.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/Textures.h"
+#include "Rendering/Config.h"
 #include "Rendering/RenderTargets.h"
 
 namespace Rendering {

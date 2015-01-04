@@ -65,7 +65,7 @@ namespace Rendering {
       Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::Depth, NULL);
 
       Backend::setTexture(list.ssaoResult);
-      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::Red, NULL);
+      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::Red, NULL);
 
       Backend::setTexture(0);
     }

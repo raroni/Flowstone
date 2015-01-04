@@ -25,6 +25,7 @@ namespace Rendering {
       const uint8_t sampleSize = 16; // also hardcoded in SSAO fragment shader
       const float sampleRadius = 0.4f;
       const float sampleDifferenceLimit = 0.8f;
+      const uint8_t downSampling = 2;
     }
 
     namespace Merge {

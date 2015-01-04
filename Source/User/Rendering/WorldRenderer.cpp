@@ -90,7 +90,7 @@ namespace Rendering {
 
     stream.writeDisableDepthTest();
 
-    SSAOPass::write(stream, worldViewTransform, viewClipTransform, clipWorldTransform);
+    SSAOPass::write(stream, resolution, worldViewTransform, viewClipTransform, clipWorldTransform);
 
     stream.writeRenderTargetSet(0);
 

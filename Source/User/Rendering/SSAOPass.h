@@ -12,6 +12,7 @@ namespace Rendering {
     void handleResolutionChange(Resolution resolution);
     void write(
       CommandStream &stream,
+      Resolution resolution,
       const Quanta::Matrix4 &worldViewTransform,
       const Quanta::Matrix4 &viewClipTransform,
       const Quanta::Matrix4 &clipWorldTransform

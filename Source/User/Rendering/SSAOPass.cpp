@@ -83,11 +83,13 @@ namespace Rendering {
 
     void write(
       CommandStream &stream,
+      Resolution resolution,
       const Quanta::Matrix4 &worldViewTransform,
       const Quanta::Matrix4 &viewClipTransform,
       const Quanta::Matrix4 &clipWorldTransform
     ) {
       stream.writeRenderTargetSet(RenderTargets::handles.ssao);
+      stream.writeViewportSet(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
       stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::SSAO)]);
 
@@ -102,6 +104,8 @@ namespace Rendering {
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
       stream.writeObjectSet(0);
+
+      stream.writeViewportSet(resolution.width, resolution.height);
     }
   }
 }
