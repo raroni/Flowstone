@@ -50,6 +50,18 @@ namespace Rendering {
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
     }
 
+    void initializeDownsampleDepth() {
+      list.downsampleDepth = Backend::createTexture();
+      Backend::setTexture(list.downsampleDepth);
+      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
+    }
+
+    void initializeDownsampleNormal() {
+      list.downsampleNormal = Backend::createTexture();
+      Backend::setTexture(list.downsampleNormal);
+      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
+    }
+
     void initialize() {
       initializeGeometryDiffuse();
       initializeGeometryNormal();
@@ -58,6 +70,8 @@ namespace Rendering {
       initializeSSAOGrainNoise();
       initializeSSAOGrainResult();
       initializeSSAOBlur();
+      initializeDownsampleDepth();
+      initializeDownsampleNormal();
       Backend::setTexture(0);
     }
 
@@ -76,6 +90,12 @@ namespace Rendering {
 
       Backend::setTexture(list.ssaoBlur);
       Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::Red, NULL);
+
+      Backend::setTexture(list.downsampleDepth);
+      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::RedF32, NULL);
+
+      Backend::setTexture(list.downsampleNormal);
+      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::SignedNormalizedRGB, NULL);
 
       Backend::setTexture(0);
     }

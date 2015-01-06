@@ -57,6 +57,10 @@ namespace Rendering {
       list.ssaoBlurGrainTexelSize = Backend::getUniform(ssaoBlur, "grainTexelSize");
       list.ssaoBlurDepthDifferenceLimit = Backend::getUniform(ssaoBlur, "depthDifferenceLimit");
       list.ssaoBlurDepthTexture = Backend::getUniform(ssaoBlur, "depthTexture");
+
+      Backend::ProgramHandle downsample = Programs::handles[static_cast<size_t>(ProgramName::Downsample)];
+      list.downsampleDepthTexture = Backend::getUniform(downsample, "depthTexture");
+      list.downsampleNormalTexture = Backend::getUniform(downsample, "normalTexture");
     }
   }
 }

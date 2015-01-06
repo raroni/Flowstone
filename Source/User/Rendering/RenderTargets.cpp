@@ -36,11 +36,20 @@ namespace Rendering {
       Backend::attachColorTexture(Textures::list.ssaoBlur, 0);
     }
 
+    static void initializeDownsample() {
+      handles.downsample = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.downsample);
+      Backend::attachColorTexture(Textures::list.downsampleDepth, 0);
+      Backend::attachColorTexture(Textures::list.downsampleNormal, 1);
+      Backend::setDrawBufferCount(2);
+    }
+
     void initialize() {
       initializeGeometry();
       initializeSSAOGrain();
       initializeSSAOBlur();
       initializeShadow();
+      initializeDownsample();
       Backend::setRenderTarget(0);
     }
 
@@ -63,6 +72,11 @@ namespace Rendering {
       Backend::setRenderTarget(handles.ssaoBlur);
       if(!Backend::checkRenderTarget()) {
         fatalError("SSAO blur render target not configured propertly.");
+      }
+
+      Backend::setRenderTarget(handles.downsample);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("Downsample render target not configured propertly.");
       }
 
       Backend::setRenderTarget(0);

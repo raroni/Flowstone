@@ -10,10 +10,12 @@ namespace Rendering {
       Backend::RenderTargetHandle shadow;
       Backend::RenderTargetHandle ssaoGrain;
       Backend::RenderTargetHandle ssaoBlur;
+      Backend::RenderTargetHandle downsample;
     };
     extern HandleList handles;
 
     void initialize();
+    void handleResolutionChange();
   }
 }
 

@@ -9,7 +9,8 @@ namespace Rendering {
     ShadowBone,
     ShadowStatic,
     SSAOGrain,
-    SSAOBlur
+    SSAOBlur,
+    Downsample
   };
 }
 

@@ -14,6 +14,8 @@ namespace Rendering {
       Backend::TextureHandle ssaoGrainResult;
       Backend::TextureHandle ssaoGrainNoise;
       Backend::TextureHandle ssaoBlur;
+      Backend::TextureHandle downsampleDepth;
+      Backend::TextureHandle downsampleNormal;
     };
 
     extern List list;

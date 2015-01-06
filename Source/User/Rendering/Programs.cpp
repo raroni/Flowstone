@@ -76,6 +76,7 @@ namespace Rendering {
       handles[static_cast<size_t>(ProgramName::ShadowStatic)] = initializeShadowStaticProgram();
       handles[static_cast<size_t>(ProgramName::SSAOGrain)] = initializeStandardProgram("SSAOGrain");
       handles[static_cast<size_t>(ProgramName::SSAOBlur)] = initializeStandardProgram("SSAOBlur");
+      handles[static_cast<size_t>(ProgramName::Downsample)] = initializeStandardProgram("Downsample");
     }
   }
 }
