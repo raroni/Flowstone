@@ -28,6 +28,8 @@ namespace Rendering {
       Backend::UniformHandle ssaoBlurGrainTexelSize;
       Backend::UniformHandle ssaoBlurDepthDifferenceLimit;
       Backend::UniformHandle ssaoBlurDepthTexture;
+      Backend::UniformHandle ssaoBlurZNear;
+      Backend::UniformHandle ssaoBlurZFar;
       Backend::UniformHandle mergeDiffuse;
       Backend::UniformHandle mergeNormal;
       Backend::UniformHandle mergeDepth;

@@ -26,7 +26,7 @@ namespace Rendering {
       const float sampleRadius = 0.4f;
       const float sampleDifferenceLimit = 0.8f;
       const uint8_t downSampling = 2;
-      const float blurDepthDifferenceLimit = 0.01;
+      const float blurDepthDifferenceLimit = 0.1;
     }
 
     namespace Merge {
