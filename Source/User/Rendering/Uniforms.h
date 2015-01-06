@@ -40,8 +40,6 @@ namespace Rendering {
       Backend::UniformHandle mergeInversePrimaryLightDirection;
       Backend::UniformHandle mergePrimaryLightColor;
       Backend::UniformHandle mergeInverseSecondaryLightDirection;
-      Backend::UniformHandle mergeSSAOTexelSize;
-      Backend::UniformHandle mergeSSAODepthDifferenceLimit;
       Backend::UniformHandle downsampleDepthTexture;
       Backend::UniformHandle downsampleNormalTexture;
     };

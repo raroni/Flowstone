@@ -11,8 +11,6 @@ namespace Rendering {
   namespace MergePass {
     extern Quanta::Vector3 primaryLightColor;
 
-    void initialize();
-    void handleResolutionChange(Resolution resolution);
     void write(
       CommandStream &stream,
       const Quanta::Matrix4 &cameraClipWorldTransform,

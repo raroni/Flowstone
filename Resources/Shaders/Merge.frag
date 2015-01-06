@@ -14,28 +14,10 @@ uniform mat4 lightWorldClipTransform;
 uniform vec3 inversePrimaryLightDirection;
 uniform vec3 primaryLightColor;
 uniform vec3 inverseSecondaryLightDirection;
-uniform vec2 ssaoTexelSize;
-uniform float ssaoDepthDifferenceLimit;
 
-const int ssaoBlurSize = 4;
-
-float blurSSAO(in float screenDepth) {
-  float occlusion = 0;
-  vec2 hlim = vec2(float(-ssaoBlurSize) * 0.5 + 0.5);
-  int sampleCount = 0;
-  for(int x=0; x<ssaoBlurSize; ++x) {
-    for(int y=0; y<ssaoBlurSize; ++y) {
-      vec2 offset = (hlim + vec2(float(x), float(y))) * ssaoTexelSize;
-      vec2 texelCoord = texCoords + offset;
-      float sampleDepth = texture(depth, texelCoord).r;
-      if(abs(sampleDepth-screenDepth) < ssaoDepthDifferenceLimit) {
-        sampleCount++;
-        occlusion += texture(ssao, texelCoord).r;
-      }
-    }
-  }
-  occlusion /= sampleCount;
-  return occlusion;
+float calcOcclusion() {
+  // make proper bilateral interpolation
+  return texture(ssao, texCoords).x;
 }
 
 void main() {
@@ -59,8 +41,6 @@ void main() {
 
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);
 
-  float occlusion = blurSSAO(aDepth);
-
   vec3 atmosphereInfluence = primaryLightColor * (0.5 + 0.4*primaryLuminosity + 0.1*secondaryLuminosity);
-  fragColor = texture(diffuse, texCoords).rgb * atmosphereInfluence * (0.2 + occlusion*0.8);
+  fragColor = texture(diffuse, texCoords).rgb * atmosphereInfluence * (0.2 + calcOcclusion()*0.8);
 }

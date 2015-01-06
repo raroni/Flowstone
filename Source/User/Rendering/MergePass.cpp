@@ -13,19 +13,6 @@ namespace Rendering {
   namespace MergePass {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
 
-    void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
-      Backend::setUniformFloat(Uniforms::list.mergeSSAODepthDifferenceLimit, 1, &Config::Merge::ssaoDepthDifferenceLimit);
-      Backend::setProgram(0);
-    }
-
-    void handleResolutionChange(Resolution resolution) {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
-      float ssaoTexelSize[] = { 1.0f/resolution.width, 1.0f/resolution.height };
-      Backend::setUniformVec2(Uniforms::list.mergeSSAOTexelSize, 1, ssaoTexelSize);
-      Backend::setProgram(0);
-    }
-
     void write(
       CommandStream &stream,
       const Quanta::Matrix4 &cameraClipWorldTransform,
@@ -45,7 +32,7 @@ namespace Rendering {
       stream.writeTextureSet(Uniforms::list.mergeNormal, Textures::list.geometryNormal, 1);
       stream.writeTextureSet(Uniforms::list.mergeDepth, Textures::list.geometryDepth, 2);
       stream.writeTextureSet(Uniforms::list.mergeShadow, Textures::list.shadow, 3);
-      stream.writeTextureSet(Uniforms::list.mergeSSAO, Textures::list.ssaoGrainResult, 4);
+      stream.writeTextureSet(Uniforms::list.mergeSSAO, Textures::list.ssaoBlur, 4);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
