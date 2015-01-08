@@ -7,7 +7,8 @@ uniform sampler2D diffuse;
 uniform sampler2D normal;
 uniform sampler2D depth;
 uniform sampler2D shadow;
-uniform sampler2D ssao;
+uniform sampler2D lowResDepthTexture;
+uniform sampler2D ssaoTexture;
 
 uniform mat4 cameraClipWorldTransform;
 uniform mat4 lightWorldClipTransform;
@@ -15,9 +16,33 @@ uniform vec3 inversePrimaryLightDirection;
 uniform vec3 primaryLightColor;
 uniform vec3 inverseSecondaryLightDirection;
 
+uniform float zNear;
+uniform float zFar;
+
+float calcLinearDepth(float expDepth) {
+  return 2.0 * zNear * zFar / (zFar + zNear - expDepth * (zFar - zNear));
+}
+
 float calcOcclusion() {
-  // make proper bilateral interpolation
-  return texture(ssao, texCoords).x;
+  float mainDepth = calcLinearDepth(texture(depth, texCoords).x);
+
+  float ao = 0.0;
+  float weight = 0.0;
+
+  vec2 lowResCoords[4];
+  lowResCoords[0] = floor((gl_FragCoord.xy + vec2(-1.0, 1.0)) / 2.0);
+  lowResCoords[1] = floor((gl_FragCoord.xy + vec2(1.0, 1.0)) / 2.0);
+  lowResCoords[2] = floor((gl_FragCoord.xy + vec2(-1.0, -1.0)) / 2.0);
+  lowResCoords[3] = floor((gl_FragCoord.xy + vec2(1.0, -1.0)) / 2.0);
+
+  for(int i=0; i<4; i++) {
+    float sampleDepth = calcLinearDepth(texelFetch(lowResDepthTexture, ivec2(lowResCoords[i]), 0).x);
+    float sampleAO = texelFetch(ssaoTexture, ivec2(lowResCoords[i]), 0).x;
+    float sampleWeight = 1.0/(1.0 + abs(sampleDepth-mainDepth)*500.0);
+    weight += sampleWeight;
+    ao += sampleAO*sampleWeight;
+  }
+  return ao/weight;
 }
 
 void main() {

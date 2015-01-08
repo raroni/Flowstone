@@ -118,6 +118,12 @@ TEST_OBJECTS = $(patsubst %.cpp,Build/Objects/Test/%.o,$(TEST_SOURCES))
 TEST_EXECUTABLE_PATH = Build/Test
 
 run: user
+
+	# todo: fix this hack
+	rm -rf $(USER_OUTPUT_DIR)/Resources
+	cp -r Resources $(USER_OUTPUT_DIR)/.
+
+
 	./Build/Flowstone.app/Contents/MacOS/Flowstone
 
 test: $(TEST_EXECUTABLE_PATH)

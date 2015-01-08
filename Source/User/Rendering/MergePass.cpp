@@ -13,6 +13,13 @@ namespace Rendering {
   namespace MergePass {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
 
+    void initialize() {
+      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+      Backend::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
+      Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
+      Backend::setProgram(0);
+    }
+
     void write(
       CommandStream &stream,
       const Quanta::Matrix4 &cameraClipWorldTransform,
@@ -32,7 +39,8 @@ namespace Rendering {
       stream.writeTextureSet(Uniforms::list.mergeNormal, Textures::list.geometryNormal, 1);
       stream.writeTextureSet(Uniforms::list.mergeDepth, Textures::list.geometryDepth, 2);
       stream.writeTextureSet(Uniforms::list.mergeShadow, Textures::list.shadow, 3);
-      stream.writeTextureSet(Uniforms::list.mergeSSAO, Textures::list.ssaoBlur, 4);
+      stream.writeTextureSet(Uniforms::list.mergeSSAOTexture, Textures::list.ssaoBlur, 4);
+      stream.writeTextureSet(Uniforms::list.mergeLowResDepthTexture, Textures::list.downsampleDepth, 5);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);

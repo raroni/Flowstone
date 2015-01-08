@@ -34,12 +34,15 @@ namespace Rendering {
       Backend::UniformHandle mergeNormal;
       Backend::UniformHandle mergeDepth;
       Backend::UniformHandle mergeShadow;
-      Backend::UniformHandle mergeSSAO;
+      Backend::UniformHandle mergeSSAOTexture;
       Backend::UniformHandle mergeCameraClipWorldTransform;
       Backend::UniformHandle mergeLightWorldClipTransform;
       Backend::UniformHandle mergeInversePrimaryLightDirection;
       Backend::UniformHandle mergePrimaryLightColor;
       Backend::UniformHandle mergeInverseSecondaryLightDirection;
+      Backend::UniformHandle mergeLowResDepthTexture;
+      Backend::UniformHandle mergeZNear;
+      Backend::UniformHandle mergeZFar;
       Backend::UniformHandle downsampleDepthTexture;
       Backend::UniformHandle downsampleNormalTexture;
     };

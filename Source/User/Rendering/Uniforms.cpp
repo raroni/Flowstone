@@ -22,12 +22,15 @@ namespace Rendering {
       list.mergeNormal = Backend::getUniform(mergeProgram, "normal");
       list.mergeDepth = Backend::getUniform(mergeProgram, "depth");
       list.mergeShadow = Backend::getUniform(mergeProgram, "shadow");
-      list.mergeSSAO = Backend::getUniform(mergeProgram, "ssao");
+      list.mergeSSAOTexture = Backend::getUniform(mergeProgram, "ssaoTexture");
+      list.mergeLowResDepthTexture = Backend::getUniform(mergeProgram, "lowResDepthTexture");
       list.mergeCameraClipWorldTransform = Backend::getUniform(mergeProgram, "cameraClipWorldTransform");
       list.mergeLightWorldClipTransform = Backend::getUniform(mergeProgram, "lightWorldClipTransform");
       list.mergeInversePrimaryLightDirection = Backend::getUniform(mergeProgram, "inversePrimaryLightDirection");
       list.mergePrimaryLightColor = Backend::getUniform(mergeProgram, "primaryLightColor");
       list.mergeInverseSecondaryLightDirection = Backend::getUniform(mergeProgram, "inverseSecondaryLightDirection");
+      list.mergeZNear = Backend::getUniform(mergeProgram, "zNear");
+      list.mergeZFar = Backend::getUniform(mergeProgram, "zFar");
 
       Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
       list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");
