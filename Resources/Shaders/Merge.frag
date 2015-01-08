@@ -38,7 +38,8 @@ float calcOcclusion() {
   for(int i=0; i<4; i++) {
     float sampleDepth = calcLinearDepth(texelFetch(lowResDepthTexture, ivec2(lowResCoords[i]), 0).x);
     float sampleAO = texelFetch(ssaoTexture, ivec2(lowResCoords[i]), 0).x;
-    float sampleWeight = 1.0/(1.0 + abs(sampleDepth-mainDepth)*500.0);
+    float sampleWeight = 1.0/(1.0 + abs(sampleDepth-mainDepth));
+    sampleWeight = pow(sampleWeight, 32);
     weight += sampleWeight;
     ao += sampleAO*sampleWeight;
   }
