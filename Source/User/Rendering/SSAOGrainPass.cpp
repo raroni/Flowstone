@@ -95,9 +95,9 @@ namespace Rendering {
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainViewClipTransform, 1, viewClipTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainClipWorldTransform, 1, clipWorldTransform.components);
 
-      stream.writeTextureSet(Uniforms::list.ssaoGrainNoise, Textures::list.ssaoGrainNoise, 0);
-      stream.writeTextureSet(Uniforms::list.ssaoGrainDepth, Textures::list.downsampleDepth, 1);
-      stream.writeTextureSet(Uniforms::list.ssaoGrainNormal, Textures::list.downsampleNormal, 2);
+      stream.writeTextureSet(Uniforms::list.ssaoGrainNoiseTexture, Textures::list.ssaoGrainNoise, 0);
+      stream.writeTextureSet(Uniforms::list.ssaoGrainDepthTexture, Textures::list.downsampleDepth, 1);
+      stream.writeTextureSet(Uniforms::list.ssaoGrainNormalTexture, Textures::list.downsampleNormal, 2);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);

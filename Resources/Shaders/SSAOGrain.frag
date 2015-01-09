@@ -3,9 +3,9 @@
 out float result;
 in vec2 texCoords;
 
-uniform sampler2D noise;
-uniform sampler2D depth;
-uniform sampler2D normal;
+uniform sampler2D noiseTexture;
+uniform sampler2D depthTexture;
+uniform sampler2D normalTexture;
 
 uniform mat4 worldViewTransform;
 uniform mat4 viewClipTransform;
@@ -18,16 +18,16 @@ const int sampleKernelSize = 16;
 uniform vec3 sampleKernel[sampleKernelSize];
 
 void main() {
-  float aDepth = texture(depth, texCoords).r;
+  float aDepth = texture(depthTexture, texCoords).r;
   vec3 ndcPosition = vec3(texCoords, aDepth)*2-1;
   vec4 a = clipWorldTransform * vec4(ndcPosition, 1.0);
   vec4 worldPosition = vec4(a.xyz/a.w, 1);
 
-  vec3 worldNormal = texture(normal, texCoords).xyz;
+  vec3 worldNormal = texture(normalTexture, texCoords).xyz;
   vec3 viewPosition = (worldViewTransform * worldPosition).xyz;
   vec3 viewNormal = (worldViewTransform * vec4(worldNormal, 0)).xyz; // assuming no scaling
 
-  vec3 randomVector = texture(noise, texCoords * noiseScale).xyz;
+  vec3 randomVector = texture(noiseTexture, texCoords * noiseScale).xyz;
   vec3 tangent = normalize(randomVector - viewNormal * dot(randomVector, viewNormal));
   vec3 bitangent = cross(viewNormal, tangent);
   mat3 normalOrthoBasis = mat3(tangent, bitangent, viewNormal);
@@ -47,7 +47,7 @@ void main() {
 
     offset.xy = offset.xy * 0.5 + 0.5;
 
-    float sampleNDCDepth = texture(depth, offset.xy).r*2-1;
+    float sampleNDCDepth = texture(depthTexture, offset.xy).r*2-1;
     float zNear = 4.5;
     float zFar = 10.0;
     float sampleViewDepth = 2.0 * zNear * zFar / (zFar + zNear - sampleNDCDepth * (zFar - zNear));

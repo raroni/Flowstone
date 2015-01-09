@@ -3,10 +3,10 @@
 out vec3 fragColor;
 in vec2 texCoords;
 
-uniform sampler2D diffuse;
-uniform sampler2D normal;
-uniform sampler2D depth;
-uniform sampler2D shadow;
+uniform sampler2D diffuseTexture;
+uniform sampler2D normalTexture;
+uniform sampler2D depthTexture;
+uniform sampler2D shadowTexture;
 uniform sampler2D lowResDepthTexture;
 uniform sampler2D ssaoTexture;
 
@@ -26,7 +26,7 @@ float calcLinearDepth(float bufferDepth) {
 }
 
 float calcOcclusion() {
-  float mainDepth = calcLinearDepth(texture(depth, texCoords).x);
+  float mainDepth = calcLinearDepth(texture(depthTexture, texCoords).x);
 
   float ao = 0.0;
   float weight = 0.0;
@@ -49,19 +49,19 @@ float calcOcclusion() {
 }
 
 void main() {
-  float aDepth = texture(depth, texCoords).r;
-  vec3 fragmentNDCPosition = vec3(texCoords, aDepth)*2-1;
+  float bufferDepth = texture(depthTexture, texCoords).r;
+  vec3 fragmentNDCPosition = vec3(texCoords, bufferDepth)*2-1;
   vec4 a = cameraClipWorldTransform * vec4(fragmentNDCPosition, 1.0);
   vec4 fragmentWorldPosition = vec4(a.xyz/a.w, 1);
   vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
   vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
 
   float primaryLuminosity;
-  vec3 worldNormal = texture(normal, texCoords).xyz;
+  vec3 worldNormal = texture(normalTexture, texCoords).xyz;
   if(dot(inversePrimaryLightDirection, worldNormal) < 0.01) {
     primaryLuminosity = 0;
   }
-  else if(lightNDCPosition.z*0.5+0.5 > texture(shadow, lightNDCPosition.xy*0.5+0.5).x) {
+  else if(lightNDCPosition.z*0.5+0.5 > texture(shadowTexture, lightNDCPosition.xy*0.5+0.5).x) {
     primaryLuminosity = 0;
   } else {
     primaryLuminosity = dot(inversePrimaryLightDirection, worldNormal);
@@ -70,5 +70,5 @@ void main() {
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);
 
   vec3 atmosphereInfluence = primaryLightColor * (0.5 + 0.4*primaryLuminosity + 0.1*secondaryLuminosity);
-  fragColor = texture(diffuse, texCoords).rgb * atmosphereInfluence * (0.2 + calcOcclusion()*0.8);
+  fragColor = texture(diffuseTexture, texCoords).rgb * atmosphereInfluence * (0.2 + calcOcclusion()*0.8);
 }

@@ -18,10 +18,10 @@ namespace Rendering {
       list.geometryStaticModelWorldTransform = Backend::getUniform(geometryStaticProgram, "modelWorldTransform");
 
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
-      list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
-      list.mergeNormal = Backend::getUniform(mergeProgram, "normal");
-      list.mergeDepth = Backend::getUniform(mergeProgram, "depth");
-      list.mergeShadow = Backend::getUniform(mergeProgram, "shadow");
+      list.mergeDiffuseTexture = Backend::getUniform(mergeProgram, "diffuseTexture");
+      list.mergeNormalTexture = Backend::getUniform(mergeProgram, "normalTexture");
+      list.mergeDepthTexture = Backend::getUniform(mergeProgram, "depthTexture");
+      list.mergeShadowTexture = Backend::getUniform(mergeProgram, "shadowTexture");
       list.mergeSSAOTexture = Backend::getUniform(mergeProgram, "ssaoTexture");
       list.mergeLowResDepthTexture = Backend::getUniform(mergeProgram, "lowResDepthTexture");
       list.mergeCameraClipWorldTransform = Backend::getUniform(mergeProgram, "cameraClipWorldTransform");
@@ -43,9 +43,9 @@ namespace Rendering {
       list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
 
       Backend::ProgramHandle ssaoGrain = Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)];
-      list.ssaoGrainNoise = Backend::getUniform(ssaoGrain, "noise");
-      list.ssaoGrainNormal = Backend::getUniform(ssaoGrain, "normal");
-      list.ssaoGrainDepth = Backend::getUniform(ssaoGrain, "depth");
+      list.ssaoGrainNoiseTexture = Backend::getUniform(ssaoGrain, "noiseTexture");
+      list.ssaoGrainNormalTexture = Backend::getUniform(ssaoGrain, "normalTexture");
+      list.ssaoGrainDepthTexture = Backend::getUniform(ssaoGrain, "depthTexture");
       list.ssaoGrainWorldViewTransform = Backend::getUniform(ssaoGrain, "worldViewTransform");
       list.ssaoGrainViewClipTransform = Backend::getUniform(ssaoGrain, "viewClipTransform");
       list.ssaoGrainClipWorldTransform = Backend::getUniform(ssaoGrain, "clipWorldTransform");

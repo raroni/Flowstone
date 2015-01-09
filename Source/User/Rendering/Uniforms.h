@@ -14,9 +14,9 @@ namespace Rendering {
       Backend::UniformHandle geometryBoneJointWorldTransform;
       Backend::UniformHandle geometryBoneModelJointTransform;
       Backend::UniformHandle geometryStaticModelWorldTransform;
-      Backend::UniformHandle ssaoGrainNoise;
-      Backend::UniformHandle ssaoGrainDepth;
-      Backend::UniformHandle ssaoGrainNormal;
+      Backend::UniformHandle ssaoGrainNoiseTexture;
+      Backend::UniformHandle ssaoGrainDepthTexture;
+      Backend::UniformHandle ssaoGrainNormalTexture;
       Backend::UniformHandle ssaoGrainWorldViewTransform;
       Backend::UniformHandle ssaoGrainViewClipTransform;
       Backend::UniformHandle ssaoGrainClipWorldTransform;
@@ -30,10 +30,10 @@ namespace Rendering {
       Backend::UniformHandle ssaoBlurDepthTexture;
       Backend::UniformHandle ssaoBlurZNear;
       Backend::UniformHandle ssaoBlurZFar;
-      Backend::UniformHandle mergeDiffuse;
-      Backend::UniformHandle mergeNormal;
-      Backend::UniformHandle mergeDepth;
-      Backend::UniformHandle mergeShadow;
+      Backend::UniformHandle mergeDiffuseTexture;
+      Backend::UniformHandle mergeNormalTexture;
+      Backend::UniformHandle mergeDepthTexture;
+      Backend::UniformHandle mergeShadowTexture;
       Backend::UniformHandle mergeSSAOTexture;
       Backend::UniformHandle mergeDownsampleScale;
       Backend::UniformHandle mergeCameraClipWorldTransform;

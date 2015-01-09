@@ -37,10 +37,10 @@ namespace Rendering {
       stream.writeUniformVec3Set(Uniforms::list.mergePrimaryLightColor, 1, primaryLightColor.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeInverseSecondaryLightDirection, 1, secondaryLightDirection.getNegated().components);
 
-      stream.writeTextureSet(Uniforms::list.mergeDiffuse, Textures::list.geometryDiffuse, 0);
-      stream.writeTextureSet(Uniforms::list.mergeNormal, Textures::list.geometryNormal, 1);
-      stream.writeTextureSet(Uniforms::list.mergeDepth, Textures::list.geometryDepth, 2);
-      stream.writeTextureSet(Uniforms::list.mergeShadow, Textures::list.shadow, 3);
+      stream.writeTextureSet(Uniforms::list.mergeDiffuseTexture, Textures::list.geometryDiffuse, 0);
+      stream.writeTextureSet(Uniforms::list.mergeNormalTexture, Textures::list.geometryNormal, 1);
+      stream.writeTextureSet(Uniforms::list.mergeDepthTexture, Textures::list.geometryDepth, 2);
+      stream.writeTextureSet(Uniforms::list.mergeShadowTexture, Textures::list.shadow, 3);
       stream.writeTextureSet(Uniforms::list.mergeSSAOTexture, Textures::list.ssaoBlur, 4);
       stream.writeTextureSet(Uniforms::list.mergeLowResDepthTexture, Textures::list.downsampleDepth, 5);
 
