@@ -16,7 +16,8 @@ namespace Rendering {
     DisableDepthTest,
     Clear,
     ViewportSet,
-    CullFaceSet
+    CullFaceSet,
+    TexturePairSet
   };
 }
 

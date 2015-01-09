@@ -130,6 +130,12 @@ namespace Rendering {
           Backend::setTexture(command.uniform, command.texture, command.unit);
           break;
         }
+        case CommandType::TexturePairSet: {
+          const TexturePairSetCommand &command = stream.readTexturePairSet();
+          Backend::setTextureUnit(command.unit);
+          Backend::setTexture(command.handle);
+          break;
+        }
         case CommandType::BufferSet: {
           const BufferSetCommand &command = stream.readBufferSet();
           Backend::setBuffer(command.target, command.buffer);

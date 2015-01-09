@@ -13,12 +13,17 @@ namespace Rendering {
   namespace MergePass {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
 
+    namespace TextureUnits {
+      uint8_t diffuse = 0;
+    }
+
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
       Backend::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
       float downSampling = Config::SSAO::downSampling;
       Backend::setUniformFloat(Uniforms::list.mergeDownsampleScale, 1, &downSampling);
+      Backend::setUniformUInt(Uniforms::list.mergeDiffuseTexture, TextureUnits::diffuse);
       Backend::setProgram(0);
     }
 
@@ -37,7 +42,8 @@ namespace Rendering {
       stream.writeUniformVec3Set(Uniforms::list.mergePrimaryLightColor, 1, primaryLightColor.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeInverseSecondaryLightDirection, 1, secondaryLightDirection.getNegated().components);
 
-      stream.writeTextureSet(Uniforms::list.mergeDiffuseTexture, Textures::list.geometryDiffuse, 0);
+      stream.writeTexturePairSet(TextureUnits::diffuse, Textures::list.geometryDiffuse);
+
       stream.writeTextureSet(Uniforms::list.mergeNormalTexture, Textures::list.geometryNormal, 1);
       stream.writeTextureSet(Uniforms::list.mergeDepthTexture, Textures::list.geometryDepth, 2);
       stream.writeTextureSet(Uniforms::list.mergeShadowTexture, Textures::list.shadow, 3);

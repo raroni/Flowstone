@@ -68,6 +68,11 @@ namespace Rendering {
   struct CullFaceSetCommand {
     Backend::CullFace face;
   };
+
+  struct TexturePairSetCommand {
+    uint8_t unit;
+    Backend::TextureHandle handle;
+  };
 }
 
 #endif

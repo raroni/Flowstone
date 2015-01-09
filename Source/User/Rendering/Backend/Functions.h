@@ -35,6 +35,7 @@ namespace Rendering {
     void setUniformVec3(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformVec2(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformFloat(UniformHandle uniform, uint8_t count, const float *data);
+    void setUniformUInt(UniformHandle uniform, unsigned int data);
     ObjectHandle createObject();
     void enableAttributeLocation(AttributeLocation location);
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);
@@ -51,6 +52,7 @@ namespace Rendering {
     TextureHandle createTexture();
     void setTextureWrap(Backend::TextureWrap wrap);
     void setTextureFilter(Backend::TextureFilter filter);
+    void setTextureUnit(uint8_t unit);
     void setTexture(TextureHandle texture);
     void writeTexture(uint16_t width, uint16_t height, TextureFormat format, const void *data);
     void attachColorTexture(TextureHandle texture, uint8_t location);
