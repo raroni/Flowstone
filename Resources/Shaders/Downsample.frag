@@ -6,8 +6,8 @@ uniform sampler2D depthTexture;
 uniform sampler2D normalTexture;
 
 uniform float factor = 2.0; // todo: flyt ud i uniform
-uniform float zNear = 4.5;
-uniform float zFar = 10.0;
+uniform float zNear;
+uniform float zFar;
 
 layout (location = 0) out float resultDepth;
 layout (location = 1) out vec3 resultNormal;

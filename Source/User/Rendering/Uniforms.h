@@ -45,6 +45,8 @@ namespace Rendering {
       Backend::UniformHandle mergeZFar;
       Backend::UniformHandle downsampleDepthTexture;
       Backend::UniformHandle downsampleNormalTexture;
+      Backend::UniformHandle downsampleZNear;
+      Backend::UniformHandle downsampleZFar;
     };
     extern List list;
 

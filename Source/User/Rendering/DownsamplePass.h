@@ -5,6 +5,7 @@ namespace Rendering {
   class CommandStream;
 
   namespace DownsamplePass {
+    void initialize();
     void write(CommandStream &stream);
   }
 }

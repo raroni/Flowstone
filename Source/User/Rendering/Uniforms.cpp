@@ -64,6 +64,8 @@ namespace Rendering {
       Backend::ProgramHandle downsample = Programs::handles[static_cast<size_t>(ProgramName::Downsample)];
       list.downsampleDepthTexture = Backend::getUniform(downsample, "depthTexture");
       list.downsampleNormalTexture = Backend::getUniform(downsample, "normalTexture");
+      list.downsampleZNear = Backend::getUniform(downsample, "zNear");
+      list.downsampleZFar = Backend::getUniform(downsample, "zFar");
     }
   }
 }

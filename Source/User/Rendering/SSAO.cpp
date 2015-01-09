@@ -9,6 +9,7 @@ namespace Rendering {
     void initialize() {
       SSAOGrainPass::initialize();
       SSAOBlurPass::initialize();
+      DownsamplePass::initialize();
     }
 
     void handleResolutionChange(Resolution resolution) {
