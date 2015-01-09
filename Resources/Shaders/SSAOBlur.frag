@@ -15,8 +15,9 @@ uniform float zFar;
 const int blurSize = 4;
 
 float calcLinearDepth(in vec2 texelCoords) {
-  float expDepth = texture(depthTexture, texelCoords).r;
-  float linearDepth = 2.0 * zNear * zFar / (zFar + zNear - expDepth * (zFar - zNear));
+  float bufferDepth = texture(depthTexture, texelCoords).r;
+  float normalizedDepth = bufferDepth*2.0-1.0;
+  float linearDepth = 2.0 * zNear * zFar / (zFar + zNear - normalizedDepth * (zFar - zNear));
   return linearDepth;
 }
 

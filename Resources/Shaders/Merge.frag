@@ -19,8 +19,9 @@ uniform vec3 inverseSecondaryLightDirection;
 uniform float zNear;
 uniform float zFar;
 
-float calcLinearDepth(float expDepth) {
-  return 2.0 * zNear * zFar / (zFar + zNear - expDepth * (zFar - zNear));
+float calcLinearDepth(float bufferDepth) {
+  float normalizedDepth = bufferDepth*2.0-1.0;
+  return 2.0 * zNear * zFar / (zFar + zNear - normalizedDepth * (zFar - zNear));
 }
 
 float calcOcclusion() {
