@@ -31,6 +31,7 @@ namespace Rendering {
       list.mergeInverseSecondaryLightDirection = Backend::getUniform(mergeProgram, "inverseSecondaryLightDirection");
       list.mergeZNear = Backend::getUniform(mergeProgram, "zNear");
       list.mergeZFar = Backend::getUniform(mergeProgram, "zFar");
+      list.mergeDownsampleScale = Backend::getUniform(mergeProgram, "downsampleScale");
 
       Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
       list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");

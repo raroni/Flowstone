@@ -18,6 +18,7 @@ uniform vec3 inverseSecondaryLightDirection;
 
 uniform float zNear;
 uniform float zFar;
+uniform float downsampleScale;
 
 float calcLinearDepth(float bufferDepth) {
   float normalizedDepth = bufferDepth*2.0-1.0;
@@ -31,10 +32,10 @@ float calcOcclusion() {
   float weight = 0.0;
 
   vec2 lowResCoords[4];
-  lowResCoords[0] = floor((gl_FragCoord.xy + vec2(-1.0, 1.0)) / 2.0); // todo: 2.0 skal trækkes ud i en uniform
-  lowResCoords[1] = floor((gl_FragCoord.xy + vec2(1.0, 1.0)) / 2.0);
-  lowResCoords[2] = floor((gl_FragCoord.xy + vec2(-1.0, -1.0)) / 2.0);
-  lowResCoords[3] = floor((gl_FragCoord.xy + vec2(1.0, -1.0)) / 2.0);
+  lowResCoords[0] = floor((gl_FragCoord.xy + vec2(-1.0, 1.0)) / downsampleScale);
+  lowResCoords[1] = floor((gl_FragCoord.xy + vec2(1.0, 1.0)) / downsampleScale);
+  lowResCoords[2] = floor((gl_FragCoord.xy + vec2(-1.0, -1.0)) / downsampleScale);
+  lowResCoords[3] = floor((gl_FragCoord.xy + vec2(1.0, -1.0)) / downsampleScale);
 
   for(int i=0; i<4; i++) {
     float sampleDepth = calcLinearDepth(texelFetch(lowResDepthTexture, ivec2(lowResCoords[i]), 0).x);
