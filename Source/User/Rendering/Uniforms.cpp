@@ -18,18 +18,20 @@ namespace Rendering {
       list.geometryStaticModelWorldTransform = Backend::getUniform(geometryStaticProgram, "modelWorldTransform");
 
       Backend::ProgramHandle mergeProgram = Programs::handles[static_cast<size_t>(ProgramName::Merge)];
-      list.mergeDiffuse = Backend::getUniform(mergeProgram, "diffuse");
-      list.mergeNormal = Backend::getUniform(mergeProgram, "normal");
-      list.mergeDepth = Backend::getUniform(mergeProgram, "depth");
-      list.mergeShadow = Backend::getUniform(mergeProgram, "shadow");
-      list.mergeSSAO = Backend::getUniform(mergeProgram, "ssao");
+      list.mergeDiffuseTexture = Backend::getUniform(mergeProgram, "diffuseTexture");
+      list.mergeNormalTexture = Backend::getUniform(mergeProgram, "normalTexture");
+      list.mergeDepthTexture = Backend::getUniform(mergeProgram, "depthTexture");
+      list.mergeShadowTexture = Backend::getUniform(mergeProgram, "shadowTexture");
+      list.mergeSSAOTexture = Backend::getUniform(mergeProgram, "ssaoTexture");
+      list.mergeLowResDepthTexture = Backend::getUniform(mergeProgram, "lowResDepthTexture");
       list.mergeCameraClipWorldTransform = Backend::getUniform(mergeProgram, "cameraClipWorldTransform");
       list.mergeLightWorldClipTransform = Backend::getUniform(mergeProgram, "lightWorldClipTransform");
       list.mergeInversePrimaryLightDirection = Backend::getUniform(mergeProgram, "inversePrimaryLightDirection");
       list.mergePrimaryLightColor = Backend::getUniform(mergeProgram, "primaryLightColor");
       list.mergeInverseSecondaryLightDirection = Backend::getUniform(mergeProgram, "inverseSecondaryLightDirection");
-      list.mergeSSAOTexelSize = Backend::getUniform(mergeProgram, "ssaoTexelSize");
-      list.mergeSSAODepthDifferenceLimit = Backend::getUniform(mergeProgram, "ssaoDepthDifferenceLimit");
+      list.mergeZNear = Backend::getUniform(mergeProgram, "zNear");
+      list.mergeZFar = Backend::getUniform(mergeProgram, "zFar");
+      list.mergeDownsampleScale = Backend::getUniform(mergeProgram, "downsampleScale");
 
       Backend::ProgramHandle shadowBone = Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)];
       list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");
@@ -40,17 +42,31 @@ namespace Rendering {
       list.shadowStaticWorldClipTransform = Backend::getUniform(shadowStatic, "worldClipTransform");
       list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
 
-      Backend::ProgramHandle ssao = Programs::handles[static_cast<size_t>(ProgramName::SSAO)];
-      list.ssaoNoise = Backend::getUniform(ssao, "noise");
-      list.ssaoNormal = Backend::getUniform(ssao, "normal");
-      list.ssaoDepth = Backend::getUniform(ssao, "depth");
-      list.ssaoWorldViewTransform = Backend::getUniform(ssao, "worldViewTransform");
-      list.ssaoViewClipTransform = Backend::getUniform(ssao, "viewClipTransform");
-      list.ssaoClipWorldTransform = Backend::getUniform(ssao, "clipWorldTransform");
-      list.ssaoSampleKernel = Backend::getUniform(ssao, "sampleKernel");
-      list.ssaoNoiseScale = Backend::getUniform(ssao, "noiseScale");
-      list.ssaoSampleRadius = Backend::getUniform(ssao, "sampleRadius");
-      list.ssaoSampleDifferenceLimit = Backend::getUniform(ssao, "sampleDifferenceLimit");
+      Backend::ProgramHandle ssaoGrain = Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)];
+      list.ssaoGrainNoiseTexture = Backend::getUniform(ssaoGrain, "noiseTexture");
+      list.ssaoGrainNormalTexture = Backend::getUniform(ssaoGrain, "normalTexture");
+      list.ssaoGrainDepthTexture = Backend::getUniform(ssaoGrain, "depthTexture");
+      list.ssaoGrainWorldViewTransform = Backend::getUniform(ssaoGrain, "worldViewTransform");
+      list.ssaoGrainViewClipTransform = Backend::getUniform(ssaoGrain, "viewClipTransform");
+      list.ssaoGrainClipWorldTransform = Backend::getUniform(ssaoGrain, "clipWorldTransform");
+      list.ssaoGrainSampleKernel = Backend::getUniform(ssaoGrain, "sampleKernel");
+      list.ssaoGrainNoiseScale = Backend::getUniform(ssaoGrain, "noiseScale");
+      list.ssaoGrainSampleRadius = Backend::getUniform(ssaoGrain, "sampleRadius");
+      list.ssaoGrainSampleDifferenceLimit = Backend::getUniform(ssaoGrain, "sampleDifferenceLimit");
+
+      Backend::ProgramHandle ssaoBlur = Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)];
+      list.ssaoBlurGrainTexture = Backend::getUniform(ssaoBlur, "grainTexture");
+      list.ssaoBlurGrainTexelSize = Backend::getUniform(ssaoBlur, "grainTexelSize");
+      list.ssaoBlurDepthDifferenceLimit = Backend::getUniform(ssaoBlur, "depthDifferenceLimit");
+      list.ssaoBlurDepthTexture = Backend::getUniform(ssaoBlur, "depthTexture");
+      list.ssaoBlurZNear = Backend::getUniform(ssaoBlur, "zFar");
+      list.ssaoBlurZFar = Backend::getUniform(ssaoBlur, "zNear");
+
+      Backend::ProgramHandle downsample = Programs::handles[static_cast<size_t>(ProgramName::Downsample)];
+      list.downsampleDepthTexture = Backend::getUniform(downsample, "depthTexture");
+      list.downsampleNormalTexture = Backend::getUniform(downsample, "normalTexture");
+      list.downsampleZNear = Backend::getUniform(downsample, "zNear");
+      list.downsampleZFar = Backend::getUniform(downsample, "zFar");
     }
   }
 }

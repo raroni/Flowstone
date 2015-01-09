@@ -11,8 +11,11 @@ namespace Rendering {
       Backend::TextureHandle geometryDepth;
       Backend::TextureHandle geometryNormal;
       Backend::TextureHandle shadow;
-      Backend::TextureHandle ssaoResult;
-      Backend::TextureHandle ssaoNoise;
+      Backend::TextureHandle ssaoGrainResult;
+      Backend::TextureHandle ssaoGrainNoise;
+      Backend::TextureHandle ssaoBlur;
+      Backend::TextureHandle downsampleDepth;
+      Backend::TextureHandle downsampleNormal;
     };
 
     extern List list;

@@ -8,11 +8,14 @@ namespace Rendering {
     struct HandleList {
       Backend::RenderTargetHandle geometry;
       Backend::RenderTargetHandle shadow;
-      Backend::RenderTargetHandle ssao;
+      Backend::RenderTargetHandle ssaoGrain;
+      Backend::RenderTargetHandle ssaoBlur;
+      Backend::RenderTargetHandle downsample;
     };
     extern HandleList handles;
 
     void initialize();
+    void handleResolutionChange();
   }
 }
 

@@ -26,6 +26,7 @@ namespace Rendering {
       const float sampleRadius = 0.4f;
       const float sampleDifferenceLimit = 0.8f;
       const uint8_t downSampling = 2;
+      const float blurDepthDifferenceLimit = 0.1;
     }
 
     namespace Merge {
@@ -34,7 +35,7 @@ namespace Rendering {
 
     struct {
       const float near = 4.5;
-      const float far = 10;
+      const float far = 10.0;
       const float fieldOfView = M_PI/3.0f;
     } perspective;
   }

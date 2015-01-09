@@ -24,16 +24,32 @@ namespace Rendering {
       Backend::setDrawBufferCount(2);
     }
 
-    static void initializeSSAO() {
-      handles.ssao = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.ssao);
-      Backend::attachColorTexture(Textures::list.ssaoResult, 0);
+    static void initializeSSAOGrain() {
+      handles.ssaoGrain = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.ssaoGrain);
+      Backend::attachColorTexture(Textures::list.ssaoGrainResult, 0);
+    }
+
+    static void initializeSSAOBlur() {
+      handles.ssaoBlur = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.ssaoBlur);
+      Backend::attachColorTexture(Textures::list.ssaoBlur, 0);
+    }
+
+    static void initializeDownsample() {
+      handles.downsample = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.downsample);
+      Backend::attachColorTexture(Textures::list.downsampleDepth, 0);
+      Backend::attachColorTexture(Textures::list.downsampleNormal, 1);
+      Backend::setDrawBufferCount(2);
     }
 
     void initialize() {
       initializeGeometry();
-      initializeSSAO();
+      initializeSSAOGrain();
+      initializeSSAOBlur();
       initializeShadow();
+      initializeDownsample();
       Backend::setRenderTarget(0);
     }
 
@@ -48,9 +64,19 @@ namespace Rendering {
         fatalError("Geometry render target not configured propertly.");
       }
 
-      Backend::setRenderTarget(handles.ssao);
+      Backend::setRenderTarget(handles.ssaoGrain);
       if(!Backend::checkRenderTarget()) {
-        fatalError("SSAO render target not configured propertly.");
+        fatalError("SSAO grain render target not configured propertly.");
+      }
+
+      Backend::setRenderTarget(handles.ssaoBlur);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("SSAO blur render target not configured propertly.");
+      }
+
+      Backend::setRenderTarget(handles.downsample);
+      if(!Backend::checkRenderTarget()) {
+        fatalError("Downsample render target not configured propertly.");
       }
 
       Backend::setRenderTarget(0);

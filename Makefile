@@ -49,7 +49,10 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/ShadowPass.cpp\
 	Source/User/Rendering/MergePass.cpp\
 	Source/User/Rendering/GeometryPass.cpp\
-	Source/User/Rendering/SSAOPass.cpp\
+	Source/User/Rendering/SSAO.cpp\
+	Source/User/Rendering/SSAOGrainPass.cpp\
+	Source/User/Rendering/SSAOBlurPass.cpp\
+	Source/User/Rendering/DownsamplePass.cpp\
 	Source/User/AtmosphereColor.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
@@ -115,6 +118,12 @@ TEST_OBJECTS = $(patsubst %.cpp,Build/Objects/Test/%.o,$(TEST_SOURCES))
 TEST_EXECUTABLE_PATH = Build/Test
 
 run: user
+
+	# todo: fix this hack
+	rm -rf $(USER_OUTPUT_DIR)/Resources
+	cp -r Resources $(USER_OUTPUT_DIR)/.
+
+
 	./Build/Flowstone.app/Contents/MacOS/Flowstone
 
 test: $(TEST_EXECUTABLE_PATH)

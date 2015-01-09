@@ -8,6 +8,7 @@
 #include "Rendering/Backend/AttributeLocation.h"
 #include "Rendering/Backend/ProgramHandle.h"
 #include "Rendering/Backend/ClearBitMask.h"
+#include "Rendering/Backend/TextureFilter.h"
 #include "Rendering/Backend/TextureWrap.h"
 #include "Rendering/Backend/CullFace.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
@@ -33,7 +34,7 @@ namespace Rendering {
     void setUniformMat4(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformVec3(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformVec2(UniformHandle uniform, uint8_t count, const float *data);
-    void setUniformFloat(UniformHandle, uint8_t count, const float *data);
+    void setUniformFloat(UniformHandle uniform, uint8_t count, const float *data);
     ObjectHandle createObject();
     void enableAttributeLocation(AttributeLocation location);
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);
@@ -49,6 +50,7 @@ namespace Rendering {
     void setRenderBuffer(RenderBufferHandle renderBuffer);
     TextureHandle createTexture();
     void setTextureWrap(Backend::TextureWrap wrap);
+    void setTextureFilter(Backend::TextureFilter filter);
     void setTexture(TextureHandle texture);
     void writeTexture(uint16_t width, uint16_t height, TextureFormat format, const void *data);
     void attachColorTexture(TextureHandle texture, uint8_t location);
