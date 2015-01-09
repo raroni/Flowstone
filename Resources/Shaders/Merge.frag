@@ -31,7 +31,7 @@ float calcOcclusion() {
   float weight = 0.0;
 
   vec2 lowResCoords[4];
-  lowResCoords[0] = floor((gl_FragCoord.xy + vec2(-1.0, 1.0)) / 2.0);
+  lowResCoords[0] = floor((gl_FragCoord.xy + vec2(-1.0, 1.0)) / 2.0); // todo: 2.0 skal trækkes ud i en uniform
   lowResCoords[1] = floor((gl_FragCoord.xy + vec2(1.0, 1.0)) / 2.0);
   lowResCoords[2] = floor((gl_FragCoord.xy + vec2(-1.0, -1.0)) / 2.0);
   lowResCoords[3] = floor((gl_FragCoord.xy + vec2(1.0, -1.0)) / 2.0);
