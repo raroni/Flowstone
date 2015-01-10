@@ -11,7 +11,6 @@
 #include "Rendering/Uniforms.h"
 #include "Rendering/Programs.h"
 #include "Rendering/CommandStream.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/Config.h"
 #include "Rendering/SSAOGrainPass.h"
 
@@ -77,7 +76,7 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
+      Backend::setProgram(Programs::handles.ssaoGrain);
       uploadNoiseKernel();
       uploadSampleKernel();
       uploadSampleRadius();
@@ -87,7 +86,7 @@ namespace Rendering {
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
+      Backend::setProgram(Programs::handles.ssaoGrain);
       Quanta::Vector2 noiseScale(resolution.width, resolution.height);
       noiseScale /= static_cast<float>(Config::SSAO::noiseSize);
       Backend::setUniformVec2(Uniforms::list.ssaoGrainNoiseScale, 1, noiseScale.components);
@@ -102,7 +101,7 @@ namespace Rendering {
     ) {
       stream.writeRenderTargetSet(RenderTargets::handles.ssaoGrain);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
+      stream.writeProgramSet(Programs::handles.ssaoGrain);
 
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainWorldViewTransform, 1, worldViewTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainViewClipTransform, 1, viewClipTransform.components);

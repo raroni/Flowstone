@@ -1,7 +1,6 @@
 #include <stddef.h>
 #include "Rendering/CommandStream.h"
 #include "Rendering/RenderTargets.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Backend/ClearBit.h"
 #include "Rendering/Backend/CullFace.h"
@@ -22,7 +21,7 @@ namespace Rendering {
       stream.writeRenderTargetSet(RenderTargets::handles.shadow);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
 
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowStatic)]);
+      stream.writeProgramSet(Programs::handles.shadowStatic);
       stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldClipTransform, 1, lightWorldClipTransform.components);
       const StaticDrawSet &staticSet = drawSet.staticSet;
       for(uint16_t i=0; staticSet.count>i; i++) {
@@ -36,7 +35,7 @@ namespace Rendering {
         stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
       }
 
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::ShadowBone)]);
+      stream.writeProgramSet(Programs::handles.shadowBone);
       stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldClipTransform, 1, lightWorldClipTransform.components);
       const BoneDrawSet &boneSet = drawSet.boneSet;
       for(uint16_t i=0; boneSet.count>i; i++) {

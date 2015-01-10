@@ -2,7 +2,6 @@
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/Config.h"
 #include "Rendering/CommandStream.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/Programs.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Textures.h"
@@ -23,7 +22,7 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+      Backend::setProgram(Programs::handles.merge);
       Backend::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
       Backend::setUniformUInt(Uniforms::list.mergeDownsampleScale, Config::SSAO::downSampling);
@@ -43,7 +42,7 @@ namespace Rendering {
       const Quanta::Vector3 &primaryLightDirection,
       const Quanta::Vector3 &secondaryLightDirection
     ) {
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
+      stream.writeProgramSet(Programs::handles.merge);
 
       stream.writeUniformMat4Set(Uniforms::list.mergeCameraClipWorldTransform, 1, cameraClipWorldTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);

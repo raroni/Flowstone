@@ -8,7 +8,6 @@
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/Backend/ClearBit.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/DownsamplePass.h"
 
 namespace Rendering {
@@ -19,7 +18,7 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Downsample)]);
+      Backend::setProgram(Programs::handles.downsample);
       Backend::setUniformFloat(Uniforms::list.downsampleZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.downsampleZFar, 1, &Config::perspective.far);
       Backend::setUniformInt(Uniforms::list.downsampleDepthTexture, TextureUnits::depth);
@@ -30,7 +29,7 @@ namespace Rendering {
     void write(CommandStream &stream) {
       stream.writeRenderTargetSet(RenderTargets::handles.downsample);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Downsample)]);
+      stream.writeProgramSet(Programs::handles.downsample);
 
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);

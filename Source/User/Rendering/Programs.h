@@ -5,7 +5,18 @@
 
 namespace Rendering {
   namespace Programs {
-    extern Backend::ShaderHandle handles[16];
+    struct HandleList {
+      Backend::ShaderHandle geometryBone;
+      Backend::ShaderHandle geometryStatic;
+      Backend::ShaderHandle merge;
+      Backend::ShaderHandle shadowBone;
+      Backend::ShaderHandle shadowStatic;
+      Backend::ShaderHandle ssaoGrain;
+      Backend::ShaderHandle ssaoBlur;
+      Backend::ShaderHandle downsample;
+    };
+    extern HandleList handles;
+
     void initialize();
   }
 }

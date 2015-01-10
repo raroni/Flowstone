@@ -6,7 +6,6 @@
 #include "Rendering/Textures.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/Programs.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/Backend/ClearBit.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/SSAOBlurPass.h"
@@ -19,7 +18,7 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)]);
+      Backend::setProgram(Programs::handles.ssaoBlur);
       Backend::setUniformFloat(Uniforms::list.ssaoBlurDepthDifferenceLimit, 1, &Config::SSAO::blurDepthDifferenceLimit);
       Backend::setUniformFloat(Uniforms::list.ssaoBlurZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.ssaoBlurZFar, 1, &Config::perspective.far);
@@ -29,7 +28,7 @@ namespace Rendering {
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)]);
+      Backend::setProgram(Programs::handles.ssaoBlur);
       float downSampling = static_cast<float>(Config::SSAO::downSampling);
       float grainTexelSize[] = {
         downSampling/resolution.width,
@@ -42,7 +41,7 @@ namespace Rendering {
     void write(CommandStream &stream) {
       stream.writeRenderTargetSet(RenderTargets::handles.ssaoBlur);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
-      stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)]);
+      stream.writeProgramSet(Programs::handles.ssaoBlur);
 
       stream.writeTexturePairSet(TextureUnits::grain, Textures::list.ssaoGrainResult);
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.downsampleDepth);

@@ -10,7 +10,6 @@
 #include "Rendering/StaticMeshes.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/Programs.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/GeometryPass.h"
@@ -51,7 +50,7 @@ namespace Rendering {
           case DrawCallType::BoneMesh: {
             const BoneMeshDrawCall *boneMeshDrawCall = reinterpret_cast<const BoneMeshDrawCall*>(drawCall);
 
-            stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::GeometryBone)]);
+            stream.writeProgramSet(Programs::handles.geometryBone);
 
             stream.writeUniformMat4Set(
               Uniforms::list.geometryBoneJointWorldTransform,
@@ -71,7 +70,7 @@ namespace Rendering {
           }
           case DrawCallType::StaticMesh: {
             const StaticMeshDrawCall *staticMeshDrawCall = reinterpret_cast<const StaticMeshDrawCall*>(drawCall);
-            stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::GeometryStatic)]);
+            stream.writeProgramSet(Programs::handles.geometryStatic);
             stream.writeUniformMat4Set(
               Uniforms::list.geometryStaticModelWorldTransform,
               1,

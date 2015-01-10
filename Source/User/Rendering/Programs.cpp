@@ -4,7 +4,6 @@
 #include "Rendering/Backend/ShaderType.h"
 #include "Rendering/Backend/ShaderHandle.h"
 #include "Rendering/Backend/ProgramHandle.h"
-#include "Rendering/ProgramName.h"
 #include "Rendering/Programs.h"
 
 namespace Rendering {
@@ -66,17 +65,17 @@ namespace Rendering {
   }
 
   namespace Programs {
-    Backend::ShaderHandle handles[16];
+    HandleList handles;
 
     void initialize() {
-      handles[static_cast<size_t>(ProgramName::GeometryBone)] = initializeGeometryProgram("GeometryBone");
-      handles[static_cast<size_t>(ProgramName::GeometryStatic)] = initializeGeometryProgram("GeometryStatic");
-      handles[static_cast<size_t>(ProgramName::Merge)] = initializeStandardProgram("Merge");
-      handles[static_cast<size_t>(ProgramName::ShadowBone)] = initializeShadowBoneProgram();
-      handles[static_cast<size_t>(ProgramName::ShadowStatic)] = initializeShadowStaticProgram();
-      handles[static_cast<size_t>(ProgramName::SSAOGrain)] = initializeStandardProgram("SSAOGrain");
-      handles[static_cast<size_t>(ProgramName::SSAOBlur)] = initializeStandardProgram("SSAOBlur");
-      handles[static_cast<size_t>(ProgramName::Downsample)] = initializeStandardProgram("Downsample");
+      handles.geometryBone = initializeGeometryProgram("GeometryBone");
+      handles.geometryStatic = initializeGeometryProgram("GeometryStatic");
+      handles.merge = initializeStandardProgram("Merge");
+      handles.shadowBone = initializeShadowBoneProgram();
+      handles.shadowStatic = initializeShadowStaticProgram();
+      handles.ssaoGrain = initializeStandardProgram("SSAOGrain");
+      handles.ssaoBlur = initializeStandardProgram("SSAOBlur");
+      handles.downsample = initializeStandardProgram("Downsample");
     }
   }
 }
