@@ -9,8 +9,8 @@ layout(std140) uniform global {
   mat4 worldViewTransform;
 };
 
-out vec3 interpolatedColor;
-out vec3 interpolatedNormal;
+flat out vec3 passedColor;
+flat out vec3 passedNormal;
 
 uniform mat4 jointWorldTransform;
 uniform mat4 modelJointTransforms[8];
@@ -21,6 +21,6 @@ void main() {
 
   vec3 worldNormal = (jointWorldTransform*vec4(normal, 0)).xyz; // assuming no scaling
 
-  interpolatedColor = vec3(0.3, 0.6, 0.95);
-  interpolatedNormal = worldNormal;
+  passedColor = vec3(0.3, 0.6, 0.95);
+  passedNormal = worldNormal;
 }

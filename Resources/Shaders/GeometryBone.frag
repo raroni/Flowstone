@@ -1,12 +1,12 @@
 #version 330
 
-in vec3 interpolatedColor;
-in vec3 interpolatedNormal;
+flat in vec3 passedColor;
+flat in vec3 passedNormal;
 
 layout (location = 0) out vec3 fragColor;
 layout (location = 1) out vec3 fragNormal;
 
 void main() {
-  fragColor = interpolatedColor;
-  fragNormal = interpolatedNormal;
+  fragColor = passedColor;
+  fragNormal = passedNormal;
 }
