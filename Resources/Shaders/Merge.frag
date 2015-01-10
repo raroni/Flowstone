@@ -18,7 +18,7 @@ uniform vec3 inverseSecondaryLightDirection;
 
 uniform float zNear;
 uniform float zFar;
-uniform float downsampleScale;
+uniform uint downsampleScale;
 
 float calcLinearDepth(float bufferDepth) {
   float normalizedDepth = bufferDepth*2.0-1.0;

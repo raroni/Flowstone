@@ -110,6 +110,10 @@ namespace Rendering {
       glUniform1i(uniform, data);
     }
 
+    void setUniformUInt(UniformHandle uniform, unsigned int data) {
+      glUniform1ui(uniform, data);
+    }
+
     void setObject(ObjectHandle object) {
       glBindVertexArray(object);
     }

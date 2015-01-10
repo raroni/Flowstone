@@ -26,8 +26,7 @@ namespace Rendering {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Merge)]);
       Backend::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
-      float downSampling = Config::SSAO::downSampling;
-      Backend::setUniformFloat(Uniforms::list.mergeDownsampleScale, 1, &downSampling);
+      Backend::setUniformUInt(Uniforms::list.mergeDownsampleScale, Config::SSAO::downSampling);
       Backend::setUniformInt(Uniforms::list.mergeDiffuseTexture, TextureUnits::diffuse);
       Backend::setUniformInt(Uniforms::list.mergeNormalTexture, TextureUnits::normal);
       Backend::setUniformInt(Uniforms::list.mergeDepthTexture, TextureUnits::depth);
