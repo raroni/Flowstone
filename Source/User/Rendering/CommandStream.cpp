@@ -88,16 +88,6 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeTextureSet(Backend::UniformHandle uniform, Backend::TextureHandle texture, uint8_t unit) {
-    writeType(CommandType::TextureSet);
-    TextureSetCommand command;
-    command.uniform = uniform;
-    command.texture = texture;
-    command.unit = unit;
-    memcpy(buffer+position, &command, sizeof(command));
-    position += sizeof(command);
-  }
-
   void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformMat4Set);
     UniformMat4SetCommand command;
@@ -204,12 +194,6 @@ namespace Rendering {
 
   const TexturePairSetCommand& CommandStream::readTexturePairSet() {
     const TexturePairSetCommand &command = *reinterpret_cast<const TexturePairSetCommand*>(buffer+position);
-    position += sizeof(command);
-    return command;
-  }
-
-  const TextureSetCommand& CommandStream::readTextureSet() {
-    const TextureSetCommand &command = *reinterpret_cast<const TextureSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

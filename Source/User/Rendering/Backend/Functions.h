@@ -60,7 +60,6 @@ namespace Rendering {
     void attachRenderBuffer(RenderBufferHandle renderBuffer);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
-    void setTexture(UniformHandle uniform, TextureHandle texture, uint8_t unit);
     void enableDepthTest();
     void enableFaceCulling();
     void disableDepthTest();

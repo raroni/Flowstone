@@ -231,12 +231,6 @@ namespace Rendering {
       glDrawBuffers(count, buffers);
     }
 
-    void setTexture(UniformHandle uniform, TextureHandle texture, uint8_t unit) {
-      glActiveTexture(GL_TEXTURE0 + unit);
-      glBindTexture(GL_TEXTURE_2D, texture);
-      glUniform1i(uniform, unit);
-    }
-
     void setTextureUnit(uint8_t unit) {
       glActiveTexture(GL_TEXTURE0 + unit);
     }
