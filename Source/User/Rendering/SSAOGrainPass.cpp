@@ -59,17 +59,17 @@ namespace Rendering {
       Backend::setUniformVec3(Uniforms::list.ssaoGrainSampleKernel, size, kernel[0].components);
     }
 
-    void uploadSampleRadius() {
+    static void uploadSampleRadius() {
       float data[] = { Config::SSAO::sampleRadius };
       Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleRadius, 1, data);
     }
 
-    void uploadSampleDifferenceLimit() {
+    static void uploadSampleDifferenceLimit() {
       float data[] = { Config::SSAO::sampleDifferenceLimit };
       Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleDifferenceLimit, 1, data);
     }
 
-    void uploadTextureConfig() {
+    static void uploadTextureConfig() {
       Backend::setUniformInt(Uniforms::list.ssaoGrainNoiseTexture, TextureUnits::noise);
       Backend::setUniformInt(Uniforms::list.ssaoGrainDepthTexture, TextureUnits::depth);
       Backend::setUniformInt(Uniforms::list.ssaoGrainNormalTexture, TextureUnits::normal);

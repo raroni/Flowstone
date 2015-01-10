@@ -7,28 +7,28 @@ namespace Rendering {
   namespace Textures {
     List list;
 
-    void initializeGeometryDiffuse() {
+    static void initializeGeometryDiffuse() {
       list.geometryDiffuse = Backend::createTexture();
       Backend::setTexture(list.geometryDiffuse);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeGeometryNormal() {
+    static void initializeGeometryNormal() {
       list.geometryNormal = Backend::createTexture();
       Backend::setTexture(list.geometryNormal);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeGeometryDepth() {
+    static void initializeGeometryDepth() {
       list.geometryDepth = Backend::createTexture();
       Backend::setTexture(list.geometryDepth);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeShadow() {
+    static void initializeShadow() {
       list.shadow = Backend::createTexture();
       Backend::setTexture(list.shadow);
       Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::Depth, NULL);
@@ -36,35 +36,35 @@ namespace Rendering {
       Backend::setTextureFilter(Backend::TextureFilter::Linear);
     }
 
-    void initializeSSAOGrainNoise() {
+    static void initializeSSAOGrainNoise() {
       list.ssaoGrainNoise = Backend::createTexture();
       Backend::setTexture(list.ssaoGrainNoise);
       Backend::setTextureWrap(Backend::TextureWrap::Repeat);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeSSAOGrainResult() {
+    static void initializeSSAOGrainResult() {
       list.ssaoGrainResult = Backend::createTexture();
       Backend::setTexture(list.ssaoGrainResult);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeSSAOBlur() {
+    static void initializeSSAOBlur() {
       list.ssaoBlur = Backend::createTexture();
       Backend::setTexture(list.ssaoBlur);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeDownsampleDepth() {
+    static void initializeDownsampleDepth() {
       list.downsampleDepth = Backend::createTexture();
       Backend::setTexture(list.downsampleDepth);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    void initializeDownsampleNormal() {
+    static void initializeDownsampleNormal() {
       list.downsampleNormal = Backend::createTexture();
       Backend::setTexture(list.downsampleNormal);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
