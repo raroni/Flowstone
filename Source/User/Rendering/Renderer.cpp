@@ -19,6 +19,7 @@ namespace Rendering {
     FullscreenQuad::initialize();
     Backend::setClearColor(0, 0, 1);
     Backend::enableFaceCulling();
+    Backend::disableDepthTest();
     worldRenderer.initialize();
   }
 
