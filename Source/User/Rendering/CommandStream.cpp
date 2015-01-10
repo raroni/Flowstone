@@ -79,12 +79,11 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeTextureSet(Backend::UniformHandle uniform, Backend::TextureHandle texture, uint8_t unit) {
-    writeType(CommandType::TextureSet);
-    TextureSetCommand command;
-    command.uniform = uniform;
-    command.texture = texture;
+  void CommandStream::writeTexturePairSet(uint8_t unit, Backend::TextureHandle handle) {
+    writeType(CommandType::TexturePairSet);
+    TexturePairSetCommand command;
     command.unit = unit;
+    command.handle = handle;
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
   }
@@ -193,8 +192,8 @@ namespace Rendering {
     return command;
   }
 
-  const TextureSetCommand& CommandStream::readTextureSet() {
-    const TextureSetCommand &command = *reinterpret_cast<const TextureSetCommand*>(buffer+position);
+  const TexturePairSetCommand& CommandStream::readTexturePairSet() {
+    const TexturePairSetCommand &command = *reinterpret_cast<const TexturePairSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

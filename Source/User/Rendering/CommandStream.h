@@ -22,7 +22,7 @@ namespace Rendering {
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);
     void writeRenderTargetSet(Backend::RenderTargetHandle renderTarget);
-    void writeTextureSet(Backend::UniformHandle uniform, Backend::TextureHandle texture, uint8_t unit);
+    void writeTexturePairSet(uint8_t unit, Backend::TextureHandle handle);
     void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     void writeUniformVec3Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     void writeViewportSet(uint16_t width, uint16_t height);
@@ -35,7 +35,7 @@ namespace Rendering {
     const ObjectSetCommand& readObjectSet();
     const ProgramSetCommand& readProgramSet();
     const RenderTargetSetCommand& readRenderTargetSet();
-    const TextureSetCommand& readTextureSet();
+    const TexturePairSetCommand& readTexturePairSet();
     const UniformMat4SetCommand& readUniformMat4Set(const float **data);
     const UniformVec3SetCommand& readUniformVec3Set(const float **data);
     const ViewportSetCommand& readViewportSet();

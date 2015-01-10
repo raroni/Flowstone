@@ -106,6 +106,10 @@ namespace Rendering {
       glUniform1fv(uniform, count, data);
     }
 
+    void setUniformInt(UniformHandle uniform, int data) {
+      glUniform1i(uniform, data);
+    }
+
     void setObject(ObjectHandle object) {
       glBindVertexArray(object);
     }
@@ -227,10 +231,8 @@ namespace Rendering {
       glDrawBuffers(count, buffers);
     }
 
-    void setTexture(UniformHandle uniform, TextureHandle texture, uint8_t unit) {
+    void setTextureUnit(uint8_t unit) {
       glActiveTexture(GL_TEXTURE0 + unit);
-      glBindTexture(GL_TEXTURE_2D, texture);
-      glUniform1i(uniform, unit);
     }
 
     void setRenderBuffer(RenderBufferHandle renderBuffer) {

@@ -50,12 +50,6 @@ namespace Rendering {
     Backend::RenderTargetHandle renderTarget;
   };
 
-  struct TextureSetCommand {
-    Backend::UniformHandle uniform;
-    Backend::TextureHandle texture;
-    uint8_t unit;
-  };
-
   struct ClearCommand {
     Backend::ClearBitMask mask;
   };
@@ -67,6 +61,11 @@ namespace Rendering {
 
   struct CullFaceSetCommand {
     Backend::CullFace face;
+  };
+
+  struct TexturePairSetCommand {
+    uint8_t unit;
+    Backend::TextureHandle handle;
   };
 }
 

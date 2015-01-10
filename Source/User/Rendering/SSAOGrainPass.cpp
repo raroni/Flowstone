@@ -21,6 +21,12 @@
 
 namespace Rendering {
   namespace SSAOGrainPass {
+    namespace TextureUnits {
+      uint8_t noise = 0;
+      uint8_t depth = 1;
+      uint8_t normal = 2;
+    }
+
     static void uploadNoiseKernel() {
       uint8_t size = Config::SSAO::noiseSize;
       uint8_t count = pow(size, 2);
@@ -64,12 +70,19 @@ namespace Rendering {
       Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleDifferenceLimit, 1, data);
     }
 
+    void uploadTextureConfig() {
+      Backend::setUniformInt(Uniforms::list.ssaoGrainNoiseTexture, TextureUnits::noise);
+      Backend::setUniformInt(Uniforms::list.ssaoGrainDepthTexture, TextureUnits::depth);
+      Backend::setUniformInt(Uniforms::list.ssaoGrainNormalTexture, TextureUnits::normal);
+    }
+
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOGrain)]);
       uploadNoiseKernel();
       uploadSampleKernel();
       uploadSampleRadius();
       uploadSampleDifferenceLimit();
+      uploadTextureConfig();
       Backend::setProgram(0);
     }
 
@@ -95,9 +108,9 @@ namespace Rendering {
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainViewClipTransform, 1, viewClipTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainClipWorldTransform, 1, clipWorldTransform.components);
 
-      stream.writeTextureSet(Uniforms::list.ssaoGrainNoiseTexture, Textures::list.ssaoGrainNoise, 0);
-      stream.writeTextureSet(Uniforms::list.ssaoGrainDepthTexture, Textures::list.downsampleDepth, 1);
-      stream.writeTextureSet(Uniforms::list.ssaoGrainNormalTexture, Textures::list.downsampleNormal, 2);
+      stream.writeTexturePairSet(TextureUnits::noise, Textures::list.ssaoGrainNoise);
+      stream.writeTexturePairSet(TextureUnits::depth, Textures::list.downsampleDepth);
+      stream.writeTexturePairSet(TextureUnits::normal, Textures::list.downsampleNormal);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
