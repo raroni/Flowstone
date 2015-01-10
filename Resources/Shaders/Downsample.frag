@@ -1,6 +1,6 @@
 #version 330
 
-in vec2 texCoords;
+noperspective in vec2 texCoords;
 
 uniform sampler2D depthTexture;
 uniform sampler2D normalTexture;

@@ -2,7 +2,7 @@
 
 layout (location = 0) in vec2 position;
 
-out vec2 texCoords;
+noperspective out vec2 texCoords;
 
 void main() {
   texCoords = position*0.5+0.5;

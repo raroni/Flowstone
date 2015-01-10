@@ -1,7 +1,7 @@
 #version 330
 
 out float result;
-in vec2 texCoords;
+noperspective in vec2 texCoords;
 
 uniform sampler2D noiseTexture;
 uniform sampler2D depthTexture;

@@ -1,7 +1,7 @@
 #version 330
 
 out vec3 fragColor;
-in vec2 texCoords;
+noperspective in vec2 texCoords;
 
 uniform sampler2D diffuseTexture;
 uniform sampler2D normalTexture;
