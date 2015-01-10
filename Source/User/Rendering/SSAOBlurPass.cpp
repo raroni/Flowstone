@@ -13,11 +13,18 @@
 
 namespace Rendering {
   namespace SSAOBlurPass {
+    namespace TextureUnits {
+      uint8_t grain = 0;
+      uint8_t depth = 1;
+    }
+
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)]);
       Backend::setUniformFloat(Uniforms::list.ssaoBlurDepthDifferenceLimit, 1, &Config::SSAO::blurDepthDifferenceLimit);
       Backend::setUniformFloat(Uniforms::list.ssaoBlurZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.ssaoBlurZFar, 1, &Config::perspective.far);
+      Backend::setUniformInt(Uniforms::list.ssaoBlurGrainTexture, TextureUnits::grain);
+      Backend::setUniformInt(Uniforms::list.ssaoBlurDepthTexture, TextureUnits::depth);
       Backend::setProgram(0);
     }
 
@@ -37,8 +44,8 @@ namespace Rendering {
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
       stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::SSAOBlur)]);
 
-      stream.writeTextureSet(Uniforms::list.ssaoBlurGrainTexture, Textures::list.ssaoGrainResult, 0);
-      stream.writeTextureSet(Uniforms::list.ssaoBlurDepthTexture, Textures::list.downsampleDepth, 1);
+      stream.writeTexturePairSet(TextureUnits::grain, Textures::list.ssaoGrainResult);
+      stream.writeTexturePairSet(TextureUnits::depth, Textures::list.downsampleDepth);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
