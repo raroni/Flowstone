@@ -13,10 +13,17 @@
 
 namespace Rendering {
   namespace DownsamplePass {
+    namespace TextureUnits {
+      uint8_t depth = 0;
+      uint8_t normal = 1;
+    }
+
     void initialize() {
       Backend::setProgram(Programs::handles[static_cast<size_t>(ProgramName::Downsample)]);
       Backend::setUniformFloat(Uniforms::list.downsampleZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.downsampleZFar, 1, &Config::perspective.far);
+      Backend::setUniformInt(Uniforms::list.downsampleDepthTexture, TextureUnits::depth);
+      Backend::setUniformInt(Uniforms::list.downsampleNormalTexture, TextureUnits::normal);
       Backend::setProgram(0);
     }
 
@@ -25,8 +32,8 @@ namespace Rendering {
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
       stream.writeProgramSet(Programs::handles[static_cast<size_t>(ProgramName::Downsample)]);
 
-      stream.writeTextureSet(Uniforms::list.downsampleDepthTexture, Textures::list.geometryDepth, 0);
-      stream.writeTextureSet(Uniforms::list.downsampleNormalTexture, Textures::list.geometryNormal, 1);
+      stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
+      stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
