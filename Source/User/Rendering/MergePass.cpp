@@ -15,6 +15,11 @@ namespace Rendering {
 
     namespace TextureUnits {
       uint8_t diffuse = 0;
+      uint8_t normal = 1;
+      uint8_t depth = 2;
+      uint8_t shadow = 3;
+      uint8_t ssao = 4;
+      uint8_t downsampleDepth = 5;
     }
 
     void initialize() {
@@ -23,7 +28,12 @@ namespace Rendering {
       Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
       float downSampling = Config::SSAO::downSampling;
       Backend::setUniformFloat(Uniforms::list.mergeDownsampleScale, 1, &downSampling);
-      Backend::setUniformUInt(Uniforms::list.mergeDiffuseTexture, TextureUnits::diffuse);
+      Backend::setUniformInt(Uniforms::list.mergeDiffuseTexture, TextureUnits::diffuse);
+      Backend::setUniformInt(Uniforms::list.mergeNormalTexture, TextureUnits::normal);
+      Backend::setUniformInt(Uniforms::list.mergeDepthTexture, TextureUnits::depth);
+      Backend::setUniformInt(Uniforms::list.mergeShadowTexture, TextureUnits::shadow);
+      Backend::setUniformInt(Uniforms::list.mergeSSAOTexture, TextureUnits::ssao);
+      Backend::setUniformInt(Uniforms::list.mergeLowResDepthTexture, TextureUnits::downsampleDepth);
       Backend::setProgram(0);
     }
 
@@ -43,12 +53,11 @@ namespace Rendering {
       stream.writeUniformVec3Set(Uniforms::list.mergeInverseSecondaryLightDirection, 1, secondaryLightDirection.getNegated().components);
 
       stream.writeTexturePairSet(TextureUnits::diffuse, Textures::list.geometryDiffuse);
-
-      stream.writeTextureSet(Uniforms::list.mergeNormalTexture, Textures::list.geometryNormal, 1);
-      stream.writeTextureSet(Uniforms::list.mergeDepthTexture, Textures::list.geometryDepth, 2);
-      stream.writeTextureSet(Uniforms::list.mergeShadowTexture, Textures::list.shadow, 3);
-      stream.writeTextureSet(Uniforms::list.mergeSSAOTexture, Textures::list.ssaoBlur, 4);
-      stream.writeTextureSet(Uniforms::list.mergeLowResDepthTexture, Textures::list.downsampleDepth, 5);
+      stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
+      stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
+      stream.writeTexturePairSet(TextureUnits::shadow, Textures::list.shadow);
+      stream.writeTexturePairSet(TextureUnits::ssao, Textures::list.ssaoBlur);
+      stream.writeTexturePairSet(TextureUnits::downsampleDepth, Textures::list.downsampleDepth);
 
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);

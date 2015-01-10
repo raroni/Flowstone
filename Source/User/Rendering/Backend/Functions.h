@@ -35,7 +35,7 @@ namespace Rendering {
     void setUniformVec3(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformVec2(UniformHandle uniform, uint8_t count, const float *data);
     void setUniformFloat(UniformHandle uniform, uint8_t count, const float *data);
-    void setUniformUInt(UniformHandle uniform, unsigned int data);
+    void setUniformInt(UniformHandle uniform, int data);
     ObjectHandle createObject();
     void enableAttributeLocation(AttributeLocation location);
     void configureAttribute(AttributeLocation location, uint8_t count, Backend::DataType dataType, uint8_t stride, uint8_t offset);

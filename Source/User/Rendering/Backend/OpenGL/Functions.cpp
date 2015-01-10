@@ -106,8 +106,8 @@ namespace Rendering {
       glUniform1fv(uniform, count, data);
     }
 
-    void setUniformUInt(UniformHandle uniform, unsigned int data) {
-      glUniform1ui(uniform, data);
+    void setUniformInt(UniformHandle uniform, int data) {
+      glUniform1i(uniform, data);
     }
 
     void setObject(ObjectHandle object) {
