@@ -13,6 +13,7 @@ USER_SOURCES_CPP =\
 	Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Plane.cpp\
 	Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
+	Libraries/Quanta/Library/Source/Random.cpp\
 	Libraries/Quanta/Library/Source/Util.cpp\
 	Source/Core/Error.cpp\
 	Source/Core/Physics/Engine.cpp\

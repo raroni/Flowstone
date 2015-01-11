@@ -19,7 +19,6 @@ namespace Quanta {
   }
 
   float lerp(float a, float b, float progress);
-  float random();
 }
 
 #endif

@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include "Quanta/Math/Vector2.h"
 #include "Quanta/Math/Vector3.h"
+#include "Quanta/Random.h"
 #include "Quanta/Util.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/Backend/ClearBit.h"
@@ -14,10 +15,6 @@
 #include "Rendering/Config.h"
 #include "Rendering/SSAOGrainPass.h"
 
-// todo:
-// change all random generation to make the kernel generations deterministic
-// for example by using a instance-based random generator
-
 namespace Rendering {
   namespace SSAOGrainPass {
     namespace TextureUnits {
@@ -26,14 +23,16 @@ namespace Rendering {
       uint8_t normal = 2;
     }
 
+    Quanta::Random random(123978);
+
     static void uploadNoiseKernel() {
       uint8_t size = Config::SSAO::noiseSize;
       uint8_t count = pow(size, 2);
       Quanta::Vector3 kernel[count];
       for(uint8_t i=0; count>i; i++) {
         kernel[i] = {
-          Quanta::random()*2-1,
-          Quanta::random()*2-1,
+          random.get()*2-1,
+          random.get()*2-1,
           0
         };
         kernel[i].normalize();
@@ -48,9 +47,9 @@ namespace Rendering {
       Quanta::Vector3 kernel[size];
       for(uint8_t i=0; i<size; ++i) {
         kernel[i] = {
-          Quanta::random()*2-1,
-          Quanta::random()*2-1,
-          Quanta::random()
+          random.get()*2-1,
+          random.get()*2-1,
+          random.get()
         };
         kernel[i].normalize();
         float scale = static_cast<float>(i)/size;
