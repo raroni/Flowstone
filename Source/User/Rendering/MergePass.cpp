@@ -25,6 +25,8 @@ namespace Rendering {
       Backend::setProgram(Programs::handles.merge);
       Backend::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
       Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
+      float inverseShadowSize = 1.0/Config::shadowMapSize;
+      Backend::setUniformFloat(Uniforms::list.mergeInverseShadowSize, 1, &inverseShadowSize);
       Backend::setUniformUInt(Uniforms::list.mergeDownsampleScale, Config::SSAO::downSampling);
       Backend::setUniformInt(Uniforms::list.mergeDiffuseTexture, TextureUnits::diffuse);
       Backend::setUniformInt(Uniforms::list.mergeNormalTexture, TextureUnits::normal);

@@ -17,7 +17,6 @@
 namespace Rendering {
   namespace ShadowPass {
     void write(CommandStream &stream, const BoneMeshRegistry &boneMeshRegistry, const DrawSet &drawSet, const Quanta::Matrix4 &lightWorldClipTransform) {
-      stream.writeCullFaceSet(Backend::CullFace::Front);
       stream.writeRenderTargetSet(RenderTargets::handles.shadow);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
 
@@ -58,7 +57,6 @@ namespace Rendering {
       }
 
       stream.writeRenderTargetSet(0);
-      stream.writeCullFaceSet(Backend::CullFace::Back);
     }
   }
 }

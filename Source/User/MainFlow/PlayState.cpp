@@ -516,7 +516,7 @@ namespace MainFlow {
   }
 
   void PlayState::update(double timeDelta) {
-    //timeOfDay += timeDelta*0.01;
+    timeOfDay += timeDelta*0.01;
     timeOfDay = fmod(timeOfDay, 1.0);
 
     stepTimeBank += timeDelta;

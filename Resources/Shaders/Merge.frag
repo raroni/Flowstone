@@ -19,10 +19,26 @@ uniform vec3 inverseSecondaryLightDirection;
 uniform float zNear;
 uniform float zFar;
 uniform uint downsampleScale;
+uniform float inverseShadowSize;
+
+const float shadowBias = 0.005;
 
 float calcLinearDepth(float bufferDepth) {
   float normalizedDepth = bufferDepth*2.0-1.0;
   return 2.0 * zNear * zFar / (zFar + zNear - normalizedDepth * (zFar - zNear));
+}
+
+float calcShadow(vec2 shadowTextureCoords, float depth) {
+  float result = 0.0;
+  for(int y=-1 ; y<=1; y++) {
+    for(int x=-1 ; x<=1; x++) {
+      vec2 offset = vec2(x, y)*inverseShadowSize;
+      if(depth > texture(shadowTexture, shadowTextureCoords+offset).x+shadowBias) {
+        result += 1;
+      }
+    }
+  }
+  return result/9.0;
 }
 
 float calcOcclusion() {
@@ -49,22 +65,20 @@ float calcOcclusion() {
 }
 
 void main() {
-  float bufferDepth = texture(depthTexture, texCoords).r;
-  vec3 fragmentNDCPosition = vec3(texCoords, bufferDepth)*2-1;
-  vec4 a = cameraClipWorldTransform * vec4(fragmentNDCPosition, 1.0);
-  vec4 fragmentWorldPosition = vec4(a.xyz/a.w, 1);
-  vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
-  vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
-
   float primaryLuminosity;
   vec3 worldNormal = texture(normalTexture, texCoords).xyz;
-  if(dot(inversePrimaryLightDirection, worldNormal) < 0.01) {
-    primaryLuminosity = 0;
-  }
-  else if(lightNDCPosition.z*0.5+0.5 > texture(shadowTexture, lightNDCPosition.xy*0.5+0.5).x) {
+  float lightDot = dot(inversePrimaryLightDirection, worldNormal);
+  if(lightDot < 0.01) {
     primaryLuminosity = 0;
   } else {
-    primaryLuminosity = dot(inversePrimaryLightDirection, worldNormal);
+    float bufferDepth = texture(depthTexture, texCoords).r;
+    vec3 fragmentNDCPosition = vec3(texCoords, bufferDepth)*2-1;
+    vec4 a = cameraClipWorldTransform * vec4(fragmentNDCPosition, 1.0);
+    vec4 fragmentWorldPosition = vec4(a.xyz/a.w, 1);
+    vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
+    vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
+    vec3 shadowTextureCoords = lightNDCPosition*0.5+0.5;
+    primaryLuminosity = lightDot*(1.0-calcShadow(shadowTextureCoords.xy, shadowTextureCoords.z));
   }
 
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);

@@ -44,6 +44,7 @@ namespace Rendering {
       Backend::UniformHandle mergeLowResDepthTexture;
       Backend::UniformHandle mergeZNear;
       Backend::UniformHandle mergeZFar;
+      Backend::UniformHandle mergeInverseShadowSize;
       Backend::UniformHandle downsampleDepthTexture;
       Backend::UniformHandle downsampleNormalTexture;
       Backend::UniformHandle downsampleZNear;
