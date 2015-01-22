@@ -11,8 +11,8 @@ namespace Rendering {
     static void initializeShadow() {
       handles.shadow = Backend::createRenderTarget();
       Backend::setRenderTarget(handles.shadow);
-      Backend::attachDepthTexture(Textures::list.shadow);
-      Backend::disableDrawBuffer();
+      Backend::attachDepthTexture(Textures::list.shadowBufferDepth);
+      Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
     }
 
     static void initializeGeometry() {

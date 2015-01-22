@@ -18,7 +18,10 @@ namespace Rendering {
   namespace ShadowPass {
     void write(CommandStream &stream, const BoneMeshRegistry &boneMeshRegistry, const DrawSet &drawSet, const Quanta::Matrix4 &lightWorldClipTransform) {
       stream.writeRenderTargetSet(RenderTargets::handles.shadow);
-      stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
+      stream.writeClear(
+        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth) |
+        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color)
+      );
 
       stream.writeProgramSet(Programs::handles.shadowStatic);
       stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldClipTransform, 1, lightWorldClipTransform.components);

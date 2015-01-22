@@ -38,7 +38,7 @@ namespace Rendering {
     loadSource("ShadowBone.vert");
     Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
     Backend::attachShader(program, vertexShader);
-    loadSource("Empty.frag");
+    loadSource("Shadow.frag");
     Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
     Backend::attachShader(program, fragmentShader);
     Backend::linkProgram(program);
@@ -50,7 +50,7 @@ namespace Rendering {
     loadSource("ShadowStatic.vert");
     Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
     Backend::attachShader(program, vertexShader);
-    loadSource("Empty.frag");
+    loadSource("Shadow.frag");
     Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
     Backend::attachShader(program, fragmentShader);
     Backend::linkProgram(program);

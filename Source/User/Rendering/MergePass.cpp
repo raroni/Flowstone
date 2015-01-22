@@ -55,7 +55,7 @@ namespace Rendering {
       stream.writeTexturePairSet(TextureUnits::diffuse, Textures::list.geometryDiffuse);
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
-      stream.writeTexturePairSet(TextureUnits::shadow, Textures::list.shadow);
+      stream.writeTexturePairSet(TextureUnits::shadow, Textures::list.shadowVarianceDepth);
       stream.writeTexturePairSet(TextureUnits::ssao, Textures::list.ssaoBlur);
       stream.writeTexturePairSet(TextureUnits::downsampleDepth, Textures::list.downsampleDepth);
 
