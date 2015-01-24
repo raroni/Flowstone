@@ -45,6 +45,10 @@ namespace Rendering {
       list.shadowStaticViewClipTransform = Backend::getUniform(shadowStatic, "viewClipTransform");
       list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
 
+      Backend::ProgramHandle shadowBlur = Programs::handles.shadowBlur;
+      list.shadowBlurOffset = Backend::getUniform(shadowBlur, "offset");
+      list.shadowBlurSourceTexture = Backend::getUniform(shadowBlur, "sourceTexture");
+
       Backend::ProgramHandle ssaoGrain = Programs::handles.ssaoGrain;
       list.ssaoGrainNoiseTexture = Backend::getUniform(ssaoGrain, "noiseTexture");
       list.ssaoGrainNormalTexture = Backend::getUniform(ssaoGrain, "normalTexture");

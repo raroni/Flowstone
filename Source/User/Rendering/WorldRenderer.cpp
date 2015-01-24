@@ -23,6 +23,7 @@ namespace Rendering {
   void WorldRenderer::initialize() {
     SSAO::initialize();
     MergePass::initialize();
+    Shadow::initialize();
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {

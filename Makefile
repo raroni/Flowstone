@@ -48,6 +48,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/StaticDrawSet.cpp\
 	Source/User/Rendering/Frustum.cpp\
 	Source/User/Rendering/Shadow.cpp\
+	Source/User/Rendering/ShadowBlur.cpp\
 	Source/User/Rendering/ShadowBasePass.cpp\
 	Source/User/Rendering/MergePass.cpp\
 	Source/User/Rendering/GeometryPass.cpp\

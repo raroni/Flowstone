@@ -88,6 +88,22 @@ namespace Rendering {
     position += sizeof(command);
   }
 
+  void CommandStream::writeTextureSet(Backend::TextureHandle handle) {
+    writeType(CommandType::TextureSet);
+    TextureSetCommand command;
+    command.handle = handle;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
+  void CommandStream::writeTextureUnitSet(uint8_t unit) {
+    writeType(CommandType::TextureUnitSet);
+    TextureUnitSetCommand command;
+    command.unit = unit;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformMat4Set);
     UniformMat4SetCommand command;
@@ -96,6 +112,18 @@ namespace Rendering {
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
     size_t dataSize = count*sizeof(float)*16;
+    memcpy(buffer+position, data, dataSize);
+    position += dataSize;
+  }
+
+  void CommandStream::writeUniformVec2Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+    writeType(CommandType::UniformVec2Set);
+    UniformVec2SetCommand command;
+    command.uniform = uniform;
+    command.count = count;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+    size_t dataSize = count*sizeof(float)*2;
     memcpy(buffer+position, data, dataSize);
     position += dataSize;
   }
@@ -198,11 +226,31 @@ namespace Rendering {
     return command;
   }
 
+  const TextureSetCommand& CommandStream::readTextureSet() {
+    const TextureSetCommand &command = *reinterpret_cast<const TextureSetCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
+  const TextureUnitSetCommand& CommandStream::readTextureUnitSet() {
+    const TextureUnitSetCommand &command = *reinterpret_cast<const TextureUnitSetCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
   const UniformMat4SetCommand& CommandStream::readUniformMat4Set(const float **data) {
     const UniformMat4SetCommand &command = *reinterpret_cast<const UniformMat4SetCommand*>(buffer+position);
     position += sizeof(command);
     *data = reinterpret_cast<const float*>(buffer+position);
     position += command.count*sizeof(float)*16;
+    return command;
+  }
+
+  const UniformVec2SetCommand& CommandStream::readUniformVec2Set(const float **data) {
+    const UniformVec2SetCommand &command = *reinterpret_cast<const UniformVec2SetCommand*>(buffer+position);
+    position += sizeof(command);
+    *data = reinterpret_cast<const float*>(buffer+position);
+    position += command.count*sizeof(float)*2;
     return command;
   }
 

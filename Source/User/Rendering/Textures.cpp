@@ -42,6 +42,14 @@ namespace Rendering {
       Backend::setTextureFilter(Backend::TextureFilter::Linear);
     }
 
+    static void initializeShadowBlurVarianceDepth() {
+      list.shadowBlurVarianceDepth = Backend::createTexture();
+      Backend::setTexture(list.shadowBlurVarianceDepth);
+      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF16, NULL);
+      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
+      Backend::setTextureFilter(Backend::TextureFilter::Linear);
+    }
+
     static void initializeSSAOGrainNoise() {
       list.ssaoGrainNoise = Backend::createTexture();
       Backend::setTexture(list.ssaoGrainNoise);
@@ -83,6 +91,7 @@ namespace Rendering {
       initializeGeometryDepth();
       initializeShadowBaseBufferDepth();
       initializeShadowVarianceDepth();
+      initializeShadowBlurVarianceDepth();
       initializeSSAOGrainNoise();
       initializeSSAOGrainResult();
       initializeSSAOBlur();

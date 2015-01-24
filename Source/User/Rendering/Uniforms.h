@@ -13,6 +13,8 @@ namespace Rendering {
       Backend::UniformHandle shadowStaticWorldViewTransform;
       Backend::UniformHandle shadowStaticViewClipTransform;
       Backend::UniformHandle shadowStaticModelWorldTransform;
+      Backend::UniformHandle shadowBlurOffset;
+      Backend::UniformHandle shadowBlurSourceTexture;
       Backend::UniformHandle geometryBoneJointWorldTransform;
       Backend::UniformHandle geometryBoneModelJointTransform;
       Backend::UniformHandle geometryStaticModelWorldTransform;

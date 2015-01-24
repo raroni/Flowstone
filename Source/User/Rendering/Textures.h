@@ -12,6 +12,7 @@ namespace Rendering {
       Backend::TextureHandle geometryNormal;
       Backend::TextureHandle shadowBaseBufferDepth;
       Backend::TextureHandle shadowVarianceDepth;
+      Backend::TextureHandle shadowBlurVarianceDepth;
       Backend::TextureHandle ssaoGrainResult;
       Backend::TextureHandle ssaoGrainNoise;
       Backend::TextureHandle ssaoBlur;

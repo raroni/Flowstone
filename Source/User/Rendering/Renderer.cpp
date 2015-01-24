@@ -92,6 +92,12 @@ namespace Rendering {
           Backend::setUniformMat4(command.uniform, command.count, data);
           break;
         }
+        case CommandType::UniformVec2Set: {
+          const float *data;
+          const UniformVec2SetCommand &command = stream.readUniformVec2Set(&data);
+          Backend::setUniformVec2(command.uniform, command.count, data);
+          break;
+        }
         case CommandType::UniformVec3Set: {
           const float *data;
           const UniformVec3SetCommand &command = stream.readUniformVec3Set(&data);
@@ -130,6 +136,16 @@ namespace Rendering {
           const TexturePairSetCommand &command = stream.readTexturePairSet();
           Backend::setTextureUnit(command.unit);
           Backend::setTexture(command.handle);
+          break;
+        }
+        case CommandType::TextureSet: {
+          const TextureSetCommand &command = stream.readTextureSet();
+          Backend::setTexture(command.handle);
+          break;
+        }
+        case CommandType::TextureUnitSet: {
+          const TextureUnitSetCommand &command = stream.readTextureUnitSet();
+          Backend::setTextureUnit(command.unit);
           break;
         }
         case CommandType::BufferSet: {

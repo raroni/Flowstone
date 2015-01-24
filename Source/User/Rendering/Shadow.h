@@ -9,6 +9,8 @@ namespace Rendering {
   struct DrawSet;
 
   namespace Shadow {
+    void initialize();
+
     void write(
       CommandStream &stream,
       const BoneMeshRegistry &boneMeshRegistry,

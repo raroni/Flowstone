@@ -11,6 +11,7 @@ namespace Rendering {
       Backend::ShaderHandle merge;
       Backend::ShaderHandle shadowBone;
       Backend::ShaderHandle shadowStatic;
+      Backend::ShaderHandle shadowBlur;
       Backend::ShaderHandle ssaoGrain;
       Backend::ShaderHandle ssaoBlur;
       Backend::ShaderHandle downsample;

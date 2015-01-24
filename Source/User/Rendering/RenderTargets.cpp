@@ -15,6 +15,18 @@ namespace Rendering {
       Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
     }
 
+    static void initializeShadowBlurHorizontal() {
+      handles.shadowBlurHorizontal = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.shadowBlurHorizontal);
+      Backend::attachColorTexture(Textures::list.shadowBlurVarianceDepth, 0);
+    }
+
+    static void initializeShadowBlurVertical() {
+      handles.shadowBlurVertical = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.shadowBlurVertical);
+      Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
+    }
+
     static void initializeGeometry() {
       handles.geometry = Backend::createRenderTarget();
       Backend::setRenderTarget(handles.geometry);
@@ -49,6 +61,8 @@ namespace Rendering {
       initializeSSAOGrain();
       initializeSSAOBlur();
       initializeShadowBase();
+      initializeShadowBlurHorizontal();
+      initializeShadowBlurVertical();
       initializeDownsample();
       Backend::setRenderTarget(0);
     }

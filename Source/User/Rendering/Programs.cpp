@@ -64,6 +64,23 @@ namespace Rendering {
     return program;
   }
 
+  static Backend::ProgramHandle initializeFullscreenQuadProgram(const char *fragmentShaderName) {
+    Backend::ProgramHandle program = Backend::createProgram();
+    loadSource("FullscreenQuad.vert");
+    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
+    Backend::attachShader(program, vertexShader);
+
+    char fragmentPathBuffer[128];
+    strcpy(fragmentPathBuffer, fragmentShaderName);
+    strcat(fragmentPathBuffer, ".frag");
+    loadSource(fragmentPathBuffer);
+    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
+    Backend::attachShader(program, fragmentShader);
+
+    Backend::linkProgram(program);
+    return program;
+  }
+
   namespace Programs {
     HandleList handles;
 
@@ -76,6 +93,7 @@ namespace Rendering {
       handles.ssaoGrain = initializeStandardProgram("SSAOGrain");
       handles.ssaoBlur = initializeStandardProgram("SSAOBlur");
       handles.downsample = initializeStandardProgram("Downsample");
+      handles.shadowBlur = initializeFullscreenQuadProgram("ShadowBlur");
     }
   }
 }
