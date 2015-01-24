@@ -11,7 +11,8 @@ uniform sampler2D lowResDepthTexture;
 uniform sampler2D ssaoTexture;
 
 uniform mat4 cameraClipWorldTransform;
-uniform mat4 lightWorldClipTransform;
+uniform mat4 lightWorldViewTransform;
+uniform mat4 lightViewClipTransform;
 uniform vec3 inversePrimaryLightDirection;
 uniform vec3 primaryLightColor;
 uniform vec3 inverseSecondaryLightDirection;
@@ -75,7 +76,8 @@ void main() {
     vec3 fragmentNDCPosition = vec3(texCoords, bufferDepth)*2-1;
     vec4 a = cameraClipWorldTransform * vec4(fragmentNDCPosition, 1.0);
     vec4 fragmentWorldPosition = vec4(a.xyz/a.w, 1);
-    vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
+    vec4 lightViewPosition = lightWorldViewTransform * fragmentWorldPosition;
+    vec4 lightClipPosition = lightViewClipTransform * lightViewPosition;
     vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
     vec3 shadowTextureCoords = lightNDCPosition*0.5+0.5;
     primaryLuminosity = lightDot*(1.0-calcShadow(shadowTextureCoords.xy, shadowTextureCoords.z));

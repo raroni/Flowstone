@@ -39,7 +39,8 @@ namespace Rendering {
       Backend::UniformHandle mergeSSAOTexture;
       Backend::UniformHandle mergeDownsampleScale;
       Backend::UniformHandle mergeCameraClipWorldTransform;
-      Backend::UniformHandle mergeLightWorldClipTransform;
+      Backend::UniformHandle mergeLightWorldViewTransform;
+      Backend::UniformHandle mergeLightViewClipTransform;
       Backend::UniformHandle mergeInversePrimaryLightDirection;
       Backend::UniformHandle mergePrimaryLightColor;
       Backend::UniformHandle mergeInverseSecondaryLightDirection;

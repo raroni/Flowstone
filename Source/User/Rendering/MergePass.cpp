@@ -40,14 +40,16 @@ namespace Rendering {
     void write(
       CommandStream &stream,
       const Quanta::Matrix4 &cameraClipWorldTransform,
-      const Quanta::Matrix4 &lightWorldClipTransform,
+      const Quanta::Matrix4 &lightWorldViewTransform,
+      const Quanta::Matrix4 &lightViewClipTransform,
       const Quanta::Vector3 &primaryLightDirection,
       const Quanta::Vector3 &secondaryLightDirection
     ) {
       stream.writeProgramSet(Programs::handles.merge);
 
       stream.writeUniformMat4Set(Uniforms::list.mergeCameraClipWorldTransform, 1, cameraClipWorldTransform.components);
-      stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldClipTransform, 1, lightWorldClipTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.mergeLightWorldViewTransform, 1, lightWorldViewTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.mergeLightViewClipTransform, 1, lightViewClipTransform.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeInversePrimaryLightDirection, 1, primaryLightDirection.getNegated().components);
       stream.writeUniformVec3Set(Uniforms::list.mergePrimaryLightColor, 1, primaryLightColor.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeInverseSecondaryLightDirection, 1, secondaryLightDirection.getNegated().components);
