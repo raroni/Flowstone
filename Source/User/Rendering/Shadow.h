@@ -1,5 +1,5 @@
-#ifndef RENDERING_SHADOW_MAP_H
-#define RENDERING_SHADOW_MAP_H
+#ifndef RENDERING_SHADOW_H
+#define RENDERING_SHADOW_H
 
 #include "Quanta/Math/Matrix4.h"
 
@@ -8,12 +8,15 @@ namespace Rendering {
   class BoneMeshRegistry;
   struct DrawSet;
 
-  namespace ShadowPass {
+  namespace Shadow {
+    void initialize();
+
     void write(
       CommandStream &stream,
       const BoneMeshRegistry &boneMeshRegistry,
       const DrawSet &drawSet,
-      const Quanta::Matrix4 &lightWorldClipTransform
+      const Quanta::Matrix4 &lightWorldViewTransform,
+      const Quanta::Matrix4 &lightViewClipTransform
     );
   }
 }

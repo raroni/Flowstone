@@ -8,11 +8,23 @@ namespace Rendering {
   namespace RenderTargets {
     HandleList handles;
 
-    static void initializeShadow() {
-      handles.shadow = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.shadow);
-      Backend::attachDepthTexture(Textures::list.shadow);
-      Backend::disableDrawBuffer();
+    static void initializeShadowBase() {
+      handles.shadowBase = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.shadowBase);
+      Backend::attachDepthTexture(Textures::list.shadowBaseBufferDepth);
+      Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
+    }
+
+    static void initializeShadowBlurHorizontal() {
+      handles.shadowBlurHorizontal = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.shadowBlurHorizontal);
+      Backend::attachColorTexture(Textures::list.shadowBlurVarianceDepth, 0);
+    }
+
+    static void initializeShadowBlurVertical() {
+      handles.shadowBlurVertical = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.shadowBlurVertical);
+      Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
     }
 
     static void initializeGeometry() {
@@ -48,15 +60,17 @@ namespace Rendering {
       initializeGeometry();
       initializeSSAOGrain();
       initializeSSAOBlur();
-      initializeShadow();
+      initializeShadowBase();
+      initializeShadowBlurHorizontal();
+      initializeShadowBlurVertical();
       initializeDownsample();
       Backend::setRenderTarget(0);
     }
 
     void handleResolutionChange() {
-      Backend::setRenderTarget(handles.shadow);
+      Backend::setRenderTarget(handles.shadowBase);
       if(!Backend::checkRenderTarget()) {
-        fatalError("Shadow render target not configured propertly.");
+        fatalError("Shadow base render target not configured propertly.");
       }
 
       Backend::setRenderTarget(handles.geometry);

@@ -24,7 +24,8 @@ namespace Rendering {
       list.mergeSSAOTexture = Backend::getUniform(mergeProgram, "ssaoTexture");
       list.mergeLowResDepthTexture = Backend::getUniform(mergeProgram, "lowResDepthTexture");
       list.mergeCameraClipWorldTransform = Backend::getUniform(mergeProgram, "cameraClipWorldTransform");
-      list.mergeLightWorldClipTransform = Backend::getUniform(mergeProgram, "lightWorldClipTransform");
+      list.mergeLightWorldViewTransform = Backend::getUniform(mergeProgram, "lightWorldViewTransform");
+      list.mergeLightViewClipTransform = Backend::getUniform(mergeProgram, "lightViewClipTransform");
       list.mergeInversePrimaryLightDirection = Backend::getUniform(mergeProgram, "inversePrimaryLightDirection");
       list.mergePrimaryLightColor = Backend::getUniform(mergeProgram, "primaryLightColor");
       list.mergeInverseSecondaryLightDirection = Backend::getUniform(mergeProgram, "inverseSecondaryLightDirection");
@@ -33,14 +34,20 @@ namespace Rendering {
       list.mergeDownsampleScale = Backend::getUniform(mergeProgram, "downsampleScale");
       list.mergeInverseShadowSize = Backend::getUniform(mergeProgram, "inverseShadowSize");
 
-      Backend::ProgramHandle shadowBone = Programs::handles.shadowBone;
-      list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");
-      list.shadowBoneJointWorldTransform = Backend::getUniform(shadowBone, "jointWorldTransform");
-      list.shadowBoneModelJointTransforms = Backend::getUniform(shadowBone, "modelJointTransforms");
+      Backend::ProgramHandle shadowBaseBone = Programs::handles.shadowBaseBone;
+      list.shadowBaseBoneWorldViewTransform = Backend::getUniform(shadowBaseBone, "worldViewTransform");
+      list.shadowBaseBoneViewClipTransform = Backend::getUniform(shadowBaseBone, "viewClipTransform");
+      list.shadowBaseBoneJointWorldTransform = Backend::getUniform(shadowBaseBone, "jointWorldTransform");
+      list.shadowBaseBoneModelJointTransforms = Backend::getUniform(shadowBaseBone, "modelJointTransforms");
 
-      Backend::ProgramHandle shadowStatic = Programs::handles.shadowStatic;
-      list.shadowStaticWorldClipTransform = Backend::getUniform(shadowStatic, "worldClipTransform");
-      list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
+      Backend::ProgramHandle shadowBaseStatic = Programs::handles.shadowBaseStatic;
+      list.shadowBaseStaticWorldViewTransform = Backend::getUniform(shadowBaseStatic, "worldViewTransform");
+      list.shadowBaseStaticViewClipTransform = Backend::getUniform(shadowBaseStatic, "viewClipTransform");
+      list.shadowBaseStaticModelWorldTransform = Backend::getUniform(shadowBaseStatic, "modelWorldTransform");
+
+      Backend::ProgramHandle shadowBlur = Programs::handles.shadowBlur;
+      list.shadowBlurOffset = Backend::getUniform(shadowBlur, "offset");
+      list.shadowBlurSourceTexture = Backend::getUniform(shadowBlur, "sourceTexture");
 
       Backend::ProgramHandle ssaoGrain = Programs::handles.ssaoGrain;
       list.ssaoGrainNoiseTexture = Backend::getUniform(ssaoGrain, "noiseTexture");

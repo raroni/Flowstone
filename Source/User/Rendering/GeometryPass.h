@@ -4,6 +4,7 @@
 namespace Rendering {
   class CommandStream;
   struct DrawSet;
+  class BoneMeshRegistry;
 
   namespace GeometryPass {
     void write(CommandStream &stream, const DrawSet &drawSet, const BoneMeshRegistry &boneMeshRegistry);

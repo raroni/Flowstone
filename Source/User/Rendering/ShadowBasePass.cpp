@@ -12,21 +12,31 @@
 #include "Rendering/BoneMesh.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/StaticDrawSet.h"
-#include "Rendering/ShadowPass.h"
+#include "Rendering/ShadowBasePass.h"
 
 namespace Rendering {
-  namespace ShadowPass {
-    void write(CommandStream &stream, const BoneMeshRegistry &boneMeshRegistry, const DrawSet &drawSet, const Quanta::Matrix4 &lightWorldClipTransform) {
-      stream.writeRenderTargetSet(RenderTargets::handles.shadow);
-      stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth));
+  namespace ShadowBasePass {
+    void write(
+      CommandStream &stream,
+      const BoneMeshRegistry &boneMeshRegistry,
+      const DrawSet &drawSet,
+      const Quanta::Matrix4 &lightWorldViewTransform,
+      const Quanta::Matrix4 &lightViewClipTransform
+    ) {
+      stream.writeRenderTargetSet(RenderTargets::handles.shadowBase);
+      stream.writeClear(
+        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth) |
+        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color)
+      );
 
-      stream.writeProgramSet(Programs::handles.shadowStatic);
-      stream.writeUniformMat4Set(Uniforms::list.shadowStaticWorldClipTransform, 1, lightWorldClipTransform.components);
+      stream.writeProgramSet(Programs::handles.shadowBaseStatic);
+      stream.writeUniformMat4Set(Uniforms::list.shadowBaseStaticWorldViewTransform, 1, lightWorldViewTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.shadowBaseStaticViewClipTransform, 1, lightViewClipTransform.components);
       const StaticDrawSet &staticSet = drawSet.staticSet;
       for(uint16_t i=0; staticSet.count>i; i++) {
         const StaticMesh& mesh = StaticMeshes::get(staticSet.meshes[i]);
         stream.writeUniformMat4Set(
-          Uniforms::list.shadowStaticModelWorldTransform,
+          Uniforms::list.shadowBaseStaticModelWorldTransform,
           1,
           staticSet.transforms[i].components
         );
@@ -34,20 +44,21 @@ namespace Rendering {
         stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
       }
 
-      stream.writeProgramSet(Programs::handles.shadowBone);
-      stream.writeUniformMat4Set(Uniforms::list.shadowBoneWorldClipTransform, 1, lightWorldClipTransform.components);
+      stream.writeProgramSet(Programs::handles.shadowBaseBone);
+      stream.writeUniformMat4Set(Uniforms::list.shadowBaseBoneWorldViewTransform, 1, lightWorldViewTransform.components);
+      stream.writeUniformMat4Set(Uniforms::list.shadowBaseBoneViewClipTransform, 1, lightViewClipTransform.components);
       const BoneDrawSet &boneSet = drawSet.boneSet;
       for(uint16_t i=0; boneSet.count>i; i++) {
         BoneMesh mesh = boneMeshRegistry.get(boneSet.meshes[i]);
 
         stream.writeUniformMat4Set(
-          Uniforms::list.shadowBoneJointWorldTransform,
+          Uniforms::list.shadowBaseBoneJointWorldTransform,
           1,
           boneSet.transforms[i].components
         );
 
         stream.writeUniformMat4Set(
-          Uniforms::list.shadowBoneModelJointTransforms,
+          Uniforms::list.shadowBaseBoneModelJointTransforms,
           8,
           boneSet.poses[i].joints[0].components
         );

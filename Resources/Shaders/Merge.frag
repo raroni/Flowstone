@@ -11,7 +11,8 @@ uniform sampler2D lowResDepthTexture;
 uniform sampler2D ssaoTexture;
 
 uniform mat4 cameraClipWorldTransform;
-uniform mat4 lightWorldClipTransform;
+uniform mat4 lightWorldViewTransform;
+uniform mat4 lightViewClipTransform;
 uniform vec3 inversePrimaryLightDirection;
 uniform vec3 primaryLightColor;
 uniform vec3 inverseSecondaryLightDirection;
@@ -28,17 +29,18 @@ float calcLinearDepth(float bufferDepth) {
   return 2.0 * zNear * zFar / (zFar + zNear - normalizedDepth * (zFar - zNear));
 }
 
-float calcShadow(vec2 shadowTextureCoords, float depth) {
-  float result = 0.0;
-  for(int y=-1 ; y<=1; y++) {
-    for(int x=-1 ; x<=1; x++) {
-      vec2 offset = vec2(x, y)*inverseShadowSize;
-      if(depth > texture(shadowTexture, shadowTextureCoords+offset).x+shadowBias) {
-        result += 1;
-      }
-    }
+float calcShadow(vec2 shadowTextureCoords, float fragmentDepth) {
+  vec2 depths = texture(shadowTexture, shadowTextureCoords).xy;
+  float mean = depths.x;
+
+  if(mean > fragmentDepth-shadowBias) {
+    return 1;
   }
-  return result/9.0;
+
+  float variance = depths.y-mean*mean;
+  variance = max(variance, 0.00001);
+  float meanDifference = fragmentDepth-depths.x;
+  return variance/(variance + meanDifference*meanDifference);
 }
 
 float calcOcclusion() {
@@ -75,10 +77,11 @@ void main() {
     vec3 fragmentNDCPosition = vec3(texCoords, bufferDepth)*2-1;
     vec4 a = cameraClipWorldTransform * vec4(fragmentNDCPosition, 1.0);
     vec4 fragmentWorldPosition = vec4(a.xyz/a.w, 1);
-    vec4 lightClipPosition = lightWorldClipTransform * fragmentWorldPosition;
+    vec4 lightViewPosition = lightWorldViewTransform * fragmentWorldPosition;
+    vec4 lightClipPosition = lightViewClipTransform * lightViewPosition;
     vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
     vec3 shadowTextureCoords = lightNDCPosition*0.5+0.5;
-    primaryLuminosity = lightDot*(1.0-calcShadow(shadowTextureCoords.xy, shadowTextureCoords.z));
+    primaryLuminosity = lightDot*calcShadow(shadowTextureCoords.xy, lightViewPosition.z);
   }
 
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);

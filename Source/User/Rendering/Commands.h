@@ -26,6 +26,11 @@ namespace Rendering {
     uint16_t count;
   };
 
+  struct UniformVec2SetCommand {
+    Backend::UniformHandle uniform;
+    uint16_t count;
+  };
+
   struct UniformVec3SetCommand {
     Backend::UniformHandle uniform;
     uint16_t count;
@@ -66,6 +71,14 @@ namespace Rendering {
   struct TexturePairSetCommand {
     uint8_t unit;
     Backend::TextureHandle handle;
+  };
+
+  struct TextureSetCommand {
+    Backend::TextureHandle handle;
+  };
+
+  struct TextureUnitSetCommand {
+    uint8_t unit;
   };
 }
 
