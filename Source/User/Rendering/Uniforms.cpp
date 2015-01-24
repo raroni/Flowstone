@@ -34,12 +34,14 @@ namespace Rendering {
       list.mergeInverseShadowSize = Backend::getUniform(mergeProgram, "inverseShadowSize");
 
       Backend::ProgramHandle shadowBone = Programs::handles.shadowBone;
-      list.shadowBoneWorldClipTransform = Backend::getUniform(shadowBone, "worldClipTransform");
+      list.shadowBoneWorldViewTransform = Backend::getUniform(shadowBone, "worldViewTransform");
+      list.shadowBoneViewClipTransform = Backend::getUniform(shadowBone, "viewClipTransform");
       list.shadowBoneJointWorldTransform = Backend::getUniform(shadowBone, "jointWorldTransform");
       list.shadowBoneModelJointTransforms = Backend::getUniform(shadowBone, "modelJointTransforms");
 
       Backend::ProgramHandle shadowStatic = Programs::handles.shadowStatic;
-      list.shadowStaticWorldClipTransform = Backend::getUniform(shadowStatic, "worldClipTransform");
+      list.shadowStaticWorldViewTransform = Backend::getUniform(shadowStatic, "worldViewTransform");
+      list.shadowStaticViewClipTransform = Backend::getUniform(shadowStatic, "viewClipTransform");
       list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
 
       Backend::ProgramHandle ssaoGrain = Programs::handles.ssaoGrain;

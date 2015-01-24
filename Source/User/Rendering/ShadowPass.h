@@ -13,7 +13,8 @@ namespace Rendering {
       CommandStream &stream,
       const BoneMeshRegistry &boneMeshRegistry,
       const DrawSet &drawSet,
-      const Quanta::Matrix4 &lightWorldClipTransform
+      const Quanta::Matrix4 &lightWorldViewTransform,
+      const Quanta::Matrix4 &lightViewClipTransform
     );
   }
 }
