@@ -14,7 +14,11 @@ namespace Rendering {
     const float verticalOffset[] = { 0.0, 1.0/Config::shadowMapSize };
     const uint8_t sourceTextureUnit = 0;
 
-    static void draw(CommandStream &stream) {
+    static void draw(CommandStream &stream, Backend::RenderTargetHandle renderTarget, const float *offset, Backend::TextureHandle texture) {
+      stream.writeRenderTargetSet(renderTarget);
+      stream.writeUniformVec2Set(Uniforms::list.shadowBlurOffset, 1, offset);
+      stream.writeTextureSet(texture);
+
       stream.writeObjectSet(FullscreenQuad::object);
       stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
       stream.writeObjectSet(0);
@@ -28,15 +32,19 @@ namespace Rendering {
       stream.writeProgramSet(Programs::handles.shadowBlur);
       stream.writeTextureUnitSet(sourceTextureUnit);
 
-      stream.writeRenderTargetSet(RenderTargets::handles.shadowBlurHorizontal);
-      stream.writeUniformVec2Set(Uniforms::list.shadowBlurOffset, 1, horizontalOffset);
-      stream.writeTextureSet(Textures::list.shadowVarianceDepth);
-      draw(stream);
+      draw(
+        stream,
+        RenderTargets::handles.shadowBlurHorizontal,
+        horizontalOffset,
+        Textures::list.shadowVarianceDepth
+      );
 
-      stream.writeRenderTargetSet(RenderTargets::handles.shadowBlurVertical);
-      stream.writeUniformVec2Set(Uniforms::list.shadowBlurOffset, 1, verticalOffset);
-      stream.writeTextureSet(Textures::list.shadowBlurVarianceDepth);
-      draw(stream);
+      draw(
+        stream,
+        RenderTargets::handles.shadowBlurVertical,
+        verticalOffset,
+        Textures::list.shadowBlurVarianceDepth
+      );
     }
   }
 }
