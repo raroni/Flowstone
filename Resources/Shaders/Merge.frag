@@ -30,12 +30,17 @@ float calcLinearDepth(float bufferDepth) {
 }
 
 float calcShadow(vec2 shadowTextureCoords, float fragmentDepth) {
-  float shadowDepth = texture(shadowTexture, shadowTextureCoords).x;
-  if(fragmentDepth-shadowBias < shadowDepth) {
+  vec2 depths = texture(shadowTexture, shadowTextureCoords).xy;
+  float mean = depths.x;
+
+  if(mean > fragmentDepth-shadowBias) {
     return 1;
-  } else {
-    return 0;
   }
+
+  float variance = depths.y-mean*mean;
+  variance = max(variance, 0.00001);
+  float meanDifference = fragmentDepth-depths.x;
+  return variance/(variance + meanDifference*meanDifference);
 }
 
 float calcOcclusion() {
