@@ -28,9 +28,9 @@ namespace Rendering {
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
 
-    static void initializeShadowBufferDepth() {
-      list.shadowBufferDepth = Backend::createTexture();
-      Backend::setTexture(list.shadowBufferDepth);
+    static void initializeShadowBaseBufferDepth() {
+      list.shadowBaseBufferDepth = Backend::createTexture();
+      Backend::setTexture(list.shadowBaseBufferDepth);
       Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::Depth, NULL);
     }
 
@@ -81,7 +81,7 @@ namespace Rendering {
       initializeGeometryDiffuse();
       initializeGeometryNormal();
       initializeGeometryDepth();
-      initializeShadowBufferDepth();
+      initializeShadowBaseBufferDepth();
       initializeShadowVarianceDepth();
       initializeSSAOGrainNoise();
       initializeSSAOGrainResult();

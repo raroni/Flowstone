@@ -7,7 +7,7 @@ namespace Rendering {
   namespace RenderTargets {
     struct HandleList {
       Backend::RenderTargetHandle geometry;
-      Backend::RenderTargetHandle shadow;
+      Backend::RenderTargetHandle shadowBase;
       Backend::RenderTargetHandle ssaoGrain;
       Backend::RenderTargetHandle ssaoBlur;
       Backend::RenderTargetHandle downsample;

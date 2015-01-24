@@ -8,10 +8,10 @@ namespace Rendering {
   namespace RenderTargets {
     HandleList handles;
 
-    static void initializeShadow() {
-      handles.shadow = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.shadow);
-      Backend::attachDepthTexture(Textures::list.shadowBufferDepth);
+    static void initializeShadowBase() {
+      handles.shadowBase = Backend::createRenderTarget();
+      Backend::setRenderTarget(handles.shadowBase);
+      Backend::attachDepthTexture(Textures::list.shadowBaseBufferDepth);
       Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
     }
 
@@ -48,15 +48,15 @@ namespace Rendering {
       initializeGeometry();
       initializeSSAOGrain();
       initializeSSAOBlur();
-      initializeShadow();
+      initializeShadowBase();
       initializeDownsample();
       Backend::setRenderTarget(0);
     }
 
     void handleResolutionChange() {
-      Backend::setRenderTarget(handles.shadow);
+      Backend::setRenderTarget(handles.shadowBase);
       if(!Backend::checkRenderTarget()) {
-        fatalError("Shadow render target not configured propertly.");
+        fatalError("Shadow base render target not configured propertly.");
       }
 
       Backend::setRenderTarget(handles.geometry);

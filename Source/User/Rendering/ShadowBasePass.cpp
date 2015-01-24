@@ -12,10 +12,10 @@
 #include "Rendering/BoneMesh.h"
 #include "Rendering/BoneMeshRegistry.h"
 #include "Rendering/StaticDrawSet.h"
-#include "Rendering/ShadowPass.h"
+#include "Rendering/ShadowBasePass.h"
 
 namespace Rendering {
-  namespace ShadowPass {
+  namespace ShadowBasePass {
     void write(
       CommandStream &stream,
       const BoneMeshRegistry &boneMeshRegistry,
@@ -23,7 +23,7 @@ namespace Rendering {
       const Quanta::Matrix4 &lightWorldViewTransform,
       const Quanta::Matrix4 &lightViewClipTransform
     ) {
-      stream.writeRenderTargetSet(RenderTargets::handles.shadow);
+      stream.writeRenderTargetSet(RenderTargets::handles.shadowBase);
       stream.writeClear(
         static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth) |
         static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color)

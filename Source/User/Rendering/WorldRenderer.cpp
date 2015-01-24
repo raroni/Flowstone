@@ -4,7 +4,7 @@
 #include "Quanta/ProjectionFactory.h"
 #include "Quanta/Math/Vector4.h"
 #include "Core/Error.h"
-#include "Rendering/ShadowPass.h"
+#include "Rendering/Shadow.h"
 #include "Rendering/GeometryPass.h"
 #include "Rendering/SSAO.h"
 #include "Rendering/MergePass.h"
@@ -82,7 +82,7 @@ namespace Rendering {
     culler.cull(frustum, drawSet);
     stream.writeEnableDepthTest();
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
-    ShadowPass::write(stream, boneMeshRegistry, drawSet, primaryLightTransforms.worldView, primaryLightTransforms.viewClip);
+    Shadow::write(stream, boneMeshRegistry, drawSet, primaryLightTransforms.worldView, primaryLightTransforms.viewClip);
     stream.writeViewportSet(resolution.width, resolution.height);
     writeGlobalUniformUpdate(stream, worldViewTransform);
     GeometryPass::write(stream, drawSet, boneMeshRegistry);
