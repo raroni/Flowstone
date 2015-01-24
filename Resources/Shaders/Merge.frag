@@ -22,7 +22,7 @@ uniform float zFar;
 uniform uint downsampleScale;
 uniform float inverseShadowSize;
 
-const float shadowBias = 0.05;
+const float shadowBias = 0.005;
 
 float calcLinearDepth(float bufferDepth) {
   float normalizedDepth = bufferDepth*2.0-1.0;

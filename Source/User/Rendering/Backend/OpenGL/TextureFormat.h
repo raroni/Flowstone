@@ -6,7 +6,7 @@ namespace Rendering {
       RGB = GL_RGB,
       SignedNormalizedRGB = GL_RGB8_SNORM,
       RedF32 = GL_R32F,
-      RedGreenF16 = GL_RG16F,
+      RedGreenF32 = GL_RG32F,
       Red = GL_RED,
       Depth = GL_DEPTH_COMPONENT32F
     };

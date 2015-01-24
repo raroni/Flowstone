@@ -37,7 +37,7 @@ namespace Rendering {
     static void initializeShadowVarianceDepth() {
       list.shadowVarianceDepth = Backend::createTexture();
       Backend::setTexture(list.shadowVarianceDepth);
-      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF16, NULL);
+      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF32, NULL);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Linear);
     }
@@ -45,7 +45,7 @@ namespace Rendering {
     static void initializeShadowBlurVarianceDepth() {
       list.shadowBlurVarianceDepth = Backend::createTexture();
       Backend::setTexture(list.shadowBlurVarianceDepth);
-      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF16, NULL);
+      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF32, NULL);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Linear);
     }
