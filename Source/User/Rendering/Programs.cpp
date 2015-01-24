@@ -33,24 +33,24 @@ namespace Rendering {
     return program;
   }
 
-  static Backend::ProgramHandle initializeShadowBoneProgram() {
+  static Backend::ProgramHandle initializeShadowBaseBoneProgram() {
     Backend::ProgramHandle program = Backend::createProgram();
-    loadSource("ShadowBone.vert");
+    loadSource("ShadowBaseBone.vert");
     Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
     Backend::attachShader(program, vertexShader);
-    loadSource("Shadow.frag");
+    loadSource("ShadowBase.frag");
     Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
     Backend::attachShader(program, fragmentShader);
     Backend::linkProgram(program);
     return program;
   }
 
-  static Backend::ProgramHandle initializeShadowStaticProgram() {
+  static Backend::ProgramHandle initializeShadowBaseStaticProgram() {
     Backend::ProgramHandle program = Backend::createProgram();
-    loadSource("ShadowStatic.vert");
+    loadSource("ShadowBaseStatic.vert");
     Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
     Backend::attachShader(program, vertexShader);
-    loadSource("Shadow.frag");
+    loadSource("ShadowBase.frag");
     Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
     Backend::attachShader(program, fragmentShader);
     Backend::linkProgram(program);
@@ -88,8 +88,8 @@ namespace Rendering {
       handles.geometryBone = initializeGeometryProgram("GeometryBone");
       handles.geometryStatic = initializeGeometryProgram("GeometryStatic");
       handles.merge = initializeStandardProgram("Merge");
-      handles.shadowBone = initializeShadowBoneProgram();
-      handles.shadowStatic = initializeShadowStaticProgram();
+      handles.shadowBaseBone = initializeShadowBaseBoneProgram();
+      handles.shadowBaseStatic = initializeShadowBaseStaticProgram();
       handles.ssaoGrain = initializeStandardProgram("SSAOGrain");
       handles.ssaoBlur = initializeStandardProgram("SSAOBlur");
       handles.downsample = initializeStandardProgram("Downsample");

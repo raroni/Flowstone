@@ -9,8 +9,8 @@ namespace Rendering {
       Backend::ShaderHandle geometryBone;
       Backend::ShaderHandle geometryStatic;
       Backend::ShaderHandle merge;
-      Backend::ShaderHandle shadowBone;
-      Backend::ShaderHandle shadowStatic;
+      Backend::ShaderHandle shadowBaseBone;
+      Backend::ShaderHandle shadowBaseStatic;
       Backend::ShaderHandle shadowBlur;
       Backend::ShaderHandle ssaoGrain;
       Backend::ShaderHandle ssaoBlur;

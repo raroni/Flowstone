@@ -34,16 +34,16 @@ namespace Rendering {
       list.mergeDownsampleScale = Backend::getUniform(mergeProgram, "downsampleScale");
       list.mergeInverseShadowSize = Backend::getUniform(mergeProgram, "inverseShadowSize");
 
-      Backend::ProgramHandle shadowBone = Programs::handles.shadowBone;
-      list.shadowBoneWorldViewTransform = Backend::getUniform(shadowBone, "worldViewTransform");
-      list.shadowBoneViewClipTransform = Backend::getUniform(shadowBone, "viewClipTransform");
-      list.shadowBoneJointWorldTransform = Backend::getUniform(shadowBone, "jointWorldTransform");
-      list.shadowBoneModelJointTransforms = Backend::getUniform(shadowBone, "modelJointTransforms");
+      Backend::ProgramHandle shadowBaseBone = Programs::handles.shadowBaseBone;
+      list.shadowBaseBoneWorldViewTransform = Backend::getUniform(shadowBaseBone, "worldViewTransform");
+      list.shadowBaseBoneViewClipTransform = Backend::getUniform(shadowBaseBone, "viewClipTransform");
+      list.shadowBaseBoneJointWorldTransform = Backend::getUniform(shadowBaseBone, "jointWorldTransform");
+      list.shadowBaseBoneModelJointTransforms = Backend::getUniform(shadowBaseBone, "modelJointTransforms");
 
-      Backend::ProgramHandle shadowStatic = Programs::handles.shadowStatic;
-      list.shadowStaticWorldViewTransform = Backend::getUniform(shadowStatic, "worldViewTransform");
-      list.shadowStaticViewClipTransform = Backend::getUniform(shadowStatic, "viewClipTransform");
-      list.shadowStaticModelWorldTransform = Backend::getUniform(shadowStatic, "modelWorldTransform");
+      Backend::ProgramHandle shadowBaseStatic = Programs::handles.shadowBaseStatic;
+      list.shadowBaseStaticWorldViewTransform = Backend::getUniform(shadowBaseStatic, "worldViewTransform");
+      list.shadowBaseStaticViewClipTransform = Backend::getUniform(shadowBaseStatic, "viewClipTransform");
+      list.shadowBaseStaticModelWorldTransform = Backend::getUniform(shadowBaseStatic, "modelWorldTransform");
 
       Backend::ProgramHandle shadowBlur = Programs::handles.shadowBlur;
       list.shadowBlurOffset = Backend::getUniform(shadowBlur, "offset");

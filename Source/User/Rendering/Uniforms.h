@@ -6,13 +6,13 @@
 namespace Rendering {
   namespace Uniforms {
     struct List {
-      Backend::UniformHandle shadowBoneWorldViewTransform;
-      Backend::UniformHandle shadowBoneViewClipTransform;
-      Backend::UniformHandle shadowBoneJointWorldTransform;
-      Backend::UniformHandle shadowBoneModelJointTransforms;
-      Backend::UniformHandle shadowStaticWorldViewTransform;
-      Backend::UniformHandle shadowStaticViewClipTransform;
-      Backend::UniformHandle shadowStaticModelWorldTransform;
+      Backend::UniformHandle shadowBaseBoneWorldViewTransform;
+      Backend::UniformHandle shadowBaseBoneViewClipTransform;
+      Backend::UniformHandle shadowBaseBoneJointWorldTransform;
+      Backend::UniformHandle shadowBaseBoneModelJointTransforms;
+      Backend::UniformHandle shadowBaseStaticWorldViewTransform;
+      Backend::UniformHandle shadowBaseStaticViewClipTransform;
+      Backend::UniformHandle shadowBaseStaticModelWorldTransform;
       Backend::UniformHandle shadowBlurOffset;
       Backend::UniformHandle shadowBlurSourceTexture;
       Backend::UniformHandle geometryBoneJointWorldTransform;
