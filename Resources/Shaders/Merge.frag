@@ -22,24 +22,20 @@ uniform float zFar;
 uniform uint downsampleScale;
 uniform float inverseShadowSize;
 
-const float shadowBias = 0.005;
+const float shadowBias = 0.05;
 
 float calcLinearDepth(float bufferDepth) {
   float normalizedDepth = bufferDepth*2.0-1.0;
   return 2.0 * zNear * zFar / (zFar + zNear - normalizedDepth * (zFar - zNear));
 }
 
-float calcShadow(vec2 shadowTextureCoords, float depth) {
-  float result = 0.0;
-  for(int y=-1 ; y<=1; y++) {
-    for(int x=-1 ; x<=1; x++) {
-      vec2 offset = vec2(x, y)*inverseShadowSize;
-      if(depth > texture(shadowTexture, shadowTextureCoords+offset).x+shadowBias) {
-        result += 1;
-      }
-    }
+float calcShadow(vec2 shadowTextureCoords, float fragmentDepth) {
+  float shadowDepth = texture(shadowTexture, shadowTextureCoords).x;
+  if(fragmentDepth-shadowBias < shadowDepth) {
+    return 1;
+  } else {
+    return 0;
   }
-  return result/9.0;
 }
 
 float calcOcclusion() {
@@ -80,7 +76,7 @@ void main() {
     vec4 lightClipPosition = lightViewClipTransform * lightViewPosition;
     vec3 lightNDCPosition = lightClipPosition.xyz/lightClipPosition.w;
     vec3 shadowTextureCoords = lightNDCPosition*0.5+0.5;
-    primaryLuminosity = lightDot*(1.0-calcShadow(shadowTextureCoords.xy, shadowTextureCoords.z));
+    primaryLuminosity = lightDot*calcShadow(shadowTextureCoords.xy, lightViewPosition.z);
   }
 
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);
