@@ -15,6 +15,7 @@ namespace Rendering {
       Backend::ShaderHandle ssaoGrain;
       Backend::ShaderHandle ssaoBlur;
       Backend::ShaderHandle downsample;
+      Backend::ShaderHandle pointLight;
     };
     extern HandleList handles;
 

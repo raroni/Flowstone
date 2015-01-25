@@ -1,6 +1,7 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
+#include "Rendering/PointLightIndex.h"
 #include "PlayerControl.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
@@ -217,10 +218,17 @@ namespace MainFlow {
     setupGround();
     setupBox();
 
+    setupPointLight();
+
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -3.75;
     camera.position[1] = 6;
     camera.rotateX(1);
+  }
+
+  void PlayState::setupPointLight() {
+    Rendering::PointLightIndex pointLight = renderer.createPointLight();
+    renderer.updatePointLightPosition(pointLight, { 1, 0.5, 2 });
   }
 
   void PlayState::configureGreenTree() {

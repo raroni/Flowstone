@@ -38,6 +38,7 @@ namespace MainFlow {
     void setupGround();
     void setupRock();
     void setupBox();
+    void setupPointLight();
     void updateAtmosphereColor();
     void updateLightDirection();
     void configureGreenTree();

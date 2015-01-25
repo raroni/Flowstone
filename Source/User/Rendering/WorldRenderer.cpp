@@ -9,6 +9,7 @@
 #include "Rendering/SSAO.h"
 #include "Rendering/MergePass.h"
 #include "Rendering/CommandStream.h"
+#include "Rendering/PointLights.h"
 #include "Rendering/LightTransforms.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
@@ -24,6 +25,7 @@ namespace Rendering {
     SSAO::initialize();
     MergePass::initialize();
     Shadow::initialize();
+    PointLights::initialize();
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -37,6 +39,14 @@ namespace Rendering {
   BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
     BoneMesh mesh = boneMeshRegistry.get(meshIndex);
     return BoneMeshInstances::create(meshIndex, mesh.boundingRadius);
+  }
+
+  PointLightIndex WorldRenderer::createPointLight() {
+    return PointLights::create();
+  }
+
+  void WorldRenderer::updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position) {
+    PointLights::updatePosition(index, position);
   }
 
   BoneMeshInstance WorldRenderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
@@ -104,6 +114,8 @@ namespace Rendering {
       primaryLightDirection,
       secondaryLightDirection
     );
+
+    PointLights::write(stream);
 
     drawSet.clear();
   }

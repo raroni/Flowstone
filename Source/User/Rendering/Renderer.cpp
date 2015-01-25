@@ -39,6 +39,14 @@ namespace Rendering {
     return worldRenderer.getBoneMeshInstance(index);
   }
 
+  PointLightIndex Renderer::createPointLight() {
+    return worldRenderer.createPointLight();
+  }
+
+  void Renderer::updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position) {
+    worldRenderer.updatePointLightPosition(index, position);
+  }
+
   void Renderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
     worldRenderer.updateStaticMeshTransform(index, transform);
   }

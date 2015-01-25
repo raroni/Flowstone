@@ -20,6 +20,8 @@ namespace Rendering {
     BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex meshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
+    PointLightIndex createPointLight();
+    void updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position);
     BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
     void setPrimaryLightColor(Quanta::Vector3 color);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);

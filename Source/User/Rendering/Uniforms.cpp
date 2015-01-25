@@ -74,6 +74,9 @@ namespace Rendering {
       list.downsampleNormalTexture = Backend::getUniform(downsample, "normalTexture");
       list.downsampleZNear = Backend::getUniform(downsample, "zNear");
       list.downsampleZFar = Backend::getUniform(downsample, "zFar");
+
+      Backend::ProgramHandle pointLight = Programs::handles.pointLight;
+      list.pointLightModelWorldTransform = Backend::getUniform(pointLight, "modelWorldTransform");
     }
   }
 }

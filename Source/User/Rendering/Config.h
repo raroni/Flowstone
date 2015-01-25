@@ -14,6 +14,7 @@ namespace Rendering {
     const uint8_t maxCulledBoneInstances = 128;
     const uint8_t maxCulledStaticInstances = 64;
     const uint8_t cullGroupsCount = 2;
+    const uint8_t maxPointLights = 32;
 
     namespace DrawSet {
       const uint16_t boneCount = 128;

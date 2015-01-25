@@ -14,6 +14,7 @@
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Rendering/StaticVertex.h"
+#include "Rendering/PointLightIndex.h"
 
 namespace Rendering {
   class CommandStream;
@@ -24,6 +25,8 @@ namespace Rendering {
     BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex BoneMeshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
     StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
+    PointLightIndex createPointLight();
+    void updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position);
     void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
     void writeCommands(CommandStream &stream);
     Quanta::Transform cameraTransform;

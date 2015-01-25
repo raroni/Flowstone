@@ -21,13 +21,13 @@ namespace Rendering {
       };
       Backend::BufferHandle vertexBuffer = Backend::createBuffer();
       Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
-      Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(float)*8, vertices);
+      Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(vertices), vertices);
       Backend::configureAttribute(static_cast<Backend::AttributeLocation>(AttributeLocation::Position), 2, Backend::DataType::Float, 0, 0);
 
       uint8_t indices[] = { 0, 1, 2, 2, 1, 3 };
       Backend::BufferHandle indexBuffer = Backend::createBuffer();
       Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
-      Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(uint8_t)*6, indices);
+      Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(indices), indices);
 
       Backend::setObject(0);
     }

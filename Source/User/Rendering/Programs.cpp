@@ -57,7 +57,7 @@ namespace Rendering {
     return program;
   }
 
-  static Backend::ProgramHandle initializeGeometryProgram(const char *name) {
+  static Backend::ProgramHandle initializeGlobalBlockProgram(const char *name) {
     Backend::ProgramHandle program = initializeStandardProgram(name);
     Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "global");
     Backend::setUniformBlockIndex(program, block, 0);
@@ -85,9 +85,10 @@ namespace Rendering {
     HandleList handles;
 
     void initialize() {
-      handles.geometryBone = initializeGeometryProgram("GeometryBone");
-      handles.geometryStatic = initializeGeometryProgram("GeometryStatic");
+      handles.geometryBone = initializeGlobalBlockProgram("GeometryBone");
+      handles.geometryStatic = initializeGlobalBlockProgram("GeometryStatic");
       handles.merge = initializeStandardProgram("Merge");
+      handles.pointLight = initializeGlobalBlockProgram("PointLight");
       handles.shadowBaseBone = initializeShadowBaseBoneProgram();
       handles.shadowBaseStatic = initializeShadowBaseStaticProgram();
       handles.ssaoGrain = initializeStandardProgram("SSAOGrain");
