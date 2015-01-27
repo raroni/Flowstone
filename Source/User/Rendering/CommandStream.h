@@ -21,6 +21,7 @@ namespace Rendering {
     void writeDisableBlending();
     void writeEnableBlending();
     void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
+    void writeBlendFunctionSet(Backend::BlendFactor sourceFactor, Backend::BlendFactor destinationFactor);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);
     void writeRenderTargetSet(Backend::RenderTargetHandle renderTarget);
@@ -37,6 +38,7 @@ namespace Rendering {
     const ClearCommand& readClear();
     const CullFaceSetCommand& readCullFaceSet();
     const IndexedDrawCommand& readIndexedDraw();
+    const BlendFunctionSetCommand& readBlendFunctionSet();
     const ObjectSetCommand& readObjectSet();
     const ProgramSetCommand& readProgramSet();
     const RenderTargetSetCommand& readRenderTargetSet();

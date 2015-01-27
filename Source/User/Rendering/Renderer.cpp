@@ -151,6 +151,11 @@ namespace Rendering {
           Backend::setTexture(command.handle);
           break;
         }
+        case CommandType::BlendFunctionSet: {
+          const BlendFunctionSetCommand &command = stream.readBlendFunctionSet();
+          Backend::setBlendFunction(command.sourceFactor, command.destinationFactor);
+          break;
+        }
         case CommandType::TextureUnitSet: {
           const TextureUnitSetCommand &command = stream.readTextureUnitSet();
           Backend::setTextureUnit(command.unit);

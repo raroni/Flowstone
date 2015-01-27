@@ -21,7 +21,8 @@ namespace Rendering {
     CullFaceSet,
     TexturePairSet,
     TextureSet,
-    TextureUnitSet
+    TextureUnitSet,
+    BlendFunctionSet
   };
 }
 

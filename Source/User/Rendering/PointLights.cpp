@@ -5,6 +5,7 @@
 #include "Rendering/Programs.h"
 #include "Rendering/Textures.h"
 #include "Rendering/Uniforms.h"
+#include "Rendering/Backend/BlendFactor.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/PointLights.h"
 
@@ -65,6 +66,7 @@ namespace Rendering {
 
     void write(CommandStream &stream, const Quanta::Matrix4 &cameraClipWorldTransform) {
       stream.writeEnableBlending();
+      stream.writeBlendFunctionSet(Backend::BlendFactor::One, Backend::BlendFactor::One);
       stream.writeProgramSet(Programs::handles.pointLight);
       stream.writeObjectSet(object);
       stream.writeUniformMat4Set(Uniforms::list.pointLightCameraClipWorldTransform, 1, cameraClipWorldTransform.components);

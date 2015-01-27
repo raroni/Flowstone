@@ -63,6 +63,15 @@ namespace Rendering {
     position += sizeof(command);
   }
 
+  void CommandStream::writeBlendFunctionSet(Backend::BlendFactor sourceFactor, Backend::BlendFactor destinationFactor) {
+    writeType(CommandType::BlendFunctionSet);
+    BlendFunctionSetCommand command;
+    command.sourceFactor = sourceFactor;
+    command.destinationFactor = sourceFactor;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
   void CommandStream::writeObjectSet(Backend::ObjectHandle object) {
     writeType(CommandType::ObjectSet);
     ObjectSetCommand command;
@@ -206,6 +215,12 @@ namespace Rendering {
 
   const IndexedDrawCommand& CommandStream::readIndexedDraw() {
     const IndexedDrawCommand& command = *reinterpret_cast<const IndexedDrawCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
+  const BlendFunctionSetCommand& CommandStream::readBlendFunctionSet() {
+    const BlendFunctionSetCommand &command = *reinterpret_cast<const BlendFunctionSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

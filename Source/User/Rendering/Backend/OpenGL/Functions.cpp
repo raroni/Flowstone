@@ -245,7 +245,10 @@ namespace Rendering {
 
     void enableDepthTest() {
       glEnable(GL_DEPTH_TEST);
-      glBlendFunc(GL_ONE, GL_ONE); // TODO: EXtract into setBlencFunction
+    }
+
+    void setBlendFunction(BlendFactor sourceFactor, BlendFactor destinationFactor) {
+      glBlendFunc(static_cast<GLenum>(sourceFactor), static_cast<GLenum>(destinationFactor));
     }
 
     void disableDepthTest() {
