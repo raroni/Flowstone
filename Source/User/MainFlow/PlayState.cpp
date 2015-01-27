@@ -529,11 +529,11 @@ namespace MainFlow {
 
     static float pl1p = 2.5;
     pl1p -= timeDelta*0.25;
-    renderer.updatePointLightPosition(0, { pl1p, 0.8, 2 });
+    renderer.updatePointLightPosition(0, { pl1p, 0.4, 2 });
 
     static float pl2p = -2.5;
     pl2p += timeDelta*0.4;
-    renderer.updatePointLightPosition(1, { pl2p, 0.8, pl2p });
+    renderer.updatePointLightPosition(1, { pl2p, 0.4, pl2p });
 
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {

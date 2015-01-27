@@ -101,7 +101,7 @@ namespace Rendering {
 
     PointLightIndex create() {
       positions[count] = Quanta::Vector3::zero();
-      radii[count] = 2.3;
+      radii[count] = 3;
       updateTransform(count);
       return count++;
     }
