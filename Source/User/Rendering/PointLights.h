@@ -9,9 +9,10 @@ namespace Rendering {
 
   namespace PointLights {
     void initialize();
-    void write(CommandStream &stream);
+    void write(CommandStream &stream, const Quanta::Matrix4 &cameraClipWorldTransform);
     PointLightIndex create();
     void updatePosition(PointLightIndex index, Quanta::Vector3 position);
+    void handleResolutionChange(Resolution resolution);
   }
 }
 

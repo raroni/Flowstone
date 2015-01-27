@@ -77,6 +77,10 @@ namespace Rendering {
 
       Backend::ProgramHandle pointLight = Programs::handles.pointLight;
       list.pointLightModelWorldTransform = Backend::getUniform(pointLight, "modelWorldTransform");
+      list.pointLightCameraClipWorldTransform = Backend::getUniform(pointLight, "cameraClipWorldTransform");
+      list.pointLightDepthTexture = Backend::getUniform(pointLight, "depthTexture");
+      list.pointLightNormalTexture = Backend::getUniform(pointLight, "normalTexture");
+      list.pointLightResolution = Backend::getUniform(pointLight, "resolution");
     }
   }
 }

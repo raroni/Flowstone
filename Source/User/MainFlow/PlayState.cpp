@@ -227,8 +227,8 @@ namespace MainFlow {
   }
 
   void PlayState::setupPointLight() {
-    Rendering::PointLightIndex pointLight = renderer.createPointLight();
-    renderer.updatePointLightPosition(pointLight, { 1, 0.5, 2 });
+    Rendering::PointLightIndex pointLight1 = renderer.createPointLight();
+    Rendering::PointLightIndex pointLight2 = renderer.createPointLight();
   }
 
   void PlayState::configureGreenTree() {
@@ -526,6 +526,14 @@ namespace MainFlow {
   void PlayState::update(double timeDelta) {
     timeOfDay += timeDelta*0.01;
     timeOfDay = fmod(timeOfDay, 1.0);
+
+    static float pl1p = 2.5;
+    pl1p -= timeDelta*0.25;
+    renderer.updatePointLightPosition(0, { pl1p, 0.8, 2 });
+
+    static float pl2p = -2.5;
+    pl2p += timeDelta*0.4;
+    renderer.updatePointLightPosition(1, { pl2p, 0.8, pl2p });
 
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {

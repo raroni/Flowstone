@@ -172,6 +172,14 @@ namespace Rendering {
           Backend::writeBuffer(command.target, command.size, data);
           break;
         }
+        case CommandType::EnableBlending: {
+          Backend::enableBlending();
+          break;
+        }
+        case CommandType::DisableBlending: {
+          Backend::disableBlending();
+          break;
+        }
         case CommandType::CullFaceSet: {
           const CullFaceSetCommand &command = stream.readCullFaceSet();
           Backend::setCullFace(command.face);

@@ -46,6 +46,14 @@ namespace Rendering {
     writeType(CommandType::EnableDepthTest);
   }
 
+  void CommandStream::writeDisableBlending() {
+    writeType(CommandType::DisableBlending);
+  }
+
+  void CommandStream::writeEnableBlending() {
+    writeType(CommandType::EnableBlending);
+  }
+
   void CommandStream::writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType) {
     writeType(CommandType::IndexedDraw);
     IndexedDrawCommand command;

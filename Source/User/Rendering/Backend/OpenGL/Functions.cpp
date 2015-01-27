@@ -245,10 +245,19 @@ namespace Rendering {
 
     void enableDepthTest() {
       glEnable(GL_DEPTH_TEST);
+      glBlendFunc(GL_ONE, GL_ONE); // TODO: EXtract into setBlencFunction
     }
 
     void disableDepthTest() {
       glDisable(GL_DEPTH_TEST);
+    }
+
+    void enableBlending() {
+      glEnable(GL_BLEND);
+    }
+
+    void disableBlending() {
+      glDisable(GL_BLEND);
     }
 
     void setCullFace(CullFace face) {

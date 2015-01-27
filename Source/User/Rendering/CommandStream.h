@@ -18,6 +18,8 @@ namespace Rendering {
     void writeCullFaceSet(Backend::CullFace face);
     void writeDisableDepthTest();
     void writeEnableDepthTest();
+    void writeDisableBlending();
+    void writeEnableBlending();
     void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
     void writeObjectSet(Backend::ObjectHandle object);
     void writeProgramSet(Backend::ProgramHandle program);

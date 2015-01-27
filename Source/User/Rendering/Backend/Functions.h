@@ -61,9 +61,11 @@ namespace Rendering {
     void attachRenderBuffer(RenderBufferHandle renderBuffer);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
-    void enableDepthTest();
     void enableFaceCulling();
     void disableDepthTest();
+    void enableDepthTest();
+    void disableBlending();
+    void enableBlending();
     void disableDrawBuffer();
     RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height);
     void setViewport(uint16_t width, uint16_t height);

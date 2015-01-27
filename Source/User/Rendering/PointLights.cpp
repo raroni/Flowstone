@@ -3,6 +3,7 @@
 #include "Rendering/Config.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/Programs.h"
+#include "Rendering/Textures.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Backend/Functions.h"
 #include "Rendering/PointLights.h"
@@ -13,7 +14,12 @@ namespace Rendering {
     Backend::ObjectHandle object;
     Quanta::Matrix4 transforms[Config::maxPointLights];
     Quanta::Vector3 positions[Config::maxPointLights];
+    float radii[Config::maxPointLights];
     uint8_t count = 0;
+    namespace TextureUnits {
+      uint8_t depth = 0;
+      uint8_t normal = 1;
+    }
 
     // todo: generate sphere instead of box
     void initialize() {
@@ -23,14 +29,14 @@ namespace Rendering {
       Backend::enableAttributeLocation(positionAttributeLocation);
 
       float vertices[] = {
-        -0.5, 0.5, -0.5,
-        0.5, 0.5, -0.5,
-        -0.5, -0.5, -0.5,
-        0.5, -0.5, -0.5,
-        -0.5, 0.5, 0.5,
-        0.5, 0.5, 0.5,
-        -0.5, -0.5, 0.5,
-        0.5, -0.5, 0.5
+        -1, 1, -1,
+        1, 1, -1,
+        -1, -1, -1,
+        1, -1, -1,
+        -1, 1, 1,
+        1, 1, 1,
+        -1, -1, 1,
+        1, -1, 1
       };
       Backend::BufferHandle vertexBuffer = Backend::createBuffer();
       Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
@@ -50,24 +56,51 @@ namespace Rendering {
       Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(indices), indices);
 
       Backend::setObject(0);
+
+      Backend::setProgram(Programs::handles.pointLight);
+      Backend::setUniformInt(Uniforms::list.pointLightDepthTexture, TextureUnits::depth);
+      Backend::setUniformInt(Uniforms::list.pointLightNormalTexture, TextureUnits::normal);
+      Backend::setProgram(0);
     }
 
-    void write(CommandStream &stream) {
+    void write(CommandStream &stream, const Quanta::Matrix4 &cameraClipWorldTransform) {
+      stream.writeEnableBlending();
       stream.writeProgramSet(Programs::handles.pointLight);
       stream.writeObjectSet(object);
+      stream.writeUniformMat4Set(Uniforms::list.pointLightCameraClipWorldTransform, 1, cameraClipWorldTransform.components);
+      stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
+      stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
       for(uint8_t i=0; i<count; ++i) {
         stream.writeUniformMat4Set(Uniforms::list.pointLightModelWorldTransform, 1, transforms[i].components);
         stream.writeIndexedDraw(36, Backend::DataType::UnsignedByte);
       }
+      stream.writeDisableBlending();
+    }
+
+    void updateTransform(PointLightIndex index) {
+      transforms[index] = Quanta::TransformFactory3D::translation(positions[index]);
+      float radius = radii[index];
+      transforms[index][0] *= radius;
+      transforms[index][5] *= radius;
+      transforms[index][10] *= radius;
     }
 
     void updatePosition(PointLightIndex index, Quanta::Vector3 position) {
       positions[index] = position;
-      transforms[index] = Quanta::TransformFactory3D::translation(position);
+      updateTransform(index);
+    }
+
+    void handleResolutionChange(Resolution resolution) {
+      Backend::setProgram(Programs::handles.pointLight);
+      const float floatResolution[] = { static_cast<float>(resolution.width), static_cast<float>(resolution.height) };
+      Backend::setUniformVec2(Uniforms::list.pointLightResolution, 1, floatResolution);
+      Backend::setProgram(0);
     }
 
     PointLightIndex create() {
-      transforms[count] = Quanta::Matrix4::identity();
+      positions[count] = Quanta::Vector3::zero();
+      radii[count] = 2.3;
+      updateTransform(count);
       return count++;
     }
   }

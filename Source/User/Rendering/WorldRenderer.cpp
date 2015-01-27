@@ -73,6 +73,7 @@ namespace Rendering {
     Frustum::calcFrustum(frustumInfo, localFrustum);
     calcViewClipTransform();
     SSAO::handleResolutionChange(resolution);
+    PointLights::handleResolutionChange(resolution);
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
@@ -115,7 +116,7 @@ namespace Rendering {
       secondaryLightDirection
     );
 
-    PointLights::write(stream);
+    PointLights::write(stream, clipWorldTransform);
 
     drawSet.clear();
   }

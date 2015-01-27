@@ -14,6 +14,8 @@ namespace Rendering {
     RenderTargetSet,
     EnableDepthTest,
     DisableDepthTest,
+    EnableBlending,
+    DisableBlending,
     Clear,
     ViewportSet,
     CullFaceSet,
