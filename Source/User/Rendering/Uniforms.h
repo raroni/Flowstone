@@ -28,6 +28,8 @@ namespace Rendering {
       Backend::UniformHandle ssaoGrainNoiseScale;
       Backend::UniformHandle ssaoGrainSampleRadius;
       Backend::UniformHandle ssaoGrainSampleDifferenceLimit;
+      Backend::UniformHandle ssaoGrainZNear;
+      Backend::UniformHandle ssaoGrainZFar;
       Backend::UniformHandle ssaoBlurGrainTexture;
       Backend::UniformHandle ssaoBlurGrainTexelSize;
       Backend::UniformHandle ssaoBlurDepthDifferenceLimit;

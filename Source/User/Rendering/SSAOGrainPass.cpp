@@ -58,6 +58,11 @@ namespace Rendering {
       Backend::setUniformVec3(Uniforms::list.ssaoGrainSampleKernel, size, kernel[0].components);
     }
 
+    static void uploadPerspectiveConfig() {
+      Backend::setUniformFloat(Uniforms::list.ssaoGrainZNear, 1, &Config::perspective.near);
+      Backend::setUniformFloat(Uniforms::list.ssaoGrainZFar, 1, &Config::perspective.far);
+    }
+
     static void uploadSampleRadius() {
       float data[] = { Config::SSAO::sampleRadius };
       Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleRadius, 1, data);
@@ -81,6 +86,7 @@ namespace Rendering {
       uploadSampleRadius();
       uploadSampleDifferenceLimit();
       uploadTextureConfig();
+      uploadPerspectiveConfig();
       Backend::setProgram(0);
     }
 

@@ -60,6 +60,8 @@ namespace Rendering {
       list.ssaoGrainNoiseScale = Backend::getUniform(ssaoGrain, "noiseScale");
       list.ssaoGrainSampleRadius = Backend::getUniform(ssaoGrain, "sampleRadius");
       list.ssaoGrainSampleDifferenceLimit = Backend::getUniform(ssaoGrain, "sampleDifferenceLimit");
+      list.ssaoGrainZNear = Backend::getUniform(ssaoGrain, "zNear");
+      list.ssaoGrainZFar = Backend::getUniform(ssaoGrain, "zFar");
 
       Backend::ProgramHandle ssaoBlur = Programs::handles.ssaoBlur;
       list.ssaoBlurGrainTexture = Backend::getUniform(ssaoBlur, "grainTexture");

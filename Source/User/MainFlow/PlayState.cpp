@@ -227,8 +227,8 @@ namespace MainFlow {
   }
 
   void PlayState::setupPointLight() {
-    Rendering::PointLightIndex pointLight1 = renderer.createPointLight();
-    Rendering::PointLightIndex pointLight2 = renderer.createPointLight();
+    renderer.createPointLight();
+    renderer.createPointLight();
   }
 
   void PlayState::configureGreenTree() {
@@ -524,7 +524,7 @@ namespace MainFlow {
   }
 
   void PlayState::update(double timeDelta) {
-    timeOfDay += timeDelta*0.01;
+    timeOfDay += timeDelta*0.03;
     timeOfDay = fmod(timeOfDay, 1.0);
 
     static float pl1p = 2.5;
