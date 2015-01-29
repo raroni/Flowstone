@@ -12,6 +12,11 @@
 
 namespace Rendering {
   namespace PointLights {
+    struct {
+      const uint8_t rings = 14;
+      const uint8_t sectors = 10;
+    } sphereConfig;
+    const uint16_t objectIndexCount = sphereConfig.rings*sphereConfig.sectors*6;
     const Backend::AttributeLocation positionAttributeLocation = 0;
     Backend::ObjectHandle object;
     Quanta::Matrix4 transforms[Config::maxPointLights];
@@ -23,36 +28,53 @@ namespace Rendering {
       uint8_t normal = 1;
     }
 
-    // todo: generate sphere instead of box
+    void createSphere(float *vertices, uint16_t *indices) {
+      float const R = 1./(float)(sphereConfig.rings-1);
+      float const S = 1./(float)(sphereConfig.sectors-1);
+
+      uint16_t offset = 0;
+      for(int r=0; r<sphereConfig.rings; r++) {
+        for(int s=0; s<sphereConfig.sectors; s++) {
+          vertices[offset++] = cos(2*M_PI * s * S) * sin(M_PI * r * R);
+          vertices[offset++] = sin(-M_PI_2 + M_PI * r * R);
+          vertices[offset++] = sin(2*M_PI * s * S) * sin(M_PI * r * R);
+        }
+      }
+
+      offset = 0;
+      for(int r=0; r<sphereConfig.rings; r++) {
+        for(int s=0; s<sphereConfig.sectors; s++) {
+          const uint16_t i0 = r * sphereConfig.sectors + (s+1);
+          const uint16_t i1 = (r+1) * sphereConfig.sectors + (s+1);
+          const uint16_t i2 = (r+1) * sphereConfig.sectors + s;
+          const uint16_t i3 = r * sphereConfig.sectors + s;
+
+          indices[offset++] = i0;
+          indices[offset++] = i1;
+          indices[offset++] = i2;
+
+          indices[offset++] = i0;
+          indices[offset++] = i2;
+          indices[offset++] = i3;
+        }
+      }
+    }
+
     void initialize() {
       object = Backend::createObject();
       Backend::setObject(object);
 
       Backend::enableAttributeLocation(positionAttributeLocation);
 
-      float vertices[] = {
-        -1, 1, -1,
-        1, 1, -1,
-        -1, -1, -1,
-        1, -1, -1,
-        -1, 1, 1,
-        1, 1, 1,
-        -1, -1, 1,
-        1, -1, 1
-      };
+      float vertices[sphereConfig.rings*sphereConfig.sectors*3];
+      uint16_t indices[objectIndexCount];
+      createSphere(vertices, indices);
+
       Backend::BufferHandle vertexBuffer = Backend::createBuffer();
       Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
       Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(vertices), vertices);
       Backend::configureAttribute(positionAttributeLocation, 3, Backend::DataType::Float, 0, 0);
 
-      uint8_t indices[] = {
-        0, 2, 1, 1, 2, 3,
-        1, 3, 7, 1, 7, 5,
-        4, 7, 6, 4, 5, 7,
-        0, 6, 2, 0, 4, 6,
-        2, 7, 3, 2, 6, 7,
-        5, 0, 1, 5, 4, 0
-      };
       Backend::BufferHandle indexBuffer = Backend::createBuffer();
       Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
       Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(indices), indices);
@@ -76,7 +98,7 @@ namespace Rendering {
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
       for(uint8_t i=0; i<count; ++i) {
         stream.writeUniformMat4Set(Uniforms::list.pointLightModelWorldTransform, 1, transforms[i].components);
-        stream.writeIndexedDraw(36, Backend::DataType::UnsignedByte);
+        stream.writeIndexedDraw(objectIndexCount, Backend::DataType::UnsignedShort);
       }
       stream.writeDisableBlending();
       stream.writeCullFaceSet(Backend::CullFace::Back);
