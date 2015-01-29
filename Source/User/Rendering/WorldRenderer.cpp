@@ -77,16 +77,22 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
-    Quanta::Matrix4 viewWorldTransform = cameraTransform.calcMatrix();
-    Quanta::Matrix4 worldViewTransform = cameraTransform.calcInverseMatrix();
-    Quanta::Matrix4 clipWorldTransform = (viewClipTransform*worldViewTransform).getInverted();
+    struct {
+      Quanta::Matrix4 viewWorld;
+      Quanta::Matrix4 worldView;
+      Quanta::Matrix4 clipWorld;
+    } cameraTransforms = {
+      cameraTransform.calcMatrix(),
+      cameraTransform.calcInverseMatrix()
+    };
+    cameraTransforms.clipWorld = (cameraViewClipTransform*cameraTransforms.worldView).getInverted();
 
     Quanta::Frustum frustum = localFrustum;
-    Quanta::Transformer::updateFrustum(frustum, viewWorldTransform);
+    Quanta::Transformer::updateFrustum(frustum, cameraTransforms.viewWorld);
 
     LightTransforms::calc(
       frustumInfo,
-      viewWorldTransform,
+      cameraTransforms.viewWorld,
       primaryLightDirection,
       primaryLightTransforms.worldView,
       primaryLightTransforms.viewClip
@@ -96,12 +102,12 @@ namespace Rendering {
     stream.writeViewportSet(Config::shadowMapSize, Config::shadowMapSize);
     Shadow::write(stream, boneMeshRegistry, drawSet, primaryLightTransforms.worldView, primaryLightTransforms.viewClip);
     stream.writeViewportSet(resolution.width, resolution.height);
-    writeGlobalUniformUpdate(stream, worldViewTransform);
+    writeGlobalUniformUpdate(stream, cameraTransforms.worldView);
     GeometryPass::write(stream, drawSet, boneMeshRegistry);
 
     stream.writeDisableDepthTest();
 
-    SSAO::write(stream, resolution, worldViewTransform, viewClipTransform, clipWorldTransform);
+    SSAO::write(stream, resolution, cameraTransforms.clipWorld);
 
     stream.writeRenderTargetSet(0);
 
@@ -109,14 +115,14 @@ namespace Rendering {
 
     MergePass::write(
       stream,
-      (viewClipTransform*worldViewTransform).getInverted(),
+      cameraTransforms.clipWorld,
       primaryLightTransforms.worldView,
       primaryLightTransforms.viewClip,
       primaryLightDirection,
       secondaryLightDirection
     );
 
-    PointLights::write(stream, clipWorldTransform);
+    PointLights::write(stream, cameraTransforms.clipWorld);
 
     drawSet.clear();
   }
@@ -128,7 +134,7 @@ namespace Rendering {
     const size_t matrixSize = sizeof(float)*16;
     const size_t totalSize = matrixSize*2;
     char data[totalSize];
-    memcpy(data, &viewClipTransform.components, matrixSize);
+    memcpy(data, &cameraViewClipTransform.components, matrixSize);
     memcpy(data+matrixSize, &worldViewTransform.components, matrixSize);
     stream.writeBufferWrite(Backend::BufferTarget::Uniform, totalSize, data);
 
@@ -137,6 +143,6 @@ namespace Rendering {
 
   void WorldRenderer::calcViewClipTransform() {
     float aspectRatio = static_cast<float>(resolution.width)/(resolution.height);
-    viewClipTransform = Quanta::ProjectionFactory::perspective(Config::perspective.fieldOfView, aspectRatio, Config::perspective.near, Config::perspective.far);
+    cameraViewClipTransform = Quanta::ProjectionFactory::perspective(Config::perspective.fieldOfView, aspectRatio, Config::perspective.near, Config::perspective.far);
   }
 }

@@ -13,8 +13,6 @@ namespace Rendering {
     void write(
       CommandStream &stream,
       Resolution resolution,
-      const Quanta::Matrix4 &worldViewTransform,
-      const Quanta::Matrix4 &viewClipTransform,
       const Quanta::Matrix4 &clipWorldTransform
     );
   }

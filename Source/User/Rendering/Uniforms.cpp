@@ -53,8 +53,6 @@ namespace Rendering {
       list.ssaoGrainNoiseTexture = Backend::getUniform(ssaoGrain, "noiseTexture");
       list.ssaoGrainNormalTexture = Backend::getUniform(ssaoGrain, "normalTexture");
       list.ssaoGrainDepthTexture = Backend::getUniform(ssaoGrain, "depthTexture");
-      list.ssaoGrainWorldViewTransform = Backend::getUniform(ssaoGrain, "worldViewTransform");
-      list.ssaoGrainViewClipTransform = Backend::getUniform(ssaoGrain, "viewClipTransform");
       list.ssaoGrainClipWorldTransform = Backend::getUniform(ssaoGrain, "clipWorldTransform");
       list.ssaoGrainSampleKernel = Backend::getUniform(ssaoGrain, "sampleKernel");
       list.ssaoGrainNoiseScale = Backend::getUniform(ssaoGrain, "noiseScale");

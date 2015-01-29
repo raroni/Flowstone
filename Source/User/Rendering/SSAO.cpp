@@ -20,13 +20,11 @@ namespace Rendering {
     void write(
       CommandStream &stream,
       Resolution resolution,
-      const Quanta::Matrix4 &worldViewTransform,
-      const Quanta::Matrix4 &viewClipTransform,
       const Quanta::Matrix4 &clipWorldTransform
     ) {
       stream.writeViewportSet(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling);
       DownsamplePass::write(stream);
-      SSAOGrainPass::write(stream, worldViewTransform, viewClipTransform, clipWorldTransform);
+      SSAOGrainPass::write(stream, clipWorldTransform);
       SSAOBlurPass::write(stream);
       stream.writeViewportSet(resolution.width, resolution.height);
     }

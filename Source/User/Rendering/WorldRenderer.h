@@ -46,7 +46,7 @@ namespace Rendering {
     Culler culler;
     BoneMeshRegistry boneMeshRegistry;
     DrawSet drawSet;
-    Quanta::Matrix4 viewClipTransform;
+    Quanta::Matrix4 cameraViewClipTransform;
     void calcViewClipTransform();
     void writeDrawQueueToStream(CommandStream &stream);
     void buildDrawQueue();

@@ -100,16 +100,12 @@ namespace Rendering {
 
     void write(
       CommandStream &stream,
-      const Quanta::Matrix4 &worldViewTransform,
-      const Quanta::Matrix4 &viewClipTransform,
       const Quanta::Matrix4 &clipWorldTransform
     ) {
       stream.writeRenderTargetSet(RenderTargets::handles.ssaoGrain);
       stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
       stream.writeProgramSet(Programs::handles.ssaoGrain);
 
-      stream.writeUniformMat4Set(Uniforms::list.ssaoGrainWorldViewTransform, 1, worldViewTransform.components);
-      stream.writeUniformMat4Set(Uniforms::list.ssaoGrainViewClipTransform, 1, viewClipTransform.components);
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainClipWorldTransform, 1, clipWorldTransform.components);
 
       stream.writeTexturePairSet(TextureUnits::noise, Textures::list.ssaoGrainNoise);

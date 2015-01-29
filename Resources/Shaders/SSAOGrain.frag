@@ -7,8 +7,11 @@ uniform sampler2D noiseTexture;
 uniform sampler2D depthTexture;
 uniform sampler2D normalTexture;
 
-uniform mat4 worldViewTransform;
-uniform mat4 viewClipTransform;
+layout(std140) uniform CameraTransforms {
+  mat4 viewClipTransform;
+  mat4 worldViewTransform;
+};
+
 uniform mat4 clipWorldTransform;
 uniform vec2 noiseScale;
 uniform float sampleRadius;

@@ -116,7 +116,7 @@ namespace Rendering {
       handles.pointLight = initializeCameraTransformBlockProgram("PointLight");
       handles.shadowBaseBone = initializeShadowBaseBoneProgram();
       handles.shadowBaseStatic = initializeShadowBaseStaticProgram();
-      handles.ssaoGrain = initializeStandardProgram("SSAOGrain");
+      handles.ssaoGrain = initializeCameraTransformBlockProgram("SSAOGrain");
       handles.ssaoBlur = initializeStandardProgram("SSAOBlur");
       handles.downsample = initializeStandardProgram("Downsample");
       handles.shadowBlur = initializeFullscreenQuadProgram("ShadowBlur");

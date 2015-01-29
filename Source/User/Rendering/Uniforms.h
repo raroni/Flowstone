@@ -21,8 +21,6 @@ namespace Rendering {
       Backend::UniformHandle ssaoGrainNoiseTexture;
       Backend::UniformHandle ssaoGrainDepthTexture;
       Backend::UniformHandle ssaoGrainNormalTexture;
-      Backend::UniformHandle ssaoGrainWorldViewTransform;
-      Backend::UniformHandle ssaoGrainViewClipTransform;
       Backend::UniformHandle ssaoGrainClipWorldTransform;
       Backend::UniformHandle ssaoGrainSampleKernel;
       Backend::UniformHandle ssaoGrainNoiseScale;
