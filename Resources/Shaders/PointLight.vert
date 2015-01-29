@@ -6,7 +6,7 @@ flat out vec3 center;
 
 layout(location = 0) in vec3 position;
 
-layout(std140) uniform global {
+layout(std140) uniform CameraTransforms {
   mat4 viewClipTransform;
   mat4 worldViewTransform;
 };

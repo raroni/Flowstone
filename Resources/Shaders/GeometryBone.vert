@@ -4,7 +4,7 @@ layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 3) in uint jointIndex;
 
-layout(std140) uniform global {
+layout(std140) uniform CameraTransforms {
   mat4 viewClipTransform;
   mat4 worldViewTransform;
 };

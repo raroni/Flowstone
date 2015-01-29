@@ -57,14 +57,14 @@ namespace Rendering {
     return program;
   }
 
-  static void attachGlobalBlock(Backend::ProgramHandle program) {
-    Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "global");
+  static void attachCameraTransformsBlock(Backend::ProgramHandle program) {
+    Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "CameraTransforms");
     Backend::setUniformBlockIndex(program, block, 0);
   }
 
-  static Backend::ProgramHandle initializeGlobalBlockProgram(const char *name) {
+  static Backend::ProgramHandle initializeCameraTransformBlockProgram(const char *name) {
     Backend::ProgramHandle program = initializeStandardProgram(name);
-    attachGlobalBlock(program);
+    attachCameraTransformsBlock(program);
     return program;
   }
 
@@ -101,7 +101,7 @@ namespace Rendering {
 
     Backend::linkProgram(program);
 
-    attachGlobalBlock(program);
+    attachCameraTransformsBlock(program);
 
     return program;
   }
@@ -113,7 +113,7 @@ namespace Rendering {
       handles.geometryBone = initializeGeometryProgram("Bone");
       handles.geometryStatic = initializeGeometryProgram("Static");
       handles.merge = initializeStandardProgram("Merge");
-      handles.pointLight = initializeGlobalBlockProgram("PointLight");
+      handles.pointLight = initializeCameraTransformBlockProgram("PointLight");
       handles.shadowBaseBone = initializeShadowBaseBoneProgram();
       handles.shadowBaseStatic = initializeShadowBaseStaticProgram();
       handles.ssaoGrain = initializeStandardProgram("SSAOGrain");
