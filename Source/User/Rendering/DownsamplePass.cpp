@@ -13,8 +13,8 @@
 namespace Rendering {
   namespace DownsamplePass {
     namespace TextureUnits {
-      uint8_t depth = 0;
-      uint8_t normal = 1;
+      const uint8_t depth = 0;
+      const uint8_t normal = 1;
     }
 
     void initialize() {

@@ -18,9 +18,9 @@
 namespace Rendering {
   namespace SSAOGrainPass {
     namespace TextureUnits {
-      uint8_t noise = 0;
-      uint8_t depth = 1;
-      uint8_t normal = 2;
+      const uint8_t noise = 0;
+      const uint8_t depth = 1;
+      const uint8_t normal = 2;
     }
 
     Quanta::Random random(123978);

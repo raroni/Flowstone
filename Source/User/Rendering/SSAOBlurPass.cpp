@@ -13,8 +13,8 @@
 namespace Rendering {
   namespace SSAOBlurPass {
     namespace TextureUnits {
-      uint8_t grain = 0;
-      uint8_t depth = 1;
+      const uint8_t grain = 0;
+      const uint8_t depth = 1;
     }
 
     void initialize() {

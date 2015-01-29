@@ -12,29 +12,31 @@
 
 namespace Rendering {
   namespace PointLights {
-    struct {
+    namespace SphereConfig {
       const uint8_t rings = 14;
       const uint8_t sectors = 10;
-    } sphereConfig;
-    const uint16_t objectIndexCount = sphereConfig.rings*sphereConfig.sectors*6;
+    }
+
+    namespace TextureUnits {
+      const uint8_t depth = 0;
+      const uint8_t normal = 1;
+    }
+
+    const uint16_t objectIndexCount = SphereConfig::rings*SphereConfig::sectors*6;
     const Backend::AttributeLocation positionAttributeLocation = 0;
     Backend::ObjectHandle object;
     Quanta::Matrix4 transforms[Config::maxPointLights];
     Quanta::Vector3 positions[Config::maxPointLights];
     float radii[Config::maxPointLights];
     uint8_t count = 0;
-    namespace TextureUnits {
-      uint8_t depth = 0;
-      uint8_t normal = 1;
-    }
 
     void createSphere(float *vertices, uint16_t *indices) {
-      float const R = 1./(float)(sphereConfig.rings-1);
-      float const S = 1./(float)(sphereConfig.sectors-1);
+      float const R = 1./(float)(SphereConfig::rings-1);
+      float const S = 1./(float)(SphereConfig::sectors-1);
 
       uint16_t offset = 0;
-      for(int r=0; r<sphereConfig.rings; r++) {
-        for(int s=0; s<sphereConfig.sectors; s++) {
+      for(int r=0; r<SphereConfig::rings; r++) {
+        for(int s=0; s<SphereConfig::sectors; s++) {
           vertices[offset++] = cos(2*M_PI * s * S) * sin(M_PI * r * R);
           vertices[offset++] = sin(-M_PI_2 + M_PI * r * R);
           vertices[offset++] = sin(2*M_PI * s * S) * sin(M_PI * r * R);
@@ -42,12 +44,12 @@ namespace Rendering {
       }
 
       offset = 0;
-      for(int r=0; r<sphereConfig.rings; r++) {
-        for(int s=0; s<sphereConfig.sectors; s++) {
-          const uint16_t i0 = r * sphereConfig.sectors + (s+1);
-          const uint16_t i1 = (r+1) * sphereConfig.sectors + (s+1);
-          const uint16_t i2 = (r+1) * sphereConfig.sectors + s;
-          const uint16_t i3 = r * sphereConfig.sectors + s;
+      for(int r=0; r<SphereConfig::rings; r++) {
+        for(int s=0; s<SphereConfig::sectors; s++) {
+          const uint16_t i0 = r * SphereConfig::sectors + (s+1);
+          const uint16_t i1 = (r+1) * SphereConfig::sectors + (s+1);
+          const uint16_t i2 = (r+1) * SphereConfig::sectors + s;
+          const uint16_t i3 = r * SphereConfig::sectors + s;
 
           indices[offset++] = i0;
           indices[offset++] = i1;
@@ -66,7 +68,7 @@ namespace Rendering {
 
       Backend::enableAttributeLocation(positionAttributeLocation);
 
-      float vertices[sphereConfig.rings*sphereConfig.sectors*3];
+      float vertices[SphereConfig::rings*SphereConfig::sectors*3];
       uint16_t indices[objectIndexCount];
       createSphere(vertices, indices);
 

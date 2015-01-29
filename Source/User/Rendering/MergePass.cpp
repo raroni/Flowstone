@@ -13,12 +13,12 @@ namespace Rendering {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
 
     namespace TextureUnits {
-      uint8_t diffuse = 0;
-      uint8_t normal = 1;
-      uint8_t depth = 2;
-      uint8_t shadow = 3;
-      uint8_t ssao = 4;
-      uint8_t downsampleDepth = 5;
+      const uint8_t diffuse = 0;
+      const uint8_t normal = 1;
+      const uint8_t depth = 2;
+      const uint8_t shadow = 3;
+      const uint8_t ssao = 4;
+      const uint8_t downsampleDepth = 5;
     }
 
     void initialize() {
