@@ -85,6 +85,12 @@ namespace Rendering {
     return program;
   }
 
+  static Backend::ProgramHandle initializeSSAOGrain() {
+    Backend::ProgramHandle program = initializeFullscreenQuadProgram("SSAOGrain");
+    attachCameraTransformsBlock(program);
+    return program;
+  }
+
   static Backend::ProgramHandle initializeGeometryProgram(const char *type) {
     Backend::ProgramHandle program = Backend::createProgram();
 
@@ -112,13 +118,13 @@ namespace Rendering {
     void initialize() {
       handles.geometryBone = initializeGeometryProgram("Bone");
       handles.geometryStatic = initializeGeometryProgram("Static");
-      handles.merge = initializeStandardProgram("Merge");
+      handles.merge = initializeFullscreenQuadProgram("Merge");
       handles.pointLight = initializeCameraTransformBlockProgram("PointLight");
       handles.shadowBaseBone = initializeShadowBaseBoneProgram();
       handles.shadowBaseStatic = initializeShadowBaseStaticProgram();
-      handles.ssaoGrain = initializeCameraTransformBlockProgram("SSAOGrain");
-      handles.ssaoBlur = initializeStandardProgram("SSAOBlur");
-      handles.downsample = initializeStandardProgram("Downsample");
+      handles.ssaoGrain = initializeSSAOGrain();;
+      handles.ssaoBlur = initializeFullscreenQuadProgram("SSAOBlur");
+      handles.downsample = initializeFullscreenQuadProgram("Downsample");
       handles.shadowBlur = initializeFullscreenQuadProgram("ShadowBlur");
     }
   }
