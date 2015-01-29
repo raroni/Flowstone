@@ -121,6 +121,18 @@ namespace Rendering {
     position += sizeof(command);
   }
 
+  void CommandStream::writeUniformFloatSet(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+    writeType(CommandType::UniformFloatSet);
+    UniformFloatSetCommand command;
+    command.uniform = uniform;
+    command.count = count;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+    size_t dataSize = count*sizeof(float);
+    memcpy(buffer+position, data, dataSize);
+    position += dataSize;
+  }
+
   void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformMat4Set);
     UniformMat4SetCommand command;
@@ -258,6 +270,14 @@ namespace Rendering {
   const TextureUnitSetCommand& CommandStream::readTextureUnitSet() {
     const TextureUnitSetCommand &command = *reinterpret_cast<const TextureUnitSetCommand*>(buffer+position);
     position += sizeof(command);
+    return command;
+  }
+
+  const UniformFloatSetCommand& CommandStream::readUniformFloatSet(const float **data) {
+    const UniformFloatSetCommand &command = *reinterpret_cast<const UniformFloatSetCommand*>(buffer+position);
+    position += sizeof(command);
+    *data = reinterpret_cast<const float*>(buffer+position);
+    position += command.count*sizeof(float);
     return command;
   }
 

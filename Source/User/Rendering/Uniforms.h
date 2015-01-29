@@ -54,8 +54,9 @@ namespace Rendering {
       Backend::UniformHandle downsampleNormalTexture;
       Backend::UniformHandle downsampleZNear;
       Backend::UniformHandle downsampleZFar;
-      Backend::UniformHandle pointLightModelWorldTransform;
       Backend::UniformHandle pointLightCameraClipWorldTransform;
+      Backend::UniformHandle pointLightWorldPosition;
+      Backend::UniformHandle pointLightRadius;
       Backend::UniformHandle pointLightDepthTexture;
       Backend::UniformHandle pointLightNormalTexture;
       Backend::UniformHandle pointLightResolution;

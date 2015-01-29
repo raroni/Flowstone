@@ -100,6 +100,12 @@ namespace Rendering {
           Backend::setUniformMat4(command.uniform, command.count, data);
           break;
         }
+        case CommandType::UniformFloatSet: {
+          const float *data;
+          const UniformFloatSetCommand &command = stream.readUniformFloatSet(&data);
+          Backend::setUniformFloat(command.uniform, command.count, data);
+          break;
+        }
         case CommandType::UniformVec2Set: {
           const float *data;
           const UniformVec2SetCommand &command = stream.readUniformVec2Set(&data);

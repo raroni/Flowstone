@@ -28,6 +28,7 @@ namespace Rendering {
     void writeTexturePairSet(uint8_t unit, Backend::TextureHandle handle);
     void writeTextureSet(Backend::TextureHandle handle);
     void writeTextureUnitSet(uint8_t unit);
+    void writeUniformFloatSet(Backend::UniformHandle uniform, uint16_t count, const float *data);
     void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     void writeUniformVec2Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
     void writeUniformVec3Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
@@ -45,6 +46,7 @@ namespace Rendering {
     const TexturePairSetCommand& readTexturePairSet();
     const TextureSetCommand& readTextureSet();
     const TextureUnitSetCommand& readTextureUnitSet();
+    const UniformFloatSetCommand& readUniformFloatSet(const float **data);
     const UniformMat4SetCommand& readUniformMat4Set(const float **data);
     const UniformVec2SetCommand& readUniformVec2Set(const float **data);
     const UniformVec3SetCommand& readUniformVec3Set(const float **data);

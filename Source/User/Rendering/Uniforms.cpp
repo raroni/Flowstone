@@ -76,7 +76,8 @@ namespace Rendering {
       list.downsampleZFar = Backend::getUniform(downsample, "zFar");
 
       Backend::ProgramHandle pointLight = Programs::handles.pointLight;
-      list.pointLightModelWorldTransform = Backend::getUniform(pointLight, "modelWorldTransform");
+      list.pointLightRadius = Backend::getUniform(pointLight, "radius");
+      list.pointLightWorldPosition = Backend::getUniform(pointLight, "worldPosition");
       list.pointLightCameraClipWorldTransform = Backend::getUniform(pointLight, "cameraClipWorldTransform");
       list.pointLightDepthTexture = Backend::getUniform(pointLight, "depthTexture");
       list.pointLightNormalTexture = Backend::getUniform(pointLight, "normalTexture");

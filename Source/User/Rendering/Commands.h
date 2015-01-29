@@ -22,6 +22,11 @@ namespace Rendering {
     Backend::ObjectHandle object;
   };
 
+  struct UniformFloatSetCommand {
+    Backend::UniformHandle uniform;
+    uint16_t count;
+  };
+
   struct UniformMat4SetCommand {
     Backend::UniformHandle uniform;
     uint16_t count;

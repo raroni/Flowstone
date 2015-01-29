@@ -99,7 +99,8 @@ namespace Rendering {
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
       for(uint8_t i=0; i<count; ++i) {
-        stream.writeUniformMat4Set(Uniforms::list.pointLightModelWorldTransform, 1, transforms[i].components);
+        stream.writeUniformVec3Set(Uniforms::list.pointLightWorldPosition, 1, positions[i].components);
+        stream.writeUniformFloatSet(Uniforms::list.pointLightRadius, 1, &radii[i]);
         stream.writeIndexedDraw(objectIndexCount, Backend::DataType::UnsignedShort);
       }
       stream.writeDisableBlending();
