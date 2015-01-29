@@ -24,7 +24,8 @@ void main() {
   vec3 worldNormal = texelFetch(normalTexture, texelCoord, 0).xyz;
   float lambert = max(0, dot(normalize(difference), -worldNormal));
   float progress = distance/radius;
+  float attenuationFactor = 1 + progress*2 + pow(progress, 2)*4;
   float cutoff = 1-pow(progress, 8);
-  float attenuation = (1/(1 + progress*2 + pow(progress, 2)*4)) * cutoff;
+  float attenuation = (1/attenuationFactor) * cutoff;
   result = vec3(1.0, 0.63, 0.05) * attenuation * lambert;
 }
