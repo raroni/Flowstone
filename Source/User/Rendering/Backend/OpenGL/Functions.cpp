@@ -247,8 +247,20 @@ namespace Rendering {
       glEnable(GL_DEPTH_TEST);
     }
 
+    void setBlendFunction(BlendFactor sourceFactor, BlendFactor destinationFactor) {
+      glBlendFunc(static_cast<GLenum>(sourceFactor), static_cast<GLenum>(destinationFactor));
+    }
+
     void disableDepthTest() {
       glDisable(GL_DEPTH_TEST);
+    }
+
+    void enableBlending() {
+      glEnable(GL_BLEND);
+    }
+
+    void disableBlending() {
+      glDisable(GL_BLEND);
     }
 
     void setCullFace(CullFace face) {

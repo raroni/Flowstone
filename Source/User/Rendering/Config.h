@@ -14,6 +14,7 @@ namespace Rendering {
     const uint8_t maxCulledBoneInstances = 128;
     const uint8_t maxCulledStaticInstances = 64;
     const uint8_t cullGroupsCount = 2;
+    const uint8_t maxPointLights = 32;
 
     namespace DrawSet {
       const uint16_t boneCount = 128;
@@ -35,7 +36,7 @@ namespace Rendering {
 
     struct {
       const float near = 4.5;
-      const float far = 10.0;
+      const float far = 14.0;
       const float fieldOfView = M_PI/3.0f;
     } perspective;
   }

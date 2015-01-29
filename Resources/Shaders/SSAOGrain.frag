@@ -13,6 +13,8 @@ uniform mat4 clipWorldTransform;
 uniform vec2 noiseScale;
 uniform float sampleRadius;
 uniform float sampleDifferenceLimit;
+uniform float zNear;
+uniform float zFar;
 
 const int sampleKernelSize = 16;
 uniform vec3 sampleKernel[sampleKernelSize];
@@ -48,8 +50,6 @@ void main() {
     offset.xy = offset.xy * 0.5 + 0.5;
 
     float sampleNDCDepth = texture(depthTexture, offset.xy).r*2-1;
-    float zNear = 4.5;
-    float zFar = 10.0;
     float sampleViewDepth = 2.0 * zNear * zFar / (zFar + zNear - sampleNDCDepth * (zFar - zNear));
 
     if(abs(viewPosition.z - sampleViewDepth) <= sampleDifferenceLimit && sampleViewDepth <= sample.z) {

@@ -1,6 +1,7 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
+#include "Rendering/PointLightIndex.h"
 #include "PlayerControl.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
@@ -217,10 +218,17 @@ namespace MainFlow {
     setupGround();
     setupBox();
 
+    setupPointLight();
+
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -3.75;
     camera.position[1] = 6;
     camera.rotateX(1);
+  }
+
+  void PlayState::setupPointLight() {
+    renderer.createPointLight();
+    renderer.createPointLight();
   }
 
   void PlayState::configureGreenTree() {
@@ -516,8 +524,16 @@ namespace MainFlow {
   }
 
   void PlayState::update(double timeDelta) {
-    timeOfDay += timeDelta*0.01;
+    timeOfDay += timeDelta*0.03;
     timeOfDay = fmod(timeOfDay, 1.0);
+
+    static float pl1p = 2.5;
+    pl1p -= timeDelta*0.25;
+    renderer.updatePointLightPosition(0, { pl1p, 0.4, 2 });
+
+    static float pl2p = -2.5;
+    pl2p += timeDelta*0.4;
+    renderer.updatePointLightPosition(1, { pl2p, 0.4, pl2p });
 
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {

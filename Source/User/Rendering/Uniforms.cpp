@@ -60,6 +60,8 @@ namespace Rendering {
       list.ssaoGrainNoiseScale = Backend::getUniform(ssaoGrain, "noiseScale");
       list.ssaoGrainSampleRadius = Backend::getUniform(ssaoGrain, "sampleRadius");
       list.ssaoGrainSampleDifferenceLimit = Backend::getUniform(ssaoGrain, "sampleDifferenceLimit");
+      list.ssaoGrainZNear = Backend::getUniform(ssaoGrain, "zNear");
+      list.ssaoGrainZFar = Backend::getUniform(ssaoGrain, "zFar");
 
       Backend::ProgramHandle ssaoBlur = Programs::handles.ssaoBlur;
       list.ssaoBlurGrainTexture = Backend::getUniform(ssaoBlur, "grainTexture");
@@ -74,6 +76,13 @@ namespace Rendering {
       list.downsampleNormalTexture = Backend::getUniform(downsample, "normalTexture");
       list.downsampleZNear = Backend::getUniform(downsample, "zNear");
       list.downsampleZFar = Backend::getUniform(downsample, "zFar");
+
+      Backend::ProgramHandle pointLight = Programs::handles.pointLight;
+      list.pointLightModelWorldTransform = Backend::getUniform(pointLight, "modelWorldTransform");
+      list.pointLightCameraClipWorldTransform = Backend::getUniform(pointLight, "cameraClipWorldTransform");
+      list.pointLightDepthTexture = Backend::getUniform(pointLight, "depthTexture");
+      list.pointLightNormalTexture = Backend::getUniform(pointLight, "normalTexture");
+      list.pointLightResolution = Backend::getUniform(pointLight, "resolution");
     }
   }
 }

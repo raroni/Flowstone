@@ -14,12 +14,15 @@ namespace Rendering {
     RenderTargetSet,
     EnableDepthTest,
     DisableDepthTest,
+    EnableBlending,
+    DisableBlending,
     Clear,
     ViewportSet,
     CullFaceSet,
     TexturePairSet,
     TextureSet,
-    TextureUnitSet
+    TextureUnitSet,
+    BlendFunctionSet
   };
 }
 

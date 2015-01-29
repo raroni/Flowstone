@@ -10,6 +10,7 @@
 #include "Rendering/Backend/UniformHandle.h"
 #include "Rendering/Backend/ClearBitMask.h"
 #include "Rendering/Backend/CullFace.h"
+#include "Rendering/Backend/BlendFactor.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
 
 namespace Rendering {
@@ -79,6 +80,11 @@ namespace Rendering {
 
   struct TextureUnitSetCommand {
     uint8_t unit;
+  };
+
+  struct BlendFunctionSetCommand {
+    Backend::BlendFactor sourceFactor;
+    Backend::BlendFactor destinationFactor;
   };
 }
 

@@ -39,6 +39,14 @@ namespace Rendering {
     return worldRenderer.getBoneMeshInstance(index);
   }
 
+  PointLightIndex Renderer::createPointLight() {
+    return worldRenderer.createPointLight();
+  }
+
+  void Renderer::updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position) {
+    worldRenderer.updatePointLightPosition(index, position);
+  }
+
   void Renderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
     worldRenderer.updateStaticMeshTransform(index, transform);
   }
@@ -143,6 +151,11 @@ namespace Rendering {
           Backend::setTexture(command.handle);
           break;
         }
+        case CommandType::BlendFunctionSet: {
+          const BlendFunctionSetCommand &command = stream.readBlendFunctionSet();
+          Backend::setBlendFunction(command.sourceFactor, command.destinationFactor);
+          break;
+        }
         case CommandType::TextureUnitSet: {
           const TextureUnitSetCommand &command = stream.readTextureUnitSet();
           Backend::setTextureUnit(command.unit);
@@ -162,6 +175,14 @@ namespace Rendering {
           const void *data;
           const BufferWriteCommand &command = stream.readBufferWrite(&data);
           Backend::writeBuffer(command.target, command.size, data);
+          break;
+        }
+        case CommandType::EnableBlending: {
+          Backend::enableBlending();
+          break;
+        }
+        case CommandType::DisableBlending: {
+          Backend::disableBlending();
           break;
         }
         case CommandType::CullFaceSet: {

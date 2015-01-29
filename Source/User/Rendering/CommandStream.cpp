@@ -46,11 +46,28 @@ namespace Rendering {
     writeType(CommandType::EnableDepthTest);
   }
 
+  void CommandStream::writeDisableBlending() {
+    writeType(CommandType::DisableBlending);
+  }
+
+  void CommandStream::writeEnableBlending() {
+    writeType(CommandType::EnableBlending);
+  }
+
   void CommandStream::writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType) {
     writeType(CommandType::IndexedDraw);
     IndexedDrawCommand command;
     command.indexCount = indexCount;
     command.dataType = dataType;
+    memcpy(buffer+position, &command, sizeof(command));
+    position += sizeof(command);
+  }
+
+  void CommandStream::writeBlendFunctionSet(Backend::BlendFactor sourceFactor, Backend::BlendFactor destinationFactor) {
+    writeType(CommandType::BlendFunctionSet);
+    BlendFunctionSetCommand command;
+    command.sourceFactor = sourceFactor;
+    command.destinationFactor = sourceFactor;
     memcpy(buffer+position, &command, sizeof(command));
     position += sizeof(command);
   }
@@ -198,6 +215,12 @@ namespace Rendering {
 
   const IndexedDrawCommand& CommandStream::readIndexedDraw() {
     const IndexedDrawCommand& command = *reinterpret_cast<const IndexedDrawCommand*>(buffer+position);
+    position += sizeof(command);
+    return command;
+  }
+
+  const BlendFunctionSetCommand& CommandStream::readBlendFunctionSet() {
+    const BlendFunctionSetCommand &command = *reinterpret_cast<const BlendFunctionSetCommand*>(buffer+position);
     position += sizeof(command);
     return command;
   }

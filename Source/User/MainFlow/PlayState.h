@@ -27,7 +27,7 @@ namespace MainFlow {
     Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
-    float timeOfDay = 0.5;
+    float timeOfDay = 0.75;
     Physics::DynamicBodyIndex playerBody;
     RendererFeeder rendererFeeder;
     AtmosphereColor atmosphereColor;
@@ -38,6 +38,7 @@ namespace MainFlow {
     void setupGround();
     void setupRock();
     void setupBox();
+    void setupPointLight();
     void updateAtmosphereColor();
     void updateLightDirection();
     void configureGreenTree();

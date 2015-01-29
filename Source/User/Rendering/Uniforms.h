@@ -28,6 +28,8 @@ namespace Rendering {
       Backend::UniformHandle ssaoGrainNoiseScale;
       Backend::UniformHandle ssaoGrainSampleRadius;
       Backend::UniformHandle ssaoGrainSampleDifferenceLimit;
+      Backend::UniformHandle ssaoGrainZNear;
+      Backend::UniformHandle ssaoGrainZFar;
       Backend::UniformHandle ssaoBlurGrainTexture;
       Backend::UniformHandle ssaoBlurGrainTexelSize;
       Backend::UniformHandle ssaoBlurDepthDifferenceLimit;
@@ -54,6 +56,11 @@ namespace Rendering {
       Backend::UniformHandle downsampleNormalTexture;
       Backend::UniformHandle downsampleZNear;
       Backend::UniformHandle downsampleZFar;
+      Backend::UniformHandle pointLightModelWorldTransform;
+      Backend::UniformHandle pointLightCameraClipWorldTransform;
+      Backend::UniformHandle pointLightDepthTexture;
+      Backend::UniformHandle pointLightNormalTexture;
+      Backend::UniformHandle pointLightResolution;
     };
     extern List list;
 

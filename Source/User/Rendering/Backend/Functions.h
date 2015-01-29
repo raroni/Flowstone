@@ -11,6 +11,7 @@
 #include "Rendering/Backend/TextureFilter.h"
 #include "Rendering/Backend/TextureWrap.h"
 #include "Rendering/Backend/CullFace.h"
+#include "Rendering/Backend/BlendFactor.h"
 #include "Rendering/Backend/UniformBlockHandle.h"
 #include "Rendering/Backend/BufferHandle.h"
 #include "Rendering/Backend/RenderTargetHandle.h"
@@ -61,9 +62,12 @@ namespace Rendering {
     void attachRenderBuffer(RenderBufferHandle renderBuffer);
     bool checkRenderTarget();
     void setDrawBufferCount(uint8_t count);
-    void enableDepthTest();
     void enableFaceCulling();
     void disableDepthTest();
+    void enableDepthTest();
+    void disableBlending();
+    void enableBlending();
+    void setBlendFunction(BlendFactor sourceFactor, BlendFactor destinationFactor);
     void disableDrawBuffer();
     RenderBufferHandle createRenderBuffer(uint16_t width, uint16_t height);
     void setViewport(uint16_t width, uint16_t height);
