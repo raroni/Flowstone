@@ -6,7 +6,8 @@ namespace Rendering {
     Position = 0,
     Normal = 1,
     Color = 2,
-    JointIndex = 3
+    SelfIllumination = 3,
+    JointIndex = 4
   };
 }
 

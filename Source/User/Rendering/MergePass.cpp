@@ -13,7 +13,7 @@ namespace Rendering {
     Quanta::Vector3 primaryLightColor(1, 1, 1);
 
     namespace TextureUnits {
-      const uint8_t diffuse = 0;
+      const uint8_t appearance = 0;
       const uint8_t normal = 1;
       const uint8_t depth = 2;
       const uint8_t shadow = 3;
@@ -28,7 +28,7 @@ namespace Rendering {
       float inverseShadowSize = 1.0/Config::shadowMapSize;
       Backend::setUniformFloat(Uniforms::list.mergeInverseShadowSize, 1, &inverseShadowSize);
       Backend::setUniformUInt(Uniforms::list.mergeDownsampleScale, Config::SSAO::downSampling);
-      Backend::setUniformInt(Uniforms::list.mergeDiffuseTexture, TextureUnits::diffuse);
+      Backend::setUniformInt(Uniforms::list.mergeAppearanceTexture, TextureUnits::appearance);
       Backend::setUniformInt(Uniforms::list.mergeNormalTexture, TextureUnits::normal);
       Backend::setUniformInt(Uniforms::list.mergeDepthTexture, TextureUnits::depth);
       Backend::setUniformInt(Uniforms::list.mergeShadowTexture, TextureUnits::shadow);
@@ -54,7 +54,7 @@ namespace Rendering {
       stream.writeUniformVec3Set(Uniforms::list.mergePrimaryLightColor, 1, primaryLightColor.components);
       stream.writeUniformVec3Set(Uniforms::list.mergeInverseSecondaryLightDirection, 1, secondaryLightDirection.getNegated().components);
 
-      stream.writeTexturePairSet(TextureUnits::diffuse, Textures::list.geometryDiffuse);
+      stream.writeTexturePairSet(TextureUnits::appearance, Textures::list.geometryAppearance);
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
       stream.writeTexturePairSet(TextureUnits::shadow, Textures::list.shadowVarianceDepth);

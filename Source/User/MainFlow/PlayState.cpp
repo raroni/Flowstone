@@ -222,6 +222,10 @@ namespace MainFlow {
     setupBox();
 
     torches.create(1, 2);
+    torches.create(1, 0);
+    torches.create(1, -2);
+    torches.create(-1, 3);
+    torches.create(-4, 2);
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -3.75;
@@ -279,8 +283,8 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.56, 0.36, 0.20 }, 0, 12 },
-      { { 0.41, 0.61, 0.21 }, 12, 12 }
+      { { 0.56, 0.36, 0.20 }, 0.0, 0, 12 },
+      { { 0.41, 0.61, 0.21 }, 0.0, 12, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -341,8 +345,8 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.56, 0.36, 0.20 }, 0, 12 },
-      { { 1, 0.36, 0.20 }, 12, 12 }
+      { { 0.56, 0.36, 0.20 }, 0.0, 0, 12 },
+      { { 1, 0.36, 0.20 }, 0.0, 12, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -386,7 +390,7 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.64, 0.83, 0.33 }, 0, 12 }
+      { { 0.64, 0.83, 0.33 }, 0.0, 0, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -440,7 +444,7 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.5, 0.5, 0.5 }, 0, 12 }
+      { { 0.5, 0.5, 0.5 }, 0.0, 0, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -480,8 +484,8 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.5, 0.5, 0.5 }, 0, 10 },
-      { { 0.3, 0.3, 0.3 }, 10, 2 }
+      { { 0.5, 0.5, 0.5 }, 0.0, 0, 10 },
+      { { 0.3, 0.3, 0.3 }, 0.0, 10, 2 }
     };
 
     Rendering::MeshInfo info;

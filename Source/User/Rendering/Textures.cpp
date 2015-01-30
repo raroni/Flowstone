@@ -7,9 +7,9 @@ namespace Rendering {
   namespace Textures {
     List list;
 
-    static void initializeGeometryDiffuse() {
-      list.geometryDiffuse = Backend::createTexture();
-      Backend::setTexture(list.geometryDiffuse);
+    static void initializeGeometryAppearance() {
+      list.geometryAppearance = Backend::createTexture();
+      Backend::setTexture(list.geometryAppearance);
       Backend::setTextureWrap(Backend::TextureWrap::Clamp);
       Backend::setTextureFilter(Backend::TextureFilter::Nearest);
     }
@@ -86,7 +86,7 @@ namespace Rendering {
     }
 
     void initialize() {
-      initializeGeometryDiffuse();
+      initializeGeometryAppearance();
       initializeGeometryNormal();
       initializeGeometryDepth();
       initializeShadowBaseBufferDepth();
@@ -101,8 +101,8 @@ namespace Rendering {
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setTexture(list.geometryDiffuse);
-      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::RGB, NULL);
+      Backend::setTexture(list.geometryAppearance);
+      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::RGBA, NULL);
 
       Backend::setTexture(list.geometryNormal);
       Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::SignedNormalizedRGB, NULL);

@@ -1,10 +1,11 @@
 #include "Quanta/Geometry/TransformFactory3D.h"
 #include "TorchManager.h"
 
+static const float woodHeight = 0.4;
+static const float fireHeight = 0.15;
+
 void TorchManager::initialize() {
-  const float woodHeight = 0.4;
   const float width = 0.1;
-  const float fireHeight = 0.15;
 
   const float halfWidth = width*0.5;
   const float totalHeight = woodHeight + fireHeight;
@@ -40,15 +41,15 @@ void TorchManager::initialize() {
     9, 5, 4, 9, 4, 8,
     10, 6, 5, 10, 5, 9,
     11, 7, 6, 11, 6, 10,
-    8, 4, 7, 8, 7, 10,
+    8, 4, 7, 8, 7, 11,
 
     // top
     10, 9, 8, 10, 8, 11
   };
 
   Rendering::Shape shapes[] = {
-    { { 0.47, 0.29, 0.17 }, 0, 10 },
-    { { 1.0, 0.63, 0.05 }, 10, 10 }
+    { { 0.56, 0.36, 0.20 }, 0.4, 0, 10 },
+    { { 1.0, 0.63, 0.05 }, 0.7, 10, 10 }
   };
 
   Rendering::MeshInfo info;
@@ -60,11 +61,8 @@ void TorchManager::initialize() {
 }
 
 void TorchManager::create(float x, float z) {
-  /*
-  Disabled while playing with self-illumination
   Rendering::PointLightIndex light = renderer.createPointLight();
-  renderer.updatePointLightPosition(light, { x, 0.4, z-0.3f });
-  */
+  renderer.updatePointLightPosition(light, { x, woodHeight + fireHeight*0.5f, z });
 
   Rendering::StaticMeshInstanceIndex mesh = renderer.createStaticMeshInstance(meshIndex);
   Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });

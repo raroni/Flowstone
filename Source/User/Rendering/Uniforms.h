@@ -34,7 +34,7 @@ namespace Rendering {
       Backend::UniformHandle ssaoBlurDepthTexture;
       Backend::UniformHandle ssaoBlurZNear;
       Backend::UniformHandle ssaoBlurZFar;
-      Backend::UniformHandle mergeDiffuseTexture;
+      Backend::UniformHandle mergeAppearanceTexture;
       Backend::UniformHandle mergeNormalTexture;
       Backend::UniformHandle mergeDepthTexture;
       Backend::UniformHandle mergeShadowTexture;

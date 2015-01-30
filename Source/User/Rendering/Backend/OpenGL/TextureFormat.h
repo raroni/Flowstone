@@ -4,6 +4,7 @@ namespace Rendering {
   namespace Backend {
     enum class TextureFormat {
       RGB = GL_RGB,
+      RGBA = GL_RGBA,
       SignedNormalizedRGB = GL_RGB8_SNORM,
       RedF32 = GL_R32F,
       RedGreenF32 = GL_RG32F,
