@@ -10,9 +10,12 @@
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :
   renderer(renderer),
-  rendererFeeder(physics, interpolater, animator, renderer) { }
+  rendererFeeder(physics, interpolater, animator, renderer),
+  torches(renderer) { }
 
   void PlayState::enter() {
+    torches.initialize();
+
     uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
     float animationDurations[] = { 3.0f, 1.0f };
@@ -218,17 +221,16 @@ namespace MainFlow {
     setupGround();
     setupBox();
 
-    setupPointLight();
+    torches.create(1, 2);
+    torches.create(1, 0);
+    torches.create(1, -2);
+    torches.create(-1, 3);
+    torches.create(-4, 2);
 
     Quanta::Transform& camera = renderer.getCameraTransform();
     camera.position[2] = -3.75;
     camera.position[1] = 6;
     camera.rotateX(1);
-  }
-
-  void PlayState::setupPointLight() {
-    renderer.createPointLight();
-    renderer.createPointLight();
   }
 
   void PlayState::configureGreenTree() {
@@ -281,8 +283,8 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.56, 0.36, 0.20 }, 0, 12 },
-      { { 0.41, 0.61, 0.21 }, 12, 12 }
+      { { 0.56, 0.36, 0.20 }, 0.0, 0, 12 },
+      { { 0.41, 0.61, 0.21 }, 0.0, 12, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -343,8 +345,8 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.56, 0.36, 0.20 }, 0, 12 },
-      { { 1, 0.36, 0.20 }, 12, 12 }
+      { { 0.56, 0.36, 0.20 }, 0.0, 0, 12 },
+      { { 1, 0.36, 0.20 }, 0.0, 12, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -388,7 +390,7 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.64, 0.83, 0.33 }, 0, 12 }
+      { { 0.64, 0.83, 0.33 }, 0.0, 0, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -442,7 +444,7 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.5, 0.5, 0.5 }, 0, 12 }
+      { { 0.5, 0.5, 0.5 }, 0.0, 0, 12 }
     };
 
     Rendering::MeshInfo info;
@@ -482,8 +484,8 @@ namespace MainFlow {
     };
 
     Rendering::Shape shapes[] = {
-      { { 0.5, 0.5, 0.5 }, 0, 10 },
-      { { 0.3, 0.3, 0.3 }, 10, 2 }
+      { { 0.5, 0.5, 0.5 }, 0.0, 0, 10 },
+      { { 0.3, 0.3, 0.3 }, 0.0, 10, 2 }
     };
 
     Rendering::MeshInfo info;
@@ -526,14 +528,6 @@ namespace MainFlow {
   void PlayState::update(double timeDelta) {
     timeOfDay += timeDelta*0.03;
     timeOfDay = fmod(timeOfDay, 1.0);
-
-    static float pl1p = 2.5;
-    pl1p -= timeDelta*0.25;
-    renderer.updatePointLightPosition(0, { pl1p, 0.4, 2 });
-
-    static float pl2p = -2.5;
-    pl2p += timeDelta*0.4;
-    renderer.updatePointLightPosition(1, { pl2p, 0.4, pl2p });
 
     stepTimeBank += timeDelta;
     if(stepTimeBank >= Physics::Config::stepDuration) {

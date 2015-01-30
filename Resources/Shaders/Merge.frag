@@ -3,7 +3,7 @@
 out vec3 fragColor;
 noperspective in vec2 texCoords;
 
-uniform sampler2D diffuseTexture;
+uniform sampler2D appearanceTexture;
 uniform sampler2D normalTexture;
 uniform sampler2D depthTexture;
 uniform sampler2D shadowTexture;
@@ -87,5 +87,10 @@ void main() {
   float secondaryLuminosity = dot(inverseSecondaryLightDirection, worldNormal);
 
   vec3 atmosphereInfluence = primaryLightColor * (0.5 + 0.4*primaryLuminosity + 0.1*secondaryLuminosity);
-  fragColor = texture(diffuseTexture, texCoords).rgb * atmosphereInfluence * (0.2 + calcOcclusion()*0.8);
+
+  vec4 appearance = texture(appearanceTexture, texCoords).rgba;
+  vec3 diffuseColor = appearance.rgb;
+  float selfIllumination = appearance.w;
+  vec3 color = diffuseColor * atmosphereInfluence + diffuseColor * selfIllumination;
+  fragColor = color * (0.2 + calcOcclusion()*0.8);
 }

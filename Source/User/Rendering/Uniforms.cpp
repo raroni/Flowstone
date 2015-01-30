@@ -17,7 +17,7 @@ namespace Rendering {
       list.geometryStaticModelWorldTransform = Backend::getUniform(geometryStaticProgram, "modelWorldTransform");
 
       Backend::ProgramHandle mergeProgram = Programs::handles.merge;
-      list.mergeDiffuseTexture = Backend::getUniform(mergeProgram, "diffuseTexture");
+      list.mergeAppearanceTexture = Backend::getUniform(mergeProgram, "appearanceTexture");
       list.mergeNormalTexture = Backend::getUniform(mergeProgram, "normalTexture");
       list.mergeDepthTexture = Backend::getUniform(mergeProgram, "depthTexture");
       list.mergeShadowTexture = Backend::getUniform(mergeProgram, "shadowTexture");

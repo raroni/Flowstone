@@ -1,7 +1,7 @@
 #version 330
 
 layout(location = 0) in vec3 position;
-layout(location = 3) in uint jointIndex;
+layout(location = 4) in uint jointIndex;
 
 out vec4 viewPosition;
 

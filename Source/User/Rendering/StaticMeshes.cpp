@@ -12,6 +12,7 @@ namespace Rendering {
         float px, py, pz;
         float nx, ny, nz;
         float color[3];
+        float selfIllumination;
       };
       StaticMesh list[Config::maxStaticMeshes];
       uint8_t count = 0;
@@ -25,6 +26,7 @@ namespace Rendering {
       for(uint8_t i=0; info.shapeCount>i; i++) {
         shape = &shapes[i];
         Quanta::Vector3 color = shape->color;
+        float selfIllumination = shape->selfIllumination;
         for(uint8_t n=0; shape->count>n; n++) {
           uint8_t indexOffset = (shape->offset+n)*3;
           StaticVertex triangleVertices[] = {
@@ -46,7 +48,8 @@ namespace Rendering {
               if(
                 v.px == vertex.position[0] && v.py == vertex.position[1] && v.pz == vertex.position[2] &&
                 v.nx == normal[0] && v.ny == normal[1] && v.nz == normal[2] &&
-                v.color[0] == color[0] && v.color[1] == color[1] && v.color[2] == color[2]
+                v.color[0] == color[0] && v.color[1] == color[1] && v.color[2] == color[2] &&
+                v.selfIllumination == selfIllumination
               ) {
                 found = true;
                 index = n;
@@ -64,6 +67,7 @@ namespace Rendering {
               v.color[0] = color[0];
               v.color[1] = color[1];
               v.color[2] = color[2];
+              v.selfIllumination = selfIllumination;
               index = (*backendVertexCount)++;
             }
             backendIndices[indexOffset+m] = index;
@@ -79,6 +83,7 @@ namespace Rendering {
       Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
       Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Normal));
       Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Color));
+      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::SelfIllumination));
 
       Backend::BufferHandle vertexBuffer = Backend::createBuffer();
       Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
@@ -108,6 +113,13 @@ namespace Rendering {
         Backend::DataType::Float,
         sizeof(BackendStaticVertex),
         sizeof(float)*3*2
+      );
+      Backend::configureAttribute(
+        static_cast<Backend::AttributeLocation>(AttributeLocation::SelfIllumination),
+        1,
+        Backend::DataType::Float,
+        sizeof(BackendStaticVertex),
+        sizeof(float)*3*3
       );
 
       Backend::setObject(0);

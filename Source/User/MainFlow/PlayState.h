@@ -7,6 +7,7 @@
 #include "AtmosphereColor.h"
 #include "Animation/Animator.h"
 #include "Rendering/BoneMeshIndex.h"
+#include "TorchManager.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "RendererFeeder.h"
 #include "AirDrag.h"
@@ -27,12 +28,13 @@ namespace MainFlow {
     Interpolation::Interpolater interpolater;
     AirDrag airDrag;
     double stepTimeBank = 0;
-    float timeOfDay = 0.75;
+    float timeOfDay = 0.3;
     Physics::DynamicBodyIndex playerBody;
     RendererFeeder rendererFeeder;
     AtmosphereColor atmosphereColor;
     Rendering::StaticMeshIndex greenTreeMesh;
     Rendering::StaticMeshIndex redTreeMesh;
+    TorchManager torches;
     void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
     void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
     void setupGround();
