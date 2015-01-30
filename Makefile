@@ -21,6 +21,7 @@ USER_SOURCES_CPP =\
 	Source/Core/Physics/CollisionResolver.cpp\
 	Source/User/main.cpp\
 	Source/User/Timing.cpp\
+	Source/User/TorchManager.cpp\
 	Source/User/Animation/Animator.cpp\
 	Source/User/Animation/Registry.cpp\
 	Source/User/Mainflow/PlayState.cpp\
