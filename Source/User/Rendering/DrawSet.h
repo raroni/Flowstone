@@ -3,11 +3,13 @@
 
 #include "Rendering/BoneDrawSet.h"
 #include "Rendering/StaticDrawSet.h"
+#include "Rendering/PointLightDrawSet.h"
 
 namespace Rendering {
   struct DrawSet {
     BoneDrawSet boneSet;
     StaticDrawSet staticSet;
+    PointLightDrawSet pointLightSet;
     void clear();
   };
 }

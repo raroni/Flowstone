@@ -14,9 +14,16 @@ namespace Rendering {
     CullResult result;
     void fillCullResult(const Quanta::Frustum &frustum);
     void fillDrawSet(DrawSet &drawSet) const;
-    void cullGroup(
+    void cullGroupByTransform(
       const Quanta::Frustum &frustum,
       const Quanta::Matrix4 *transforms,
+      const float *boundingRadii,
+      uint16_t count,
+      CullGroupIndex group
+    );
+    void cullGroupByPosition(
+      const Quanta::Frustum &frustum,
+      const Quanta::Vector3 *positions,
       const float *boundingRadii,
       uint16_t count,
       CullGroupIndex group

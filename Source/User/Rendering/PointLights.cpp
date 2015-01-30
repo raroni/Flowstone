@@ -89,7 +89,7 @@ namespace Rendering {
       Backend::setProgram(0);
     }
 
-    void write(CommandStream &stream, const Quanta::Matrix4 &cameraClipWorldTransform) {
+    void write(CommandStream &stream, const PointLightDrawSet &drawSet, const Quanta::Matrix4 &cameraClipWorldTransform) {
       stream.writeCullFaceSet(Backend::CullFace::Front);
       stream.writeEnableBlending();
       stream.writeBlendFunctionSet(Backend::BlendFactor::One, Backend::BlendFactor::One);
@@ -98,9 +98,9 @@ namespace Rendering {
       stream.writeUniformMat4Set(Uniforms::list.pointLightCameraClipWorldTransform, 1, cameraClipWorldTransform.components);
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
-      for(uint8_t i=0; i<count; ++i) {
-        stream.writeUniformVec3Set(Uniforms::list.pointLightWorldPosition, 1, positions[i].components);
-        stream.writeUniformFloatSet(Uniforms::list.pointLightRadius, 1, &radii[i]);
+      for(uint8_t i=0; i<drawSet.count; ++i) {
+        stream.writeUniformVec3Set(Uniforms::list.pointLightWorldPosition, 1, drawSet.positions[i].components);
+        stream.writeUniformFloatSet(Uniforms::list.pointLightRadius, 1, &drawSet.radii[i]);
         stream.writeIndexedDraw(objectIndexCount, Backend::DataType::UnsignedShort);
       }
       stream.writeDisableBlending();
@@ -132,6 +132,10 @@ namespace Rendering {
       radii[count] = 3;
       updateTransform(count);
       return count++;
+    }
+
+    uint16_t getCount() {
+      return count;
     }
   }
 }

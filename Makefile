@@ -47,6 +47,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/DrawSet.cpp\
 	Source/User/Rendering/BoneDrawSet.cpp\
 	Source/User/Rendering/StaticDrawSet.cpp\
+	Source/User/Rendering/PointLightDrawSet.cpp\
 	Source/User/Rendering/Frustum.cpp\
 	Source/User/Rendering/Shadow.cpp\
 	Source/User/Rendering/ShadowBlur.cpp\

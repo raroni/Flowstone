@@ -3,12 +3,14 @@
 #include "Rendering/DrawSet.h"
 #include "Rendering/BoneMeshInstances.h"
 #include "Rendering/StaticMeshInstances.h"
+#include "Rendering/PointLights.h"
 #include "Rendering/Culler.h"
 
 namespace Rendering {
   namespace CullGroupNames {
-    const static CullGroupIndex Bone = 0;
-    const static CullGroupIndex Static = 1;
+    static const CullGroupIndex Bone = 0;
+    static const CullGroupIndex Static = 1;
+    static const CullGroupIndex PointLight = 2;
   }
 
   static bool check(const Quanta::Frustum &frustum, const Quanta::Vector3 &position, float boundingRadii) {
@@ -20,7 +22,7 @@ namespace Rendering {
     return true;
   }
 
-  void Culler::cullGroup(
+  void Culler::cullGroupByTransform(
     const Quanta::Frustum &frustum,
     const Quanta::Matrix4 *transforms,
     const float *boundingRadii,
@@ -38,8 +40,24 @@ namespace Rendering {
     result.storeRange(group, rangeStart, result.count);
   }
 
+  void Culler::cullGroupByPosition(
+    const Quanta::Frustum &frustum,
+    const Quanta::Vector3 *positions,
+    const float *boundingRadii,
+    uint16_t count,
+    CullGroupIndex group
+  ) {
+    uint16_t rangeStart = result.count;
+    for(uint16_t i=0; count>i; i++) {
+      if(check(frustum, positions[i], boundingRadii[i])) {
+        result.addIndex(i);
+      }
+    }
+    result.storeRange(group, rangeStart, result.count);
+  }
+
   void Culler::fillCullResult(const Quanta::Frustum &frustum) {
-    cullGroup(
+    cullGroupByTransform(
       frustum,
       BoneMeshInstances::transforms,
       BoneMeshInstances::boundingRadii,
@@ -47,18 +65,26 @@ namespace Rendering {
       CullGroupNames::Bone
     );
 
-    cullGroup(
+    cullGroupByTransform(
       frustum,
       StaticMeshInstances::transforms,
       StaticMeshInstances::boundingRadii,
       StaticMeshInstances::getCount(),
       CullGroupNames::Static
     );
+
+    cullGroupByPosition(
+      frustum,
+      PointLights::positions,
+      PointLights::radii,
+      PointLights::getCount(),
+      CullGroupNames::PointLight
+    );
   }
 
   void Culler::fillDrawSet(DrawSet &drawSet) const {
-    CullResultRange boneRange = result.getRange(CullGroupNames::Bone);
-    for(uint16_t i=boneRange.start; boneRange.end>i; i++) {
+    CullResultRange range = result.getRange(CullGroupNames::Bone);
+    for(uint16_t i=range.start; range.end>i; i++) {
       uint16_t index = result.indices[i];
       drawSet.boneSet.add(
         BoneMeshInstances::transforms[index],
@@ -66,12 +92,22 @@ namespace Rendering {
         BoneMeshInstances::poses[index]
       );
     }
-    CullResultRange staticRange = result.getRange(CullGroupNames::Static);
-    for(uint16_t i=staticRange.start; staticRange.end>i; i++) {
+
+    range = result.getRange(CullGroupNames::Static);
+    for(uint16_t i=range.start; range.end>i; i++) {
       uint16_t index = result.indices[i];
       drawSet.staticSet.add(
         StaticMeshInstances::transforms[index],
         StaticMeshInstances::meshes[index]
+      );
+    }
+
+    range = result.getRange(CullGroupNames::PointLight);
+    for(uint16_t i=range.start; range.end>i; i++) {
+      uint16_t index = result.indices[i];
+      drawSet.pointLightSet.add(
+        PointLights::positions[index],
+        PointLights::radii[index]
       );
     }
   }

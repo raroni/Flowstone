@@ -122,7 +122,7 @@ namespace Rendering {
       secondaryLightDirection
     );
 
-    PointLights::write(stream, cameraTransforms.clipWorld);
+    PointLights::write(stream, drawSet.pointLightSet, cameraTransforms.clipWorld);
 
     drawSet.clear();
   }
