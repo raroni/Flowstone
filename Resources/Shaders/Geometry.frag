@@ -3,10 +3,10 @@
 flat in vec4 passedAppearance;
 flat in vec3 passedNormal;
 
-layout (location = 0) out vec4 fragAppearance;
-layout (location = 1) out vec3 fragNormal;
+layout (location = 0) out vec4 appearance;
+layout (location = 1) out vec3 normal;
 
 void main() {
-  fragAppearance = passedAppearance;
-  fragNormal = passedNormal;
+  appearance = passedAppearance;
+  normal = passedNormal;
 }

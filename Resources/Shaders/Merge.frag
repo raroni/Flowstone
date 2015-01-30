@@ -1,6 +1,6 @@
 #version 330
 
-out vec3 fragColor;
+out vec3 result;
 noperspective in vec2 texCoords;
 
 uniform sampler2D appearanceTexture;
@@ -92,5 +92,5 @@ void main() {
   vec3 diffuseColor = appearance.rgb;
   float selfIllumination = appearance.w;
   vec3 color = diffuseColor * atmosphereInfluence + diffuseColor * selfIllumination;
-  fragColor = color * (0.2 + calcOcclusion()*0.8);
+  result = color * (0.2 + calcOcclusion()*0.8);
 }
