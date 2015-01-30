@@ -25,7 +25,6 @@ namespace Rendering {
     const uint16_t objectIndexCount = SphereConfig::rings*SphereConfig::sectors*6;
     const Backend::AttributeLocation positionAttributeLocation = 0;
     Backend::ObjectHandle object;
-    Quanta::Matrix4 transforms[Config::maxPointLights];
     Quanta::Vector3 positions[Config::maxPointLights];
     float radii[Config::maxPointLights];
     uint8_t count = 0;
@@ -107,17 +106,8 @@ namespace Rendering {
       stream.writeCullFaceSet(Backend::CullFace::Back);
     }
 
-    void updateTransform(PointLightIndex index) {
-      transforms[index] = Quanta::TransformFactory3D::translation(positions[index]);
-      float radius = radii[index];
-      transforms[index][0] *= radius;
-      transforms[index][5] *= radius;
-      transforms[index][10] *= radius;
-    }
-
     void updatePosition(PointLightIndex index, Quanta::Vector3 position) {
       positions[index] = position;
-      updateTransform(index);
     }
 
     void handleResolutionChange(Resolution resolution) {
@@ -130,7 +120,6 @@ namespace Rendering {
     PointLightIndex create() {
       positions[count] = Quanta::Vector3::zero();
       radii[count] = 3;
-      updateTransform(count);
       return count++;
     }
 
