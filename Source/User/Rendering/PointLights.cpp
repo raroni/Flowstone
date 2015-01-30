@@ -6,11 +6,11 @@ namespace Rendering {
     float radii[Config::maxPointLights];
     uint8_t count = 0;
 
-    void updatePosition(PointLightIndex index, Quanta::Vector3 position) {
-      positions[index] = position;
+    void updatePosition(PointLightHandle handle, Quanta::Vector3 position) {
+      positions[handle] = position;
     }
 
-    PointLightIndex create() {
+    PointLightHandle create() {
       positions[count] = Quanta::Vector3::zero();
       radii[count] = 3;
       return count++;

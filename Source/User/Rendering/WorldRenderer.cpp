@@ -37,32 +37,32 @@ namespace Rendering {
     MergePass::primaryLightColor = color;
   }
 
-  BoneMeshInstanceIndex WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
+  BoneMeshInstanceHandle WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
     BoneMesh mesh = boneMeshRegistry.get(meshIndex);
     return BoneMeshInstances::create(meshIndex, mesh.boundingRadius);
   }
 
-  PointLightIndex WorldRenderer::createPointLight() {
+  PointLightHandle WorldRenderer::createPointLight() {
     return PointLights::create();
   }
 
-  void WorldRenderer::updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position) {
-    PointLights::updatePosition(index, position);
+  void WorldRenderer::updatePointLightPosition(PointLightHandle handle, const Quanta::Vector3 &position) {
+    PointLights::updatePosition(handle, position);
   }
 
-  BoneMeshInstance WorldRenderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
-    return BoneMeshInstances::get(index);
+  BoneMeshInstance WorldRenderer::getBoneMeshInstance(BoneMeshInstanceHandle handle) {
+    return BoneMeshInstances::get(handle);
   }
 
   StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
     return StaticMeshes::create(info, vertices, indices, shapes);
   }
 
-  void WorldRenderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
-    StaticMeshInstances::updateTransform(index, transform);
+  void WorldRenderer::updateStaticMeshTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform) {
+    StaticMeshInstances::updateTransform(handle, transform);
   }
 
-  StaticMeshInstanceIndex WorldRenderer::createStaticMeshInstance(StaticMeshIndex index) {
+  StaticMeshInstanceHandle WorldRenderer::createStaticMeshInstance(StaticMeshIndex index) {
     const StaticMesh& mesh = StaticMeshes::get(index);
     return StaticMeshInstances::create(index, mesh.boundingRadius);
   }

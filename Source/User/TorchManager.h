@@ -2,7 +2,7 @@
 #define TORCH_MANAGER_H
 
 #include "Rendering/Renderer.h"
-#include "Rendering/PointLightIndex.h"
+#include "Rendering/PointLightHandle.h"
 
 class TorchManager {
 public:

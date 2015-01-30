@@ -1,7 +1,7 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Rendering/Renderer.h"
 #include "Animation/JointConfig.h"
-#include "Rendering/PointLightIndex.h"
+#include "Rendering/PointLightHandle.h"
 #include "PlayerControl.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
@@ -364,7 +364,7 @@ namespace MainFlow {
     (*body.position)[0] = x;
     (*body.position)[2] = z;
 
-    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+    Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
     rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
   }
 
@@ -401,7 +401,7 @@ namespace MainFlow {
     Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
 
     Physics::StaticBodyIndex body = physics.createStaticBody();
-    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+    Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
 
     rendererFeeder.bindStaticStatic(body, meshInstance);
   }
@@ -417,7 +417,7 @@ namespace MainFlow {
 
     airDrag.add(playerBody);
 
-    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh);
+    Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(mesh);
 
     rendererFeeder.setupBoneMesh(interpolation, pose, meshInstance);
   }
@@ -458,7 +458,7 @@ namespace MainFlow {
     physics.createStaticSphereCollider(bodyIndex, 0.5);
     Physics::StaticBody body = physics.getStaticBody(bodyIndex);
     (*body.position)[0] = 4;
-    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+    Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
     rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
   }
 
@@ -501,7 +501,7 @@ namespace MainFlow {
     (*body.position)[0] = 2;
     (*body.position)[2] = 2;
 
-    Rendering::StaticMeshInstanceIndex meshInstance = renderer.createStaticMeshInstance(mesh);
+    Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
 
     rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
   }
@@ -520,7 +520,7 @@ namespace MainFlow {
 
     airDrag.add(bodyIndex);
 
-    Rendering::BoneMeshInstanceIndex meshInstance = renderer.createBoneMeshInstance(mesh);
+    Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(mesh);
 
     rendererFeeder.setupBoneMesh(interpolationTransformID, pose, meshInstance);
   }

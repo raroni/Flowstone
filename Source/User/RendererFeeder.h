@@ -4,8 +4,8 @@
 #include "Core/Physics/StaticBodyIndex.h"
 #include "Core/Physics/DynamicBodyIndex.h"
 #include "Interpolation/Index.h"
-#include "Rendering/StaticMeshInstanceIndex.h"
-#include "Rendering/BoneMeshInstanceIndex.h"
+#include "Rendering/StaticMeshInstanceHandle.h"
+#include "Rendering/BoneMeshInstanceHandle.h"
 
 namespace Physics {
   class Engine;
@@ -31,14 +31,14 @@ public:
     const Animation::Animator &animator,
     Rendering::Renderer &renderer
   );
-  void bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh);
-  void setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh);
+  void bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceHandle mesh);
+  void setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
   void update();
 private:
   struct DynamicBoneBinding {
     uint8_t interpolation;
     Animation::PoseIndex pose;
-    Rendering::BoneMeshInstanceIndex mesh;
+    Rendering::BoneMeshInstanceHandle mesh;
   };
   struct {
     DynamicBoneBinding list[128];
@@ -46,7 +46,7 @@ private:
   } dynamicBoneBindings;
   struct StaticStaticBinding {
     Physics::StaticBodyIndex body;
-    Rendering::StaticMeshInstanceIndex mesh;
+    Rendering::StaticMeshInstanceHandle mesh;
   };
   struct {
     StaticStaticBinding list[128];

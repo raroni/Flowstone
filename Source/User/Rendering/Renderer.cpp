@@ -35,20 +35,20 @@ namespace Rendering {
     worldRenderer.setPrimaryLightColor(color);
   }
 
-  BoneMeshInstance Renderer::getBoneMeshInstance(BoneMeshInstanceIndex index) {
-    return worldRenderer.getBoneMeshInstance(index);
+  BoneMeshInstance Renderer::getBoneMeshInstance(BoneMeshInstanceHandle handle) {
+    return worldRenderer.getBoneMeshInstance(handle);
   }
 
-  PointLightIndex Renderer::createPointLight() {
+  PointLightHandle Renderer::createPointLight() {
     return worldRenderer.createPointLight();
   }
 
-  void Renderer::updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position) {
-    worldRenderer.updatePointLightPosition(index, position);
+  void Renderer::updatePointLightPosition(PointLightHandle handle, const Quanta::Vector3 &position) {
+    worldRenderer.updatePointLightPosition(handle, position);
   }
 
-  void Renderer::updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
-    worldRenderer.updateStaticMeshTransform(index, transform);
+  void Renderer::updateStaticMeshTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform) {
+    worldRenderer.updateStaticMeshTransform(handle, transform);
   }
 
   BoneMeshIndex Renderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -59,7 +59,7 @@ namespace Rendering {
     return worldRenderer.createStaticMesh(info, vertices, indices, shapes);
   }
 
-  StaticMeshInstanceIndex Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
+  StaticMeshInstanceHandle Renderer::createStaticMeshInstance(StaticMeshIndex mesh) {
     return worldRenderer.createStaticMeshInstance(mesh);
   }
 
@@ -73,7 +73,7 @@ namespace Rendering {
     RenderTargets::handleResolutionChange();
   }
 
-  BoneMeshInstanceIndex Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
+  BoneMeshInstanceHandle Renderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
     return worldRenderer.createBoneMeshInstance(meshIndex);
   }
 

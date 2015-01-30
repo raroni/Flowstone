@@ -61,10 +61,10 @@ void TorchManager::initialize() {
 }
 
 void TorchManager::create(float x, float z) {
-  Rendering::PointLightIndex light = renderer.createPointLight();
+  Rendering::PointLightHandle light = renderer.createPointLight();
   renderer.updatePointLightPosition(light, { x, woodHeight + fireHeight*0.5f, z });
 
-  Rendering::StaticMeshInstanceIndex mesh = renderer.createStaticMeshInstance(meshIndex);
+  Rendering::StaticMeshInstanceHandle mesh = renderer.createStaticMeshInstance(meshIndex);
   Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
 
   renderer.updateStaticMeshTransform(mesh, transform);

@@ -7,15 +7,15 @@ namespace Rendering {
     StaticMeshIndex meshes[Config::maxStaticMeshInstances];
     float boundingRadii[Config::maxStaticMeshInstances];
 
-    StaticMeshInstanceIndex create(StaticMeshIndex mesh, float boundingRadius) {
+    StaticMeshInstanceHandle create(StaticMeshIndex mesh, float boundingRadius) {
       meshes[count] = mesh;
       boundingRadii[count] = boundingRadius;
       transforms[count] = Quanta::Matrix4::identity();
       return count++;
     }
 
-    void updateTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform) {
-      transforms[index] = transform;
+    void updateTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform) {
+      transforms[handle] = transform;
     }
 
     uint16_t getCount() {

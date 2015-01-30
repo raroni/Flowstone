@@ -14,7 +14,7 @@
 #include "Rendering/Shape.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Rendering/StaticVertex.h"
-#include "Rendering/PointLightIndex.h"
+#include "Rendering/PointLightHandle.h"
 
 namespace Rendering {
   class CommandStream;
@@ -22,16 +22,16 @@ namespace Rendering {
   class WorldRenderer {
   public:
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    BoneMeshInstanceIndex createBoneMeshInstance(BoneMeshIndex BoneMeshIndex);
+    BoneMeshInstanceHandle createBoneMeshInstance(BoneMeshIndex BoneMeshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
-    StaticMeshInstanceIndex createStaticMeshInstance(StaticMeshIndex mesh);
-    PointLightIndex createPointLight();
-    void updatePointLightPosition(PointLightIndex index, const Quanta::Vector3 &position);
-    void updateStaticMeshTransform(StaticMeshInstanceIndex index, const Quanta::Matrix4 &transform);
+    StaticMeshInstanceHandle createStaticMeshInstance(StaticMeshIndex mesh);
+    PointLightHandle createPointLight();
+    void updatePointLightPosition(PointLightHandle handle, const Quanta::Vector3 &position);
+    void updateStaticMeshTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform);
     void writeCommands(CommandStream &stream);
     Quanta::Transform cameraTransform;
     void updateResolution(Resolution resolution);
-    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceIndex index);
+    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceHandle handle);
     Quanta::Vector3 primaryLightDirection;
     Quanta::Vector3 secondaryLightDirection;
     void initialize();

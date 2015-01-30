@@ -34,7 +34,7 @@ void RendererFeeder::update() {
   }
 }
 
-void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceIndex mesh) {
+void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
   DynamicBoneBinding binding;
   binding.interpolation = interpolation;
   binding.mesh = mesh;
@@ -43,7 +43,7 @@ void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation
   dynamicBoneBindings.count++;
 }
 
-void RendererFeeder::bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceIndex mesh) {
+void RendererFeeder::bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceHandle mesh) {
   StaticStaticBinding binding;
   binding.body = body;
   binding.mesh = mesh;
