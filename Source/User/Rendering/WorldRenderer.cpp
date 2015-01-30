@@ -10,6 +10,7 @@
 #include "Rendering/MergePass.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/PointLights.h"
+#include "Rendering/PointLightPass.h"
 #include "Rendering/LightTransforms.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
@@ -25,7 +26,7 @@ namespace Rendering {
     SSAO::initialize();
     MergePass::initialize();
     Shadow::initialize();
-    PointLights::initialize();
+    PointLightPass::initialize();
   }
 
   BoneMeshIndex WorldRenderer::createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
@@ -73,7 +74,7 @@ namespace Rendering {
     Frustum::calcFrustum(frustumInfo, localFrustum);
     calcViewClipTransform();
     SSAO::handleResolutionChange(resolution);
-    PointLights::handleResolutionChange(resolution);
+    PointLightPass::handleResolutionChange(resolution);
   }
 
   void WorldRenderer::writeCommands(CommandStream &stream) {
@@ -122,7 +123,7 @@ namespace Rendering {
       secondaryLightDirection
     );
 
-    PointLights::write(stream, drawSet.pointLightSet, cameraTransforms.clipWorld);
+    PointLightPass::write(stream, drawSet.pointLightSet, cameraTransforms.clipWorld);
 
     drawSet.clear();
   }

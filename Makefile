@@ -59,6 +59,7 @@ USER_SOURCES_CPP =\
 	Source/User/Rendering/SSAOBlurPass.cpp\
 	Source/User/Rendering/DownsamplePass.cpp\
 	Source/User/Rendering/PointLights.cpp\
+	Source/User/Rendering/PointLightPass.cpp\
 	Source/User/AtmosphereColor.cpp\
 	Source/User/Interpolation/Interpolater.cpp\
 	Source/User/RendererFeeder.cpp
