@@ -4,14 +4,15 @@ CC = clang++
 CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
-	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
+	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp
 
 USER_SOURCES_OBJC = \
-	main.m\
-	GameView.m\
+	Source/main.m\
+	Source/GameView.m
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Quanta/Library/Include\
+	-IInclude
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 
@@ -19,7 +20,7 @@ BUILD_DIR = ../../Build
 
 USER_OBJECTS =\
 	$(patsubst %.cpp,$(BUILD_DIR)/Objects/User/%.o,$(USER_SOURCES_CPP))\
-	$(patsubst %.m,Build/Objects/User/%.o,$(USER_SOURCES_OBJC))\
+	$(patsubst %.m,Build/Objects/User/%.o,$(USER_SOURCES_OBJC))
 
 USER_OUTPUT_DIR = $(BUILD_DIR)/$(NAME).app/Contents
 USER_EXECUTABLE_DIR = $(USER_OUTPUT_DIR)/MacOS

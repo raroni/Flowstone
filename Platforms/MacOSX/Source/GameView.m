@@ -1,5 +1,5 @@
 #include <OpenGL/gl3.h>
-#include "GameView.h"
+#include "MacOSX/GameView.h"
 
 @class NSOpenGLPixelFormat;
 

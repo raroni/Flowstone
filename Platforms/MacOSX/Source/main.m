@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#import "GameView.h"
+#import "MacOSX/GameView.h"
 
 @interface GameWindow : NSWindow {}
 @end
