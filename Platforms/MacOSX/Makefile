@@ -1,26 +1,36 @@
 NAME = Flowstone
 
 CC = clang++
-CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
+CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
-	main.cpp\
+	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
+
+USER_SOURCES_OBJC = \
+	main.m\
 
 USER_HEADER_DIRS =\
-	-ISome/Thing\
-	-ISome/Thing/Else\
+	-I../../Libraries/Quanta/Library/Include\
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL
 
 BUILD_DIR = ../../Build
-USER_OBJECTS = $(patsubst %.cpp,$(BUILD_DIR)/Objects/User/%.o,$(USER_SOURCES_CPP))
+
+USER_OBJECTS =\
+	$(patsubst %.cpp,$(BUILD_DIR)/Objects/User/%.o,$(USER_SOURCES_CPP))\
+	$(patsubst %.m,Build/Objects/User/%.o,$(USER_SOURCES_OBJC))\
+
 USER_OUTPUT_DIR = $(BUILD_DIR)/$(NAME).app/Contents
 USER_EXECUTABLE_DIR = $(USER_OUTPUT_DIR)/MacOS
 USER_EXECUTABLE_PATH = $(USER_EXECUTABLE_DIR)/$(NAME)
 
 $(BUILD_DIR)/Objects/User/%.o : %.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
+	$(CC) $(CPP_CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
+
+Build/Objects/User/%.o : %.m
+	mkdir -p $(dir $@)
+	$(CC) $(USER_HEADER_DIRS) $< -c -o $@
 
 user: $(USER_EXECUTABLE_PATH)
 
