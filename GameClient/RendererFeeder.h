@@ -1,8 +1,8 @@
 #ifndef RENDERER_FEEDER_H
 #define RENDERER_FEEDER_H
 
-#include "Core/Physics/StaticBodyIndex.h"
-#include "Core/Physics/DynamicBodyIndex.h"
+#include "Common/Physics/StaticBodyIndex.h"
+#include "Common/Physics/DynamicBodyIndex.h"
 #include "Interpolation/Index.h"
 #include "Rendering/StaticMeshInstanceHandle.h"
 #include "Rendering/BoneMeshInstanceHandle.h"

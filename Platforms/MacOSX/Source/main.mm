@@ -7,8 +7,7 @@
 #import "MacOSX/GameAppDelegate.h"
 #import "MacOSX/GameWindow.h"
 #import "MacOSX/GameWindowDelegate.h"
-#include "Rendering/Renderer.h"
-#include "MainFlow/Manager.h"
+#import "GameClient.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
@@ -17,8 +16,8 @@ static GameView *view;
 static id windowDelegate;
 static NSOpenGLContext *context;
 
-static Rendering::Renderer renderer;
-static MainFlow::Manager flow;
+GameClient gameClient;
+
 static struct {
   const uint16_t width = 800;
   const uint16_t height = 600;
@@ -153,17 +152,14 @@ static void terminate() {
 int main() {
   initialize();
   timingInitialize();
-  renderer.initialize();
-  renderer.updateResolution({ resolution.width, resolution.height });
-  flow.initialize(renderer);
+  gameClient.initialize(resolution.width, resolution.height);
 
   while(shouldTerminate == NO) {
     timingStartFrame();
 
     pollEvents();
     double timeDelta = timingGetDelta();
-    flow.update(timeDelta);
-    renderer.draw();
+    gameClient.update(timeDelta);
     [context flushBuffer];
     timingWaitForNextFrame();
   }

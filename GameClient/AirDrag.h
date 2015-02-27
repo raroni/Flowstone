@@ -2,7 +2,7 @@
 #define AIR_DRAG_H
 
 #include <math.h>
-#include "Core/Physics/DynamicBodyIndex.h"
+#include "Common/Physics/DynamicBodyIndex.h"
 
 class AirDrag {
   typedef Physics::DynamicBodyIndex BodyIndex;

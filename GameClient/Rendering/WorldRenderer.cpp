@@ -3,7 +3,7 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/ProjectionFactory.h"
 #include "Quanta/Math/Vector4.h"
-#include "Core/Error.h"
+#include "Common/Error.h"
 #include "Rendering/Shadow.h"
 #include "Rendering/GeometryPass.h"
 #include "Rendering/SSAO.h"

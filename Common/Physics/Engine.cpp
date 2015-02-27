@@ -1,7 +1,7 @@
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Core/Physics/DynamicSphereColliderHandle.h"
-#include "Core/Physics/CollisionResolver.h"
-#include "Core/Physics/Engine.h"
+#include "Common/Physics/DynamicSphereColliderHandle.h"
+#include "Common/Physics/CollisionResolver.h"
+#include "Common/Physics/Engine.h"
 
 namespace Physics {
   DynamicBodyIndex Engine::createDynamicBody() {

@@ -5,7 +5,7 @@ CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
 	Source/Timing.cpp\
-	../../Source/Core/Error.cpp\
+	../../Common/Error.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector4.cpp\
@@ -17,51 +17,52 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Library/Source/Random.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Source/Core/Physics/Engine.cpp\
-	../../Source/Core/Physics/CollisionDetector.cpp\
-	../../Source/Core/Physics/CollisionResolver.cpp\
-	../../Source/User/TorchManager.cpp\
-	../../Source/User/Animation/Animator.cpp\
-	../../Source/User/Animation/Registry.cpp\
-	../../Source/User/Mainflow/PlayState.cpp\
-	../../Source/User/AtmosphereColor.cpp\
-	../../Source/User/Interpolation/Interpolater.cpp\
-	../../Source/User/RendererFeeder.cpp\
-	../../Source/User/Rendering/Renderer.cpp\
-	../../Source/User/Rendering/WorldRenderer.cpp\
-	../../Source/User/Rendering/Backend/OpenGL/Functions.cpp\
-	../../Source/User/Rendering/BoneMeshRegistry.cpp\
-	../../Source/User/Rendering/Programs.cpp\
-	../../Source/User/Rendering/BoneMeshInstances.cpp\
-	../../Source/User/Rendering/CommandStream.cpp\
-	../../Source/User/Rendering/DrawQueue.cpp\
-	../../Source/User/Rendering/Uniforms.cpp\
-	../../Source/User/Rendering/Buffers.cpp\
-	../../Source/User/Rendering/CullResult.cpp\
-	../../Source/User/Rendering/RenderTargets.cpp\
-	../../Source/User/Rendering/FullscreenQuad.cpp\
-	../../Source/User/Rendering/Textures.cpp\
-	../../Source/User/Rendering/StaticMeshes.cpp\
-	../../Source/User/Rendering/StaticMeshInstances.cpp\
-	../../Source/User/Rendering/MeshHelper.cpp\
-	../../Source/User/Rendering/Culler.cpp\
-	../../Source/User/Rendering/LightTransforms.cpp\
-	../../Source/User/Rendering/DrawSet.cpp\
-	../../Source/User/Rendering/BoneDrawSet.cpp\
-	../../Source/User/Rendering/StaticDrawSet.cpp\
-	../../Source/User/Rendering/PointLightDrawSet.cpp\
-	../../Source/User/Rendering/Frustum.cpp\
-	../../Source/User/Rendering/Shadow.cpp\
-	../../Source/User/Rendering/ShadowBlur.cpp\
-	../../Source/User/Rendering/ShadowBasePass.cpp\
-	../../Source/User/Rendering/MergePass.cpp\
-	../../Source/User/Rendering/GeometryPass.cpp\
-	../../Source/User/Rendering/SSAO.cpp\
-	../../Source/User/Rendering/SSAOGrainPass.cpp\
-	../../Source/User/Rendering/SSAOBlurPass.cpp\
-	../../Source/User/Rendering/DownsamplePass.cpp\
-	../../Source/User/Rendering/PointLights.cpp\
-	../../Source/User/Rendering/PointLightPass.cpp
+	../../Common/Physics/Engine.cpp\
+	../../Common/Physics/CollisionDetector.cpp\
+	../../Common/Physics/CollisionResolver.cpp\
+	../../GameClient/GameClient.cpp\
+	../../GameClient/TorchManager.cpp\
+	../../GameClient/Animation/Animator.cpp\
+	../../GameClient/Animation/Registry.cpp\
+	../../GameClient/Mainflow/PlayState.cpp\
+	../../GameClient/AtmosphereColor.cpp\
+	../../GameClient/Interpolation/Interpolater.cpp\
+	../../GameClient/RendererFeeder.cpp\
+	../../GameClient/Rendering/Renderer.cpp\
+	../../GameClient/Rendering/WorldRenderer.cpp\
+	../../GameClient/Rendering/Backend/OpenGL/Functions.cpp\
+	../../GameClient/Rendering/BoneMeshRegistry.cpp\
+	../../GameClient/Rendering/Programs.cpp\
+	../../GameClient/Rendering/BoneMeshInstances.cpp\
+	../../GameClient/Rendering/CommandStream.cpp\
+	../../GameClient/Rendering/DrawQueue.cpp\
+	../../GameClient/Rendering/Uniforms.cpp\
+	../../GameClient/Rendering/Buffers.cpp\
+	../../GameClient/Rendering/CullResult.cpp\
+	../../GameClient/Rendering/RenderTargets.cpp\
+	../../GameClient/Rendering/FullscreenQuad.cpp\
+	../../GameClient/Rendering/Textures.cpp\
+	../../GameClient/Rendering/StaticMeshes.cpp\
+	../../GameClient/Rendering/StaticMeshInstances.cpp\
+	../../GameClient/Rendering/MeshHelper.cpp\
+	../../GameClient/Rendering/Culler.cpp\
+	../../GameClient/Rendering/LightTransforms.cpp\
+	../../GameClient/Rendering/DrawSet.cpp\
+	../../GameClient/Rendering/BoneDrawSet.cpp\
+	../../GameClient/Rendering/StaticDrawSet.cpp\
+	../../GameClient/Rendering/PointLightDrawSet.cpp\
+	../../GameClient/Rendering/Frustum.cpp\
+	../../GameClient/Rendering/Shadow.cpp\
+	../../GameClient/Rendering/ShadowBlur.cpp\
+	../../GameClient/Rendering/ShadowBasePass.cpp\
+	../../GameClient/Rendering/MergePass.cpp\
+	../../GameClient/Rendering/GeometryPass.cpp\
+	../../GameClient/Rendering/SSAO.cpp\
+	../../GameClient/Rendering/SSAOGrainPass.cpp\
+	../../GameClient/Rendering/SSAOBlurPass.cpp\
+	../../GameClient/Rendering/DownsamplePass.cpp\
+	../../GameClient/Rendering/PointLights.cpp\
+	../../GameClient/Rendering/PointLightPass.cpp
 
 USER_SOURCES_OBJC = \
 	Source/Util.m\
@@ -79,8 +80,8 @@ USER_HEADER_DIRS =\
 	-I../../Libraries/Cabi/Library/Include\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
-	-I../../Source/User\
-	-I../../Source\
+	-I../../GameClient\
+	-I../..\
 	-IInclude
 
 USER_FRAMEWORKS = -framework CoreFoundation -framework QuartzCore -framework AppKit -framework OpenGL

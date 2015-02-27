@@ -1,13 +1,13 @@
 #ifndef PHYSICS_COLLISION_DETECTOR_H
 #define PHYSICS_COLLISION_DETECTOR_H
 
-#include "Core/Physics/DynamicBodyIndex.h"
-#include "Core/Physics/DynamicSphereColliderHandle.h"
-#include "Core/Physics/StaticSphereColliderHandle.h"
-#include "Core/Physics/FreeList.h"
+#include "Common/Physics/DynamicBodyIndex.h"
+#include "Common/Physics/DynamicSphereColliderHandle.h"
+#include "Common/Physics/StaticSphereColliderHandle.h"
+#include "Common/Physics/FreeList.h"
 #include "Quanta/Math/Vector3.h"
-#include "Core/Physics/CollisionSet.h"
-#include "Core/Physics/SphereColliderList.h"
+#include "Common/Physics/CollisionSet.h"
+#include "Common/Physics/SphereColliderList.h"
 
 namespace Physics {
   class CollisionDetector {

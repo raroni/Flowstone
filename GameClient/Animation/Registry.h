@@ -2,7 +2,7 @@
 #define ANIMATION_REGISTRY_H
 
 #include <assert.h>
-#include "Core/Error.h"
+#include "Common/Error.h"
 #include "Animation/JointConfig.h"
 #include "Animation/JointTransform.h"
 

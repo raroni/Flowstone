@@ -1,4 +1,4 @@
-#include "Core/Physics/CollisionDetector.h"
+#include "Common/Physics/CollisionDetector.h"
 
 namespace Physics {
   void CollisionDetector::detect(CollisionSet &set, const Quanta::Vector3 *dynamicPositions, const Quanta::Vector3 *staticPositions) {

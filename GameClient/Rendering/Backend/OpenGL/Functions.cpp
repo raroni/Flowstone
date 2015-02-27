@@ -1,6 +1,6 @@
 #include <OpenGL/gl3.h>
 #include <cstddef>
-#include "Core/Error.h"
+#include "Common/Error.h"
 #include "Rendering/Backend/Functions.h"
 
 namespace Rendering {

@@ -2,7 +2,7 @@
 #define PLAYER_CONTROL_H
 
 #include <math.h>
-#include "Core/Physics/DynamicBody.h"
+#include "Common/Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 #include "Animation/Animator.h"
 

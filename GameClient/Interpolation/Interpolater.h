@@ -6,7 +6,7 @@
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Interpolation/Index.h"
-#include "Core/Physics/DynamicBodyIndex.h"
+#include "Common/Physics/DynamicBodyIndex.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 
 namespace Interpolation {

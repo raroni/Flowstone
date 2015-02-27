@@ -1,5 +1,5 @@
 #include "Quanta/Math/Vector3.h"
-#include "Core/Physics/CollisionSet.h"
+#include "Common/Physics/CollisionSet.h"
 
 namespace Physics {
   void resolveCollisions(CollisionSet &set, Quanta::Vector3 *positions, Quanta::Vector3 *velocities) {
