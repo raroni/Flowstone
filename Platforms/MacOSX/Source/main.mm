@@ -61,7 +61,6 @@ static void createWindow() {
   windowDelegate = [[GameWindowDelegate alloc] init];
   window.delegate = windowDelegate;
 
-  // check whether you actually NEED to send bounds (maybe just send window, see glfw)
   NSView *contentView = window.contentView;
   view = [[GameView alloc] initWithFrame:contentView.bounds];
   window.contentView = view;
