@@ -17,6 +17,16 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Library/Source/Random.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
+	../../Source/Core/Physics/Engine.cpp\
+	../../Source/Core/Physics/CollisionDetector.cpp\
+	../../Source/Core/Physics/CollisionResolver.cpp\
+	../../Source/User/TorchManager.cpp\
+	../../Source/User/Animation/Animator.cpp\
+	../../Source/User/Animation/Registry.cpp\
+	../../Source/User/Mainflow/PlayState.cpp\
+	../../Source/User/AtmosphereColor.cpp\
+	../../Source/User/Interpolation/Interpolater.cpp\
+	../../Source/User/RendererFeeder.cpp\
 	../../Source/User/Rendering/Renderer.cpp\
 	../../Source/User/Rendering/WorldRenderer.cpp\
 	../../Source/User/Rendering/Backend/OpenGL/Functions.cpp\
@@ -67,6 +77,7 @@ USER_SOURCES_OBJCPP = \
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Cabi/Library/Include\
+	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
 	-I../../Source/User\
 	-I../../Source\
