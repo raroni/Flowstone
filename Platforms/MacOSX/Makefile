@@ -8,6 +8,7 @@ USER_SOURCES_CPP =\
 
 USER_SOURCES_OBJC = \
 	main.m\
+	GameView.m\
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Quanta/Library/Include\
