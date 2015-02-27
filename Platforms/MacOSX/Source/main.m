@@ -34,6 +34,11 @@ static void setupMenu() {
   NSMenu *bar = [[NSMenu alloc] init];
   [bar addItem: barItem];
   [NSApp setMainMenu:bar];
+
+  [menu release];
+  [quitItem release];
+  [barItem release];
+  [bar release];
 }
 
 static void createWindow() {
