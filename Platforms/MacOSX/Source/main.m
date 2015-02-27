@@ -1,12 +1,13 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import "MacOSX/Util.h"
 #import "MacOSX/GameView.h"
-
-@interface GameWindow : NSWindow {}
-@end
+#import "MacOSX/GameApplication.h"
+#import "MacOSX/GameAppDelegate.h"
+#import "MacOSX/GameWindow.h"
+#import "MacOSX/GameWindowDelegate.h"
 
 NSAutoreleasePool *autoreleasePool;
-static BOOL shouldTerminate = NO;
 static id appDelegate;
 static GameWindow *window;
 static GameView *view;
@@ -16,10 +17,6 @@ static NSOpenGLContext *context;
 static void fatalError(NSString *message) {
   NSLog(@"Mac OSX system error: %@\n", message);
   exit(1);
-}
-
-static void requestTermination() {
-  shouldTerminate = YES;
 }
 
 static void handleSigint(int signum) {
@@ -38,44 +35,6 @@ static void setupMenu() {
   [bar addItem: barItem];
   [NSApp setMainMenu:bar];
 }
-
-@interface GameApplication : NSApplication
-@end
-
-@implementation GameApplication
-@end
-
-@interface GameAppDelegate : NSObject <NSApplicationDelegate>
-@end
-
-@implementation GameAppDelegate
-
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication*)sender {
-  requestTermination();
-  return NSTerminateCancel;
-}
-
-@end
-
-@implementation GameWindow
-
-- (BOOL)canBecomeKeyWindow {
-  return YES;
-}
-
-@end
-
-@interface GameWindowDelegate : NSObject <NSWindowDelegate>
-@end
-
-@implementation GameWindowDelegate
-
-- (BOOL)windowShouldClose:(id)sender {
-    requestTermination();
-    return NO;
-}
-
-@end
 
 static void createWindow() {
   unsigned int styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
@@ -134,23 +93,6 @@ static void pollEvents() {
   }
 }
 
-static void terminate() {
-  [context release];
-
-  window.contentView = nil;
-  [view release];
-
-  [windowDelegate release];
-  window.delegate = nil;
-
-  [window release];
-
-  [NSApp setDelegate:nil];
-  [appDelegate release];
-
-  [autoreleasePool release];
-}
-
 static void initialize() {
   autoreleasePool = [[NSAutoreleasePool alloc] init];
 
@@ -175,6 +117,23 @@ static void initialize() {
   createContext();
   [context makeCurrentContext];
   [context setView:view];
+}
+
+static void terminate() {
+  [context release];
+
+  window.contentView = nil;
+  [view release];
+
+  [windowDelegate release];
+  window.delegate = nil;
+
+  [window release];
+
+  [NSApp setDelegate:nil];
+  [appDelegate release];
+
+  [autoreleasePool release];
 }
 
 int main() {
