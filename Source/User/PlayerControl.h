@@ -4,11 +4,11 @@
 #include <math.h>
 #include "Core/Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Bro/Bro.h"
 #include "Animation/Animator.h"
 
 static void updateForce(Physics::DynamicBody &body) {
   Quanta::Vector3 force = Quanta::Vector3::zero();
+  /*
   if(broIsKeyPressed(BroKeyRight)) {
     force[0] += 1;
   }
@@ -21,6 +21,7 @@ static void updateForce(Physics::DynamicBody &body) {
   else if(broIsKeyPressed(BroKeyDown)) {
     force[2] -= 1;
   }
+  */
 
   if(!force.isZero()) {
     force.normalize();
