@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import "MacOSX/Timing.h"
 #import "MacOSX/Util.h"
 #import "MacOSX/GameView.h"
 #import "MacOSX/GameApplication.h"
@@ -13,6 +14,10 @@ static GameWindow *window;
 static GameView *view;
 static id windowDelegate;
 static NSOpenGLContext *context;
+static struct {
+  const uint16_t width = 800;
+  const uint16_t height = 600;
+} resolution;
 
 static void fatalError(NSString *message) {
   NSLog(@"Mac OSX system error: %@\n", message);
@@ -44,7 +49,7 @@ static void setupMenu() {
 static void createWindow() {
   unsigned int styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
 
-  window = [[GameWindow alloc] initWithContentRect:NSMakeRect(0, 0, 800, 600)
+  window = [[GameWindow alloc] initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
                                                  styleMask:styleMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
@@ -143,9 +148,21 @@ static void terminate() {
 
 int main() {
   initialize();
+  timingInitialize();
+  //renderer.initialize();
+  //renderer.updateResolution({ resolution.width, resolution.height });
+  //flow.initialize(renderer);
 
   while(shouldTerminate == NO) {
+    timingStartFrame();
+
     pollEvents();
+    double timeDelta = timingGetDelta();
+    NSLog(@"Time: %f\n", timeDelta);
+    //flow.update(timeDelta);
+    //renderer.draw();
+    //swapBuffers();
+    timingWaitForNextFrame();
   }
 
   terminate();

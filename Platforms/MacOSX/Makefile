@@ -4,16 +4,18 @@ CC = clang++
 CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
-	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp
+	Source/Timing.cpp
 
 USER_SOURCES_OBJC = \
-	Source/main.m\
 	Source/Util.m\
 	Source/GameView.m\
 	Source/GameAppDelegate.m\
 	Source/GameWindow.m\
 	Source/GameWindowDelegate.m\
 	Source/GameApplication.m
+
+USER_SOURCES_OBJCPP = \
+	Source/main.mm
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Quanta/Library/Include\
@@ -25,7 +27,8 @@ BUILD_DIR = ../../Build
 
 USER_OBJECTS =\
 	$(patsubst %.cpp,$(BUILD_DIR)/Objects/User/%.o,$(USER_SOURCES_CPP))\
-	$(patsubst %.m,Build/Objects/User/%.o,$(USER_SOURCES_OBJC))
+	$(patsubst %.mm,$(BUILD_DIR)/Objects/User/%.o,$(USER_SOURCES_OBJCPP))\
+	$(patsubst %.m,$(BUILD_DIR)/Objects/User/%.o,$(USER_SOURCES_OBJC))
 
 USER_OUTPUT_DIR = $(BUILD_DIR)/$(NAME).app/Contents
 USER_EXECUTABLE_DIR = $(USER_OUTPUT_DIR)/MacOS
@@ -35,7 +38,11 @@ $(BUILD_DIR)/Objects/User/%.o : %.cpp
 	mkdir -p $(dir $@)
 	$(CC) $(CPP_CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
 
-Build/Objects/User/%.o : %.m
+$(BUILD_DIR)/Objects/User/%.o : %.mm
+	mkdir -p $(dir $@)
+	$(CC) $(CPP_CFLAGS) $(USER_HEADER_DIRS) $< -c -o $@
+
+$(BUILD_DIR)/Objects/User/%.o : %.m
 	mkdir -p $(dir $@)
 	$(CC) $(USER_HEADER_DIRS) $< -c -o $@
 

@@ -1,3 +1,4 @@
+#import "MacOSX/Util.h"
 #import "MacOSX/GameWindowDelegate.h"
 
 @implementation GameWindowDelegate
