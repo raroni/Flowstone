@@ -21,7 +21,8 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../GameClient/GameClient.cpp\
-	../../GameClient/ClientPlatformInput.cpp\
+	../../GameClient/GameClientInput.cpp\
+	../../GameClient/GameClientOutput.cpp\
 	../../GameClient/KeyboardInput.cpp\
 	../../GameClient/TorchManager.cpp\
 	../../GameClient/Animation/Animator.cpp\
