@@ -21,6 +21,8 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../GameClient/GameClient.cpp\
+	../../GameClient/ClientPlatformInput.cpp\
+	../../GameClient/KeyboardInput.cpp\
 	../../GameClient/TorchManager.cpp\
 	../../GameClient/Animation/Animator.cpp\
 	../../GameClient/Animation/Registry.cpp\
@@ -66,7 +68,6 @@ USER_SOURCES_CPP =\
 
 USER_SOURCES_OBJC = \
 	Source/Util.m\
-	Source/GameView.m\
 	Source/GameAppDelegate.m\
 	Source/GameWindow.m\
 	Source/GameWindowDelegate.m\

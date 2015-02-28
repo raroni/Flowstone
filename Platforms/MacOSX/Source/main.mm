@@ -2,21 +2,21 @@
 #import <AppKit/AppKit.h>
 #import "MacOSX/Timing.h"
 #import "MacOSX/Util.h"
-#import "MacOSX/GameView.h"
 #import "MacOSX/GameApplication.h"
 #import "MacOSX/GameAppDelegate.h"
 #import "MacOSX/GameWindow.h"
 #import "MacOSX/GameWindowDelegate.h"
 #import "GameClient.h"
+#import "KeyboardEventKey.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
 static GameWindow *window;
-static GameView *view;
 static id windowDelegate;
 static NSOpenGLContext *context;
 
 GameClient gameClient;
+ClientPlatformInput clientPlatformInput;
 
 static struct {
   const uint16_t width = 800;
@@ -65,10 +65,6 @@ static void createWindow() {
   windowDelegate = [[GameWindowDelegate alloc] init];
   window.delegate = windowDelegate;
 
-  NSView *contentView = window.contentView;
-  view = [[GameView alloc] initWithFrame:contentView.bounds];
-  window.contentView = view;
-
   [window center];
   [window makeKeyAndOrderFront:nil];
 }
@@ -93,7 +89,144 @@ static void createContext() {
   [pixelFormat release];
 }
 
-static void pollEvents() {
+static KeyboardEventKey convertKeyCode(unsigned short keyCode) {
+  if(keyCode > 127) return KeyboardEventKey::Unknown;
+
+  static const KeyboardEventKey table[] = {
+    KeyboardEventKey::A,
+    KeyboardEventKey::S,
+    KeyboardEventKey::D,
+    KeyboardEventKey::F,
+    KeyboardEventKey::H,
+    KeyboardEventKey::G,
+    KeyboardEventKey::Z,
+    KeyboardEventKey::X,
+    KeyboardEventKey::C,
+    KeyboardEventKey::V,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::B,
+    KeyboardEventKey::Q,
+    KeyboardEventKey::W,
+    KeyboardEventKey::E,
+    KeyboardEventKey::R,
+    KeyboardEventKey::Y,
+    KeyboardEventKey::T,
+    KeyboardEventKey::Num1,
+    KeyboardEventKey::Num2,
+    KeyboardEventKey::Num3,
+    KeyboardEventKey::Num4,
+    KeyboardEventKey::Num6,
+    KeyboardEventKey::Num5,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Num9,
+    KeyboardEventKey::Num7,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Num8,
+    KeyboardEventKey::Num0,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::O,
+    KeyboardEventKey::U,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::I,
+    KeyboardEventKey::P,
+    KeyboardEventKey::Enter,
+    KeyboardEventKey::L,
+    KeyboardEventKey::J,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::K,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Comma,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::N,
+    KeyboardEventKey::M,
+    KeyboardEventKey::Period,
+    KeyboardEventKey::Tab,
+    KeyboardEventKey::Space,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Backspace,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Escape,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Capslock,
+    KeyboardEventKey::LeftAlt,
+    KeyboardEventKey::LeftControl,
+    KeyboardEventKey::RightShift,
+    KeyboardEventKey::RightAlt,
+    KeyboardEventKey::RightControl,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Unknown,
+    KeyboardEventKey::Left,
+    KeyboardEventKey::Right,
+    KeyboardEventKey::Down,
+    KeyboardEventKey::Up,
+    KeyboardEventKey::Unknown
+  };
+
+  return table[keyCode];
+}
+
+static void pollEvents(KeyboardInput &keyboard) {
   while(true) {
     NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                         untilDate:[NSDate distantPast]
@@ -102,7 +235,21 @@ static void pollEvents() {
     if(event == nil) {
       return;
     }
-    [NSApp sendEvent:event];
+
+    switch(event.type) {
+      case NSKeyDown: {
+        KeyboardEvent gameEvent;
+        gameEvent.type = KeyboardEventType::Down;
+        gameEvent.key = convertKeyCode(event.keyCode);
+        keyboard.write(gameEvent);
+        break;
+      }
+      case NSAppKitDefined:
+        [NSApp sendEvent:event];
+        break;
+      default: {
+      }
+    }
   }
 }
 
@@ -129,14 +276,11 @@ static void initialize() {
   createWindow();
   createContext();
   [context makeCurrentContext];
-  [context setView:view];
+  [context setView:window.contentView];
 }
 
 static void terminate() {
   [context release];
-
-  window.contentView = nil;
-  [view release];
 
   [windowDelegate release];
   window.delegate = nil;
@@ -156,10 +300,10 @@ int main() {
 
   while(shouldTerminate == NO) {
     timingStartFrame();
-
-    pollEvents();
-    double timeDelta = timingGetDelta();
-    gameClient.update(timeDelta);
+    clientPlatformInput.clear();
+    pollEvents(clientPlatformInput.keyboard);
+    clientPlatformInput.timeDelta = timingGetDelta();
+    gameClient.update(clientPlatformInput);
     [context flushBuffer];
     timingWaitForNextFrame();
   }
