@@ -4,24 +4,23 @@
 #include <math.h>
 #include "Common/Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
+#include "Keyboard.h"
 #include "Animation/Animator.h"
 
-static void updateForce(Physics::DynamicBody &body) {
+static void updateForce(Physics::DynamicBody &body, const Keyboard &keyboard) {
   Quanta::Vector3 force = Quanta::Vector3::zero();
-  /*
-  if(broIsKeyPressed(BroKeyRight)) {
+  if(keyboard.isDown(KeyboardKey::Right)) {
     force[0] += 1;
   }
-  else if(broIsKeyPressed(BroKeyLeft)) {
+  else if(keyboard.isDown(KeyboardKey::Left)) {
     force[0] -= 1;
   }
-  if(broIsKeyPressed(BroKeyUp)) {
+  if(keyboard.isDown(KeyboardKey::Up)) {
     force[2] += 1;
   }
-  else if(broIsKeyPressed(BroKeyDown)) {
+  else if(keyboard.isDown(KeyboardKey::Down)) {
     force[2] -= 1;
   }
-  */
 
   if(!force.isZero()) {
     force.normalize();
@@ -52,8 +51,8 @@ static void updateAnimation(Physics::DynamicBody &body, Animation::Animator &ani
   }
 }
 
-void playerControlUpdateForce(Physics::DynamicBody &body) {
-  updateForce(body);
+void playerControlUpdateForce(Physics::DynamicBody &body, const Keyboard &keyboard) {
+  updateForce(body, keyboard);
   updateOrientation(body);
 }
 

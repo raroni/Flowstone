@@ -49,7 +49,7 @@ namespace MainFlow {
   public:
     PlayState(Rendering::Renderer &renderer);
     void enter();
-    void update(double deltaTime);
+    void update(double deltaTime, const Keyboard &keyboard);
     State* checkTransition();
   };
 }

@@ -525,7 +525,7 @@ namespace MainFlow {
     rendererFeeder.setupBoneMesh(interpolationTransformID, pose, meshInstance);
   }
 
-  void PlayState::update(double timeDelta) {
+  void PlayState::update(double timeDelta, const Keyboard &keyboard) {
     timeOfDay += timeDelta*0.03;
     timeOfDay = fmod(timeOfDay, 1.0);
 
@@ -533,7 +533,7 @@ namespace MainFlow {
     if(stepTimeBank >= Physics::Config::stepDuration) {
       Physics::DynamicBody body = physics.getDynamicBody(playerBody);
       do {
-        playerControlUpdateForce(body);
+        playerControlUpdateForce(body, keyboard);
         airDrag.update(physics.getDynamicVelocities(), physics.getDynamicForces());
         physics.simulate();
         stepTimeBank -= Physics::Config::stepDuration;

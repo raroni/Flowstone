@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_EVENT_H
 #define KEYBOARD_EVENT_H
 
-#include "KeyboardEventKey.h"
+#include "KeyboardKey.h"
 
 enum class KeyboardEventType {
   Down, Up
@@ -9,7 +9,7 @@ enum class KeyboardEventType {
 
 struct KeyboardEvent {
   KeyboardEventType type;
-  KeyboardEventKey key;
+  KeyboardKey key;
 };
 
 #endif

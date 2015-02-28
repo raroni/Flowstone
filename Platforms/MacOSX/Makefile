@@ -29,6 +29,7 @@ USER_SOURCES_CPP =\
 	../../GameClient/Mainflow/PlayState.cpp\
 	../../GameClient/AtmosphereColor.cpp\
 	../../GameClient/Interpolation/Interpolater.cpp\
+	../../GameClient/Keyboard.cpp\
 	../../GameClient/RendererFeeder.cpp\
 	../../GameClient/Rendering/Renderer.cpp\
 	../../GameClient/Rendering/WorldRenderer.cpp\

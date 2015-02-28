@@ -12,12 +12,12 @@ namespace MainFlow {
       State *state = new PlayState(renderer);
       changeState(state);
     }
-    void update(double timeDelta) {
+    void update(double timeDelta, const Keyboard &keyboard) {
       State* newState = state->checkTransition();
       if(newState != nullptr) {
         changeState(newState);
       }
-      state->update(timeDelta);
+      state->update(timeDelta, keyboard);
     }
     void changeState(State *newState) {
       if(state != nullptr) {
