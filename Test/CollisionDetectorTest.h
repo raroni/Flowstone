@@ -1,5 +1,5 @@
-#include "Core/Physics/CollisionDetector.h"
-#include "Core/Physics/CollisionSet.h"
+#include "Common/Physics/CollisionDetector.h"
+#include "Common/Physics/CollisionSet.h"
 #include "Orwell.h"
 
 namespace CollisionDetectorTest {
