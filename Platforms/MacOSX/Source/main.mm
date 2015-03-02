@@ -250,11 +250,8 @@ static void pollEvents(KeyboardInput &keyboard) {
         keyboard.write(gameEvent);
         break;
       }
-      case NSAppKitDefined:
+      default:
         [NSApp sendEvent:event];
-        break;
-      default: {
-      }
     }
   }
 }
