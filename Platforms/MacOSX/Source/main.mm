@@ -240,18 +240,23 @@ static void pollEvents(KeyboardInput &keyboard) {
     switch(event.type) {
       case NSKeyDown:
       case NSKeyUp: {
-        KeyboardEvent gameEvent;
-        gameEvent.key = convertKeyCode(event.keyCode);
-        if(event.type == NSKeyDown) {
-          gameEvent.type = KeyboardEventType::Down;
+        if(event.modifierFlags & NSCommandKeyMask) {
+          [NSApp sendEvent:event];
         } else {
-          gameEvent.type = KeyboardEventType::Up;
+          KeyboardEvent gameEvent;
+          gameEvent.key = convertKeyCode(event.keyCode);
+          if(event.type == NSKeyDown) {
+            gameEvent.type = KeyboardEventType::Down;
+          } else {
+            gameEvent.type = KeyboardEventType::Up;
+          }
+          keyboard.write(gameEvent);
         }
-        keyboard.write(gameEvent);
         break;
       }
       default:
         [NSApp sendEvent:event];
+        break;
     }
   }
 }
