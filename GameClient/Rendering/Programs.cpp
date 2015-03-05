@@ -1,5 +1,5 @@
 #include <string.h>
-#include "Cabi/Cabi.h"
+#include "SysFile/SysFile.h"
 #include "SysGFX/SysGFX.h"
 #include "SysGFX/ShaderType.h"
 #include "SysGFX/ShaderHandle.h"
@@ -13,7 +13,7 @@ namespace Rendering {
   static void loadSource(const char *filename) {
     char path[128] = "Shaders/";
     strcat(path, filename);
-    cabiReadFile(path, sourceBuffer, sourceBufferLength);
+    SysFile::readFile(path, sourceBuffer, sourceBufferLength);
   }
 
   static SysGFX::ProgramHandle initializeStandardProgram(const char *name) {

@@ -76,15 +76,15 @@ USER_SOURCES_OBJC = \
 	Source/GameApplication.m
 
 USER_SOURCES_OBJCPP = \
-	../../Libraries/Cabi/Library/Source/OSX/Cabi.mm\
-	Source/main.mm
+	Source/main.mm\
+	Source/SysFile.mm
 
 USER_HEADER_DIRS =\
-	-I../../Libraries/Cabi/Library/Include\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
-	-I../../Sys/Gfx/Include\
-	-I../../Sys/Gfx/OpenGL/Include\
+	-I../../Sys/File/Include\
+	-I../../Sys/GFX/Include\
+	-I../../Sys/GFX/OpenGL/Include\
 	-I../../GameClient\
 	-I../..\
 	-IInclude
