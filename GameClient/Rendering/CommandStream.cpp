@@ -2,7 +2,7 @@
 #include "Rendering/CommandStream.h"
 
 namespace Rendering {
-  void CommandStream::writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer) {
+  void CommandStream::writeBufferSet(SysGFX::BufferTarget target, SysGFX::BufferHandle buffer) {
     writeType(CommandType::BufferSet);
     BufferSetCommand command;
     command.target = target;
@@ -11,7 +11,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data) {
+  void CommandStream::writeBufferWrite(SysGFX::BufferTarget target, uint16_t size, const void *data) {
     writeType(CommandType::BufferWrite);
     BufferWriteCommand command;
     command.target = target;
@@ -22,7 +22,7 @@ namespace Rendering {
     position += size;
   }
 
-  void CommandStream::writeClear(Backend::ClearBitMask mask) {
+  void CommandStream::writeClear(SysGFX::ClearBitMask mask) {
     writeType(CommandType::Clear);
     ClearCommand command;
     command.mask = mask;
@@ -30,7 +30,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeCullFaceSet(Backend::CullFace face) {
+  void CommandStream::writeCullFaceSet(SysGFX::CullFace face) {
     writeType(CommandType::CullFaceSet);
     CullFaceSetCommand command;
     command.face = face;
@@ -54,7 +54,7 @@ namespace Rendering {
     writeType(CommandType::EnableBlending);
   }
 
-  void CommandStream::writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType) {
+  void CommandStream::writeIndexedDraw(uint16_t indexCount, SysGFX::DataType dataType) {
     writeType(CommandType::IndexedDraw);
     IndexedDrawCommand command;
     command.indexCount = indexCount;
@@ -63,7 +63,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeBlendFunctionSet(Backend::BlendFactor sourceFactor, Backend::BlendFactor destinationFactor) {
+  void CommandStream::writeBlendFunctionSet(SysGFX::BlendFactor sourceFactor, SysGFX::BlendFactor destinationFactor) {
     writeType(CommandType::BlendFunctionSet);
     BlendFunctionSetCommand command;
     command.sourceFactor = sourceFactor;
@@ -72,7 +72,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeObjectSet(Backend::ObjectHandle object) {
+  void CommandStream::writeObjectSet(SysGFX::ObjectHandle object) {
     writeType(CommandType::ObjectSet);
     ObjectSetCommand command;
     command.object = object;
@@ -80,7 +80,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeProgramSet(Backend::ProgramHandle program) {
+  void CommandStream::writeProgramSet(SysGFX::ProgramHandle program) {
     writeType(CommandType::ProgramSet);
     ProgramSetCommand command;
     command.program = program;
@@ -88,7 +88,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeRenderTargetSet(Backend::RenderTargetHandle renderTarget) {
+  void CommandStream::writeRenderTargetSet(SysGFX::RenderTargetHandle renderTarget) {
     writeType(CommandType::RenderTargetSet);
     RenderTargetSetCommand command;
     command.renderTarget = renderTarget;
@@ -96,7 +96,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeTexturePairSet(uint8_t unit, Backend::TextureHandle handle) {
+  void CommandStream::writeTexturePairSet(uint8_t unit, SysGFX::TextureHandle handle) {
     writeType(CommandType::TexturePairSet);
     TexturePairSetCommand command;
     command.unit = unit;
@@ -105,7 +105,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeTextureSet(Backend::TextureHandle handle) {
+  void CommandStream::writeTextureSet(SysGFX::TextureHandle handle) {
     writeType(CommandType::TextureSet);
     TextureSetCommand command;
     command.handle = handle;
@@ -121,7 +121,7 @@ namespace Rendering {
     position += sizeof(command);
   }
 
-  void CommandStream::writeUniformFloatSet(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+  void CommandStream::writeUniformFloatSet(SysGFX::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformFloatSet);
     UniformFloatSetCommand command;
     command.uniform = uniform;
@@ -133,7 +133,7 @@ namespace Rendering {
     position += dataSize;
   }
 
-  void CommandStream::writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+  void CommandStream::writeUniformMat4Set(SysGFX::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformMat4Set);
     UniformMat4SetCommand command;
     command.uniform = uniform;
@@ -145,7 +145,7 @@ namespace Rendering {
     position += dataSize;
   }
 
-  void CommandStream::writeUniformVec2Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+  void CommandStream::writeUniformVec2Set(SysGFX::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformVec2Set);
     UniformVec2SetCommand command;
     command.uniform = uniform;
@@ -157,7 +157,7 @@ namespace Rendering {
     position += dataSize;
   }
 
-  void CommandStream::writeUniformVec3Set(Backend::UniformHandle uniform, uint16_t count, const float *data) {
+  void CommandStream::writeUniformVec3Set(SysGFX::UniformHandle uniform, uint16_t count, const float *data) {
     writeType(CommandType::UniformVec3Set);
     UniformVec3SetCommand command;
     command.uniform = uniform;

@@ -1,6 +1,6 @@
 #include "Quanta/Math/Vector3.h"
 #include "Rendering/Config.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/AttributeLocation.h"
 #include "Rendering/MeshHelper.h"
 #include "Rendering/StaticMeshes.h"
@@ -76,53 +76,53 @@ namespace Rendering {
       }
     }
 
-    static Backend::ObjectHandle upload(const BackendStaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-      Backend::ObjectHandle object = Backend::createObject();
-      Backend::setObject(object);
+    static SysGFX::ObjectHandle upload(const BackendStaticVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
+      SysGFX::ObjectHandle object = SysGFX::createObject();
+      SysGFX::setObject(object);
 
-      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
-      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Normal));
-      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Color));
-      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::SelfIllumination));
+      SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Position));
+      SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Normal));
+      SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Color));
+      SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::SelfIllumination));
 
-      Backend::BufferHandle vertexBuffer = Backend::createBuffer();
-      Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
-      Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(BackendStaticVertex)*vertexCount, vertices);
+      SysGFX::BufferHandle vertexBuffer = SysGFX::createBuffer();
+      SysGFX::setBuffer(SysGFX::BufferTarget::Vertex, vertexBuffer);
+      SysGFX::writeBuffer(SysGFX::BufferTarget::Vertex, sizeof(BackendStaticVertex)*vertexCount, vertices);
 
-      Backend::BufferHandle indexBuffer = Backend::createBuffer();
-      Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
-      Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
+      SysGFX::BufferHandle indexBuffer = SysGFX::createBuffer();
+      SysGFX::setBuffer(SysGFX::BufferTarget::Index, indexBuffer);
+      SysGFX::writeBuffer(SysGFX::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
 
-      Backend::configureAttribute(
-        static_cast<Backend::AttributeLocation>(AttributeLocation::Position),
+      SysGFX::configureAttribute(
+        static_cast<SysGFX::AttributeLocation>(AttributeLocation::Position),
         3,
-        Backend::DataType::Float,
+        SysGFX::DataType::Float,
         sizeof(BackendStaticVertex),
         0
       );
-      Backend::configureAttribute(
-        static_cast<Backend::AttributeLocation>(AttributeLocation::Normal),
+      SysGFX::configureAttribute(
+        static_cast<SysGFX::AttributeLocation>(AttributeLocation::Normal),
         3,
-        Backend::DataType::Float,
+        SysGFX::DataType::Float,
         sizeof(BackendStaticVertex),
         sizeof(float)*3
       );
-      Backend::configureAttribute(
-        static_cast<Backend::AttributeLocation>(AttributeLocation::Color),
+      SysGFX::configureAttribute(
+        static_cast<SysGFX::AttributeLocation>(AttributeLocation::Color),
         3,
-        Backend::DataType::Float,
+        SysGFX::DataType::Float,
         sizeof(BackendStaticVertex),
         sizeof(float)*3*2
       );
-      Backend::configureAttribute(
-        static_cast<Backend::AttributeLocation>(AttributeLocation::SelfIllumination),
+      SysGFX::configureAttribute(
+        static_cast<SysGFX::AttributeLocation>(AttributeLocation::SelfIllumination),
         1,
-        Backend::DataType::Float,
+        SysGFX::DataType::Float,
         sizeof(BackendStaticVertex),
         sizeof(float)*3*3
       );
 
-      Backend::setObject(0);
+      SysGFX::setObject(0);
 
       return object;
     }

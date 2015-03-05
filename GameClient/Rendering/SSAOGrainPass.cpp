@@ -4,8 +4,8 @@
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Random.h"
 #include "Quanta/Util.h"
-#include "Rendering/Backend/Functions.h"
-#include "Rendering/Backend/ClearBit.h"
+#include "SysGFX/SysGFX.h"
+#include "SysGFX/ClearBit.h"
 #include "Rendering/Textures.h"
 #include "Rendering/RenderTargets.h"
 #include "Rendering/FullscreenQuad.h"
@@ -37,9 +37,9 @@ namespace Rendering {
         };
         kernel[i].normalize();
       }
-      Backend::setTexture(Textures::list.ssaoGrainNoise);
-      Backend::writeTexture(size, size, Backend::TextureFormat::SignedNormalizedRGB, kernel);
-      Backend::setTexture(0);
+      SysGFX::setTexture(Textures::list.ssaoGrainNoise);
+      SysGFX::writeTexture(size, size, SysGFX::TextureFormat::SignedNormalizedRGB, kernel);
+      SysGFX::setTexture(0);
     }
 
     static void uploadSampleKernel() {
@@ -55,47 +55,47 @@ namespace Rendering {
         float scale = static_cast<float>(i)/size;
         kernel[i] *= Quanta::lerp(0.1, 1, pow(scale, 2));
       }
-      Backend::setUniformVec3(Uniforms::list.ssaoGrainSampleKernel, size, kernel[0].components);
+      SysGFX::setUniformVec3(Uniforms::list.ssaoGrainSampleKernel, size, kernel[0].components);
     }
 
     static void uploadPerspectiveConfig() {
-      Backend::setUniformFloat(Uniforms::list.ssaoGrainZNear, 1, &Config::perspective.near);
-      Backend::setUniformFloat(Uniforms::list.ssaoGrainZFar, 1, &Config::perspective.far);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoGrainZNear, 1, &Config::perspective.near);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoGrainZFar, 1, &Config::perspective.far);
     }
 
     static void uploadSampleRadius() {
       float data[] = { Config::SSAO::sampleRadius };
-      Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleRadius, 1, data);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoGrainSampleRadius, 1, data);
     }
 
     static void uploadSampleDifferenceLimit() {
       float data[] = { Config::SSAO::sampleDifferenceLimit };
-      Backend::setUniformFloat(Uniforms::list.ssaoGrainSampleDifferenceLimit, 1, data);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoGrainSampleDifferenceLimit, 1, data);
     }
 
     static void uploadTextureConfig() {
-      Backend::setUniformInt(Uniforms::list.ssaoGrainNoiseTexture, TextureUnits::noise);
-      Backend::setUniformInt(Uniforms::list.ssaoGrainDepthTexture, TextureUnits::depth);
-      Backend::setUniformInt(Uniforms::list.ssaoGrainNormalTexture, TextureUnits::normal);
+      SysGFX::setUniformInt(Uniforms::list.ssaoGrainNoiseTexture, TextureUnits::noise);
+      SysGFX::setUniformInt(Uniforms::list.ssaoGrainDepthTexture, TextureUnits::depth);
+      SysGFX::setUniformInt(Uniforms::list.ssaoGrainNormalTexture, TextureUnits::normal);
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles.ssaoGrain);
+      SysGFX::setProgram(Programs::handles.ssaoGrain);
       uploadNoiseKernel();
       uploadSampleKernel();
       uploadSampleRadius();
       uploadSampleDifferenceLimit();
       uploadTextureConfig();
       uploadPerspectiveConfig();
-      Backend::setProgram(0);
+      SysGFX::setProgram(0);
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setProgram(Programs::handles.ssaoGrain);
+      SysGFX::setProgram(Programs::handles.ssaoGrain);
       Quanta::Vector2 noiseScale(resolution.width, resolution.height);
       noiseScale /= static_cast<float>(Config::SSAO::noiseSize);
-      Backend::setUniformVec2(Uniforms::list.ssaoGrainNoiseScale, 1, noiseScale.components);
-      Backend::setProgram(0);
+      SysGFX::setUniformVec2(Uniforms::list.ssaoGrainNoiseScale, 1, noiseScale.components);
+      SysGFX::setProgram(0);
     }
 
     void write(
@@ -103,7 +103,7 @@ namespace Rendering {
       const Quanta::Matrix4 &clipWorldTransform
     ) {
       stream.writeRenderTargetSet(RenderTargets::handles.ssaoGrain);
-      stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
+      stream.writeClear(static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Color));
       stream.writeProgramSet(Programs::handles.ssaoGrain);
 
       stream.writeUniformMat4Set(Uniforms::list.ssaoGrainClipWorldTransform, 1, clipWorldTransform.components);
@@ -113,7 +113,7 @@ namespace Rendering {
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.downsampleNormal);
 
       stream.writeObjectSet(FullscreenQuad::object);
-      stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
+      stream.writeIndexedDraw(6, SysGFX::DataType::UnsignedByte);
       stream.writeObjectSet(0);
     }
   }

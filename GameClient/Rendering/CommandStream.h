@@ -3,8 +3,8 @@
 
 #include "Rendering/Commands.h"
 #include "Rendering/CommandType.h"
-#include "Rendering/Backend/ClearBitMask.h"
-#include "Rendering/Backend/RenderTargetHandle.h"
+#include "SysGFX/ClearBitMask.h"
+#include "SysGFX/RenderTargetHandle.h"
 
 namespace Rendering {
   class CommandStream {
@@ -12,26 +12,26 @@ namespace Rendering {
     void reset();
     void rewind();
     uint16_t getCount() { return count; }
-    void writeBufferSet(Backend::BufferTarget target, Backend::BufferHandle buffer);
-    void writeBufferWrite(Backend::BufferTarget target, uint16_t size, const void *data);
-    void writeClear(Backend::ClearBitMask mask);
-    void writeCullFaceSet(Backend::CullFace face);
+    void writeBufferSet(SysGFX::BufferTarget target, SysGFX::BufferHandle buffer);
+    void writeBufferWrite(SysGFX::BufferTarget target, uint16_t size, const void *data);
+    void writeClear(SysGFX::ClearBitMask mask);
+    void writeCullFaceSet(SysGFX::CullFace face);
     void writeDisableDepthTest();
     void writeEnableDepthTest();
     void writeDisableBlending();
     void writeEnableBlending();
-    void writeIndexedDraw(uint16_t indexCount, Backend::DataType dataType);
-    void writeBlendFunctionSet(Backend::BlendFactor sourceFactor, Backend::BlendFactor destinationFactor);
-    void writeObjectSet(Backend::ObjectHandle object);
-    void writeProgramSet(Backend::ProgramHandle program);
-    void writeRenderTargetSet(Backend::RenderTargetHandle renderTarget);
-    void writeTexturePairSet(uint8_t unit, Backend::TextureHandle handle);
-    void writeTextureSet(Backend::TextureHandle handle);
+    void writeIndexedDraw(uint16_t indexCount, SysGFX::DataType dataType);
+    void writeBlendFunctionSet(SysGFX::BlendFactor sourceFactor, SysGFX::BlendFactor destinationFactor);
+    void writeObjectSet(SysGFX::ObjectHandle object);
+    void writeProgramSet(SysGFX::ProgramHandle program);
+    void writeRenderTargetSet(SysGFX::RenderTargetHandle renderTarget);
+    void writeTexturePairSet(uint8_t unit, SysGFX::TextureHandle handle);
+    void writeTextureSet(SysGFX::TextureHandle handle);
     void writeTextureUnitSet(uint8_t unit);
-    void writeUniformFloatSet(Backend::UniformHandle uniform, uint16_t count, const float *data);
-    void writeUniformMat4Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
-    void writeUniformVec2Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
-    void writeUniformVec3Set(Backend::UniformHandle uniform, uint16_t count, const float *data);
+    void writeUniformFloatSet(SysGFX::UniformHandle uniform, uint16_t count, const float *data);
+    void writeUniformMat4Set(SysGFX::UniformHandle uniform, uint16_t count, const float *data);
+    void writeUniformVec2Set(SysGFX::UniformHandle uniform, uint16_t count, const float *data);
+    void writeUniformVec3Set(SysGFX::UniformHandle uniform, uint16_t count, const float *data);
     void writeViewportSet(uint16_t width, uint16_t height);
     CommandType readType();
     const BufferSetCommand& readBufferSet();

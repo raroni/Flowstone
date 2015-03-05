@@ -2,7 +2,7 @@
 #include "Rendering/Textures.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Programs.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/RenderTargets.h"
@@ -17,9 +17,9 @@ namespace Rendering {
     Programs::initialize();
     Uniforms::initialize();
     FullscreenQuad::initialize();
-    Backend::setClearColor(0, 0, 1);
-    Backend::enableFaceCulling();
-    Backend::disableDepthTest();
+    SysGFX::setClearColor(0, 0, 1);
+    SysGFX::enableFaceCulling();
+    SysGFX::disableDepthTest();
     worldRenderer.initialize();
   }
 
@@ -91,109 +91,109 @@ namespace Rendering {
       switch(type) {
         case CommandType::ProgramSet: {
           const ProgramSetCommand &command = stream.readProgramSet();
-          Backend::setProgram(command.program);
+          SysGFX::setProgram(command.program);
           break;
         }
         case CommandType::UniformMat4Set: {
           const float *data;
           const UniformMat4SetCommand &command = stream.readUniformMat4Set(&data);
-          Backend::setUniformMat4(command.uniform, command.count, data);
+          SysGFX::setUniformMat4(command.uniform, command.count, data);
           break;
         }
         case CommandType::UniformFloatSet: {
           const float *data;
           const UniformFloatSetCommand &command = stream.readUniformFloatSet(&data);
-          Backend::setUniformFloat(command.uniform, command.count, data);
+          SysGFX::setUniformFloat(command.uniform, command.count, data);
           break;
         }
         case CommandType::UniformVec2Set: {
           const float *data;
           const UniformVec2SetCommand &command = stream.readUniformVec2Set(&data);
-          Backend::setUniformVec2(command.uniform, command.count, data);
+          SysGFX::setUniformVec2(command.uniform, command.count, data);
           break;
         }
         case CommandType::UniformVec3Set: {
           const float *data;
           const UniformVec3SetCommand &command = stream.readUniformVec3Set(&data);
-          Backend::setUniformVec3(command.uniform, command.count, data);
+          SysGFX::setUniformVec3(command.uniform, command.count, data);
           break;
         }
         case CommandType::ObjectSet: {
           const ObjectSetCommand &command = stream.readObjectSet();
-          Backend::setObject(command.object);
+          SysGFX::setObject(command.object);
           break;
         }
         case CommandType::Clear: {
           const ClearCommand &command = stream.readClear();
-          Backend::clear(command.mask);
+          SysGFX::clear(command.mask);
           break;
         }
         case CommandType::EnableDepthTest: {
-          Backend::enableDepthTest();
+          SysGFX::enableDepthTest();
           break;
         }
         case CommandType::DisableDepthTest: {
-          Backend::disableDepthTest();
+          SysGFX::disableDepthTest();
           break;
         }
         case CommandType::IndexedDraw: {
           const IndexedDrawCommand &command = stream.readIndexedDraw();
-          Backend::drawIndexed(command.indexCount, command.dataType);
+          SysGFX::drawIndexed(command.indexCount, command.dataType);
           break;
         }
         case CommandType::RenderTargetSet: {
           const RenderTargetSetCommand &command = stream.readRenderTargetSet();
-          Backend::setRenderTarget(command.renderTarget);
+          SysGFX::setRenderTarget(command.renderTarget);
           break;
         }
         case CommandType::TexturePairSet: {
           const TexturePairSetCommand &command = stream.readTexturePairSet();
-          Backend::setTextureUnit(command.unit);
-          Backend::setTexture(command.handle);
+          SysGFX::setTextureUnit(command.unit);
+          SysGFX::setTexture(command.handle);
           break;
         }
         case CommandType::TextureSet: {
           const TextureSetCommand &command = stream.readTextureSet();
-          Backend::setTexture(command.handle);
+          SysGFX::setTexture(command.handle);
           break;
         }
         case CommandType::BlendFunctionSet: {
           const BlendFunctionSetCommand &command = stream.readBlendFunctionSet();
-          Backend::setBlendFunction(command.sourceFactor, command.destinationFactor);
+          SysGFX::setBlendFunction(command.sourceFactor, command.destinationFactor);
           break;
         }
         case CommandType::TextureUnitSet: {
           const TextureUnitSetCommand &command = stream.readTextureUnitSet();
-          Backend::setTextureUnit(command.unit);
+          SysGFX::setTextureUnit(command.unit);
           break;
         }
         case CommandType::BufferSet: {
           const BufferSetCommand &command = stream.readBufferSet();
-          Backend::setBuffer(command.target, command.buffer);
+          SysGFX::setBuffer(command.target, command.buffer);
           break;
         }
         case CommandType::ViewportSet: {
           const ViewportSetCommand &command = stream.readViewportSet();
-          Backend::setViewport(command.width, command.height);
+          SysGFX::setViewport(command.width, command.height);
           break;
         }
         case CommandType::BufferWrite: {
           const void *data;
           const BufferWriteCommand &command = stream.readBufferWrite(&data);
-          Backend::writeBuffer(command.target, command.size, data);
+          SysGFX::writeBuffer(command.target, command.size, data);
           break;
         }
         case CommandType::EnableBlending: {
-          Backend::enableBlending();
+          SysGFX::enableBlending();
           break;
         }
         case CommandType::DisableBlending: {
-          Backend::disableBlending();
+          SysGFX::disableBlending();
           break;
         }
         case CommandType::CullFaceSet: {
           const CullFaceSetCommand &command = stream.readCullFaceSet();
-          Backend::setCullFace(command.face);
+          SysGFX::setCullFace(command.face);
           break;
         }
         default:

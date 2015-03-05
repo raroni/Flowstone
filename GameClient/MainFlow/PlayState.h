@@ -2,7 +2,6 @@
 #define MAIN_FLOW_SINGLE_PLAYER_H
 
 #include <stddef.h>
-#include <OpenGL/gl3.h>
 #include "MainFlow/State.h"
 #include "AtmosphereColor.h"
 #include "Animation/Animator.h"

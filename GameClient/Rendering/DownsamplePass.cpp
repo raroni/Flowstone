@@ -5,9 +5,9 @@
 #include "Rendering/Config.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Programs.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/FullscreenQuad.h"
-#include "Rendering/Backend/ClearBit.h"
+#include "SysGFX/ClearBit.h"
 #include "Rendering/DownsamplePass.h"
 
 namespace Rendering {
@@ -18,24 +18,24 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles.downsample);
-      Backend::setUniformFloat(Uniforms::list.downsampleZNear, 1, &Config::perspective.near);
-      Backend::setUniformFloat(Uniforms::list.downsampleZFar, 1, &Config::perspective.far);
-      Backend::setUniformInt(Uniforms::list.downsampleDepthTexture, TextureUnits::depth);
-      Backend::setUniformInt(Uniforms::list.downsampleNormalTexture, TextureUnits::normal);
-      Backend::setProgram(0);
+      SysGFX::setProgram(Programs::handles.downsample);
+      SysGFX::setUniformFloat(Uniforms::list.downsampleZNear, 1, &Config::perspective.near);
+      SysGFX::setUniformFloat(Uniforms::list.downsampleZFar, 1, &Config::perspective.far);
+      SysGFX::setUniformInt(Uniforms::list.downsampleDepthTexture, TextureUnits::depth);
+      SysGFX::setUniformInt(Uniforms::list.downsampleNormalTexture, TextureUnits::normal);
+      SysGFX::setProgram(0);
     }
 
     void write(CommandStream &stream) {
       stream.writeRenderTargetSet(RenderTargets::handles.downsample);
-      stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
+      stream.writeClear(static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Color));
       stream.writeProgramSet(Programs::handles.downsample);
 
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.geometryDepth);
       stream.writeTexturePairSet(TextureUnits::normal, Textures::list.geometryNormal);
 
       stream.writeObjectSet(FullscreenQuad::object);
-      stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
+      stream.writeIndexedDraw(6, SysGFX::DataType::UnsignedByte);
       stream.writeObjectSet(0);
     }
   }

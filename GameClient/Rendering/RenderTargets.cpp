@@ -1,5 +1,5 @@
 #include "Common/Error.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/Textures.h"
 #include "Rendering/Config.h"
 #include "Rendering/RenderTargets.h"
@@ -9,51 +9,51 @@ namespace Rendering {
     HandleList handles;
 
     static void initializeShadowBase() {
-      handles.shadowBase = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.shadowBase);
-      Backend::attachDepthTexture(Textures::list.shadowBaseBufferDepth);
-      Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
+      handles.shadowBase = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.shadowBase);
+      SysGFX::attachDepthTexture(Textures::list.shadowBaseBufferDepth);
+      SysGFX::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
     }
 
     static void initializeShadowBlurHorizontal() {
-      handles.shadowBlurHorizontal = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.shadowBlurHorizontal);
-      Backend::attachColorTexture(Textures::list.shadowBlurVarianceDepth, 0);
+      handles.shadowBlurHorizontal = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.shadowBlurHorizontal);
+      SysGFX::attachColorTexture(Textures::list.shadowBlurVarianceDepth, 0);
     }
 
     static void initializeShadowBlurVertical() {
-      handles.shadowBlurVertical = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.shadowBlurVertical);
-      Backend::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
+      handles.shadowBlurVertical = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.shadowBlurVertical);
+      SysGFX::attachColorTexture(Textures::list.shadowVarianceDepth, 0);
     }
 
     static void initializeGeometry() {
-      handles.geometry = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.geometry);
-      Backend::attachColorTexture(Textures::list.geometryAppearance, 0);
-      Backend::attachColorTexture(Textures::list.geometryNormal, 1);
-      Backend::attachDepthTexture(Textures::list.geometryDepth);
-      Backend::setDrawBufferCount(2);
+      handles.geometry = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.geometry);
+      SysGFX::attachColorTexture(Textures::list.geometryAppearance, 0);
+      SysGFX::attachColorTexture(Textures::list.geometryNormal, 1);
+      SysGFX::attachDepthTexture(Textures::list.geometryDepth);
+      SysGFX::setDrawBufferCount(2);
     }
 
     static void initializeSSAOGrain() {
-      handles.ssaoGrain = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.ssaoGrain);
-      Backend::attachColorTexture(Textures::list.ssaoGrainResult, 0);
+      handles.ssaoGrain = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.ssaoGrain);
+      SysGFX::attachColorTexture(Textures::list.ssaoGrainResult, 0);
     }
 
     static void initializeSSAOBlur() {
-      handles.ssaoBlur = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.ssaoBlur);
-      Backend::attachColorTexture(Textures::list.ssaoBlur, 0);
+      handles.ssaoBlur = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.ssaoBlur);
+      SysGFX::attachColorTexture(Textures::list.ssaoBlur, 0);
     }
 
     static void initializeDownsample() {
-      handles.downsample = Backend::createRenderTarget();
-      Backend::setRenderTarget(handles.downsample);
-      Backend::attachColorTexture(Textures::list.downsampleDepth, 0);
-      Backend::attachColorTexture(Textures::list.downsampleNormal, 1);
-      Backend::setDrawBufferCount(2);
+      handles.downsample = SysGFX::createRenderTarget();
+      SysGFX::setRenderTarget(handles.downsample);
+      SysGFX::attachColorTexture(Textures::list.downsampleDepth, 0);
+      SysGFX::attachColorTexture(Textures::list.downsampleNormal, 1);
+      SysGFX::setDrawBufferCount(2);
     }
 
     void initialize() {
@@ -64,36 +64,36 @@ namespace Rendering {
       initializeShadowBlurHorizontal();
       initializeShadowBlurVertical();
       initializeDownsample();
-      Backend::setRenderTarget(0);
+      SysGFX::setRenderTarget(0);
     }
 
     void handleResolutionChange() {
-      Backend::setRenderTarget(handles.shadowBase);
-      if(!Backend::checkRenderTarget()) {
+      SysGFX::setRenderTarget(handles.shadowBase);
+      if(!SysGFX::checkRenderTarget()) {
         fatalError("Shadow base render target not configured propertly.");
       }
 
-      Backend::setRenderTarget(handles.geometry);
-      if(!Backend::checkRenderTarget()) {
+      SysGFX::setRenderTarget(handles.geometry);
+      if(!SysGFX::checkRenderTarget()) {
         fatalError("Geometry render target not configured propertly.");
       }
 
-      Backend::setRenderTarget(handles.ssaoGrain);
-      if(!Backend::checkRenderTarget()) {
+      SysGFX::setRenderTarget(handles.ssaoGrain);
+      if(!SysGFX::checkRenderTarget()) {
         fatalError("SSAO grain render target not configured propertly.");
       }
 
-      Backend::setRenderTarget(handles.ssaoBlur);
-      if(!Backend::checkRenderTarget()) {
+      SysGFX::setRenderTarget(handles.ssaoBlur);
+      if(!SysGFX::checkRenderTarget()) {
         fatalError("SSAO blur render target not configured propertly.");
       }
 
-      Backend::setRenderTarget(handles.downsample);
-      if(!Backend::checkRenderTarget()) {
+      SysGFX::setRenderTarget(handles.downsample);
+      if(!SysGFX::checkRenderTarget()) {
         fatalError("Downsample render target not configured propertly.");
       }
 
-      Backend::setRenderTarget(0);
+      SysGFX::setRenderTarget(0);
     }
   }
 }

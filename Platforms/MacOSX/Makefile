@@ -34,7 +34,6 @@ USER_SOURCES_CPP =\
 	../../GameClient/RendererFeeder.cpp\
 	../../GameClient/Rendering/Renderer.cpp\
 	../../GameClient/Rendering/WorldRenderer.cpp\
-	../../GameClient/Rendering/Backend/OpenGL/Functions.cpp\
 	../../GameClient/Rendering/BoneMeshRegistry.cpp\
 	../../GameClient/Rendering/Programs.cpp\
 	../../GameClient/Rendering/BoneMeshInstances.cpp\
@@ -66,7 +65,8 @@ USER_SOURCES_CPP =\
 	../../GameClient/Rendering/SSAOBlurPass.cpp\
 	../../GameClient/Rendering/DownsamplePass.cpp\
 	../../GameClient/Rendering/PointLights.cpp\
-	../../GameClient/Rendering/PointLightPass.cpp
+	../../GameClient/Rendering/PointLightPass.cpp\
+	../../Sys/GFX/OpenGL/Source/SysGFX.cpp
 
 USER_SOURCES_OBJC = \
 	Source/Util.m\
@@ -83,6 +83,8 @@ USER_HEADER_DIRS =\
 	-I../../Libraries/Cabi/Library/Include\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
+	-I../../Sys/Gfx/Include\
+	-I../../Sys/Gfx/OpenGL/Include\
 	-I../../GameClient\
 	-I../..\
 	-IInclude

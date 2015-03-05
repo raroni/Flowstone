@@ -4,9 +4,9 @@
 #include "Rendering/RenderTargets.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Textures.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/Programs.h"
-#include "Rendering/Backend/ClearBit.h"
+#include "SysGFX/ClearBit.h"
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/SSAOBlurPass.h"
 
@@ -18,36 +18,36 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles.ssaoBlur);
-      Backend::setUniformFloat(Uniforms::list.ssaoBlurDepthDifferenceLimit, 1, &Config::SSAO::blurDepthDifferenceLimit);
-      Backend::setUniformFloat(Uniforms::list.ssaoBlurZNear, 1, &Config::perspective.near);
-      Backend::setUniformFloat(Uniforms::list.ssaoBlurZFar, 1, &Config::perspective.far);
-      Backend::setUniformInt(Uniforms::list.ssaoBlurGrainTexture, TextureUnits::grain);
-      Backend::setUniformInt(Uniforms::list.ssaoBlurDepthTexture, TextureUnits::depth);
-      Backend::setProgram(0);
+      SysGFX::setProgram(Programs::handles.ssaoBlur);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoBlurDepthDifferenceLimit, 1, &Config::SSAO::blurDepthDifferenceLimit);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoBlurZNear, 1, &Config::perspective.near);
+      SysGFX::setUniformFloat(Uniforms::list.ssaoBlurZFar, 1, &Config::perspective.far);
+      SysGFX::setUniformInt(Uniforms::list.ssaoBlurGrainTexture, TextureUnits::grain);
+      SysGFX::setUniformInt(Uniforms::list.ssaoBlurDepthTexture, TextureUnits::depth);
+      SysGFX::setProgram(0);
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setProgram(Programs::handles.ssaoBlur);
+      SysGFX::setProgram(Programs::handles.ssaoBlur);
       float downSampling = static_cast<float>(Config::SSAO::downSampling);
       float grainTexelSize[] = {
         downSampling/resolution.width,
         downSampling/resolution.height
       };
-      Backend::setUniformVec2(Uniforms::list.ssaoBlurGrainTexelSize, 1, grainTexelSize);
-      Backend::setProgram(0);
+      SysGFX::setUniformVec2(Uniforms::list.ssaoBlurGrainTexelSize, 1, grainTexelSize);
+      SysGFX::setProgram(0);
     }
 
     void write(CommandStream &stream) {
       stream.writeRenderTargetSet(RenderTargets::handles.ssaoBlur);
-      stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
+      stream.writeClear(static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Color));
       stream.writeProgramSet(Programs::handles.ssaoBlur);
 
       stream.writeTexturePairSet(TextureUnits::grain, Textures::list.ssaoGrainResult);
       stream.writeTexturePairSet(TextureUnits::depth, Textures::list.downsampleDepth);
 
       stream.writeObjectSet(FullscreenQuad::object);
-      stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
+      stream.writeIndexedDraw(6, SysGFX::DataType::UnsignedByte);
       stream.writeObjectSet(0);
     }
   }

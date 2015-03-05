@@ -1,11 +1,11 @@
 #ifndef RENDERING_STATIC_MESH_H
 #define RENDERING_STATIC_MESH_H
 
-#include "Rendering/Backend/ObjectHandle.h"
+#include "SysGFX/ObjectHandle.h"
 
 namespace Rendering {
   struct StaticMesh {
-    Backend::ObjectHandle object;
+    SysGFX::ObjectHandle object;
     uint16_t indexCount;
     float boundingRadius;
   };

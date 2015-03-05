@@ -1,15 +1,15 @@
 #ifndef RENDERING_BONE_MESH_REGISTRY_H
 #define RENDERING_BONE_MESH_REGISTRY_H
 
+#include "SysGFX/ObjectHandle.h"
 #include "Rendering/Config.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/BoneVertex.h"
-#include "Rendering/Backend/ObjectHandle.h"
 #include "Rendering/BoneMesh.h"
 
 namespace Rendering {
   class BoneMeshRegistry {
-    Backend::ObjectHandle handles[Config::maxBoneMeshes];
+    SysGFX::ObjectHandle handles[Config::maxBoneMeshes];
     uint16_t indexCounts[Config::maxBoneMeshes];
     float boundingRadii[Config::maxBoneMeshes];
     uint16_t count = 0;

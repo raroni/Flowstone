@@ -1,5 +1,5 @@
 #include <stddef.h>
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/Config.h"
 #include "Rendering/CommandStream.h"
 #include "Rendering/Programs.h"
@@ -22,19 +22,19 @@ namespace Rendering {
     }
 
     void initialize() {
-      Backend::setProgram(Programs::handles.merge);
-      Backend::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
-      Backend::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
+      SysGFX::setProgram(Programs::handles.merge);
+      SysGFX::setUniformFloat(Uniforms::list.mergeZNear, 1, &Config::perspective.near);
+      SysGFX::setUniformFloat(Uniforms::list.mergeZFar, 1, &Config::perspective.far);
       float inverseShadowSize = 1.0/Config::shadowMapSize;
-      Backend::setUniformFloat(Uniforms::list.mergeInverseShadowSize, 1, &inverseShadowSize);
-      Backend::setUniformUInt(Uniforms::list.mergeDownsampleScale, Config::SSAO::downSampling);
-      Backend::setUniformInt(Uniforms::list.mergeAppearanceTexture, TextureUnits::appearance);
-      Backend::setUniformInt(Uniforms::list.mergeNormalTexture, TextureUnits::normal);
-      Backend::setUniformInt(Uniforms::list.mergeDepthTexture, TextureUnits::depth);
-      Backend::setUniformInt(Uniforms::list.mergeShadowTexture, TextureUnits::shadow);
-      Backend::setUniformInt(Uniforms::list.mergeSSAOTexture, TextureUnits::ssao);
-      Backend::setUniformInt(Uniforms::list.mergeLowResDepthTexture, TextureUnits::downsampleDepth);
-      Backend::setProgram(0);
+      SysGFX::setUniformFloat(Uniforms::list.mergeInverseShadowSize, 1, &inverseShadowSize);
+      SysGFX::setUniformUInt(Uniforms::list.mergeDownsampleScale, Config::SSAO::downSampling);
+      SysGFX::setUniformInt(Uniforms::list.mergeAppearanceTexture, TextureUnits::appearance);
+      SysGFX::setUniformInt(Uniforms::list.mergeNormalTexture, TextureUnits::normal);
+      SysGFX::setUniformInt(Uniforms::list.mergeDepthTexture, TextureUnits::depth);
+      SysGFX::setUniformInt(Uniforms::list.mergeShadowTexture, TextureUnits::shadow);
+      SysGFX::setUniformInt(Uniforms::list.mergeSSAOTexture, TextureUnits::ssao);
+      SysGFX::setUniformInt(Uniforms::list.mergeLowResDepthTexture, TextureUnits::downsampleDepth);
+      SysGFX::setProgram(0);
     }
 
     void write(
@@ -62,7 +62,7 @@ namespace Rendering {
       stream.writeTexturePairSet(TextureUnits::downsampleDepth, Textures::list.downsampleDepth);
 
       stream.writeObjectSet(FullscreenQuad::object);
-      stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
+      stream.writeIndexedDraw(6, SysGFX::DataType::UnsignedByte);
       stream.writeObjectSet(0);
     }
   }

@@ -1,9 +1,6 @@
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/AttributeLocation.h"
 #include "Rendering/MeshHelper.h"
-#include "Rendering/Backend/AttributeLocation.h"
-#include "Rendering/Backend/BufferTarget.h"
-#include "Rendering/Backend/ObjectHandle.h"
 #include "Rendering/BoneMeshRegistry.h"
 
 namespace Rendering {
@@ -64,45 +61,45 @@ namespace Rendering {
     }
   }
 
-  static Backend::ObjectHandle upload(const BackendBoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
-    Backend::ObjectHandle object = Backend::createObject();
-    Backend::setObject(object);
+  static SysGFX::ObjectHandle upload(const BackendBoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount) {
+    SysGFX::ObjectHandle object = SysGFX::createObject();
+    SysGFX::setObject(object);
 
-    Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
-    Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Normal));
-    Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::JointIndex));
+    SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Position));
+    SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Normal));
+    SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::JointIndex));
 
-    Backend::BufferHandle vertexBuffer = Backend::createBuffer();
-    Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
-    Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(BackendBoneVertex)*vertexCount, vertices);
+    SysGFX::BufferHandle vertexBuffer = SysGFX::createBuffer();
+    SysGFX::setBuffer(SysGFX::BufferTarget::Vertex, vertexBuffer);
+    SysGFX::writeBuffer(SysGFX::BufferTarget::Vertex, sizeof(BackendBoneVertex)*vertexCount, vertices);
 
-    Backend::BufferHandle indexBuffer = Backend::createBuffer();
-    Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
-    Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
+    SysGFX::BufferHandle indexBuffer = SysGFX::createBuffer();
+    SysGFX::setBuffer(SysGFX::BufferTarget::Index, indexBuffer);
+    SysGFX::writeBuffer(SysGFX::BufferTarget::Index, sizeof(uint16_t)*indexCount, indices);
 
-    Backend::configureAttribute(
-      static_cast<Backend::AttributeLocation>(AttributeLocation::Position),
+    SysGFX::configureAttribute(
+      static_cast<SysGFX::AttributeLocation>(AttributeLocation::Position),
       3,
-      Backend::DataType::Float,
+      SysGFX::DataType::Float,
       sizeof(BackendBoneVertex),
       0
     );
-    Backend::configureAttribute(
-      static_cast<Backend::AttributeLocation>(AttributeLocation::Normal),
+    SysGFX::configureAttribute(
+      static_cast<SysGFX::AttributeLocation>(AttributeLocation::Normal),
       3,
-      Backend::DataType::Float,
+      SysGFX::DataType::Float,
       sizeof(BackendBoneVertex),
       sizeof(float)*3
     );
-    Backend::configureAttribute(
-      static_cast<Backend::AttributeLocation>(AttributeLocation::JointIndex),
+    SysGFX::configureAttribute(
+      static_cast<SysGFX::AttributeLocation>(AttributeLocation::JointIndex),
       1,
-      Backend::DataType::UnsignedByte,
+      SysGFX::DataType::UnsignedByte,
       sizeof(BackendBoneVertex),
       sizeof(float)*6
     );
 
-    Backend::setObject(0);
+    SysGFX::setObject(0);
 
     return object;
   }

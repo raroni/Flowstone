@@ -2,8 +2,8 @@
 #include "Rendering/CommandStream.h"
 #include "Rendering/RenderTargets.h"
 #include "Rendering/Uniforms.h"
-#include "Rendering/Backend/ClearBit.h"
-#include "Rendering/Backend/CullFace.h"
+#include "SysGFX/ClearBit.h"
+#include "SysGFX/CullFace.h"
 #include "Rendering/Programs.h"
 #include "Rendering/DrawSet.h"
 #include "Rendering/BoneDrawSet.h"
@@ -25,8 +25,8 @@ namespace Rendering {
     ) {
       stream.writeRenderTargetSet(RenderTargets::handles.shadowBase);
       stream.writeClear(
-        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth) |
-        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color)
+        static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Depth) |
+        static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Color)
       );
 
       stream.writeProgramSet(Programs::handles.shadowBaseStatic);
@@ -41,7 +41,7 @@ namespace Rendering {
           staticSet.transforms[i].components
         );
         stream.writeObjectSet(mesh.object);
-        stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
+        stream.writeIndexedDraw(mesh.indexCount, SysGFX::DataType::UnsignedShort);
       }
 
       stream.writeProgramSet(Programs::handles.shadowBaseBone);
@@ -64,7 +64,7 @@ namespace Rendering {
         );
 
         stream.writeObjectSet(mesh.object);
-        stream.writeIndexedDraw(mesh.indexCount, Backend::DataType::UnsignedShort);
+        stream.writeIndexedDraw(mesh.indexCount, SysGFX::DataType::UnsignedShort);
       }
 
       stream.writeRenderTargetSet(0);

@@ -1,6 +1,6 @@
 #include "Rendering/FullscreenQuad.h"
 #include "Rendering/CommandStream.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/Uniforms.h"
 #include "Rendering/Textures.h"
 #include "Rendering/Config.h"
@@ -14,18 +14,18 @@ namespace Rendering {
     const float verticalOffset[] = { 0.0, 1.0/Config::shadowMapSize };
     const uint8_t sourceTextureUnit = 0;
 
-    static void draw(CommandStream &stream, Backend::RenderTargetHandle renderTarget, const float *offset, Backend::TextureHandle texture) {
+    static void draw(CommandStream &stream, SysGFX::RenderTargetHandle renderTarget, const float *offset, SysGFX::TextureHandle texture) {
       stream.writeRenderTargetSet(renderTarget);
       stream.writeUniformVec2Set(Uniforms::list.shadowBlurOffset, 1, offset);
       stream.writeTextureSet(texture);
 
       stream.writeObjectSet(FullscreenQuad::object);
-      stream.writeIndexedDraw(6, Backend::DataType::UnsignedByte);
+      stream.writeIndexedDraw(6, SysGFX::DataType::UnsignedByte);
       stream.writeObjectSet(0);
     }
 
     void initialize() {
-      Backend::setUniformInt(Uniforms::list.shadowBlurSourceTexture, sourceTextureUnit);
+      SysGFX::setUniformInt(Uniforms::list.shadowBlurSourceTexture, sourceTextureUnit);
     }
 
     void write(CommandStream &stream) {

@@ -1,21 +1,21 @@
 #ifndef RENDERING_PROGRAMS_H
 #define RENDERING_PROGRAMS_H
 
-#include "Rendering/Backend/ShaderHandle.h"
+#include "SysGFX/ShaderHandle.h"
 
 namespace Rendering {
   namespace Programs {
     struct HandleList {
-      Backend::ShaderHandle geometryBone;
-      Backend::ShaderHandle geometryStatic;
-      Backend::ShaderHandle merge;
-      Backend::ShaderHandle shadowBaseBone;
-      Backend::ShaderHandle shadowBaseStatic;
-      Backend::ShaderHandle shadowBlur;
-      Backend::ShaderHandle ssaoGrain;
-      Backend::ShaderHandle ssaoBlur;
-      Backend::ShaderHandle downsample;
-      Backend::ShaderHandle pointLight;
+      SysGFX::ShaderHandle geometryBone;
+      SysGFX::ShaderHandle geometryStatic;
+      SysGFX::ShaderHandle merge;
+      SysGFX::ShaderHandle shadowBaseBone;
+      SysGFX::ShaderHandle shadowBaseStatic;
+      SysGFX::ShaderHandle shadowBlur;
+      SysGFX::ShaderHandle ssaoGrain;
+      SysGFX::ShaderHandle ssaoBlur;
+      SysGFX::ShaderHandle downsample;
+      SysGFX::ShaderHandle pointLight;
     };
     extern HandleList handles;
 

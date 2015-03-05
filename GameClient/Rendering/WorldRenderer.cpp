@@ -14,7 +14,7 @@
 #include "Rendering/LightTransforms.h"
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
-#include "Rendering/Backend/ClearBit.h"
+#include "SysGFX/ClearBit.h"
 #include "Rendering/StaticMeshInstances.h"
 #include "Rendering/StaticMeshes.h"
 #include "Rendering/BoneMeshInstances.h"
@@ -112,7 +112,7 @@ namespace Rendering {
 
     stream.writeRenderTargetSet(0);
 
-    stream.writeClear(static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color));
+    stream.writeClear(static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Color));
 
     MergePass::write(
       stream,
@@ -129,17 +129,17 @@ namespace Rendering {
   }
 
   void WorldRenderer::writeGlobalUniformUpdate(CommandStream &stream, const Quanta::Matrix4 &worldViewTransform) {
-    Backend::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
-    stream.writeBufferSet(Backend::BufferTarget::Uniform, globalBuffer);
+    SysGFX::BufferHandle globalBuffer = Buffers::handles[static_cast<size_t>(BufferName::Global1)];
+    stream.writeBufferSet(SysGFX::BufferTarget::Uniform, globalBuffer);
 
     const size_t matrixSize = sizeof(float)*16;
     const size_t totalSize = matrixSize*2;
     char data[totalSize];
     memcpy(data, &cameraViewClipTransform.components, matrixSize);
     memcpy(data+matrixSize, &worldViewTransform.components, matrixSize);
-    stream.writeBufferWrite(Backend::BufferTarget::Uniform, totalSize, data);
+    stream.writeBufferWrite(SysGFX::BufferTarget::Uniform, totalSize, data);
 
-    stream.writeBufferSet(Backend::BufferTarget::Uniform, 0);
+    stream.writeBufferSet(SysGFX::BufferTarget::Uniform, 0);
   }
 
   void WorldRenderer::calcViewClipTransform() {

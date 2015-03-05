@@ -1,9 +1,9 @@
 #include <string.h>
 #include "Cabi/Cabi.h"
-#include "Rendering/Backend/Functions.h"
-#include "Rendering/Backend/ShaderType.h"
-#include "Rendering/Backend/ShaderHandle.h"
-#include "Rendering/Backend/ProgramHandle.h"
+#include "SysGFX/SysGFX.h"
+#include "SysGFX/ShaderType.h"
+#include "SysGFX/ShaderHandle.h"
+#include "SysGFX/ProgramHandle.h"
 #include "Rendering/Programs.h"
 
 namespace Rendering {
@@ -16,96 +16,96 @@ namespace Rendering {
     cabiReadFile(path, sourceBuffer, sourceBufferLength);
   }
 
-  static Backend::ProgramHandle initializeStandardProgram(const char *name) {
+  static SysGFX::ProgramHandle initializeStandardProgram(const char *name) {
     char pathBuffer[128];
     strcpy(pathBuffer, name);
     strcat(pathBuffer, ".vert");
     loadSource(pathBuffer);
-    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
+    SysGFX::ShaderHandle vertexShader = SysGFX::createShader(SysGFX::ShaderType::Vertex, sourceBuffer);
     pathBuffer[strlen(name)] = '\0';
     strcat(pathBuffer, ".frag");
     loadSource(pathBuffer);
-    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
-    Backend::ProgramHandle program = Backend::createProgram();
-    Backend::attachShader(program, vertexShader);
-    Backend::attachShader(program, fragmentShader);
-    Backend::linkProgram(program);
+    SysGFX::ShaderHandle fragmentShader = SysGFX::createShader(SysGFX::ShaderType::Fragment, sourceBuffer);
+    SysGFX::ProgramHandle program = SysGFX::createProgram();
+    SysGFX::attachShader(program, vertexShader);
+    SysGFX::attachShader(program, fragmentShader);
+    SysGFX::linkProgram(program);
     return program;
   }
 
-  static Backend::ProgramHandle initializeShadowBaseBoneProgram() {
-    Backend::ProgramHandle program = Backend::createProgram();
+  static SysGFX::ProgramHandle initializeShadowBaseBoneProgram() {
+    SysGFX::ProgramHandle program = SysGFX::createProgram();
     loadSource("ShadowBaseBone.vert");
-    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
-    Backend::attachShader(program, vertexShader);
+    SysGFX::ShaderHandle vertexShader = SysGFX::createShader(SysGFX::ShaderType::Vertex, sourceBuffer);
+    SysGFX::attachShader(program, vertexShader);
     loadSource("ShadowBase.frag");
-    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
-    Backend::attachShader(program, fragmentShader);
-    Backend::linkProgram(program);
+    SysGFX::ShaderHandle fragmentShader = SysGFX::createShader(SysGFX::ShaderType::Fragment, sourceBuffer);
+    SysGFX::attachShader(program, fragmentShader);
+    SysGFX::linkProgram(program);
     return program;
   }
 
-  static Backend::ProgramHandle initializeShadowBaseStaticProgram() {
-    Backend::ProgramHandle program = Backend::createProgram();
+  static SysGFX::ProgramHandle initializeShadowBaseStaticProgram() {
+    SysGFX::ProgramHandle program = SysGFX::createProgram();
     loadSource("ShadowBaseStatic.vert");
-    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
-    Backend::attachShader(program, vertexShader);
+    SysGFX::ShaderHandle vertexShader = SysGFX::createShader(SysGFX::ShaderType::Vertex, sourceBuffer);
+    SysGFX::attachShader(program, vertexShader);
     loadSource("ShadowBase.frag");
-    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
-    Backend::attachShader(program, fragmentShader);
-    Backend::linkProgram(program);
+    SysGFX::ShaderHandle fragmentShader = SysGFX::createShader(SysGFX::ShaderType::Fragment, sourceBuffer);
+    SysGFX::attachShader(program, fragmentShader);
+    SysGFX::linkProgram(program);
     return program;
   }
 
-  static void attachCameraTransformsBlock(Backend::ProgramHandle program) {
-    Backend::UniformBlockHandle block = Backend::getUniformBlock(program, "CameraTransforms");
-    Backend::setUniformBlockIndex(program, block, 0);
+  static void attachCameraTransformsBlock(SysGFX::ProgramHandle program) {
+    SysGFX::UniformBlockHandle block = SysGFX::getUniformBlock(program, "CameraTransforms");
+    SysGFX::setUniformBlockIndex(program, block, 0);
   }
 
-  static Backend::ProgramHandle initializeCameraTransformBlockProgram(const char *name) {
-    Backend::ProgramHandle program = initializeStandardProgram(name);
+  static SysGFX::ProgramHandle initializeCameraTransformBlockProgram(const char *name) {
+    SysGFX::ProgramHandle program = initializeStandardProgram(name);
     attachCameraTransformsBlock(program);
     return program;
   }
 
-  static Backend::ProgramHandle initializeFullscreenQuadProgram(const char *fragmentShaderName) {
-    Backend::ProgramHandle program = Backend::createProgram();
+  static SysGFX::ProgramHandle initializeFullscreenQuadProgram(const char *fragmentShaderName) {
+    SysGFX::ProgramHandle program = SysGFX::createProgram();
     loadSource("FullscreenQuad.vert");
-    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
-    Backend::attachShader(program, vertexShader);
+    SysGFX::ShaderHandle vertexShader = SysGFX::createShader(SysGFX::ShaderType::Vertex, sourceBuffer);
+    SysGFX::attachShader(program, vertexShader);
 
     char fragmentPathBuffer[128];
     strcpy(fragmentPathBuffer, fragmentShaderName);
     strcat(fragmentPathBuffer, ".frag");
     loadSource(fragmentPathBuffer);
-    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
-    Backend::attachShader(program, fragmentShader);
+    SysGFX::ShaderHandle fragmentShader = SysGFX::createShader(SysGFX::ShaderType::Fragment, sourceBuffer);
+    SysGFX::attachShader(program, fragmentShader);
 
-    Backend::linkProgram(program);
+    SysGFX::linkProgram(program);
     return program;
   }
 
-  static Backend::ProgramHandle initializeSSAOGrain() {
-    Backend::ProgramHandle program = initializeFullscreenQuadProgram("SSAOGrain");
+  static SysGFX::ProgramHandle initializeSSAOGrain() {
+    SysGFX::ProgramHandle program = initializeFullscreenQuadProgram("SSAOGrain");
     attachCameraTransformsBlock(program);
     return program;
   }
 
-  static Backend::ProgramHandle initializeGeometryProgram(const char *type) {
-    Backend::ProgramHandle program = Backend::createProgram();
+  static SysGFX::ProgramHandle initializeGeometryProgram(const char *type) {
+    SysGFX::ProgramHandle program = SysGFX::createProgram();
 
     char vertexPathBuffer[128] = "Geometry";
     strcat(vertexPathBuffer, type);
     strcat(vertexPathBuffer, ".vert");
     loadSource(vertexPathBuffer);
-    Backend::ShaderHandle vertexShader = Backend::createShader(Backend::ShaderType::Vertex, sourceBuffer);
-    Backend::attachShader(program, vertexShader);
+    SysGFX::ShaderHandle vertexShader = SysGFX::createShader(SysGFX::ShaderType::Vertex, sourceBuffer);
+    SysGFX::attachShader(program, vertexShader);
 
     loadSource("Geometry.frag");
-    Backend::ShaderHandle fragmentShader = Backend::createShader(Backend::ShaderType::Fragment, sourceBuffer);
-    Backend::attachShader(program, fragmentShader);
+    SysGFX::ShaderHandle fragmentShader = SysGFX::createShader(SysGFX::ShaderType::Fragment, sourceBuffer);
+    SysGFX::attachShader(program, fragmentShader);
 
-    Backend::linkProgram(program);
+    SysGFX::linkProgram(program);
 
     attachCameraTransformsBlock(program);
 

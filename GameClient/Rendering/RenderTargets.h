@@ -1,18 +1,18 @@
 #ifndef RENDERING_RENDER_TARGETS_H
 #define RENDERING_RENDER_TARGETS_H
 
-#include "Rendering/Backend/RenderTargetHandle.h"
+#include "SysGFX/RenderTargetHandle.h"
 
 namespace Rendering {
   namespace RenderTargets {
     struct HandleList {
-      Backend::RenderTargetHandle geometry;
-      Backend::RenderTargetHandle shadowBase;
-      Backend::RenderTargetHandle shadowBlurHorizontal;
-      Backend::RenderTargetHandle shadowBlurVertical;
-      Backend::RenderTargetHandle ssaoGrain;
-      Backend::RenderTargetHandle ssaoBlur;
-      Backend::RenderTargetHandle downsample;
+      SysGFX::RenderTargetHandle geometry;
+      SysGFX::RenderTargetHandle shadowBase;
+      SysGFX::RenderTargetHandle shadowBlurHorizontal;
+      SysGFX::RenderTargetHandle shadowBlurVertical;
+      SysGFX::RenderTargetHandle ssaoGrain;
+      SysGFX::RenderTargetHandle ssaoBlur;
+      SysGFX::RenderTargetHandle downsample;
     };
     extern HandleList handles;
 

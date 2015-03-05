@@ -5,7 +5,7 @@
 #include "Rendering/BoneDrawSet.h"
 #include "Rendering/BoneMesh.h"
 #include "Rendering/RenderTargets.h"
-#include "Rendering/Backend/ClearBit.h"
+#include "SysGFX/ClearBit.h"
 #include "Rendering/StaticMesh.h"
 #include "Rendering/StaticMeshes.h"
 #include "Rendering/CommandStream.h"
@@ -65,7 +65,7 @@ namespace Rendering {
             );
 
             stream.writeObjectSet(boneMeshDrawCall->object);
-            stream.writeIndexedDraw(boneMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
+            stream.writeIndexedDraw(boneMeshDrawCall->indexCount, SysGFX::DataType::UnsignedShort);
             break;
           }
           case DrawCallType::StaticMesh: {
@@ -77,7 +77,7 @@ namespace Rendering {
               &staticMeshDrawCall->transform.components[0]
             );
             stream.writeObjectSet(staticMeshDrawCall->object);
-            stream.writeIndexedDraw(staticMeshDrawCall->indexCount, Backend::DataType::UnsignedShort);
+            stream.writeIndexedDraw(staticMeshDrawCall->indexCount, SysGFX::DataType::UnsignedShort);
             break;
           }
           default:
@@ -90,8 +90,8 @@ namespace Rendering {
     void write(CommandStream &stream, const DrawSet &drawSet, const BoneMeshRegistry &boneMeshRegistry) {
       stream.writeRenderTargetSet(RenderTargets::handles.geometry);
       stream.writeClear(
-        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Color) |
-        static_cast<Backend::ClearBitMask>(Backend::ClearBit::Depth)
+        static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Color) |
+        static_cast<SysGFX::ClearBitMask>(SysGFX::ClearBit::Depth)
       );
       buildDrawQueue(drawSet, boneMeshRegistry);
       writeStream(stream);

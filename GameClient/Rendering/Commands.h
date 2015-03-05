@@ -1,68 +1,68 @@
 #ifndef RENDERING_COMMANDS_H
 #define RENDERING_COMMANDS_H
 
-#include "Rendering/Backend/BufferHandle.h"
-#include "Rendering/Backend/BufferTarget.h"
-#include "Rendering/Backend/DataType.h"
-#include "Rendering/Backend/ObjectHandle.h"
-#include "Rendering/Backend/TextureHandle.h"
-#include "Rendering/Backend/ProgramHandle.h"
-#include "Rendering/Backend/UniformHandle.h"
-#include "Rendering/Backend/ClearBitMask.h"
-#include "Rendering/Backend/CullFace.h"
-#include "Rendering/Backend/BlendFactor.h"
-#include "Rendering/Backend/RenderTargetHandle.h"
+#include "SysGFX/BufferHandle.h"
+#include "SysGFX/BufferTarget.h"
+#include "SysGFX/DataType.h"
+#include "SysGFX/ObjectHandle.h"
+#include "SysGFX/TextureHandle.h"
+#include "SysGFX/ProgramHandle.h"
+#include "SysGFX/UniformHandle.h"
+#include "SysGFX/ClearBitMask.h"
+#include "SysGFX/CullFace.h"
+#include "SysGFX/BlendFactor.h"
+#include "SysGFX/RenderTargetHandle.h"
 
 namespace Rendering {
   struct ProgramSetCommand {
-    Backend::ProgramHandle program;
+    SysGFX::ProgramHandle program;
   };
 
   struct ObjectSetCommand {
-    Backend::ObjectHandle object;
+    SysGFX::ObjectHandle object;
   };
 
   struct UniformFloatSetCommand {
-    Backend::UniformHandle uniform;
+    SysGFX::UniformHandle uniform;
     uint16_t count;
   };
 
   struct UniformMat4SetCommand {
-    Backend::UniformHandle uniform;
+    SysGFX::UniformHandle uniform;
     uint16_t count;
   };
 
   struct UniformVec2SetCommand {
-    Backend::UniformHandle uniform;
+    SysGFX::UniformHandle uniform;
     uint16_t count;
   };
 
   struct UniformVec3SetCommand {
-    Backend::UniformHandle uniform;
+    SysGFX::UniformHandle uniform;
     uint16_t count;
   };
 
   struct IndexedDrawCommand {
     uint16_t indexCount;
-    Backend::DataType dataType;
+    SysGFX::DataType dataType;
   };
 
   struct BufferSetCommand {
-    Backend::BufferTarget target;
-    Backend::BufferHandle buffer;
+    SysGFX::BufferTarget target;
+    SysGFX::BufferHandle buffer;
   };
 
   struct BufferWriteCommand {
     uint16_t size;
-    Backend::BufferTarget target;
+    SysGFX::BufferTarget target;
   };
 
   struct RenderTargetSetCommand {
-    Backend::RenderTargetHandle renderTarget;
+    SysGFX::RenderTargetHandle renderTarget;
   };
 
   struct ClearCommand {
-    Backend::ClearBitMask mask;
+    SysGFX::ClearBitMask mask;
   };
 
   struct ViewportSetCommand {
@@ -71,16 +71,16 @@ namespace Rendering {
   };
 
   struct CullFaceSetCommand {
-    Backend::CullFace face;
+    SysGFX::CullFace face;
   };
 
   struct TexturePairSetCommand {
     uint8_t unit;
-    Backend::TextureHandle handle;
+    SysGFX::TextureHandle handle;
   };
 
   struct TextureSetCommand {
-    Backend::TextureHandle handle;
+    SysGFX::TextureHandle handle;
   };
 
   struct TextureUnitSetCommand {
@@ -88,8 +88,8 @@ namespace Rendering {
   };
 
   struct BlendFunctionSetCommand {
-    Backend::BlendFactor sourceFactor;
-    Backend::BlendFactor destinationFactor;
+    SysGFX::BlendFactor sourceFactor;
+    SysGFX::BlendFactor destinationFactor;
   };
 }
 

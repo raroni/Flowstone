@@ -1,17 +1,17 @@
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/AttributeLocation.h"
-#include "Rendering/Backend/AttributeLocation.h"
+#include "SysGFX/AttributeLocation.h"
 #include "Rendering/FullscreenQuad.h"
 
 namespace Rendering {
   namespace FullscreenQuad {
-    Backend::ObjectHandle object;
+    SysGFX::ObjectHandle object;
 
     void initialize() {
-      object = Backend::createObject();
-      Backend::setObject(object);
+      object = SysGFX::createObject();
+      SysGFX::setObject(object);
 
-      Backend::enableAttributeLocation(static_cast<Backend::AttributeLocation>(AttributeLocation::Position));
+      SysGFX::enableAttributeLocation(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Position));
 
       float vertices[] = {
         -1, -1,
@@ -19,17 +19,17 @@ namespace Rendering {
         -1, 1,
         1, 1
       };
-      Backend::BufferHandle vertexBuffer = Backend::createBuffer();
-      Backend::setBuffer(Backend::BufferTarget::Vertex, vertexBuffer);
-      Backend::writeBuffer(Backend::BufferTarget::Vertex, sizeof(vertices), vertices);
-      Backend::configureAttribute(static_cast<Backend::AttributeLocation>(AttributeLocation::Position), 2, Backend::DataType::Float, 0, 0);
+      SysGFX::BufferHandle vertexBuffer = SysGFX::createBuffer();
+      SysGFX::setBuffer(SysGFX::BufferTarget::Vertex, vertexBuffer);
+      SysGFX::writeBuffer(SysGFX::BufferTarget::Vertex, sizeof(vertices), vertices);
+      SysGFX::configureAttribute(static_cast<SysGFX::AttributeLocation>(AttributeLocation::Position), 2, SysGFX::DataType::Float, 0, 0);
 
       uint8_t indices[] = { 0, 1, 2, 2, 1, 3 };
-      Backend::BufferHandle indexBuffer = Backend::createBuffer();
-      Backend::setBuffer(Backend::BufferTarget::Index, indexBuffer);
-      Backend::writeBuffer(Backend::BufferTarget::Index, sizeof(indices), indices);
+      SysGFX::BufferHandle indexBuffer = SysGFX::createBuffer();
+      SysGFX::setBuffer(SysGFX::BufferTarget::Index, indexBuffer);
+      SysGFX::writeBuffer(SysGFX::BufferTarget::Index, sizeof(indices), indices);
 
-      Backend::setObject(0);
+      SysGFX::setObject(0);
     }
   }
 }

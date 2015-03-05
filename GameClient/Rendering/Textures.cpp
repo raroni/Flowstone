@@ -1,6 +1,6 @@
 #include <cstddef>
 #include "Rendering/Config.h"
-#include "Rendering/Backend/Functions.h"
+#include "SysGFX/SysGFX.h"
 #include "Rendering/Textures.h"
 
 namespace Rendering {
@@ -8,81 +8,81 @@ namespace Rendering {
     List list;
 
     static void initializeGeometryAppearance() {
-      list.geometryAppearance = Backend::createTexture();
-      Backend::setTexture(list.geometryAppearance);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.geometryAppearance = SysGFX::createTexture();
+      SysGFX::setTexture(list.geometryAppearance);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeGeometryNormal() {
-      list.geometryNormal = Backend::createTexture();
-      Backend::setTexture(list.geometryNormal);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.geometryNormal = SysGFX::createTexture();
+      SysGFX::setTexture(list.geometryNormal);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeGeometryDepth() {
-      list.geometryDepth = Backend::createTexture();
-      Backend::setTexture(list.geometryDepth);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.geometryDepth = SysGFX::createTexture();
+      SysGFX::setTexture(list.geometryDepth);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeShadowBaseBufferDepth() {
-      list.shadowBaseBufferDepth = Backend::createTexture();
-      Backend::setTexture(list.shadowBaseBufferDepth);
-      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::Depth, NULL);
+      list.shadowBaseBufferDepth = SysGFX::createTexture();
+      SysGFX::setTexture(list.shadowBaseBufferDepth);
+      SysGFX::writeTexture(Config::shadowMapSize, Config::shadowMapSize, SysGFX::TextureFormat::Depth, NULL);
     }
 
     static void initializeShadowVarianceDepth() {
-      list.shadowVarianceDepth = Backend::createTexture();
-      Backend::setTexture(list.shadowVarianceDepth);
-      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF32, NULL);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Linear);
+      list.shadowVarianceDepth = SysGFX::createTexture();
+      SysGFX::setTexture(list.shadowVarianceDepth);
+      SysGFX::writeTexture(Config::shadowMapSize, Config::shadowMapSize, SysGFX::TextureFormat::RedGreenF32, NULL);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Linear);
     }
 
     static void initializeShadowBlurVarianceDepth() {
-      list.shadowBlurVarianceDepth = Backend::createTexture();
-      Backend::setTexture(list.shadowBlurVarianceDepth);
-      Backend::writeTexture(Config::shadowMapSize, Config::shadowMapSize, Backend::TextureFormat::RedGreenF32, NULL);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Linear);
+      list.shadowBlurVarianceDepth = SysGFX::createTexture();
+      SysGFX::setTexture(list.shadowBlurVarianceDepth);
+      SysGFX::writeTexture(Config::shadowMapSize, Config::shadowMapSize, SysGFX::TextureFormat::RedGreenF32, NULL);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Linear);
     }
 
     static void initializeSSAOGrainNoise() {
-      list.ssaoGrainNoise = Backend::createTexture();
-      Backend::setTexture(list.ssaoGrainNoise);
-      Backend::setTextureWrap(Backend::TextureWrap::Repeat);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.ssaoGrainNoise = SysGFX::createTexture();
+      SysGFX::setTexture(list.ssaoGrainNoise);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Repeat);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeSSAOGrainResult() {
-      list.ssaoGrainResult = Backend::createTexture();
-      Backend::setTexture(list.ssaoGrainResult);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.ssaoGrainResult = SysGFX::createTexture();
+      SysGFX::setTexture(list.ssaoGrainResult);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeSSAOBlur() {
-      list.ssaoBlur = Backend::createTexture();
-      Backend::setTexture(list.ssaoBlur);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.ssaoBlur = SysGFX::createTexture();
+      SysGFX::setTexture(list.ssaoBlur);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeDownsampleDepth() {
-      list.downsampleDepth = Backend::createTexture();
-      Backend::setTexture(list.downsampleDepth);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.downsampleDepth = SysGFX::createTexture();
+      SysGFX::setTexture(list.downsampleDepth);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     static void initializeDownsampleNormal() {
-      list.downsampleNormal = Backend::createTexture();
-      Backend::setTexture(list.downsampleNormal);
-      Backend::setTextureWrap(Backend::TextureWrap::Clamp);
-      Backend::setTextureFilter(Backend::TextureFilter::Nearest);
+      list.downsampleNormal = SysGFX::createTexture();
+      SysGFX::setTexture(list.downsampleNormal);
+      SysGFX::setTextureWrap(SysGFX::TextureWrap::Clamp);
+      SysGFX::setTextureFilter(SysGFX::TextureFilter::Nearest);
     }
 
     void initialize() {
@@ -97,32 +97,32 @@ namespace Rendering {
       initializeSSAOBlur();
       initializeDownsampleDepth();
       initializeDownsampleNormal();
-      Backend::setTexture(0);
+      SysGFX::setTexture(0);
     }
 
     void handleResolutionChange(Resolution resolution) {
-      Backend::setTexture(list.geometryAppearance);
-      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::RGBA, NULL);
+      SysGFX::setTexture(list.geometryAppearance);
+      SysGFX::writeTexture(resolution.width, resolution.height, SysGFX::TextureFormat::RGBA, NULL);
 
-      Backend::setTexture(list.geometryNormal);
-      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::SignedNormalizedRGB, NULL);
+      SysGFX::setTexture(list.geometryNormal);
+      SysGFX::writeTexture(resolution.width, resolution.height, SysGFX::TextureFormat::SignedNormalizedRGB, NULL);
 
-      Backend::setTexture(list.geometryDepth);
-      Backend::writeTexture(resolution.width, resolution.height, Backend::TextureFormat::Depth, NULL);
+      SysGFX::setTexture(list.geometryDepth);
+      SysGFX::writeTexture(resolution.width, resolution.height, SysGFX::TextureFormat::Depth, NULL);
 
-      Backend::setTexture(list.ssaoGrainResult);
-      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::Red, NULL);
+      SysGFX::setTexture(list.ssaoGrainResult);
+      SysGFX::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, SysGFX::TextureFormat::Red, NULL);
 
-      Backend::setTexture(list.ssaoBlur);
-      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::Red, NULL);
+      SysGFX::setTexture(list.ssaoBlur);
+      SysGFX::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, SysGFX::TextureFormat::Red, NULL);
 
-      Backend::setTexture(list.downsampleDepth);
-      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::RedF32, NULL);
+      SysGFX::setTexture(list.downsampleDepth);
+      SysGFX::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, SysGFX::TextureFormat::RedF32, NULL);
 
-      Backend::setTexture(list.downsampleNormal);
-      Backend::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, Backend::TextureFormat::SignedNormalizedRGB, NULL);
+      SysGFX::setTexture(list.downsampleNormal);
+      SysGFX::writeTexture(resolution.width/Config::SSAO::downSampling, resolution.height/Config::SSAO::downSampling, SysGFX::TextureFormat::SignedNormalizedRGB, NULL);
 
-      Backend::setTexture(0);
+      SysGFX::setTexture(0);
     }
   }
 }

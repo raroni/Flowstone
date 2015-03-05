@@ -1,11 +1,11 @@
 #ifndef RENDERING_FULLSCREEN_QUAD_H
 #define RENDERING_FULLSCREEN_QUAD_H
 
-#include "Rendering/Backend/ObjectHandle.h"
+#include "SysGFX/ObjectHandle.h"
 
 namespace Rendering {
   namespace FullscreenQuad {
-    extern Backend::ObjectHandle object;
+    extern SysGFX::ObjectHandle object;
     void initialize();
   }
 }
