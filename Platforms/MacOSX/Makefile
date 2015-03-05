@@ -100,6 +100,7 @@ USER_OBJECTS =\
 
 USER_OUTPUT_DIR = $(BUILD_DIR)/$(NAME).app/Contents
 USER_EXECUTABLE_DIR = $(USER_OUTPUT_DIR)/MacOS
+USER_RESOURCE_DIR = $(USER_OUTPUT_DIR)/Resources
 USER_EXECUTABLE_PATH = $(USER_EXECUTABLE_DIR)/$(NAME)
 
 $(BUILD_DIR)/Objects/User/%.o : %.cpp
@@ -118,9 +119,10 @@ user: $(USER_EXECUTABLE_PATH)
 
 $(USER_EXECUTABLE_PATH): $(USER_OBJECTS)
 	mkdir -p $(USER_EXECUTABLE_DIR)
+	mkdir -p $(USER_RESOURCE_DIR)
 	$(CC) $(CFLAGS) $(USER_FRAMEWORKS) $(USER_OBJECTS) -o $(USER_EXECUTABLE_PATH)
-	rm -rf $(USER_OUTPUT_DIR)/Resources
-	cp -r ../../Resources $(USER_OUTPUT_DIR)/.
+	rm -rf $(USER_OUTPUT_DIR)/Shaders
+	cp -r ../../Shaders/GLSL $(USER_RESOURCE_DIR)/Shaders
 
 all: user
 
@@ -128,7 +130,4 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 run: user
-	# todo: fix this hack
-	rm -rf $(USER_OUTPUT_DIR)/Resources
-	cp -r ../../Resources $(USER_OUTPUT_DIR)/.
 	$(USER_OUTPUT_DIR)/MacOS/$(NAME)
