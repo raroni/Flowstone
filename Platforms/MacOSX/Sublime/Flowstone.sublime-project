@@ -12,7 +12,7 @@
     {
       "name": "Flowstone-Make",
       "selector": "source.c++",
-      "working_dir": "${project_path}/../..",
+      "working_dir": "${project_path}/..",
       "cmd": ["make"],
       "variants": [
         {
