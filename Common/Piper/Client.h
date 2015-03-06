@@ -6,7 +6,9 @@
 namespace Piper {
   class Client {
   public:
-    Client(Address address);
+    void setAddress(Address address);
+  private:
+    Address serverAddress;
   };
 }
 

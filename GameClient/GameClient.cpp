@@ -1,12 +1,12 @@
 #include "GameClient.h"
 
-GameClient::GameClient() :
-connection({ { 127, 0, 0, 0 }, 4242 }) { }
-
 void GameClient::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   renderer.initialize();
   renderer.updateResolution({ resolutionWidth, resolutionHeight });
   flow.initialize(renderer);
+
+  uint8_t ip[] = { 127, 0, 0, 0 };
+  connection.open(ip, 4242);
 }
 
 void GameClient::update(const GameClientInput &input) {

@@ -24,6 +24,7 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/Transmission.cpp\
 	../../GameClient/GameClient.cpp\
 	../../GameClient/GameClientInput.cpp\
+	../../GameClient/Connection.cpp\
 	../../GameClient/KeyboardInput.cpp\
 	../../GameClient/TorchManager.cpp\
 	../../GameClient/Animation/Animator.cpp\
