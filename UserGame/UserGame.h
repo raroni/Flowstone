@@ -1,16 +1,16 @@
-#ifndef GAME_CLIENT_H
-#define GAME_CLIENT_H
+#ifndef USER_GAME_H
+#define USER_GAME_H
 
-#include "GameClientInput.h"
+#include "UserGameInput.h"
 #include "Rendering/Renderer.h"
 #include "Keyboard.h"
 #include "Connection.h"
 #include "MainFlow/Manager.h"
 
-class GameClient {
+class UserGame {
 public:
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
-  void update(const GameClientInput &input);
+  void update(const UserGameInput &input);
 private:
   void updateKeyboard(const KeyboardInput &input);
   Connection connection;

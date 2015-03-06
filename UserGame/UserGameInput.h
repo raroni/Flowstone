@@ -3,7 +3,7 @@
 
 #include "KeyboardInput.h"
 
-struct GameClientInput {
+struct UserGameInput {
   KeyboardInput keyboard;
   double timeDelta;
   void clear();
