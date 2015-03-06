@@ -78,13 +78,15 @@ USER_SOURCES_OBJC = \
 
 USER_SOURCES_OBJCPP = \
 	Source/main.mm\
-	Source/SysFile.mm
+	Source/SysFile.mm\
+	Source/SysKey.mm
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
 	-I../../Sys/File/Include\
 	-I../../Sys/Net/Include\
+	-I../../Sys/Key/Include\
 	-I../../Sys/GFX/Include\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../UserGame\

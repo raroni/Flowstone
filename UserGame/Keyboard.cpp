@@ -1,17 +1,17 @@
 #include "Keyboard.h"
 
-bool Keyboard::isDown(KeyboardKey key) const {
+bool Keyboard::isDown(SysKey::Key key) const {
   return keys[static_cast<unsigned>(key)];
 }
 
-void Keyboard::handleDown(KeyboardKey key) {
+void Keyboard::handleDown(SysKey::Key key) {
   update(key, true);
 }
 
-void Keyboard::handleUp(KeyboardKey key) {
+void Keyboard::handleUp(SysKey::Key key) {
   update(key, false);
 }
 
-void Keyboard::update(KeyboardKey key, bool value) {
+void Keyboard::update(SysKey::Key key, bool value) {
   keys[static_cast<unsigned>(key)] = value;
 }

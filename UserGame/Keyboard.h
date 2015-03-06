@@ -1,16 +1,16 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#include "KeyboardKey.h"
+#include "SysKey/Key.h"
 
 class Keyboard {
 public:
-  bool isDown(KeyboardKey key) const;
-  void handleDown(KeyboardKey key);
-  void handleUp(KeyboardKey key);
+  bool isDown(SysKey::Key key) const;
+  void handleDown(SysKey::Key key);
+  void handleUp(SysKey::Key key);
 private:
-  void update(KeyboardKey key, bool value);
-  bool keys[static_cast<int>(KeyboardKey::Count)] = { false };
+  void update(SysKey::Key key, bool value);
+  bool keys[static_cast<int>(SysKey::Key::Count)] = { false };
 };
 
 #endif

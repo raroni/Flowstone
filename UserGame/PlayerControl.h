@@ -5,20 +5,21 @@
 #include "Common/Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 #include "Keyboard.h"
+#include "SysKey/Key.h"
 #include "Animation/Animator.h"
 
 static void updateForce(Physics::DynamicBody &body, const Keyboard &keyboard) {
   Quanta::Vector3 force = Quanta::Vector3::zero();
-  if(keyboard.isDown(KeyboardKey::Right)) {
+  if(keyboard.isDown(SysKey::Key::Right)) {
     force[0] += 1;
   }
-  else if(keyboard.isDown(KeyboardKey::Left)) {
+  else if(keyboard.isDown(SysKey::Key::Left)) {
     force[0] -= 1;
   }
-  if(keyboard.isDown(KeyboardKey::Up)) {
+  if(keyboard.isDown(SysKey::Key::Up)) {
     force[2] += 1;
   }
-  else if(keyboard.isDown(KeyboardKey::Down)) {
+  else if(keyboard.isDown(SysKey::Key::Down)) {
     force[2] -= 1;
   }
 

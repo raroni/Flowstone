@@ -1,13 +1,13 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import "MacOSX/Timing.h"
+#import "MacOSX/SysKey.h"
 #import "MacOSX/Util.h"
 #import "MacOSX/GameApplication.h"
 #import "MacOSX/GameAppDelegate.h"
 #import "MacOSX/GameWindow.h"
 #import "MacOSX/GameWindowDelegate.h"
 #import "UserGame.h"
-#import "KeyboardKey.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
@@ -86,146 +86,6 @@ static void createContext() {
   [pixelFormat release];
 }
 
-/*
-temporarily disabled
-static KeyboardKey convertKeyCode(unsigned short keyCode) {
-  if(keyCode > 127) return KeyboardKey::Unknown;
-
-  static const KeyboardKey table[] = {
-    KeyboardKey::A,
-    KeyboardKey::S,
-    KeyboardKey::D,
-    KeyboardKey::F,
-    KeyboardKey::H,
-    KeyboardKey::G,
-    KeyboardKey::Z,
-    KeyboardKey::X,
-    KeyboardKey::C,
-    KeyboardKey::V,
-    KeyboardKey::Unknown,
-    KeyboardKey::B,
-    KeyboardKey::Q,
-    KeyboardKey::W,
-    KeyboardKey::E,
-    KeyboardKey::R,
-    KeyboardKey::Y,
-    KeyboardKey::T,
-    KeyboardKey::Num1,
-    KeyboardKey::Num2,
-    KeyboardKey::Num3,
-    KeyboardKey::Num4,
-    KeyboardKey::Num6,
-    KeyboardKey::Num5,
-    KeyboardKey::Unknown,
-    KeyboardKey::Num9,
-    KeyboardKey::Num7,
-    KeyboardKey::Unknown,
-    KeyboardKey::Num8,
-    KeyboardKey::Num0,
-    KeyboardKey::Unknown,
-    KeyboardKey::O,
-    KeyboardKey::U,
-    KeyboardKey::Unknown,
-    KeyboardKey::I,
-    KeyboardKey::P,
-    KeyboardKey::Enter,
-    KeyboardKey::L,
-    KeyboardKey::J,
-    KeyboardKey::Unknown,
-    KeyboardKey::K,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Comma,
-    KeyboardKey::Unknown,
-    KeyboardKey::N,
-    KeyboardKey::M,
-    KeyboardKey::Period,
-    KeyboardKey::Tab,
-    KeyboardKey::Space,
-    KeyboardKey::Unknown,
-    KeyboardKey::Backspace,
-    KeyboardKey::Unknown,
-    KeyboardKey::Escape,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Capslock,
-    KeyboardKey::LeftAlt,
-    KeyboardKey::LeftControl,
-    KeyboardKey::RightShift,
-    KeyboardKey::RightAlt,
-    KeyboardKey::RightControl,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Unknown,
-    KeyboardKey::Left,
-    KeyboardKey::Right,
-    KeyboardKey::Down,
-    KeyboardKey::Up,
-    KeyboardKey::Unknown
-  };
-
-  return table[keyCode];
-}
-*/
-
 static void pollEvents() {
   while(true) {
     NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask
@@ -236,23 +96,13 @@ static void pollEvents() {
       return;
     }
 
-
     switch(event.type) {
       case NSKeyDown:
       case NSKeyUp: {
         if(event.modifierFlags & NSCommandKeyMask) {
           [NSApp sendEvent:event];
         } else {
-          /*
-          KeyboardEvent gameEvent;
-          gameEvent.key = convertKeyCode(event.keyCode);
-          if(event.type == NSKeyDown) {
-            gameEvent.type = KeyboardEventType::Down;
-          } else {
-            gameEvent.type = KeyboardEventType::Up;
-          }
-          keyboard.write(gameEvent);
-          */
+          SysKey::handleNSEvent(event);
         }
         break;
       }
@@ -313,6 +163,7 @@ int main() {
     pollEvents();
     UserGame::update(timingGetDelta());
     [context flushBuffer];
+    SysKey::clear();
     timingWaitForNextFrame();
   }
 

@@ -1,4 +1,7 @@
 #include "ClientGame.h"
+#include "SysKey/SysKey.h"
+
+#include <stdio.h>
 
 void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   renderer.initialize();
@@ -16,16 +19,12 @@ void ClientGame::update(double timeDelta) {
 }
 
 void ClientGame::updateKeyboard() {
-  /*
-  temporarily disabled until we have SysKey#poll or something
-
-  for(uint16_t i=0; i<input.getCount(); ++i) {
-    const KeyboardEvent &event = input.read(i);
-    if(event.type == KeyboardEventType::Down) {
+  SysKey::Event event;
+  while(SysKey::pollEvent(event)) {
+    if(event.type == SysKey::EventType::Down) {
       keyboard.handleDown(event.key);
     } else {
       keyboard.handleUp(event.key);
     }
   }
-  */
 }
