@@ -6,7 +6,7 @@ void GameClient::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   flow.initialize(renderer);
 }
 
-void GameClient::update(const GameClientInput &input, GameClientOutput &output) {
+void GameClient::update(const GameClientInput &input) {
   updateKeyboard(input.keyboard);
   flow.update(input.timeDelta, keyboard);
   renderer.draw();

@@ -17,7 +17,6 @@ static NSOpenGLContext *context;
 
 GameClient gameClient;
 GameClientInput gameClientInput;
-GameClientOutput gameClientOutput;
 
 static struct {
   const uint16_t width = 800;
@@ -311,8 +310,7 @@ int main() {
     gameClientInput.clear();
     pollEvents(gameClientInput.keyboard);
     gameClientInput.timeDelta = timingGetDelta();
-    gameClientOutput.clear();
-    gameClient.update(gameClientInput, gameClientOutput);
+    gameClient.update(gameClientInput);
     [context flushBuffer];
     timingWaitForNextFrame();
   }

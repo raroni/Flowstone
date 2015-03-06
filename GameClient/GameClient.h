@@ -2,7 +2,6 @@
 #define GAME_CLIENT_H
 
 #include "GameClientInput.h"
-#include "GameClientOutput.h"
 #include "Rendering/Renderer.h"
 #include "Keyboard.h"
 #include "MainFlow/Manager.h"
@@ -10,7 +9,7 @@
 class GameClient {
 public:
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
-  void update(const GameClientInput &input, GameClientOutput &output);
+  void update(const GameClientInput &input);
 private:
   void updateKeyboard(const KeyboardInput &input);
   Keyboard keyboard;
