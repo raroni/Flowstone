@@ -9,13 +9,16 @@ void UserGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   connection.open(ip, 4242);
 }
 
-void UserGame::update(const UserGameInput &input) {
-  updateKeyboard(input.keyboard);
-  flow.update(input.timeDelta, keyboard);
+void UserGame::update(double timeDelta) {
+  updateKeyboard();
+  flow.update(timeDelta, keyboard);
   renderer.draw();
 }
 
-void UserGame::updateKeyboard(const KeyboardInput &input) {
+void UserGame::updateKeyboard() {
+  /*
+  temporarily disabled until we have SysKey#poll or something
+
   for(uint16_t i=0; i<input.getCount(); ++i) {
     const KeyboardEvent &event = input.read(i);
     if(event.type == KeyboardEventType::Down) {
@@ -24,4 +27,5 @@ void UserGame::updateKeyboard(const KeyboardInput &input) {
       keyboard.handleUp(event.key);
     }
   }
+  */
 }

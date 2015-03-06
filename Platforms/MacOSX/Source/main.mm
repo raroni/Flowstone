@@ -6,7 +6,7 @@
 #import "MacOSX/GameAppDelegate.h"
 #import "MacOSX/GameWindow.h"
 #import "MacOSX/GameWindowDelegate.h"
-#import "GameClient.h"
+#import "UserGame.h"
 #import "KeyboardKey.h"
 
 NSAutoreleasePool *autoreleasePool;
@@ -15,8 +15,7 @@ static GameWindow *window;
 static id windowDelegate;
 static NSOpenGLContext *context;
 
-GameClient gameClient;
-GameClientInput gameClientInput;
+UserGame gameClient;
 
 static struct {
   const uint16_t width = 800;
@@ -89,6 +88,8 @@ static void createContext() {
   [pixelFormat release];
 }
 
+/*
+temporarily disabled
 static KeyboardKey convertKeyCode(unsigned short keyCode) {
   if(keyCode > 127) return KeyboardKey::Unknown;
 
@@ -225,8 +226,9 @@ static KeyboardKey convertKeyCode(unsigned short keyCode) {
 
   return table[keyCode];
 }
+*/
 
-static void pollEvents(KeyboardInput &keyboard) {
+static void pollEvents() {
   while(true) {
     NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                         untilDate:[NSDate distantPast]
@@ -236,12 +238,14 @@ static void pollEvents(KeyboardInput &keyboard) {
       return;
     }
 
+
     switch(event.type) {
       case NSKeyDown:
       case NSKeyUp: {
         if(event.modifierFlags & NSCommandKeyMask) {
           [NSApp sendEvent:event];
         } else {
+          /*
           KeyboardEvent gameEvent;
           gameEvent.key = convertKeyCode(event.keyCode);
           if(event.type == NSKeyDown) {
@@ -250,6 +254,7 @@ static void pollEvents(KeyboardInput &keyboard) {
             gameEvent.type = KeyboardEventType::Up;
           }
           keyboard.write(gameEvent);
+          */
         }
         break;
       }
@@ -307,10 +312,8 @@ int main() {
 
   while(shouldTerminate == NO) {
     timingStartFrame();
-    gameClientInput.clear();
-    pollEvents(gameClientInput.keyboard);
-    gameClientInput.timeDelta = timingGetDelta();
-    gameClient.update(gameClientInput);
+    pollEvents();
+    gameClient.update(timingGetDelta());
     [context flushBuffer];
     timingWaitForNextFrame();
   }

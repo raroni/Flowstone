@@ -1,7 +1,6 @@
 #ifndef USER_GAME_H
 #define USER_GAME_H
 
-#include "UserGameInput.h"
 #include "Rendering/Renderer.h"
 #include "Keyboard.h"
 #include "Connection.h"
@@ -10,9 +9,9 @@
 class UserGame {
 public:
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
-  void update(const UserGameInput &input);
+  void update(double timeDelta);
 private:
-  void updateKeyboard(const KeyboardInput &input);
+  void updateKeyboard();
   Connection connection;
   Keyboard keyboard;
   Rendering::Renderer renderer;

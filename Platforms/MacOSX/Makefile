@@ -22,52 +22,50 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
 	../../Common/Piper/Transmission.cpp\
-	../../GameClient/GameClient.cpp\
-	../../GameClient/GameClientInput.cpp\
-	../../GameClient/Connection.cpp\
-	../../GameClient/KeyboardInput.cpp\
-	../../GameClient/TorchManager.cpp\
-	../../GameClient/Animation/Animator.cpp\
-	../../GameClient/Animation/Registry.cpp\
-	../../GameClient/Mainflow/PlayState.cpp\
-	../../GameClient/AtmosphereColor.cpp\
-	../../GameClient/Interpolation/Interpolater.cpp\
-	../../GameClient/Keyboard.cpp\
-	../../GameClient/RendererFeeder.cpp\
-	../../GameClient/Rendering/Renderer.cpp\
-	../../GameClient/Rendering/WorldRenderer.cpp\
-	../../GameClient/Rendering/BoneMeshRegistry.cpp\
-	../../GameClient/Rendering/Programs.cpp\
-	../../GameClient/Rendering/BoneMeshInstances.cpp\
-	../../GameClient/Rendering/CommandStream.cpp\
-	../../GameClient/Rendering/DrawQueue.cpp\
-	../../GameClient/Rendering/Uniforms.cpp\
-	../../GameClient/Rendering/Buffers.cpp\
-	../../GameClient/Rendering/CullResult.cpp\
-	../../GameClient/Rendering/RenderTargets.cpp\
-	../../GameClient/Rendering/FullscreenQuad.cpp\
-	../../GameClient/Rendering/Textures.cpp\
-	../../GameClient/Rendering/StaticMeshes.cpp\
-	../../GameClient/Rendering/StaticMeshInstances.cpp\
-	../../GameClient/Rendering/MeshHelper.cpp\
-	../../GameClient/Rendering/Culler.cpp\
-	../../GameClient/Rendering/LightTransforms.cpp\
-	../../GameClient/Rendering/DrawSet.cpp\
-	../../GameClient/Rendering/BoneDrawSet.cpp\
-	../../GameClient/Rendering/StaticDrawSet.cpp\
-	../../GameClient/Rendering/PointLightDrawSet.cpp\
-	../../GameClient/Rendering/Frustum.cpp\
-	../../GameClient/Rendering/Shadow.cpp\
-	../../GameClient/Rendering/ShadowBlur.cpp\
-	../../GameClient/Rendering/ShadowBasePass.cpp\
-	../../GameClient/Rendering/MergePass.cpp\
-	../../GameClient/Rendering/GeometryPass.cpp\
-	../../GameClient/Rendering/SSAO.cpp\
-	../../GameClient/Rendering/SSAOGrainPass.cpp\
-	../../GameClient/Rendering/SSAOBlurPass.cpp\
-	../../GameClient/Rendering/DownsamplePass.cpp\
-	../../GameClient/Rendering/PointLights.cpp\
-	../../GameClient/Rendering/PointLightPass.cpp\
+	../../UserGame/UserGame.cpp\
+	../../UserGame/Connection.cpp\
+	../../UserGame/TorchManager.cpp\
+	../../UserGame/Animation/Animator.cpp\
+	../../UserGame/Animation/Registry.cpp\
+	../../UserGame/Mainflow/PlayState.cpp\
+	../../UserGame/AtmosphereColor.cpp\
+	../../UserGame/Interpolation/Interpolater.cpp\
+	../../UserGame/Keyboard.cpp\
+	../../UserGame/RendererFeeder.cpp\
+	../../UserGame/Rendering/Renderer.cpp\
+	../../UserGame/Rendering/WorldRenderer.cpp\
+	../../UserGame/Rendering/BoneMeshRegistry.cpp\
+	../../UserGame/Rendering/Programs.cpp\
+	../../UserGame/Rendering/BoneMeshInstances.cpp\
+	../../UserGame/Rendering/CommandStream.cpp\
+	../../UserGame/Rendering/DrawQueue.cpp\
+	../../UserGame/Rendering/Uniforms.cpp\
+	../../UserGame/Rendering/Buffers.cpp\
+	../../UserGame/Rendering/CullResult.cpp\
+	../../UserGame/Rendering/RenderTargets.cpp\
+	../../UserGame/Rendering/FullscreenQuad.cpp\
+	../../UserGame/Rendering/Textures.cpp\
+	../../UserGame/Rendering/StaticMeshes.cpp\
+	../../UserGame/Rendering/StaticMeshInstances.cpp\
+	../../UserGame/Rendering/MeshHelper.cpp\
+	../../UserGame/Rendering/Culler.cpp\
+	../../UserGame/Rendering/LightTransforms.cpp\
+	../../UserGame/Rendering/DrawSet.cpp\
+	../../UserGame/Rendering/BoneDrawSet.cpp\
+	../../UserGame/Rendering/StaticDrawSet.cpp\
+	../../UserGame/Rendering/PointLightDrawSet.cpp\
+	../../UserGame/Rendering/Frustum.cpp\
+	../../UserGame/Rendering/Shadow.cpp\
+	../../UserGame/Rendering/ShadowBlur.cpp\
+	../../UserGame/Rendering/ShadowBasePass.cpp\
+	../../UserGame/Rendering/MergePass.cpp\
+	../../UserGame/Rendering/GeometryPass.cpp\
+	../../UserGame/Rendering/SSAO.cpp\
+	../../UserGame/Rendering/SSAOGrainPass.cpp\
+	../../UserGame/Rendering/SSAOBlurPass.cpp\
+	../../UserGame/Rendering/DownsamplePass.cpp\
+	../../UserGame/Rendering/PointLights.cpp\
+	../../UserGame/Rendering/PointLightPass.cpp\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp
 
 USER_SOURCES_OBJC = \
@@ -88,7 +86,7 @@ USER_HEADER_DIRS =\
 	-I../../Sys/Net/Include\
 	-I../../Sys/GFX/Include\
 	-I../../Sys/GFX/OpenGL/Include\
-	-I../../GameClient\
+	-I../../UserGame\
 	-I../..\
 	-IInclude
 
