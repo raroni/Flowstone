@@ -20,6 +20,8 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/Engine.cpp\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
+	../../Common/Piper/Client.cpp\
+	../../Common/Piper/Transmission.cpp\
 	../../GameClient/GameClient.cpp\
 	../../GameClient/GameClientInput.cpp\
 	../../GameClient/KeyboardInput.cpp\
@@ -82,6 +84,7 @@ USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
 	-I../../Sys/File/Include\
+	-I../../Sys/Net/Include\
 	-I../../Sys/GFX/Include\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../GameClient\
