@@ -15,8 +15,6 @@ static GameWindow *window;
 static id windowDelegate;
 static NSOpenGLContext *context;
 
-UserGame gameClient;
-
 static struct {
   const uint16_t width = 800;
   const uint16_t height = 600;
@@ -308,12 +306,12 @@ static void terminate() {
 int main() {
   initialize();
   timingInitialize();
-  gameClient.initialize(resolution.width, resolution.height);
+  UserGame::initialize(resolution.width, resolution.height);
 
   while(shouldTerminate == NO) {
     timingStartFrame();
     pollEvents();
-    gameClient.update(timingGetDelta());
+    UserGame::update(timingGetDelta());
     [context flushBuffer];
     timingWaitForNextFrame();
   }
