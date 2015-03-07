@@ -17,6 +17,20 @@ namespace SysNet {
     return s;
   }
 
+  void bind(Socket socket, const Address &address) {
+    memset(&sockAddress, 0, sizeof(sockAddress));
+    sockaddr_in *ipv4Address = reinterpret_cast<sockaddr_in*>(&sockAddress);
+    ipv4Address->sin_family = AF_INET;
+    ipv4Address->sin_addr.s_addr = *reinterpret_cast<const uint32_t*>(address.ip);
+    ipv4Address->sin_port = htons(address.port);
+    addressLength = sizeof(sockaddr_in);
+    int bindResult = ::bind(socket, &sockAddress, addressLength);
+
+    if(bindResult == -1) {
+      fatalError("bind() failed.");
+    }
+  }
+
   void send(Socket socket, const Packet &packet) {
     memset(&sockAddress, 0, sizeof(sockAddress));
     sockaddr_in *ipv4Address = reinterpret_cast<sockaddr_in*>(&sockAddress);
