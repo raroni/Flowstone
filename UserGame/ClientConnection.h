@@ -3,7 +3,7 @@
 
 #include "Common/Piper/Client.h"
 
-class Connection {
+class ClientConnection {
 public:
   void open(const uint8_t *ip, uint16_t port);
 private:

@@ -24,7 +24,7 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/Transmission.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
-	../../UserGame/Connection.cpp\
+	../../UserGame/ClientConnection.cpp\
 	../../UserGame/TorchManager.cpp\
 	../../UserGame/Animation/Animator.cpp\
 	../../UserGame/Animation/Registry.cpp\
