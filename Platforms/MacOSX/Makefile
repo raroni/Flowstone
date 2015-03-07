@@ -70,6 +70,7 @@ USER_SOURCES_CPP =\
 	../../UserGame/Rendering/PointLights.cpp\
 	../../UserGame/Rendering/PointLightPass.cpp\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
+	../../Sys/Net/Source/SysNet.cpp\
 	Source/SysNet.cpp
 
 USER_SOURCES_OBJC = \

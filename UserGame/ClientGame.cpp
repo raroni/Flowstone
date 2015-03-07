@@ -2,8 +2,6 @@
 #include "UserGame.h"
 #include "ClientGame.h"
 
-#include <stdio.h>
-
 void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   renderer.initialize();
   renderer.updateResolution({ resolutionWidth, resolutionHeight });

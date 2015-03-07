@@ -8,6 +8,7 @@ namespace SysNet {
   Socket createSocket();
   void send(Socket socket, const Packet &packet);
   bool receive(Socket socket, Packet &packet);
+  bool addressEqual(const Address &a, const Address &b);
 }
 
 #endif

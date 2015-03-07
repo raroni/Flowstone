@@ -7,6 +7,7 @@
 
 namespace SysNet {
   static sockaddr sockAddress;
+  static socklen_t addressLength;
   static const size_t bufferSize = 10*1024;
   static char buffer[bufferSize];
 
@@ -23,13 +24,15 @@ namespace SysNet {
     ipv4Address->sin_addr.s_addr = *reinterpret_cast<const uint32_t*>(packet.address.ip);
     ipv4Address->sin_port = htons(packet.address.port);
 
+    addressLength = sizeof(sockaddr_in);
+
     ssize_t result = sendto(
       socket,
       packet.message,
       packet.messageLength,
       0,
-      reinterpret_cast<sockaddr*>(ipv4Address),
-      sizeof(ipv4Address)
+      &sockAddress,
+      addressLength
     );
 
     if(result == -1) {
@@ -38,7 +41,7 @@ namespace SysNet {
   }
 
   bool receive(Socket socket, Packet &packet) {
-    socklen_t addressLength = sizeof(sockAddress);
+    addressLength = sizeof(sockAddress);
     while(true) {
       ssize_t result = recvfrom(
         socket,
