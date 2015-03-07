@@ -11,6 +11,14 @@ namespace UserGame {
   }
 
   void update(double timeDelta) {
+    if(serverGame != nullptr) {
+      serverGame->update(timeDelta);
+    }
     clientGame.update(timeDelta);
+  }
+
+  void startServer() {
+    serverGame = new ServerGame();
+    serverGame->initialize();
   }
 }

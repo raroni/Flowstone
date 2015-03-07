@@ -22,6 +22,8 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
 	../../Common/Piper/Transmission.cpp\
+	../../ServerGame/ServerGame.cpp\
+	../../ServerGame/ConnectionPool.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
 	../../UserGame/ClientConnection.cpp\

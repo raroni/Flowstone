@@ -1,5 +1,6 @@
-#include "ClientGame.h"
 #include "SysKey/SysKey.h"
+#include "UserGame.h"
+#include "ClientGame.h"
 
 #include <stdio.h>
 
@@ -10,6 +11,9 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
 
   uint8_t ip[] = { 127, 0, 0, 0 };
   connection.open(ip, 4242);
+
+  // dummy
+  UserGame::startServer();
 }
 
 void ClientGame::update(double timeDelta) {
