@@ -3,12 +3,14 @@
 
 #include "Common/Piper/Address.h"
 #include "Common/Piper/Socket.h"
+#include "Common/Piper/Packet.h"
 
 namespace Piper {
   class Server {
   public:
     Server();
     void listen(const Address &address);
+    bool receive(Packet &packet);
   private:
     Socket socket;
   };

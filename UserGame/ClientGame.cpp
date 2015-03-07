@@ -7,7 +7,7 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   renderer.updateResolution({ resolutionWidth, resolutionHeight });
   flow.initialize(renderer);
 
-  uint8_t ip[] = { 127, 0, 0, 0 };
+  uint8_t ip[] = { 127, 0, 0, 1 };
   connection.open(ip, 4242);
 
   // dummy
