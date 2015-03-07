@@ -6,6 +6,7 @@
 class ClientConnection {
 public:
   void open(const uint8_t *ip, uint16_t port);
+  void update(double timeDelta);
 private:
   Piper::Client socket;
 };

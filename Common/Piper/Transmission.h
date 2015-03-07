@@ -5,8 +5,10 @@
 #include "Common/Piper/Socket.h"
 
 namespace Piper {
-  void send(Socket socket, const Packet &packet);
-  void receive(Socket socket, Packet &packet);
+  namespace Transmission {
+    void send(Socket socket, const Packet &packet);
+    void receive(Socket socket, Packet &packet);
+  }
 }
 
 #endif

@@ -17,6 +17,7 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
 }
 
 void ClientGame::update(double timeDelta) {
+  connection.update(timeDelta);
   updateKeyboard();
   flow.update(timeDelta, keyboard);
   renderer.draw();

@@ -69,7 +69,8 @@ USER_SOURCES_CPP =\
 	../../UserGame/Rendering/DownsamplePass.cpp\
 	../../UserGame/Rendering/PointLights.cpp\
 	../../UserGame/Rendering/PointLightPass.cpp\
-	../../Sys/GFX/OpenGL/Source/SysGFX.cpp
+	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
+	Source/SysNet.cpp
 
 USER_SOURCES_OBJC = \
 	Source/Util.m\

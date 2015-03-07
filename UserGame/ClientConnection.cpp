@@ -7,3 +7,8 @@ void ClientConnection::open(const uint8_t *ip, uint16_t port) {
   address.port = port;
   socket.setAddress(address);
 }
+
+void ClientConnection::update(double timeDelta) {
+  Piper::Packet packet;
+  //while()
+}
