@@ -7,7 +7,7 @@
 namespace Piper {
   namespace Transmission {
     void send(Socket socket, const Packet &packet);
-    void receive(Socket socket, Packet &packet);
+    bool receive(Socket socket, Packet &packet);
   }
 }
 

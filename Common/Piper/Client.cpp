@@ -11,7 +11,11 @@ namespace Piper {
     serverAddress = address;
   }
 
-  void Client::receive(Packet &packet) {
+  bool Client::receive(Packet &packet) {
     return Transmission::receive(socket, packet);
+  }
+
+  void Client::send(const Packet &packet) {
+    Transmission::send(socket, packet);
   }
 }

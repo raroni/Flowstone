@@ -10,7 +10,8 @@ namespace Piper {
   public:
     Client();
     void setAddress(Address address);
-    void receive(Packet &packet);
+    bool receive(Packet &packet);
+    void send(const Packet &packet);
   private:
     Socket socket;
     Address serverAddress;
