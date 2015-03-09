@@ -11,46 +11,57 @@ namespace Piper {
     serverAddress = address;
   }
 
-  bool Client::receive(
-    Sequence &id,
-    Sequence &ackStart,
-    BitSet32 &ackBits,
-    const void *message,
-    uint16_t messageLength
-  ) {
+  uint16_t Client::createID() {
+    return nextID++;
+  }
+
+  void Client::poll() {
     Packet packet;
     while(true) {
-      if(Transmission::receive(socket, packet)) {
-        if(SysNet::addressEqual(packet.address, serverAddress)) {
-          id = packet.id;
-          ackStart = packet.ackStart;
-          ackBits = packet.ackBits;
-          message = packet.message;
-          messageLength = packet.messageLength;
-          return true;
-        } else {
-          continue;
-        }
-      } else {
-        return false;
+      bool result = Transmission::receive(socket, packet);
+      if(!result) {
+        return;
       }
+      if(!SysNet::addressEqual(packet.address, serverAddress)) {
+        continue;
+      }
+
+      // do something with ackStart, ackBits
+      inBuffer.write(packet.message, packet.messageLength);
     }
   }
 
-  void Client::send(
-    Sequence id,
-    Sequence ackStart,
-    const BitSet32 &ackBits,
-    const void *message,
-    uint16_t messageLength
-  ) {
+  bool Client::readMessage(const void **message, uint16_t *messageLength) {
+    *messageLength = inBuffer.read(inBufferPosition++, message);
+    return *messageLength != 0;
+  }
+
+  void Client::clear() {
+    inBuffer.clear();
+    inBufferPosition = 0;
+  }
+
+  void Client::sendMessage(Sequence id, const void *message, uint16_t messageLength) {
+    outBuffer.write(message, messageLength);
+    outIDs[outBuffer.getCount()-1] = id;
+  }
+
+  void Client::dispatch() {
     Packet packet;
-    packet.address = serverAddress;
-    packet.id = id;
-    packet.ackStart = ackStart;
-    packet.ackBits = ackBits;
-    packet.message = message;
-    packet.messageLength = messageLength;
-    Transmission::send(socket, packet);
+    uint16_t position = 0;
+    uint16_t messageLength;
+    const void *message = nullptr;
+    for(uint16_t p = 0; p<outBuffer.getCount(); ++p) {
+      messageLength = outBuffer.read(p, &message);
+      packet.address = serverAddress;
+      packet.id = outIDs[position];
+      // todo
+      // packet.ackStart = ackStart;
+      // packet.ackBits = ackBits;
+      packet.message = message;
+      packet.messageLength = messageLength;
+      Transmission::send(socket, packet);
+    }
+    outBuffer.clear();
   }
 }

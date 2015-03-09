@@ -4,12 +4,26 @@
 #include "Common/Piper/Socket.h"
 #include "Common/Piper/Address.h"
 #include "Common/Piper/Packet.h"
+#include "Common/Piper/MessageBuffer.h"
 
 namespace Piper {
   class Client {
   public:
     Client();
     void setAddress(Address address);
+    void poll();
+    void clear();
+    bool readMessage(const void **message, uint16_t *messageLength);
+    void sendMessage(Sequence id, const void *message, uint16_t messageLength);
+    void dispatch();
+    uint16_t createID();
+  private:
+    uint16_t nextID = 0;
+    uint16_t inBufferPosition = 0;
+    MessageBuffer inBuffer;
+    MessageBuffer outBuffer;
+    Sequence outIDs[MessageBuffer::maxCount];
+    /*
     bool receive(
       Sequence &id,
       Sequence &ackStart,
@@ -24,7 +38,7 @@ namespace Piper {
       const void *message,
       uint16_t messageLength
     );
-  private:
+    */
     Socket socket;
     Address serverAddress;
   };

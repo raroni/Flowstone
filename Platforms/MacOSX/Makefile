@@ -21,19 +21,20 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
+	../../Common/Piper/MessageBuffer.cpp\
 	../../Common/Piper/Server.cpp\
 	../../Common/Piper/Transmission.cpp\
 	../../ServerGame/ServerGame.cpp\
 	../../ServerGame/ConnectionPool.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
-	../../UserGame/ClientConnection.cpp\
 	../../UserGame/TorchManager.cpp\
 	../../UserGame/Animation/Animator.cpp\
 	../../UserGame/Animation/Registry.cpp\
 	../../UserGame/Mainflow/PlayState.cpp\
 	../../UserGame/AtmosphereColor.cpp\
 	../../UserGame/Interpolation/Interpolater.cpp\
+	../../UserGame/PingPong.cpp\
 	../../UserGame/Keyboard.cpp\
 	../../UserGame/RendererFeeder.cpp\
 	../../UserGame/Rendering/Renderer.cpp\
