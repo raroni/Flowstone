@@ -1,3 +1,4 @@
+#include "Common/MessageType.h"
 #include "PingPong.h"
 
 namespace PingPong {
@@ -13,7 +14,8 @@ namespace PingPong {
     timeUntilPing -= timeDelta;
     if(timeUntilPing <= 0) {
       Piper::Sequence id = pipe->createID();
-      pipe->sendMessage(id, "hey", 4);
+      char message[] = { static_cast<char>(MessageType::Ping) };
+      pipe->sendMessage(id, message, sizeof(message));
       timeUntilPing += interval;
     }
   }
