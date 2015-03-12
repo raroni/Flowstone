@@ -1,4 +1,4 @@
-#ifndef SYS_GFX_H
+#ifndef SYSGFX_H
 
 #include "SysGFX/CullFace.h"
 
