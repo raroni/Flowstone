@@ -1,10 +1,12 @@
 #ifndef PIPER_CLIENT_H
 #define PIPER_CLIENT_H
 
+#include "Common/Piper/Config.h"
 #include "Common/Piper/Socket.h"
 #include "Common/Piper/Address.h"
 #include "Common/Piper/Packet.h"
 #include "Common/Piper/MessageBuffer.h"
+#include "Common/Piper/ClientOutBuffer.h"
 
 namespace Piper {
   class Client {
@@ -20,25 +22,13 @@ namespace Piper {
   private:
     uint16_t nextID = 0;
     uint16_t inBufferPosition = 0;
+    struct {
+      uint16_t offsets[Config::Client::inMessageMax];
+      uint16_t lengths[Config::Client::inMessageMax];
+      char storage[Config::Client::inMessageCapacity];
+    } inData;
     MessageBuffer inBuffer;
-    MessageBuffer outBuffer;
-    Sequence outIDs[MessageBuffer::maxCount];
-    /*
-    bool receive(
-      Sequence &id,
-      Sequence &ackStart,
-      BitSet32 &ackBits,
-      const void *message,
-      uint16_t messageLength
-    );
-    void send(
-      Sequence id,
-      Sequence ackStart,
-      const BitSet32 &ackBits,
-      const void *message,
-      uint16_t messageLength
-    );
-    */
+    ClientOutBuffer outBuffer;
     Socket socket;
     Address serverAddress;
   };

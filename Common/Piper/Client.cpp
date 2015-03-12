@@ -3,7 +3,14 @@
 #include "Common/Piper/Client.h"
 
 namespace Piper {
-  Client::Client() {
+  Client::Client() :
+  inBuffer(
+    Config::Client::inMessageMax,
+    Config::Client::inMessageCapacity,
+    inData.offsets,
+    inData.lengths,
+    inData.storage
+  ) {
     socket = SysNet::createSocket();
   }
 
@@ -42,19 +49,18 @@ namespace Piper {
   }
 
   void Client::sendMessage(Sequence id, const void *message, uint16_t messageLength) {
-    outBuffer.write(message, messageLength);
-    outIDs[outBuffer.getCount()-1] = id;
+    outBuffer.write(id, message, messageLength);
   }
 
   void Client::dispatch() {
     Packet packet;
-    uint16_t position = 0;
     uint16_t messageLength;
+    Sequence id;
     const void *message = nullptr;
     for(uint16_t p = 0; p<outBuffer.getCount(); ++p) {
-      messageLength = outBuffer.read(p, &message);
+      messageLength = outBuffer.read(p, &id, &message);
       packet.address = serverAddress;
-      packet.id = outIDs[position];
+      packet.id = id;
       // todo
       // packet.ackStart = ackStart;
       // packet.ackBits = ackBits;
