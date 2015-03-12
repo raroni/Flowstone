@@ -80,7 +80,7 @@ namespace SysNet {
 
       sockaddr_in *ipv4Address = reinterpret_cast<sockaddr_in*>(&sockAddress);
       memcpy(packet.address.ip, &ipv4Address->sin_addr.s_addr, sizeof(uint8_t)*4);
-      packet.address.port = ipv4Address->sin_port;
+      packet.address.port = ntohs(ipv4Address->sin_port);
       packet.message = buffer;
       packet.messageLength = result;
       return true;
