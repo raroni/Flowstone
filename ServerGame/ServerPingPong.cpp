@@ -19,7 +19,7 @@ namespace ServerPingPong {
     memcpy(message+1, &pingID, 1);
     pipe->sendMessage(
       clientID,
-      (*nextSequenceID)++,
+      pipe->createSequenceID(clientID),
       message,
       sizeof(message)
     );

@@ -21,6 +21,11 @@ namespace Piper {
     return false;
   }
 
+  Sequence Server::createSequenceID(ClientID id) {
+    uint8_t index = indices[id];
+    return nextSequenceIDs[index]++;
+  }
+
   void Server::poll() {
     Packet packet;
     ClientID id;
@@ -37,6 +42,7 @@ namespace Piper {
         ids[clientCount] = id;
         addresses[clientCount] = packet.address;
         indices[id] = clientCount;
+        nextSequenceIDs[clientCount] = 0;
         clientCount++;
       }
       // handle ackStart, ackBits

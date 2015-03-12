@@ -20,7 +20,9 @@ namespace Piper {
     void dispatch();
     void poll();
     void clear();
+    Sequence createSequenceID(ClientID id);
   private:
+    Sequence nextSequenceIDs[Config::Server::clientMax];
     Address addresses[Config::Server::clientMax];
     ClientID ids[Config::Server::clientMax];
     uint8_t indices[Config::Server::clientMax];
