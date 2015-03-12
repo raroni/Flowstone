@@ -4,7 +4,7 @@
 #include "MacOSX/Config.h"
 #include "MacOSX/Timing.h"
 
-static double gameStartTime;
+static uint64_t gameStartTime;
 static double frameStartTime;
 static double frameLastTime;
 
