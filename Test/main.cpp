@@ -4,9 +4,11 @@
 #include "PhysicsEngineTest.h"
 #include "BitSet128Test.h"
 #include "BitSet32Test.h"
+#include "PiperUtilTest.h"
 #include "IntegratorTest.h"
 
 int main() {
+  PiperUtilTest::setup();
   BitSet128Test::setup();
   BitSet32Test::setup();
   CollisionDetectorTest::setup();

@@ -161,6 +161,7 @@ TEST_SOURCES =\
 	../../Common/Physics/Engine.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Physics/CollisionDetector.cpp\
+	../../Common/Piper/Util.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\
