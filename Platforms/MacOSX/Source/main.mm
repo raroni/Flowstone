@@ -155,8 +155,8 @@ static void terminate() {
 
 int main() {
   initialize();
-  timingInitialize();
   UserGame::initialize(resolution.width, resolution.height);
+  timingInitialize();
 
   while(shouldTerminate == NO) {
     timingStartFrame();

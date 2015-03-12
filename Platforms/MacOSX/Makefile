@@ -17,6 +17,7 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Library/Source/Random.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
+	../../Common/GameTime.cpp\
 	../../Common/Physics/Engine.cpp\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\

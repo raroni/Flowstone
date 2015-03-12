@@ -1,3 +1,4 @@
+#include "Common/GameTime.h"
 #include "ServerGame/ServerGame.h"
 #include "UserGame/ClientGame.h"
 #include "UserGame/UserGame.h"
@@ -7,6 +8,7 @@ namespace UserGame {
   ServerGame *serverGame = nullptr;
 
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
+    GameTime::initialize();
     clientGame.initialize(resolutionWidth, resolutionHeight);
   }
 
