@@ -5,9 +5,9 @@
 #include "Common/Piper/ClientID.h"
 
 namespace Piper {
-  class ServerBuffer {
+  class ServerInBuffer {
   public:
-    ServerBuffer(
+    ServerInBuffer(
       uint16_t maxCount,
       uint16_t capacity,
       ClientID *ids,

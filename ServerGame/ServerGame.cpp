@@ -1,6 +1,8 @@
-#include <stdio.h>
+#include "Common/MessageType.h"
 #include "ServerPingPong.h"
 #include "ServerGame.h"
+
+#include <stdio.h>
 
 void ServerGame::initialize() {
   Piper::Address address;
@@ -11,7 +13,7 @@ void ServerGame::initialize() {
   address.port = 4242;
   pipe.listen(address);
 
-  ServerPingPong::setPipe(&pipe);
+  ServerPingPong::configure(&pipe, &nextSequenceID);
 }
 
 void ServerGame::update(double timeDelta) {
@@ -20,7 +22,7 @@ void ServerGame::update(double timeDelta) {
   // do game logic
   // ServerPingPong::update();
 
-  //pipe.dispatch();
+  pipe.dispatch();
 }
 
 void ServerGame::readPipe() {
@@ -32,11 +34,21 @@ void ServerGame::readPipe() {
   while(pipe.readMessage(&id, &message, &messageLength)) {
     if(!clientIDs[id]) {
       clientIDs[id] = true;
-      printf("Got new connection!\n");
       // zomg new connection
       // put into active players or into rejection-queue (if full)
     }
-    printf("Got something from client %d!\n", id);
+    MessageType type = *static_cast<const MessageType*>(message);
+    switch(type) {
+      case MessageType::Ping:
+        if(messageLength == 2) {
+          uint8_t pingID = static_cast<const uint8_t*>(message)[1];
+          ServerPingPong::handlePing(id, pingID);
+        }
+        break;
+      default:
+        printf("Server got something unknown.");
+        break;
+    }
   }
   // at some point later pipe.free(id);
 

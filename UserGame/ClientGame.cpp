@@ -1,7 +1,10 @@
 #include "SysKey/SysKey.h"
 #include "UserGame.h"
 #include "PingPong.h"
+#include "Common/MessageType.h"
 #include "ClientGame.h"
+
+#include <stdio.h>
 
 void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   renderer.initialize();
@@ -51,7 +54,18 @@ void ClientGame::readPipe() {
   uint16_t messageLength = 0;
 
   while(pipe.readMessage(&message, &messageLength)) {
-
+    MessageType type = *static_cast<const MessageType*>(message);
+    switch(type) {
+      case MessageType::Pong:
+        if(messageLength == 2) {
+          uint8_t pingID = static_cast<const uint8_t*>(message)[1];
+          PingPong::handlePong(pingID);
+        }
+        break;
+      default:
+        printf("Client got something unknown.");
+        break;
+    }
   }
   pipe.clear();
 }

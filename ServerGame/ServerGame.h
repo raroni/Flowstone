@@ -9,6 +9,7 @@ public:
   void update(double timeDelta);
   void readPipe();
 private:
+  Piper::Sequence nextSequenceID = 0;
   Piper::Server pipe;
   bool clientIDs[Piper::Config::Server::clientMax] = { false };
 };

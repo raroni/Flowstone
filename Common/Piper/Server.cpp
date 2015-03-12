@@ -44,11 +44,21 @@ namespace Piper {
         id = idPool.obtain();
         ids[clientCount] = id;
         addresses[clientCount] = packet.address;
+        indices[id] = clientCount;
         clientCount++;
       }
       // handle ackStart, ackBits
       inBuffer.write(id, packet.message, packet.messageLength);
     }
+  }
+
+  void Server::sendMessage(ClientID clientID, Sequence sequenceID, const void *message, uint16_t messageLength) {
+    outBuffer.write(
+      clientID,
+      sequenceID,
+      message,
+      messageLength
+    );
   }
 
   void Server::clear() {
@@ -62,6 +72,26 @@ namespace Piper {
   }
 
   void Server::dispatch() {
+    Packet packet;
+    ClientID clientID;
+    Sequence sequenceID;
+    const void *message;
+    uint16_t messageLength;
 
+    for(uint16_t p = 0; p<outBuffer.getCount(); ++p) {
+      outBuffer.read(p, &clientID, &sequenceID, &message, &messageLength);
+
+      uint8_t index = indices[clientID];
+      packet.address = addresses[index];
+      packet.id = sequenceID;
+      // todo
+      // packet.ackStart = ackStart;
+      // packet.ackBits = ackBits;
+      packet.message = message;
+      packet.messageLength = messageLength;
+      Transmission::send(socket, packet);
+    }
+
+    outBuffer.clear();
   }
 }

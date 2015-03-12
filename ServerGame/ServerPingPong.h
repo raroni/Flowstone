@@ -4,8 +4,8 @@
 #include "Common/Piper/Server.h"
 
 namespace ServerPingPong {
-  void setPipe(Piper::Server *aPipe);
-  void handlePing(Piper::ClientID id);
+  void configure(Piper::Server *aPipe, Piper::Sequence *aNextSequenceID);
+  void handlePing(Piper::ClientID clientID, uint8_t pingID);
   void update(double timeDelta);
 }
 

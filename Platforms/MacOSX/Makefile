@@ -25,7 +25,8 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/ClientIDPool.cpp\
 	../../Common/Piper/MessageBuffer.cpp\
 	../../Common/Piper/Server.cpp\
-	../../Common/Piper/ServerBuffer.cpp\
+	../../Common/Piper/ServerInBuffer.cpp\
+	../../Common/Piper/ServerOutBuffer.cpp\
 	../../Common/Piper/Transmission.cpp\
 	../../ServerGame/ServerGame.cpp\
 	../../ServerGame/ServerPingPong.cpp\

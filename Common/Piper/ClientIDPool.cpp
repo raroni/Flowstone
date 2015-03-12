@@ -2,7 +2,7 @@
 
 namespace Piper {
   ClientIDPool::ClientIDPool() {
-    for(uint8_t i=0; i<maxIDCount; ++i) {
+    for(uint8_t i=0; i<Config::Server::clientMax; ++i) {
       list[i] = i;
     }
   }

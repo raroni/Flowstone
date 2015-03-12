@@ -6,6 +6,7 @@
 namespace PingPong {
   void setPipe(Piper::Client &pipe);
   void update(double timeDelta);
+  void handlePong(uint8_t pingID);
 }
 
 #endif

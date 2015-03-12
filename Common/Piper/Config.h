@@ -15,6 +15,9 @@ namespace Piper {
       const uint16_t clientMax = 16;
       const uint16_t inMessageCapacity = 1024*50;
       const uint16_t inMessageMax = 256;
+      const uint16_t outMessageCapacity = inMessageCapacity;
+      const uint16_t outMessageMax = inMessageMax;
+
     }
   }
 }
