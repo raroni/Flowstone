@@ -8,8 +8,7 @@ namespace GameTime {
     startTime = SysTime::get();
   }
 
-  double get() {
-    uint64_t elapsed = SysTime::get()-startTime;
-    return elapsed*0.000001;
+  uint64_t get() {
+    return SysTime::get()-startTime;
   }
 }

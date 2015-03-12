@@ -7,8 +7,8 @@
 #include "MacOSX/Timing.h"
 
 static uint64_t gameStartTime;
-static double frameStartTime;
-static double frameLastTime;
+static uint64_t frameStartTime;
+static uint64_t frameLastTime;
 
 void timingInitialize() {
   gameStartTime = SysTime::get();
@@ -20,13 +20,13 @@ void timingStartFrame() {
 }
 
 void timingWaitForNextFrame() {
-  auto now = GameTime::get();
-  double duration = now-frameStartTime;
-  double rest = Config::targetFrameDuration-duration;
+  uint64_t now = GameTime::get();
+  uint64_t duration = now-frameStartTime;
+  double rest = Config::targetFrameDuration-0.000001*duration;
   usleep(Quanta::max(rest*1000000.0, 0.0));
   frameLastTime = frameStartTime;
 }
 
 double timingGetDelta() {
-  return frameStartTime-frameLastTime;
+  return 0.000001*(frameStartTime-frameLastTime);
 }
