@@ -148,3 +148,38 @@ clean:
 
 run: user
 	$(USER_OUTPUT_DIR)/MacOS/$(NAME)
+
+
+TEST_SOURCES =\
+	../../Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
+	../../Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
+	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\
+	../../Libraries/Quanta/Library/Source/Math/Vector4.cpp\
+	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
+	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
+	../../Libraries/Quanta/Library/Source/Util.cpp\
+	../../Common/Physics/Engine.cpp\
+	../../Common/Physics/CollisionResolver.cpp\
+	../../Common/Physics/CollisionDetector.cpp\
+	../../Test/main.cpp
+
+TEST_HEADER_DIRS =\
+	-I../../Libraries/Conrad/Library/Include\
+	-I../../Libraries/Quanta/Library/Include\
+	-I../../Source\
+	-I../../Source/User\
+	-I../..
+
+TEST_OBJECTS = $(patsubst %.cpp,$(BUILD_DIR)/Objects/Test/%.o,$(TEST_SOURCES))
+
+TEST_EXECUTABLE_PATH = $(BUILD_DIR)/Test/Test
+
+test: $(TEST_EXECUTABLE_PATH)
+	$(TEST_EXECUTABLE_PATH)
+
+$(TEST_EXECUTABLE_PATH): $(TEST_OBJECTS)
+	$(CC) $(CFLAGS) $(TEST_HEADER_DIRS) $(TEST_OBJECTS) -o $@
+
+$(BUILD_DIR)/Objects/Test/%.o : %.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(CPP_CFLAGS) $(TEST_HEADER_DIRS) $< -c -o $@

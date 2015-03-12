@@ -16,7 +16,7 @@ namespace CollisionDetectorTest {
       { 5, 5, 5 },
       { 5.1, 5.1, 5.1 }
     };
-    detector.detect(set, positions);
+    detector.detect(set, positions, {});
     assertEqual(1, set.getDynamics().getCount());
   }
 
@@ -29,7 +29,7 @@ namespace CollisionDetectorTest {
       { -1.5, 0, 0 },
       { 1.5, 0, 0 }
     };
-    detector.detect(set, positions);
+    detector.detect(set, positions, {});
     assertEqual(0, set.getDynamics().getCount());
   }
 
@@ -45,12 +45,12 @@ namespace CollisionDetectorTest {
       { 0, 0, 0 },
       { 0.6, 0, 0 }
     };
-    detector.detect(set, positions);
+    detector.detect(set, positions, {});
     assertEqual(2, set.getDynamics().getCount());
 
     set.clear();
     detector.destroyDynamicSphere(handle);
-    detector.detect(set, positions);
+    detector.detect(set, positions, {});
     assertEqual(0, set.getDynamics().getCount());
   }
 
@@ -63,7 +63,7 @@ namespace CollisionDetectorTest {
       { 1.5, 0, 0 }
     };
     CollisionSet set;
-    detector.detect(set, positions);
+    detector.detect(set, positions, {});
     assertEqual(1, set.getDynamics().getCount());
     Quanta::Vector3 separation = set.getDynamics()[0].separation;
     assertInDelta(0.5, 0.01, separation[0]);
