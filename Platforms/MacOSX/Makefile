@@ -77,7 +77,8 @@ USER_SOURCES_CPP =\
 	../../UserGame/Rendering/PointLightPass.cpp\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
 	../../Sys/Net/Source/SysNet.cpp\
-	Source/SysNet.cpp
+	Source/SysNet.cpp\
+	Source/SysTime.cpp
 
 USER_SOURCES_OBJC = \
 	Source/Util.m\
@@ -99,6 +100,7 @@ USER_HEADER_DIRS =\
 	-I../../Sys/Key/Include\
 	-I../../Sys/GFX/Include\
 	-I../../Sys/GFX/OpenGL/Include\
+	-I../../Sys/Time/Include\
 	-I../../UserGame\
 	-I../..\
 	-IInclude

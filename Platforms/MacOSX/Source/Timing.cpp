@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <sys/time.h>
+#include "SysTime/SysTime.h"
 #include "Quanta/Util.h"
 #include "MacOSX/Config.h"
 #include "MacOSX/Timing.h"
@@ -8,19 +9,13 @@ static uint64_t gameStartTime;
 static double frameStartTime;
 static double frameLastTime;
 
-static uint64_t getSystemTime() {
-  struct timeval tv;
-  gettimeofday(&tv, NULL);
-  return (tv.tv_sec*1000000+tv.tv_usec);
-}
-
 static double getTime() {
-  uint64_t elapsed = getSystemTime()-gameStartTime;
+  uint64_t elapsed = SysTime::get()-gameStartTime;
   return elapsed*0.000001;
 }
 
 void timingInitialize() {
-  gameStartTime = getSystemTime();
+  gameStartTime = SysTime::get();
   auto x = getTime();
   frameLastTime = x;
 }
