@@ -9,10 +9,9 @@ public:
     data |= 1 << n;
   }
   bool get(uint8_t n) const {
-    uint32_t value = data & (1 << n);
-    return value == 1;
+    return (data >> n) & 1;
   }
-  void clear(uint8_t n) {
+  void unset(uint8_t n) {
     data &= ~(1 << n);
   }
 private:
