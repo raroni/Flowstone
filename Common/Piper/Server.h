@@ -27,13 +27,6 @@ namespace Piper {
     ClientIDPool idPool;
     uint16_t clientCount = 0;
     Socket socket;
-    // todo: move this data into ServerInBuffer, no need to put it here
-    struct {
-      uint16_t offsets[Config::Server::inMessageMax];
-      uint16_t lengths[Config::Server::inMessageMax];
-      ClientID ids[Config::Server::inMessageMax];
-      char storage[Config::Server::inMessageCapacity];
-    } inData;
     ServerInBuffer inBuffer;
     ServerOutBuffer outBuffer;
 

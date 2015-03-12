@@ -3,15 +3,7 @@
 #include "Common/Piper/Server.h"
 
 namespace Piper {
-  Server::Server() :
-  inBuffer(
-    Config::Server::inMessageMax,
-    Config::Server::inMessageCapacity,
-    inData.ids,
-    inData.offsets,
-    inData.lengths,
-    inData.storage
-  ) {
+  Server::Server() {
     socket = SysNet::createSocket();
   }
 

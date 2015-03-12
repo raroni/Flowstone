@@ -1,16 +1,8 @@
 #include "Common/Piper/ServerInBuffer.h"
 
 namespace Piper {
-  ServerInBuffer::ServerInBuffer(
-    uint16_t maxCount,
-    uint16_t capacity,
-    ClientID *ids,
-    uint16_t *offsets,
-    uint16_t *lengths,
-    void *storage
-  ) :
-  messages(maxCount, capacity, offsets, lengths, storage),
-  ids(ids) { }
+  ServerInBuffer::ServerInBuffer() :
+  messages(Config::Server::inMessageMax, Config::Server::inMessageCapacity, offsets, lengths, storage) { }
 
   void ServerInBuffer::write(ClientID id, const void *message, uint16_t messageLength) {
     messages.write(message, messageLength);
