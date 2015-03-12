@@ -36,7 +36,7 @@ namespace Piper {
         packet.ackStart = uint16View[1];
         memcpy(&packet.ackBits, charView+sizeof(uint16_t)*2, sizeof(BitSet32));
         packet.message = charView+headerSize;
-        packet.messageLength = sysNetPacket.messageLength;
+        packet.messageLength = sysNetPacket.messageLength-headerSize;
         return true;
       } else {
         return false;
