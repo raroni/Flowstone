@@ -63,6 +63,22 @@ namespace Orwell {
         reportFailure(message);
       }
     }
+
+    void assertFalse(bool result) {
+      if(result != false) {
+        char message[64];
+        sprintf(message, "%d was not false.", result);
+        reportFailure(message);
+      }
+    }
+
+    void assertTrue(bool result) {
+      if(result != true) {
+        char message[64];
+        sprintf(message, "%d was not true.", result);
+        reportFailure(message);
+      }
+    }
   }
 }
 
