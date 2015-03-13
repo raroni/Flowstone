@@ -11,18 +11,14 @@ namespace Piper {
       return;
     }
     if(Util::sequenceGreaterThan(id, head+128)) {
-      position = 0;
       head = id;
       bits.clear();
     }
     else if(Util::sequenceGreaterThan(id, head)) {
       Sequence difference = id-head;
-      for(uint8_t i=0; i<difference; ++i) {
-        bits.unset(getBitIndex(tail+i));
-      }
+      bits.left(difference);
+      bits.set(id-head-1);
       head = id;
-      position = (position+difference) % 128;
-      bits.set(getBitIndex(id-difference));
     } else {
       bits.set(getBitIndex(id));
     }
@@ -49,7 +45,6 @@ namespace Piper {
   }
 
   uint8_t AckSet::getBitIndex(Sequence id) {
-    Sequence difference = 128-(head-id);
-    return static_cast<uint8_t>(difference+position) % 128;
+    return head-id-1;
   }
 }

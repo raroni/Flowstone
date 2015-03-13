@@ -13,7 +13,6 @@ namespace Piper {
     uint8_t getBitIndex(Sequence id);
     Sequence getHead() const;
   private:
-    uint8_t position = 0;
     Sequence head = SEQUENCE_MAX;
     BitSet128 bits;
   };

@@ -18,6 +18,12 @@ public:
   void clear() {
     memset(data, 0, sizeof(data));
   }
+  void left(uint8_t n) {
+    uint64_t *uint64View = reinterpret_cast<uint64_t*>(data);
+    uint64View[0] <<= n;
+    uint64View[0] |= uint64View[1] >> n & ((1 << (n+1))-1);
+    uint64View[1] <<= n;
+  }
 private:
   uint8_t data[16] = { 0 };
 };
