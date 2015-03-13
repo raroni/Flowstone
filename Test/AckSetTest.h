@@ -18,6 +18,17 @@ namespace AckSetTest {
     assertTrue(set.getStatus(6) == AckStatus::No);
   }
 
+  void testDouble() {
+    AckSet set;
+    set.ack(3);
+    set.ack(3);
+    set.ack(3);
+
+    assertTrue(set.getStatus(2) == AckStatus::No);
+    assertTrue(set.getStatus(3) == AckStatus::Yes);
+    assertTrue(set.getStatus(5) == AckStatus::No);
+  }
+
   void testScroll() {
     AckSet set;
     set.ack(130);
@@ -64,6 +75,7 @@ namespace AckSetTest {
   void setup() {
     unsigned suite = Orwell::createSuite("AckSetTest");
     Orwell::addTest(suite, testBasic, "Basic");
+    Orwell::addTest(suite, testDouble, "Double");
     Orwell::addTest(suite, testScroll, "Scroll");
     Orwell::addTest(suite, testLargeJump, "LargeJump");
     Orwell::addTest(suite, testWrapAround, "WrapAround");
