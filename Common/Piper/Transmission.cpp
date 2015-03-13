@@ -13,7 +13,7 @@ namespace Piper {
       uint16_t *uint16View = reinterpret_cast<uint16_t*>(buffer);
       uint16View[0] = packet.id;
       uint16View[1] = packet.ackHead;
-      memcpy(buffer+5, &packet.ackBits, sizeof(BitSet32));
+      memcpy(buffer+sizeof(uint16_t)*2, &packet.ackBits, sizeof(BitSet32));
       assert(headerSize + packet.messageLength <= bufferSize);
       memcpy(buffer+headerSize, packet.message, packet.messageLength);
 
