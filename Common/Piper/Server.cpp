@@ -88,7 +88,7 @@ namespace Piper {
       packet.address = addresses[index];
       packet.id = sequenceID;
       // todo
-      // packet.ackStart = ackStart;
+      // packet.ackHead = ackHead;
       // packet.ackBits = ackBits;
       packet.message = message;
       packet.messageLength = messageLength;

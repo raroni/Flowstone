@@ -12,7 +12,7 @@ namespace Piper {
     void send(Socket socket, const Packet &packet) {
       uint16_t *uint16View = reinterpret_cast<uint16_t*>(buffer);
       uint16View[0] = packet.id;
-      uint16View[1] = packet.ackStart;
+      uint16View[1] = packet.ackHead;
       memcpy(buffer+5, &packet.ackBits, sizeof(BitSet32));
       assert(headerSize + packet.messageLength <= bufferSize);
       memcpy(buffer+headerSize, packet.message, packet.messageLength);
@@ -33,7 +33,7 @@ namespace Piper {
 
         packet.address = sysNetPacket.address;
         packet.id = uint16View[0];
-        packet.ackStart = uint16View[1];
+        packet.ackHead = uint16View[1];
         memcpy(&packet.ackBits, charView+sizeof(uint16_t)*2, sizeof(BitSet32));
         packet.message = charView+headerSize;
         packet.messageLength = sysNetPacket.messageLength-headerSize;

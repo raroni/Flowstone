@@ -39,10 +39,10 @@ namespace Piper {
         inBuffer.write(packet.message, packet.messageLength);
       }
 
-      outAcks.ack(packet.ackStart);
+      outAcks.ack(packet.ackHead);
       for(uint8_t i=0; i<32; ++i) {
         if(packet.ackBits.get(i)) {
-          outAcks.ack(packet.ackStart+1+i);
+          outAcks.ack(packet.ackHead+1+i);
         }
       }
     }
@@ -72,7 +72,7 @@ namespace Piper {
       packet.address = serverAddress;
       packet.id = id;
       // todo
-      // packet.ackStart = ackStart;
+      // packet.ackHead = ackHead;
       // packet.ackBits = ackBits;
       packet.message = message;
       packet.messageLength = messageLength;

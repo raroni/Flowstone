@@ -9,7 +9,7 @@ namespace Piper {
   struct Packet {
     Address address;
     Sequence id;
-    Sequence ackStart;
+    Sequence ackHead;
     BitSet32 ackBits;
     const void *message;
     uint16_t messageLength;
