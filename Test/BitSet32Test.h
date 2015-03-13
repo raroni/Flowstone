@@ -45,10 +45,24 @@ namespace BitSet32Test {
     assertTrue(bits.get(7));
   }
 
+  void testClear() {
+    BitSet32 bits;
+    bits.set(6);
+    bits.set(7);
+    bits.clear();
+
+    uint8_t total = 0;
+    for(uint8_t i=0; i<32; ++i) {
+      total += bits.get(i);
+    }
+    assertEqual(0, total);
+  }
+
   void setup() {
     unsigned suite = Orwell::createSuite("BitSet32");
     Orwell::addTest(suite, testInitialState, "InitialState");
     Orwell::addTest(suite, testSetGet, "SetGet");
     Orwell::addTest(suite, testUnset, "Unset");
+    Orwell::addTest(suite, testClear, "Clear");
   }
 }

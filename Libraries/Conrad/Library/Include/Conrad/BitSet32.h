@@ -14,6 +14,9 @@ public:
   void unset(uint8_t n) {
     data &= ~(1 << n);
   }
+  void clear() {
+    data = 0;
+  }
 private:
   uint32_t data = 0;
 };
