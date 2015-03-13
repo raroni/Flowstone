@@ -1,5 +1,5 @@
-#ifndef PIPER_ACK_SET_H
-#define PIPER_ACK_SET_H
+#ifndef PIPER_ACK_SET_128_H
+#define PIPER_ACK_SET_128_H
 
 #include "Conrad/BitSet128.h"
 #include "Common/Piper/AckStatus.h"
