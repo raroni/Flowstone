@@ -99,7 +99,7 @@ namespace AckSetTest {
   void testGetHead() {
     AckSet set;
 
-    assertEqual(SEQUENCE_MAX, set.getHead());
+    assertEqual(SEQUENCE_MAX-128, set.getHead());
 
     set.ack(5);
     assertEqual(5, set.getHead());
@@ -109,6 +109,43 @@ namespace AckSetTest {
 
     set.ack(8);
     assertEqual(8, set.getHead());
+  }
+
+  void testGetBits() {
+    AckSet set;
+    set.ack(3);
+    set.ack(5);
+    set.ack(2);
+
+    const BitSet128& bits = set.getBits();
+
+    uint8_t totalYes = 0;
+    for(uint8_t i=0; i<128; i++) {
+      totalYes += bits.get(i);
+    }
+    assertEqual(2, totalYes);
+
+    assertTrue(bits.get(1));
+    assertTrue(bits.get(2));
+  }
+
+  void testInitialState() {
+    AckSet set;
+
+    assertEqual(SEQUENCE_MAX-128, set.getHead());
+
+    const BitSet128 &bits = set.getBits();
+    uint8_t totalOn = 0;
+    for(uint8_t i=0; i<128; i++) {
+      totalOn += bits.get(i);
+    }
+    assertEqual(0, totalOn);
+
+    uint8_t totalNo = 0;
+    for(uint8_t i=0; i<128; i++) {
+      totalNo += set.getStatus(i) == AckStatus::No;
+    }
+    assertEqual(128, totalNo);
   }
 
   void setup() {
@@ -121,5 +158,7 @@ namespace AckSetTest {
     Orwell::addTest(suite, testLargeJump, "LargeJump");
     Orwell::addTest(suite, testWrapAround, "WrapAround");
     Orwell::addTest(suite, testGetHead, "GetHead");
+    Orwell::addTest(suite, testGetBits, "GetBits");
+    Orwell::addTest(suite, testInitialState, "InitialState");
   }
 }

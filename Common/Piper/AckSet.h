@@ -12,8 +12,9 @@ namespace Piper {
     AckStatus getStatus(Sequence id);
     uint8_t getBitIndex(Sequence id);
     Sequence getHead() const;
+    const BitSet128& getBits() const;
   private:
-    Sequence head = SEQUENCE_MAX;
+    Sequence head = SEQUENCE_MAX-128;
     BitSet128 bits;
   };
 }

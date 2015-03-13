@@ -17,15 +17,12 @@ namespace Piper {
     else if(Util::sequenceGreaterThan(id, head)) {
       Sequence difference = id-head;
       bits.left(difference);
-      bits.set(id-head-1);
+      Sequence oldHead = head;
       head = id;
+      bits.set(getBitIndex(oldHead));
     } else {
       bits.set(getBitIndex(id));
     }
-  }
-
-  Sequence AckSet::getHead() const {
-    return head;
   }
 
   AckStatus AckSet::getStatus(Sequence id) {
@@ -45,6 +42,14 @@ namespace Piper {
   }
 
   uint8_t AckSet::getBitIndex(Sequence id) {
-    return head-id-1;
+    return static_cast<Sequence>((head-id-1)) % 128;
+  }
+
+  Sequence AckSet::getHead() const {
+    return head;
+  }
+
+  const BitSet128& AckSet::getBits() const {
+    return bits;
   }
 }
