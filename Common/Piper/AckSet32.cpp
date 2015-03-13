@@ -1,25 +1,26 @@
 #include "Common/Piper/Util.h"
 #include "Common/Piper/AckSet32.h"
 
+#include <stdio.h>
+
 namespace Piper {
   void AckSet32::ack(Sequence id) {
-    Sequence tail = head-32;
-    if(Util::sequenceGreaterThan(tail, id)) {
+    if(Util::sequenceGreaterThan(head-32, id)) {
       return;
     }
     else if(id == head) {
       return;
     }
-    if(Util::sequenceGreaterThan(id, head+128)) {
+    if(Util::sequenceGreaterThan(id, head+32)) {
       head = id;
-      // not impl yet
+      bits.clear();
     }
     else if(Util::sequenceGreaterThan(id, head)) {
+      bits.left(id-head);
+      bits.set(id-head-1);
       head = id;
-      // not impl yet
-      //bits.left(difference);
     } else {
-      // bits.set(id);
+      bits.set(head-id-1);
     }
   }
 
