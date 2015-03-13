@@ -47,9 +47,9 @@ namespace Piper {
       }
 
       uint8_t index = indices[id];
-      AckSet128 &inAckSet128 = inAcks[index];
-      if(inAckSet128.getStatus(packet.id) == AckStatus::No) {
-        inAckSet128.ack(packet.id);
+      AckSet &inAckSet = inAcks[index];
+      if(inAckSet.getStatus(packet.id) == AckStatus::No) {
+        inAckSet.ack(packet.id);
         inBuffer.write(id, packet.message, packet.messageLength);
       }
     }

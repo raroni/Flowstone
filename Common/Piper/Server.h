@@ -7,7 +7,7 @@
 #include "Common/Piper/ServerOutBuffer.h"
 #include "Common/Piper/Address.h"
 #include "Common/Piper/Socket.h"
-#include "Common/Piper/AckSet128.h"
+#include "Common/Piper/AckSet.h"
 #include "Common/Piper/Packet.h"
 
 namespace Piper {
@@ -26,7 +26,7 @@ namespace Piper {
     Sequence nextSequenceIDs[Config::Server::clientMax];
     Address addresses[Config::Server::clientMax];
     ClientID ids[Config::Server::clientMax];
-    AckSet128 inAcks[Config::Server::clientMax];
+    AckSet inAcks[Config::Server::clientMax];
     uint8_t indices[Config::Server::clientMax];
     ClientIDPool idPool;
     uint16_t clientCount = 0;

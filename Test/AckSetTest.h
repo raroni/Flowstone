@@ -1,12 +1,12 @@
 #include "Orwell.h"
-#include "Common/Piper/AckSet128.h"
+#include "Common/Piper/AckSet.h"
 
-namespace AckSet128Test {
+namespace AckSetTest {
   using namespace Orwell::Assertions;
   using namespace Piper;
 
   void testBasic() {
-    AckSet128 set;
+    AckSet set;
     set.ack(3);
     set.ack(5);
     set.ack(2);
@@ -19,7 +19,7 @@ namespace AckSet128Test {
   }
 
   void testLatecomers() {
-    AckSet128 set;
+    AckSet set;
     set.ack(500);
     set.ack(300);
 
@@ -30,7 +30,7 @@ namespace AckSet128Test {
   }
 
   void testRange() {
-    AckSet128 set;
+    AckSet set;
     set.ack(200);
 
     assertTrue(set.getStatus(200-128) == AckStatus::No);
@@ -38,7 +38,7 @@ namespace AckSet128Test {
   }
 
   void testDouble() {
-    AckSet128 set;
+    AckSet set;
     set.ack(3);
     set.ack(3);
     set.ack(3);
@@ -49,7 +49,7 @@ namespace AckSet128Test {
   }
 
   void testScroll() {
-    AckSet128 set;
+    AckSet set;
     set.ack(130);
     set.ack(135);
     set.ack(134);
@@ -63,7 +63,7 @@ namespace AckSet128Test {
   }
 
   void testLargeJump() {
-    AckSet128 set;
+    AckSet set;
     set.ack(0);
     set.ack(500);
     assertTrue(set.getStatus(0) == AckStatus::Unknown);
@@ -72,7 +72,7 @@ namespace AckSet128Test {
   }
 
   void testWrapAround() {
-    AckSet128 set;
+    AckSet set;
     Sequence quarter = SEQUENCE_MAX/4;
     set.ack(30);
     set.ack(quarter);
@@ -97,7 +97,7 @@ namespace AckSet128Test {
   }
 
   void testGetHead() {
-    AckSet128 set;
+    AckSet set;
 
     assertEqual(SEQUENCE_MAX, set.getHead());
 
@@ -112,7 +112,7 @@ namespace AckSet128Test {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("AckSet128Test");
+    unsigned suite = Orwell::createSuite("AckSetTest");
     Orwell::addTest(suite, testBasic, "Basic");
     Orwell::addTest(suite, testLatecomers, "Latecomers");
     Orwell::addTest(suite, testRange, "Range");

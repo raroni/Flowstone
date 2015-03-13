@@ -6,12 +6,10 @@
 #include "BitSet32Test.h"
 #include "PiperUtilTest.h"
 #include "IntegratorTest.h"
-#include "AckSet32Test.h"
-#include "AckSet128Test.h"
+#include "AckSetTest.h"
 
 int main() {
-  AckSet32Test::setup();
-  AckSet128Test::setup();
+  AckSetTest::setup();
   PiperUtilTest::setup();
   BitSet128Test::setup();
   BitSet32Test::setup();
