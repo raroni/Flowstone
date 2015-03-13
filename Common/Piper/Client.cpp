@@ -39,14 +39,12 @@ namespace Piper {
         inBuffer.write(packet.message, packet.messageLength);
       }
 
-      /*
-      serverAcks.ack(packet.ackStart);
-      for(i=1; i<=32; ++i) {
-        if(packet.ackBits.isSet(i)) {
-          serverAcks.ack(packet.ackStart+i);
+      outAcks.ack(packet.ackStart);
+      for(uint8_t i=0; i<32; ++i) {
+        if(packet.ackBits.get(i)) {
+          outAcks.ack(packet.ackStart+1+i);
         }
       }
-      */
     }
   }
 

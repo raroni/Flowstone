@@ -29,6 +29,7 @@ namespace Piper {
       char storage[Config::Client::inMessageCapacity];
     } inData;
     AckSet inAcks;
+    AckSet outAcks;
     MessageBuffer inBuffer;
     ClientOutBuffer outBuffer;
     Socket socket;
