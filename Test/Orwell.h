@@ -48,7 +48,7 @@ namespace Orwell {
   }
 
   namespace Assertions {
-    void assertEqual(uint8_t expected, uint8_t actual) {
+    void assertEqual(int32_t expected, int32_t actual) {
       if(actual != expected) {
         char message[64];
         sprintf(message, "%d was not %d.", actual, expected);

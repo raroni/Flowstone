@@ -18,6 +18,25 @@ namespace AckSetTest {
     assertTrue(set.getStatus(6) == AckStatus::No);
   }
 
+  void testLatecomers() {
+    AckSet set;
+    set.ack(500);
+    set.ack(300);
+
+    assertTrue(set.getStatus(500) == AckStatus::Yes);
+    assertTrue(set.getStatus(500-128) == AckStatus::No);
+    assertTrue(set.getStatus(300) == AckStatus::Unknown);
+    assertTrue(set.getStatus(500-129) == AckStatus::Unknown);
+  }
+
+  void testRange() {
+    AckSet set;
+    set.ack(200);
+
+    assertTrue(set.getStatus(200-128) == AckStatus::No);
+    assertTrue(set.getStatus(200-129) == AckStatus::Unknown);
+  }
+
   void testDouble() {
     AckSet set;
     set.ack(3);
@@ -54,17 +73,22 @@ namespace AckSetTest {
 
   void testWrapAround() {
     AckSet set;
+    Sequence quarter = SEQUENCE_MAX/4;
     set.ack(30);
-    set.ack(SEQUENCE_MAX-3);
+    set.ack(quarter);
+    set.ack(quarter*2);
+    set.ack(quarter*3);
+    set.ack(quarter*4-3);
     set.ack(7);
-    assertTrue(set.getStatus(SEQUENCE_MAX-3) == AckStatus::Yes);
+
+    assertTrue(set.getStatus(quarter*4-3) == AckStatus::Yes);
     assertTrue(set.getStatus(7) == AckStatus::Yes);
     assertTrue(set.getStatus(1) == AckStatus::No);
     assertTrue(set.getStatus(8) == AckStatus::No);
     assertTrue(set.getStatus(SEQUENCE_MAX-300) == AckStatus::Unknown);
 
     uint8_t totalYes = 0;
-    for(uint8_t i=0; i<128; i++) {
+    for(uint8_t i=0; i<=128; i++) {
       if(set.getStatus(static_cast<Sequence>(7)-i) == AckStatus::Yes) {
         totalYes++;
       }
@@ -72,12 +96,30 @@ namespace AckSetTest {
     assertEqual(2, totalYes);
   }
 
+  void testGetHead() {
+    AckSet set;
+
+    assertEqual(SEQUENCE_MAX, set.getHead());
+
+    set.ack(5);
+    assertEqual(5, set.getHead());
+
+    set.ack(3);
+    assertEqual(5, set.getHead());
+
+    set.ack(8);
+    assertEqual(8, set.getHead());
+  }
+
   void setup() {
     unsigned suite = Orwell::createSuite("AckSetTest");
     Orwell::addTest(suite, testBasic, "Basic");
+    Orwell::addTest(suite, testLatecomers, "Latecomers");
+    Orwell::addTest(suite, testRange, "Range");
     Orwell::addTest(suite, testDouble, "Double");
     Orwell::addTest(suite, testScroll, "Scroll");
     Orwell::addTest(suite, testLargeJump, "LargeJump");
     Orwell::addTest(suite, testWrapAround, "WrapAround");
+    Orwell::addTest(suite, testGetHead, "GetHead");
   }
 }
