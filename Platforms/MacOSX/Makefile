@@ -23,6 +23,7 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
 	../../Common/Piper/ClientOutBuffer.cpp\
+	../../Common/Piper/Util.cpp\
 	../../Common/Piper/ClientIDPool.cpp\
 	../../Common/Piper/MessageBuffer.cpp\
 	../../Common/Piper/Server.cpp\

@@ -1,4 +1,5 @@
 #include "SysNet/SysNet.h"
+#include "Common/Piper/AckStatus.h"
 #include "Common/Piper/Transmission.h"
 #include "Common/Piper/Client.h"
 
@@ -33,8 +34,19 @@ namespace Piper {
         continue;
       }
 
-      // do something with ackStart, ackBits
-      inBuffer.write(packet.message, packet.messageLength);
+      if(inAcks.getStatus(packet.id) == AckStatus::No) {
+        inAcks.ack(packet.id);
+        inBuffer.write(packet.message, packet.messageLength);
+      }
+
+      /*
+      serverAcks.ack(packet.ackStart);
+      for(i=1; i<=32; ++i) {
+        if(packet.ackBits.isSet(i)) {
+          serverAcks.ack(packet.ackStart+i);
+        }
+      }
+      */
     }
   }
 
