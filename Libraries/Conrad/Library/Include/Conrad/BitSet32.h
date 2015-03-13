@@ -14,6 +14,9 @@ public:
   void unset(uint8_t n) {
     data &= ~(1 << n);
   }
+  void left(uint8_t n) {
+    data = data << n;
+  }
   void clear() {
     data = 0;
   }
