@@ -7,7 +7,7 @@
 #include "Common/Piper/Packet.h"
 #include "Common/Piper/MessageBuffer.h"
 #include "Common/Piper/ClientOutBuffer.h"
-#include "Common/Piper/AckSet.h"
+#include "Common/Piper/AckSet128.h"
 
 namespace Piper {
   class Client {
@@ -28,8 +28,8 @@ namespace Piper {
       uint16_t lengths[Config::Client::inMessageMax];
       char storage[Config::Client::inMessageCapacity];
     } inData;
-    AckSet inAcks;
-    AckSet outAcks;
+    AckSet128 inAcks;
+    AckSet128 outAcks;
     MessageBuffer inBuffer;
     ClientOutBuffer outBuffer;
     Socket socket;

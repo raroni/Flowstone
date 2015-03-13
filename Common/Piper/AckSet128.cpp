@@ -1,8 +1,8 @@
 #include "Common/Piper/Util.h"
-#include "Common/Piper/AckSet.h"
+#include "Common/Piper/AckSet128.h"
 
 namespace Piper {
-  void AckSet::ack(Sequence id) {
+  void AckSet128::ack(Sequence id) {
     Sequence tail = head-128;
     if(Util::sequenceGreaterThan(tail, id)) {
       return;
@@ -28,11 +28,11 @@ namespace Piper {
     }
   }
 
-  Sequence AckSet::getHead() const {
+  Sequence AckSet128::getHead() const {
     return head;
   }
 
-  AckStatus AckSet::getStatus(Sequence id) {
+  AckStatus AckSet128::getStatus(Sequence id) {
     if(id == head) {
       return AckStatus::Yes;
     }
@@ -48,7 +48,7 @@ namespace Piper {
     return AckStatus::Yes;
   }
 
-  uint8_t AckSet::getBitIndex(Sequence id) {
+  uint8_t AckSet128::getBitIndex(Sequence id) {
     Sequence difference = 128-(head-id);
     return static_cast<uint8_t>(difference+position) % 128;
   }
