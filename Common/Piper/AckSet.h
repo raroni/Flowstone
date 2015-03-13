@@ -2,6 +2,7 @@
 #define PIPER_ACK_SET_H
 
 #include "Conrad/BitSet128.h"
+#include "Common/Piper/Util.h"
 #include "Common/Piper/AckStatus.h"
 #include "Common/Piper/Sequence.h"
 
@@ -13,11 +14,7 @@ namespace Piper {
       if(difference > 255) {
         position = 0;
         base = id-127;
-
-        // todo: replace with bits.clear();
-        for(uint8_t i=0; i<128; ++i) {
-          bits.unset(i);
-        }
+        bits.clear();
       }
       else if(difference > 127) {
         Sequence steps = difference-127;
