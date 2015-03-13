@@ -85,11 +85,11 @@ namespace Piper {
       outBuffer.read(p, &clientID, &sequenceID, &message, &messageLength);
 
       uint8_t index = indices[clientID];
+      const AckSet &acks = inAcks[index];
       packet.address = addresses[index];
       packet.id = sequenceID;
-      // todo
-      // packet.ackHead = ackHead;
-      // packet.ackBits = ackBits;
+      packet.ackHead = acks.getHead();
+      memcpy(&packet.ackBits, reinterpret_cast<const char*>(&acks.getBits()), 4);
       packet.message = message;
       packet.messageLength = messageLength;
       Transmission::send(socket, packet);
