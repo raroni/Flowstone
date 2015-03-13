@@ -45,8 +45,13 @@ namespace Piper {
         nextSequenceIDs[clientCount] = 0;
         clientCount++;
       }
-      // handle ackStart, ackBits
-      inBuffer.write(id, packet.message, packet.messageLength);
+
+      uint8_t index = indices[id];
+      AckSet &inAckSet = inAcks[index];
+      if(inAckSet.getStatus(packet.id) == AckStatus::No) {
+        inAckSet.ack(packet.id);
+        inBuffer.write(id, packet.message, packet.messageLength);
+      }
     }
   }
 
