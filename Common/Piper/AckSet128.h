@@ -6,7 +6,7 @@
 #include "Common/Piper/Sequence.h"
 
 namespace Piper {
-  class AckSet {
+  class AckSet128 {
   public:
     void ack(Sequence id);
     AckStatus getStatus(Sequence id);

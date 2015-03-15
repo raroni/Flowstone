@@ -22,7 +22,7 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
-	../../Common/Piper/AckSet.cpp\
+	../../Common/Piper/AckSet128.cpp\
 	../../Common/Piper/ClientOutBuffer.cpp\
 	../../Common/Piper/Util.cpp\
 	../../Common/Piper/ClientIDPool.cpp\
@@ -164,7 +164,7 @@ TEST_SOURCES =\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Piper/Util.cpp\
-	../../Common/Piper/AckSet.cpp\
+	../../Common/Piper/AckSet128.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\

@@ -1,12 +1,12 @@
 #include "Orwell.h"
-#include "Common/Piper/AckSet.h"
+#include "Common/Piper/AckSet128.h"
 
-namespace AckSetTest {
+namespace AckSet128Test {
   using namespace Orwell::Assertions;
   using namespace Piper;
 
   void testBasic() {
-    AckSet set;
+    AckSet128 set;
     set.ack(3);
     set.ack(5);
     set.ack(2);
@@ -19,7 +19,7 @@ namespace AckSetTest {
   }
 
   void testLatecomers() {
-    AckSet set;
+    AckSet128 set;
     set.ack(500);
     set.ack(300);
 
@@ -30,7 +30,7 @@ namespace AckSetTest {
   }
 
   void testRange() {
-    AckSet set;
+    AckSet128 set;
     set.ack(200);
 
     assertTrue(set.getStatus(200-128) == AckStatus::No);
@@ -38,7 +38,7 @@ namespace AckSetTest {
   }
 
   void testDouble() {
-    AckSet set;
+    AckSet128 set;
     set.ack(3);
     set.ack(3);
     set.ack(3);
@@ -49,7 +49,7 @@ namespace AckSetTest {
   }
 
   void testScroll() {
-    AckSet set;
+    AckSet128 set;
     set.ack(130);
     set.ack(135);
     set.ack(134);
@@ -63,7 +63,7 @@ namespace AckSetTest {
   }
 
   void testLargeJump() {
-    AckSet set;
+    AckSet128 set;
     set.ack(0);
     set.ack(500);
     assertTrue(set.getStatus(0) == AckStatus::Unknown);
@@ -72,7 +72,7 @@ namespace AckSetTest {
   }
 
   void testWrapAround() {
-    AckSet set;
+    AckSet128 set;
     Sequence quarter = SEQUENCE_MAX/4;
     set.ack(30);
     set.ack(quarter);
@@ -97,7 +97,7 @@ namespace AckSetTest {
   }
 
   void testGetHead() {
-    AckSet set;
+    AckSet128 set;
 
     assertEqual(SEQUENCE_MAX-128, set.getHead());
 
@@ -112,7 +112,7 @@ namespace AckSetTest {
   }
 
   void testGetBits() {
-    AckSet set;
+    AckSet128 set;
     set.ack(3);
     set.ack(5);
     set.ack(2);
@@ -130,7 +130,7 @@ namespace AckSetTest {
   }
 
   void testInitialState() {
-    AckSet set;
+    AckSet128 set;
 
     assertEqual(SEQUENCE_MAX-128, set.getHead());
 
@@ -149,7 +149,7 @@ namespace AckSetTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("AckSetTest");
+    unsigned suite = Orwell::createSuite("AckSet128Test");
     Orwell::addTest(suite, testBasic, "Basic");
     Orwell::addTest(suite, testLatecomers, "Latecomers");
     Orwell::addTest(suite, testRange, "Range");
