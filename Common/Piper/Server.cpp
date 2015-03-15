@@ -56,10 +56,8 @@ namespace Piper {
       }
 
       AckSet &inAckSet = inAcks[index];
-      if(inAckSet.getStatus(packet.id) == AckStatus::No) {
-        inAckSet.ack(packet.id);
-        inBuffer.write(id, packet.message, packet.messageLength);
-      }
+      inAckSet.ack(packet.id);
+      inBuffer.write(id, packet.message, packet.messageLength);
     }
   }
 

@@ -41,10 +41,8 @@ namespace Piper {
         }
       }
 
-      if(inAcks.getStatus(packet.id) == AckStatus::No) {
-        inAcks.ack(packet.id);
-        inBuffer.write(packet.message, packet.messageLength);
-      }
+      inAcks.ack(packet.id);
+      inBuffer.write(packet.message, packet.messageLength);
     }
   }
 
