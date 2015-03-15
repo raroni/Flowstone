@@ -17,13 +17,13 @@ namespace Piper {
     Server();
     void listen(const Address &address);
     bool readMessage(ClientID *id, const void **message, uint16_t *messageLength);
-    void sendMessage(ClientID clientID, Sequence sequenceID, const void *message, uint16_t messageLength);
+    Sequence sendMessage(ClientID clientID, const void *message, uint16_t messageLength);
     bool findClientID(const Address &address, ClientID &id);
     void dispatch();
     void poll();
     void clear();
-    Sequence createSequenceID(ClientID id);
   private:
+    Sequence createSequenceID(ClientID id);
     Sequence nextSequenceIDs[Config::Server::clientMax];
     Address addresses[Config::Server::clientMax];
     ClientID ids[Config::Server::clientMax];

@@ -61,13 +61,15 @@ namespace Piper {
     }
   }
 
-  void Server::sendMessage(ClientID clientID, Sequence sequenceID, const void *message, uint16_t messageLength) {
+  Sequence Server::sendMessage(ClientID clientID, const void *message, uint16_t messageLength) {
+    Sequence sequenceID = createSequenceID(clientID);
     outBuffer.write(
       clientID,
       sequenceID,
       message,
       messageLength
     );
+    return sequenceID;
   }
 
   void Server::clear() {

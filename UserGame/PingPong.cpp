@@ -36,8 +36,10 @@ namespace PingPong {
   }
 
   void handlePong(uint8_t pingID) {
+    // todo: check if already received pong for pingID
     int32_t packetRTT = GameTime::get()-startTimes[pingID];
     int32_t difference = packetRTT-rtt;
     rtt += difference/10;
+    printf("New RTT: %d\n", rtt);
   }
 }
