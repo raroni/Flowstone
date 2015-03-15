@@ -7,9 +7,11 @@
 #include "PiperUtilTest.h"
 #include "IntegratorTest.h"
 #include "AckSet128Test.h"
+#include "AckSet32Test.h"
 
 int main() {
   AckSet128Test::setup();
+  AckSet32Test::setup();
   PiperUtilTest::setup();
   BitSet128Test::setup();
   BitSet32Test::setup();
