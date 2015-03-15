@@ -55,8 +55,8 @@ namespace Piper {
         }
       }
 
-      AckSet128 &inAckSet128 = inAcks[index];
-      inAckSet128.ack(packet.id);
+      AckSet32 &inAckSet = inAcks[index];
+      inAckSet.ack(packet.id);
       inBuffer.write(id, packet.message, packet.messageLength);
     }
   }
@@ -91,7 +91,7 @@ namespace Piper {
       outBuffer.read(p, &clientID, &sequenceID, &message, &messageLength);
 
       uint8_t index = indices[clientID];
-      const AckSet128 &acks = inAcks[index];
+      const AckSet32 &acks = inAcks[index];
       packet.address = addresses[index];
       packet.id = sequenceID;
       packet.ackHead = acks.getHead();
