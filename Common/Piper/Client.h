@@ -18,17 +18,16 @@ namespace Piper {
     void poll();
     void clear();
     bool readMessage(const void **message, uint16_t *messageLength);
-    void sendMessage(Sequence id, const void *message, uint16_t messageLength);
+    Sequence sendMessage(const void *message, uint16_t messageLength);
     void dispatch();
-    uint16_t createID();
   private:
-    uint16_t nextID = 0;
     uint16_t inBufferPosition = 0;
     struct {
       uint16_t offsets[Config::Client::inMessageMax];
       uint16_t lengths[Config::Client::inMessageMax];
       char storage[Config::Client::inMessageCapacity];
     } inData;
+    Sequence nextID = 0;
     AckSet32 inAcks;
     AckSet128 outAcks;
     MessageBuffer inBuffer;

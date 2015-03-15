@@ -19,10 +19,6 @@ namespace Piper {
     serverAddress = address;
   }
 
-  uint16_t Client::createID() {
-    return nextID++;
-  }
-
   void Client::poll() {
     Packet packet;
     while(true) {
@@ -56,8 +52,9 @@ namespace Piper {
     inBufferPosition = 0;
   }
 
-  void Client::sendMessage(Sequence id, const void *message, uint16_t messageLength) {
-    outBuffer.write(id, message, messageLength);
+  Sequence Client::sendMessage(const void *message, uint16_t messageLength) {
+    outBuffer.write(nextID, message, messageLength);
+    return nextID++;
   }
 
   void Client::dispatch() {

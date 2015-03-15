@@ -23,16 +23,14 @@ namespace PingPong {
   void update(double timeDelta) {
     timeUntilPing -= timeDelta;
     if(timeUntilPing <= 0) {
-      Piper::Sequence id = pipe->createID();
-      // todo: generalize this code, no need to do this manually on both client/server
-
       startTimes[nextPingID] = GameTime::get();
 
+      // todo: generalize this code, no need to do this manually on both client/server
       char message[2];
       message[0] = static_cast<char>(MessageType::Ping);
       memcpy(message+1, &nextPingID, 1);
       nextPingID++;
-      pipe->sendMessage(id, message, sizeof(message));
+      pipe->sendMessage(message, sizeof(message));
       timeUntilPing += interval;
     }
   }
