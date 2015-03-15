@@ -34,16 +34,16 @@ namespace Piper {
         continue;
       }
 
-      if(inAcks.getStatus(packet.id) == AckStatus::No) {
-        inAcks.ack(packet.id);
-        inBuffer.write(packet.message, packet.messageLength);
-      }
-
       outAcks.ack(packet.ackHead);
       for(uint8_t i=0; i<32; ++i) {
         if(packet.ackBits.get(i)) {
-          outAcks.ack(packet.ackHead+1+i);
+          outAcks.ack(packet.ackHead-1-i);
         }
+      }
+
+      if(inAcks.getStatus(packet.id) == AckStatus::No) {
+        inAcks.ack(packet.id);
+        inBuffer.write(packet.message, packet.messageLength);
       }
     }
   }
@@ -71,9 +71,12 @@ namespace Piper {
       messageLength = outBuffer.read(p, &id, &message);
       packet.address = serverAddress;
       packet.id = id;
-      // todo
-      // packet.ackHead = ackHead;
-      // packet.ackBits = ackBits;
+
+      packet.ackHead = inAcks.getHead();
+      memcpy(&packet.ackBits, reinterpret_cast<const char*>(&inAcks.getBits()), 4);
+      packet.message = message;
+      packet.messageLength = messageLength;
+
       packet.message = message;
       packet.messageLength = messageLength;
       Transmission::send(socket, packet);

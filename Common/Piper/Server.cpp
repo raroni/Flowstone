@@ -47,6 +47,14 @@ namespace Piper {
       }
 
       uint8_t index = indices[id];
+      AckSet &outAckSet = outAcks[index];
+      outAckSet.ack(packet.ackHead);
+      for(uint8_t i=0; i<32; ++i) {
+        if(packet.ackBits.get(i)) {
+          outAckSet.ack(packet.ackHead-1-i);
+        }
+      }
+
       AckSet &inAckSet = inAcks[index];
       if(inAckSet.getStatus(packet.id) == AckStatus::No) {
         inAckSet.ack(packet.id);

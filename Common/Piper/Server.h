@@ -27,6 +27,7 @@ namespace Piper {
     Address addresses[Config::Server::clientMax];
     ClientID ids[Config::Server::clientMax];
     AckSet inAcks[Config::Server::clientMax];
+    AckSet outAcks[Config::Server::clientMax];
     uint8_t indices[Config::Server::clientMax];
     ClientIDPool idPool;
     uint16_t clientCount = 0;
