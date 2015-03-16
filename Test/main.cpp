@@ -8,8 +8,10 @@
 #include "IntegratorTest.h"
 #include "AckSet128Test.h"
 #include "AckSet32Test.h"
+#include "LoopStreamTest.h"
 
 int main() {
+  LoopStreamTest::setup();
   AckSet128Test::setup();
   AckSet32Test::setup();
   PiperUtilTest::setup();
