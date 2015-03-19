@@ -167,6 +167,7 @@ TEST_SOURCES =\
 	../../Common/Piper/Util.cpp\
 	../../Common/Piper/AckSet128.cpp\
 	../../Common/Piper/AckSet32.cpp\
+	../../UserGame/LoopStream.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\
