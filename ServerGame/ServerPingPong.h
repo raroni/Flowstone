@@ -2,7 +2,7 @@
 #define SERVER_PING_PONG_H
 
 namespace ServerPingPong {
-  void handlePing(Piper::ClientID clientID, uint8_t pingID);
+  void handlePing(ServerGameClientID clientID, uint8_t pingID);
   void update(double timeDelta);
 }
 

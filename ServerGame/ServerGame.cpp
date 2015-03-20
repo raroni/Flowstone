@@ -31,7 +31,7 @@ void ServerGame::readPipe() {
 
   const void *message = nullptr;
   uint16_t messageLength = 0;
-  Piper::ClientID id;
+  ServerGameClientID id;
   MessageType type;
   while(ServerNet::readMessage(&id, &type, &message, &messageLength)) {
     switch(type) {

@@ -4,7 +4,7 @@
 #include "ServerPingPong.h"
 
 namespace ServerPingPong {
-  void handlePing(Piper::ClientID clientID, uint8_t pingID) {
+  void handlePing(ServerGameClientID clientID, uint8_t pingID) {
     char message[2];
     message[0] = static_cast<char>(MessageType::Pong);
     memcpy(message+1, &pingID, 1);

@@ -1,12 +1,12 @@
 #ifndef SERVER_ACK_HELPER_H
 #define SERVER_ACK_HELPER_H
 
-#include "Common/Piper/ClientID.h"
 #include "Common/MessageType.h"
+#include "ServerGameClientID.h"
 
 namespace ServerAckHelper {
   void initialize();
-  void handleReceive(Piper::ClientID id, MessageType type);
+  void handleReceive(ServerGameClientID id, MessageType type);
   void check();
 }
 

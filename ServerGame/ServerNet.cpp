@@ -1,29 +1,36 @@
 #include <assert.h>
 #include "Common/Piper/Config.h"
 #include "Common/Piper/Server.h"
+#include "ServerGame/ServerGameConfig.h"
+#include "ServerGame/ServerGameClientIDPool.h"
 #include "ServerGame/ServerAckHelper.h"
 #include "ServerGame/ServerNet.h"
 
 namespace ServerNet {
-  static const uint8_t max = 8;
+  static ServerGameClientIDPool idPool;
   Piper::Server pipe;
-  bool idLookup[Piper::Config::Server::clientMax] = { false };
-  uint8_t indices[Piper::Config::Server::clientMax];
-  Piper::ClientID ids[max];
-  uint8_t sendCounts[max];
+
+  int8_t indicesByPiperIDs[Piper::Config::Server::clientMax] = { -1 };
+
+  uint8_t indices[ServerGameConfig::clientMax];
+  ServerGameClientID ids[ServerGameConfig::clientMax];
+  Piper::ClientID piperIDs[ServerGameConfig::clientMax];
+  uint8_t sendCounts[ServerGameConfig::clientMax];
   uint8_t count = 0;
 
   void initialize() {
     ServerAckHelper::initialize();
   }
 
-  void createClient(Piper::ClientID id) {
+  void createClient(Piper::ClientID piperID) {
     // todo: better handling, rejection of some kind
-    assert(count != max);
+    assert(count != ServerGameConfig::clientMax);
 
-    idLookup[id] = true;
+    indicesByPiperIDs[piperID] = count;
+    ServerGameClientID id = idPool.obtain();
     indices[id] = count;
     ids[count] = id;
+    piperIDs[count] = piperID;
     sendCounts[count] = 0;
     count++;
   }
@@ -32,23 +39,28 @@ namespace ServerNet {
     pipe.listen(address);
   }
 
-  bool readMessage(Piper::ClientID *id, MessageType *type, const void **message, uint16_t *messageLength) {
-    bool result = pipe.readMessage(id, message, messageLength);
+  bool readMessage(ServerGameClientID *id, MessageType *type, const void **message, uint16_t *messageLength) {
+    Piper::ClientID piperID;
+    bool result = pipe.readMessage(&piperID, message, messageLength);
 
     if(result) {
       *messageLength = (*messageLength)-1;
       *type = *static_cast<const MessageType*>(*message);
       *message = static_cast<const char*>(*message)+1;
-      if(!idLookup[*id]) {
-        createClient(*id);
+
+      // todo: handle client overflow
+      if(indicesByPiperIDs[piperID] == -1) {
+        createClient(piperID);
       }
+      uint8_t index = indicesByPiperIDs[piperID];
+      *id = ids[index];
       ServerAckHelper::handleReceive(*id, *type);
     }
 
     return result;
   }
 
-  Piper::ClientID getClientID(uint8_t index) {
+  ServerGameClientID getClientID(uint8_t index) {
     return ids[index];
   }
 
@@ -60,11 +72,12 @@ namespace ServerNet {
     return sendCounts[index];
   }
 
-  Piper::Sequence sendMessage(Piper::ClientID clientID, const void *message, uint16_t messageLength) {
+  Piper::Sequence sendMessage(ServerGameClientID clientID, const void *message, uint16_t messageLength) {
     uint8_t index = indices[clientID];
     assert(sendCounts[index] != UINT8_MAX);
     sendCounts[index]++;
-    return pipe.sendMessage(clientID, message, messageLength);
+    Piper::ClientID piperID = piperIDs[index];
+    return pipe.sendMessage(piperID, message, messageLength);
   }
 
   void dispatch() {
