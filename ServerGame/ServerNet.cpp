@@ -1,16 +1,25 @@
+#include <assert.h>
 #include "Common/Piper/Config.h"
 #include "Common/Piper/Server.h"
 #include "ServerGame/ServerNet.h"
 
 namespace ServerNet {
+  static const uint8_t max = 8;
   Piper::Server pipe;
   bool idLookup[Piper::Config::Server::clientMax] = { false };
-  Piper::ClientID ids[Piper::Config::Server::clientMax];
+  uint8_t indices[Piper::Config::Server::clientMax];
+  Piper::ClientID ids[max];
+  uint8_t sendCounts[max];
   uint8_t count = 0;
 
   void createClient(Piper::ClientID id) {
+    // todo: better handling, rejection of some kind
+    assert(count != max);
+
     idLookup[id] = true;
+    indices[id] = count;
     ids[count] = id;
+    sendCounts[count] = 0;
     count++;
   }
 
@@ -36,6 +45,7 @@ namespace ServerNet {
   }
 
   Piper::Sequence sendMessage(Piper::ClientID clientID, const void *message, uint16_t messageLength) {
+
     return pipe.sendMessage(clientID, message, messageLength);
   }
 
