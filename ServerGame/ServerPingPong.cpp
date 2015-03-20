@@ -8,11 +8,7 @@ namespace ServerPingPong {
     char message[2];
     message[0] = static_cast<char>(MessageType::Pong);
     memcpy(message+1, &pingID, 1);
-    ServerNet::sendMessage(
-      clientID,
-      message,
-      sizeof(message)
-    );
+    ServerNet::sendMessage(clientID, message, sizeof(message));
   }
 
   void update(double timeDelta) {
