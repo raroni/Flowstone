@@ -3,8 +3,6 @@
 #include "ServerGame/ServerNet.h"
 #include "ServerPingPong.h"
 
-#include <stdio.h>
-
 namespace ServerPingPong {
   void handlePing(Piper::ClientID clientID, uint8_t pingID) {
     char message[2];

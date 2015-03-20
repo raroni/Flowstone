@@ -4,8 +4,6 @@
 #include "ClientCarrier.h"
 #include "LoopStream.h"
 
-#include <stdio.h>
-
 namespace ClientCarrier {
   const uint8_t max = 128;
   GameTime::MSecond16 durations[max];
@@ -47,12 +45,10 @@ namespace ClientCarrier {
         const void *message;
         uint16_t length = messages.read(handles[i], &message);
         piperIDs[i] = ClientNet::sendMessage(message, length);
-        printf("Attempting re-send %d...\n", piperIDs[i]);
       }
       else if(ClientNet::getStatus(piperIDs[i]) == Piper::AckStatus::Yes) {
         remove(i);
         i--;
-        printf("Success removing.\n");
       } else {
       }
 
@@ -63,7 +59,6 @@ namespace ClientCarrier {
   }
 
   void send(const void *message, uint16_t length, float timeout) {
-    printf("Queing message\n");
     assert(count != max);
     bool result = messages.write(handles+count, message, length);
     assert(result); // todo more appropriate false handling, such as disconnect

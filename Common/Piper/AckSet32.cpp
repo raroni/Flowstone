@@ -1,8 +1,6 @@
 #include "Common/Piper/Util.h"
 #include "Common/Piper/AckSet32.h"
 
-#include <stdio.h>
-
 namespace Piper {
   void AckSet32::ack(Sequence id) {
     if(Util::sequenceGreaterThan(head-32, id)) {
