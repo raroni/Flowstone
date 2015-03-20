@@ -11,7 +11,7 @@ public:
     void *storage,
     uint16_t capacity
   );
-  uint16_t read(uint16_t handle, void **message);
+  uint16_t read(uint16_t handle, const void **message);
   bool write(uint16_t *handle, const void *message, uint16_t length);
   void release(uint16_t handle);
 private:

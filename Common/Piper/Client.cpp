@@ -19,6 +19,10 @@ namespace Piper {
     serverAddress = address;
   }
 
+  AckStatus Client::getStatus(Sequence id) const {
+    return outAcks.getStatus(id);
+  }
+
   void Client::poll() {
     Packet packet;
     while(true) {

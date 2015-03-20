@@ -43,6 +43,8 @@ USER_SOURCES_CPP =\
 	../../UserGame/AtmosphereColor.cpp\
 	../../UserGame/Interpolation/Interpolater.cpp\
 	../../UserGame/PingPong.cpp\
+	../../UserGame/ClientCarrier.cpp\
+	../../UserGame/LoopStream.cpp\
 	../../UserGame/Keyboard.cpp\
 	../../UserGame/RendererFeeder.cpp\
 	../../UserGame/Rendering/Renderer.cpp\

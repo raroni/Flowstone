@@ -1,6 +1,7 @@
 #include "SysKey/SysKey.h"
 #include "UserGame.h"
 #include "PingPong.h"
+#include "ClientCarrier.h"
 #include "Common/MessageType.h"
 #include "ClientGame.h"
 
@@ -23,6 +24,10 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
 
   // dummy
   UserGame::startServer();
+
+  ClientCarrier::setPipe(&pipe);
+  char test[] = "hey";
+  ClientCarrier::send(test, 4, 30);
 }
 
 void ClientGame::update(double timeDelta) {
@@ -31,6 +36,7 @@ void ClientGame::update(double timeDelta) {
 
   updateKeyboard();
   flow.update(timeDelta, keyboard);
+  ClientCarrier::update(timeDelta);
 
   renderer.draw();
   pipe.dispatch();

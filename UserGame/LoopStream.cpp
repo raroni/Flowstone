@@ -16,7 +16,7 @@ capacity(capacity) {
 
 }
 
-uint16_t LoopStream::read(uint16_t handle, void **message) {
+uint16_t LoopStream::read(uint16_t handle, const void **message) {
   *message = storage+offsets[handle];
   return lengths[handle];
 }

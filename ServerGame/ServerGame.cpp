@@ -46,7 +46,7 @@ void ServerGame::readPipe() {
         }
         break;
       default:
-        printf("Server got something unknown.");
+        printf("Server got something unknown.\n");
         break;
     }
   }

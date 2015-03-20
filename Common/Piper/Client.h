@@ -20,6 +20,7 @@ namespace Piper {
     bool readMessage(const void **message, uint16_t *messageLength);
     Sequence sendMessage(const void *message, uint16_t messageLength);
     void dispatch();
+    AckStatus getStatus(Sequence id) const;
   private:
     uint16_t inBufferPosition = 0;
     struct {

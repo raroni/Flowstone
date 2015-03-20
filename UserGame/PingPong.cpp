@@ -16,6 +16,10 @@ namespace PingPong {
 
   uint64_t startTimes[UINT8_MAX];
 
+  GameTime::MSecond16 getRTT() {
+    return rtt/1000;
+  }
+
   void setPipe(Piper::Client &aPipe) {
     pipe = &aPipe;
   }
@@ -40,6 +44,5 @@ namespace PingPong {
     int32_t packetRTT = GameTime::get()-startTimes[pingID];
     int32_t difference = packetRTT-rtt;
     rtt += difference/10;
-    printf("New RTT: %d\n", rtt);
   }
 }

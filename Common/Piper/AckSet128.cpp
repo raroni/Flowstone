@@ -25,7 +25,7 @@ namespace Piper {
     }
   }
 
-  AckStatus AckSet128::getStatus(Sequence id) {
+  AckStatus AckSet128::getStatus(Sequence id) const {
     if(id == head) {
       return AckStatus::Yes;
     }
@@ -41,7 +41,7 @@ namespace Piper {
     return AckStatus::Yes;
   }
 
-  uint8_t AckSet128::getBitIndex(Sequence id) {
+  uint8_t AckSet128::getBitIndex(Sequence id) const {
     return static_cast<Sequence>((head-id-1)) % 128;
   }
 
