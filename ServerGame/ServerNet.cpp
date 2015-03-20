@@ -4,7 +4,15 @@
 
 namespace ServerNet {
   Piper::Server pipe;
-  bool clientIDs[Piper::Config::Server::clientMax] = { false };
+  bool idLookup[Piper::Config::Server::clientMax] = { false };
+  Piper::ClientID ids[Piper::Config::Server::clientMax];
+  uint8_t count = 0;
+
+  void createClient(Piper::ClientID id) {
+    idLookup[id] = true;
+    ids[count] = id;
+    count++;
+  }
 
   void listen(const Piper::Address &address) {
     pipe.listen(address);
@@ -17,8 +25,8 @@ namespace ServerNet {
       *messageLength = (*messageLength)-1;
       *type = *static_cast<const MessageType*>(*message);
       *message = static_cast<const char*>(*message)+1;
-      if(!clientIDs[*id]) {
-        clientIDs[*id] = true;
+      if(!idLookup[*id]) {
+        createClient(*id);
         // zomg new connection
         // put into active players or into rejection-queue (if full)
       }
