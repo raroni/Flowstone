@@ -13,6 +13,10 @@ namespace ServerNet {
   uint8_t sendCounts[max];
   uint8_t count = 0;
 
+  void initialize() {
+    ServerAckHelper::initialize();
+  }
+
   void createClient(Piper::ClientID id) {
     // todo: better handling, rejection of some kind
     assert(count != max);

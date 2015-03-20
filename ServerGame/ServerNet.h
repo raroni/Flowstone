@@ -7,6 +7,7 @@
 #include "Common/Piper/Sequence.h"
 
 namespace ServerNet {
+  void initialize();
   void listen(const Piper::Address &address);
   bool readMessage(Piper::ClientID *id, MessageType *type, const void **message, uint16_t *messageLength);
   Piper::Sequence sendMessage(Piper::ClientID clientID, const void *message, uint16_t messageLength);

@@ -24,7 +24,7 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   // dummy
   UserGame::startServer();
 
-  char test[] = "hey";
+  char test[] = { static_cast<char>(MessageType::Test) };
   ClientCarrier::send(test, 4, 30);
 }
 

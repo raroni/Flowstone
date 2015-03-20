@@ -5,9 +5,16 @@
 
 namespace ServerAckHelper {
   bool reliableReceived[Piper::Config::Server::clientMax] = { false };
+  bool reliableTypes[static_cast<unsigned>(MessageType::Count)] = { false };
+
+  void initialize() {
+    reliableTypes[static_cast<unsigned>(MessageType::Test)] = true;
+  }
 
   void handleReceive(Piper::ClientID id, MessageType type) {
-    reliableReceived[id] = true;
+    if(reliableTypes[static_cast<unsigned>(type)]) {
+      reliableReceived[id] = true;
+    }
   }
 
   void check() {

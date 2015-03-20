@@ -5,6 +5,7 @@
 #include "Common/MessageType.h"
 
 namespace ServerAckHelper {
+  void initialize();
   void handleReceive(Piper::ClientID id, MessageType type);
   void check();
 }

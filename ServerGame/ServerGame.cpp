@@ -6,6 +6,8 @@
 #include <stdio.h>
 
 void ServerGame::initialize() {
+  ServerNet::initialize();
+
   Piper::Address address;
   address.ip[0] = 0;
   address.ip[1] = 0;
