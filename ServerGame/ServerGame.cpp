@@ -35,7 +35,7 @@ void ServerGame::readPipe() {
     switch(type) {
       case MessageType::Ping:
         if(messageLength == 1) {
-          uint8_t pingID = static_cast<const uint8_t*>(message)[1];
+          uint8_t pingID = *static_cast<const uint8_t*>(message);
           ServerPingPong::handlePing(id, pingID);
         }
         break;
