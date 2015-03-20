@@ -18,11 +18,11 @@ namespace Piper {
     void listen(const Address &address);
     bool readMessage(ClientID *id, const void **message, uint16_t *messageLength);
     Sequence sendMessage(ClientID clientID, const void *message, uint16_t messageLength);
-    bool findClientID(const Address &address, ClientID &id);
     void dispatch();
     void poll();
     void clear();
   private:
+    bool findClientID(const Address &address, ClientID &id);
     Sequence createSequenceID(ClientID id);
     Sequence nextSequenceIDs[Config::Server::clientMax];
     Address addresses[Config::Server::clientMax];
