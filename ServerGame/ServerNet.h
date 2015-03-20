@@ -13,6 +13,9 @@ namespace ServerNet {
   void dispatch();
   void poll();
   void clear();
+  uint8_t getClientCount();
+  Piper::ClientID getClientID(uint8_t index);
+  uint8_t getSendCount(uint8_t index);
 }
 
 #endif

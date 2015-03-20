@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "Common/Piper/Config.h"
 #include "Common/Piper/Server.h"
+#include "ServerGame/ServerAckHelper.h"
 #include "ServerGame/ServerNet.h"
 
 namespace ServerNet {
@@ -39,18 +40,35 @@ namespace ServerNet {
         // zomg new connection
         // put into active players or into rejection-queue (if full)
       }
+      ServerAckHelper::handleReceive(*id, *type);
     }
 
     return result;
   }
 
-  Piper::Sequence sendMessage(Piper::ClientID clientID, const void *message, uint16_t messageLength) {
+  Piper::ClientID getClientID(uint8_t index) {
+    return ids[index];
+  }
 
+  uint8_t getClientCount() {
+    return count;
+  }
+
+  uint8_t getSendCount(uint8_t index) {
+    return sendCounts[index];
+  }
+
+  Piper::Sequence sendMessage(Piper::ClientID clientID, const void *message, uint16_t messageLength) {
+    uint8_t index = indices[clientID];
+    assert(sendCounts[index] != UINT8_MAX);
+    sendCounts[index]++;
     return pipe.sendMessage(clientID, message, messageLength);
   }
 
   void dispatch() {
+    ServerAckHelper::check();
     pipe.dispatch();
+    memset(sendCounts, 0, sizeof(sendCounts));
   }
 
   void poll() {
