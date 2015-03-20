@@ -30,16 +30,11 @@ void ServerGame::readPipe() {
   const void *message = nullptr;
   uint16_t messageLength = 0;
   Piper::ClientID id;
-  while(ServerNet::readMessage(&id, &message, &messageLength)) {
-    if(!clientIDs[id]) {
-      clientIDs[id] = true;
-      // zomg new connection
-      // put into active players or into rejection-queue (if full)
-    }
-    MessageType type = *static_cast<const MessageType*>(message);
+  MessageType type;
+  while(ServerNet::readMessage(&id, &type, &message, &messageLength)) {
     switch(type) {
       case MessageType::Ping:
-        if(messageLength == 2) {
+        if(messageLength == 1) {
           uint8_t pingID = static_cast<const uint8_t*>(message)[1];
           ServerPingPong::handlePing(id, pingID);
         }
