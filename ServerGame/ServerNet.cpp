@@ -41,8 +41,6 @@ namespace ServerNet {
       *message = static_cast<const char*>(*message)+1;
       if(!idLookup[*id]) {
         createClient(*id);
-        // zomg new connection
-        // put into active players or into rejection-queue (if full)
       }
       ServerAckHelper::handleReceive(*id, *type);
     }
