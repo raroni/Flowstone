@@ -1,5 +1,6 @@
 #include <assert.h>
 #include "PingPong.h"
+#include "ClientNet.h"
 #include "ClientCarrier.h"
 #include "LoopStream.h"
 
@@ -27,12 +28,6 @@ namespace ClientCarrier {
     messageCapacity
   );
 
-  Piper::Client *pipe;
-
-  void setPipe(Piper::Client *aPipe) {
-    pipe = aPipe;
-  }
-
   void remove(uint16_t index) {
     count--;
     messages.release(handles[index]);
@@ -51,10 +46,10 @@ namespace ClientCarrier {
         durations[i] = 0;
         const void *message;
         uint16_t length = messages.read(handles[i], &message);
-        piperIDs[i] = pipe->sendMessage(message, length);
+        piperIDs[i] = ClientNet::sendMessage(message, length);
         printf("Attempting re-send %d...\n", piperIDs[i]);
       }
-      else if(pipe->getStatus(piperIDs[i]) == Piper::AckStatus::Yes) {
+      else if(ClientNet::getStatus(piperIDs[i]) == Piper::AckStatus::Yes) {
         remove(i);
         i--;
         printf("Success removing.\n");

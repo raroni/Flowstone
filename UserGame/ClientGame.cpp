@@ -1,8 +1,9 @@
 #include "SysKey/SysKey.h"
+#include "Common/MessageType.h"
+#include "ClientNet.h"
 #include "UserGame.h"
 #include "PingPong.h"
 #include "ClientCarrier.h"
-#include "Common/MessageType.h"
 #include "ClientGame.h"
 
 #include <stdio.h>
@@ -18,20 +19,17 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   address.ip[2] = 0;
   address.ip[3] = 1;
   address.port = 4242;
-  pipe.setAddress(address);
-
-  PingPong::setPipe(pipe);
+  ClientNet::setAddress(address);
 
   // dummy
   UserGame::startServer();
 
-  ClientCarrier::setPipe(&pipe);
   char test[] = "hey";
   ClientCarrier::send(test, 4, 30);
 }
 
 void ClientGame::update(double timeDelta) {
-  readPipe();
+  readNet();
   PingPong::update(timeDelta);
 
   updateKeyboard();
@@ -39,7 +37,7 @@ void ClientGame::update(double timeDelta) {
   ClientCarrier::update(timeDelta);
 
   renderer.draw();
-  pipe.dispatch();
+  ClientNet::dispatch();
 }
 
 void ClientGame::updateKeyboard() {
@@ -53,13 +51,13 @@ void ClientGame::updateKeyboard() {
   }
 }
 
-void ClientGame::readPipe() {
-  pipe.poll();
+void ClientGame::readNet() {
+  ClientNet::poll();
 
   const void *message = nullptr;
   uint16_t messageLength = 0;
 
-  while(pipe.readMessage(&message, &messageLength)) {
+  while(ClientNet::readMessage(&message, &messageLength)) {
     MessageType type = *static_cast<const MessageType*>(message);
     switch(type) {
       case MessageType::Pong:
@@ -73,5 +71,5 @@ void ClientGame::readPipe() {
         break;
     }
   }
-  pipe.clear();
+  ClientNet::clear();
 }
