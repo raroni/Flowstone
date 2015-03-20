@@ -1,4 +1,5 @@
 #include "Common/MessageType.h"
+#include "ServerGame/ServerNet.h"
 #include "ServerPingPong.h"
 #include "ServerGame.h"
 
@@ -11,9 +12,7 @@ void ServerGame::initialize() {
   address.ip[2] = 0;
   address.ip[3] = 0;
   address.port = 4242;
-  pipe.listen(address);
-
-  ServerPingPong::configure(&pipe, &nextSequenceID);
+  ServerNet::listen(address);
 }
 
 void ServerGame::update(double timeDelta) {
@@ -22,16 +21,16 @@ void ServerGame::update(double timeDelta) {
   // do game logic
   // ServerPingPong::update();
 
-  pipe.dispatch();
+  ServerNet::dispatch();
 }
 
 void ServerGame::readPipe() {
-  pipe.poll();
+  ServerNet::poll();
 
   const void *message = nullptr;
   uint16_t messageLength = 0;
   Piper::ClientID id;
-  while(pipe.readMessage(&id, &message, &messageLength)) {
+  while(ServerNet::readMessage(&id, &message, &messageLength)) {
     if(!clientIDs[id]) {
       clientIDs[id] = true;
       // zomg new connection
@@ -50,7 +49,6 @@ void ServerGame::readPipe() {
         break;
     }
   }
-  // at some point later pipe.free(id);
 
-  pipe.clear();
+  ServerNet::clear();
 }

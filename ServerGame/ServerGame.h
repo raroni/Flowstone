@@ -1,7 +1,7 @@
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
 
-#include "Common/Piper/Server.h"
+#include "Common/Piper/Config.h"
 
 class ServerGame {
 public:
@@ -9,8 +9,6 @@ public:
   void update(double timeDelta);
   void readPipe();
 private:
-  Piper::Sequence nextSequenceID = 0;
-  Piper::Server pipe;
   bool clientIDs[Piper::Config::Server::clientMax] = { false };
 };
 

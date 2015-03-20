@@ -1,23 +1,16 @@
 #include <string.h>
 #include "Common/MessageType.h"
+#include "ServerGame/ServerNet.h"
 #include "ServerPingPong.h"
 
 #include <stdio.h>
 
 namespace ServerPingPong {
-  static Piper::Server *pipe;
-  static Piper::Sequence *nextSequenceID;
-
-  void configure(Piper::Server *aPipe, Piper::Sequence *aNextSequenceID) {
-    pipe = aPipe;
-    nextSequenceID = aNextSequenceID;
-  }
-
   void handlePing(Piper::ClientID clientID, uint8_t pingID) {
     char message[2];
     message[0] = static_cast<char>(MessageType::Pong);
     memcpy(message+1, &pingID, 1);
-    pipe->sendMessage(
+    ServerNet::sendMessage(
       clientID,
       message,
       sizeof(message)

@@ -33,6 +33,7 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/ServerOutBuffer.cpp\
 	../../Common/Piper/Transmission.cpp\
 	../../ServerGame/ServerGame.cpp\
+	../../ServerGame/ServerNet.cpp\
 	../../ServerGame/ServerPingPong.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
