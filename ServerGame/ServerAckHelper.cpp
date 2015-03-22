@@ -1,5 +1,6 @@
 #include <string.h>
 #include "ServerGame/ServerGameConfig.h"
+#include "ServerGame/ServerGameClientSet.h"
 #include "ServerGame/ServerNet.h"
 #include "ServerGame/ServerAckHelper.h"
 
@@ -18,10 +19,13 @@ namespace ServerAckHelper {
   }
 
   void check() {
-    for(uint8_t i=0; i<ServerNet::getClientCount(); ++i) {
-      ServerGameClientID id = ServerNet::getClientID(i);
-      uint8_t sendCount = ServerNet::getSendCount(i);
-      if(reliableReceived[id] && sendCount == 0) {
+    uint8_t count = ServerGameClientSet::getCount();
+    const ServerGameClientID *ids = ServerGameClientSet::ids;
+    const uint8_t *sendCounts = ServerGameClientSet::sendCounts;
+
+    for(uint8_t i=0; i<count; ++i) {
+      ServerGameClientID id = ids[i];
+      if(reliableReceived[id] && sendCounts[i] == 0) {
         ServerNet::sendMessage(id, 0, 0);
       }
     }

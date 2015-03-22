@@ -4,8 +4,6 @@
 #include "ClientNet.h"
 #include "PingPong.h"
 
-#include <stdio.h>
-
 namespace PingPong {
   static double timeUntilPing = 0;
   static const double interval = 1.5;
