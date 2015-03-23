@@ -38,4 +38,11 @@ namespace PingPong {
     int32_t difference = packetRTT-rtt;
     rtt += difference/10;
   }
+
+  void handlePing(uint8_t pingID) {
+    char message[2];
+    message[0] = static_cast<char>(MessageType::Pong);
+    memcpy(message+1, &pingID, 1);
+    ClientNet::sendMessage(message, sizeof(message));
+  }
 }

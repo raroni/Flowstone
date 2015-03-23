@@ -21,7 +21,7 @@ void ServerGame::update(double timeDelta) {
   readPipe();
 
   // do game logic
-  // ServerPingPong::update();
+  ServerPingPong::update(timeDelta);
 
   ServerNet::dispatch();
 }
@@ -35,12 +35,20 @@ void ServerGame::readPipe() {
   MessageType type;
   while(ServerNet::readMessage(&id, &type, &message, &messageLength)) {
     switch(type) {
-      case MessageType::Ping:
+      case MessageType::Ping: {
         if(messageLength == 1) {
           uint8_t pingID = *static_cast<const uint8_t*>(message);
           ServerPingPong::handlePing(id, pingID);
         }
         break;
+      }
+      case MessageType::Pong: {
+        if(messageLength == 1) {
+          uint8_t pingID = *static_cast<const uint8_t*>(message);
+          ServerPingPong::handlePong(id, pingID);
+        }
+        break;
+      }
       default:
         printf("Server got something unknown.\n");
         break;

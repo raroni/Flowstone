@@ -3,6 +3,7 @@
 
 namespace ServerPingPong {
   void handlePing(ServerGameClientID clientID, uint8_t pingID);
+  void handlePong(ServerGameClientID clientID, uint8_t pingID);
   void update(double timeDelta);
 }
 

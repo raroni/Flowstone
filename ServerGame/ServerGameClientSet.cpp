@@ -11,7 +11,14 @@ namespace ServerGameClientSet {
   ServerGameClientID ids[ServerGameConfig::clientMax];
   Piper::ClientID piperIDs[ServerGameConfig::clientMax];
   uint8_t sendCounts[ServerGameConfig::clientMax];
+  uint32_t rtts[ServerGameConfig::clientMax];
   uint8_t count = 0;
+
+  namespace PingPong {
+    StartTimeSet startTimes[ServerGameConfig::clientMax];
+    double timeouts[ServerGameConfig::clientMax];
+    uint8_t nextIDs[ServerGameConfig::clientMax];
+  }
 
   void create(Piper::ClientID piperID) {
     assert(count != ServerGameConfig::clientMax);
@@ -22,6 +29,8 @@ namespace ServerGameClientSet {
     ids[count] = id;
     piperIDs[count] = piperID;
     sendCounts[count] = 0;
+    PingPong::timeouts[count] = 0;
+    PingPong::nextIDs[count] = 0;
     count++;
   }
 

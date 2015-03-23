@@ -12,6 +12,17 @@ namespace ServerGameClientSet {
   extern ServerGameClientID ids[ServerGameConfig::clientMax];
   extern Piper::ClientID piperIDs[ServerGameConfig::clientMax];
   extern uint8_t sendCounts[ServerGameConfig::clientMax];
+  extern uint32_t rtts[ServerGameConfig::clientMax];
+
+  namespace PingPong {
+    struct StartTimeSet {
+      uint64_t list[UINT8_MAX];
+    };
+
+    extern StartTimeSet startTimes[ServerGameConfig::clientMax];
+    extern double timeouts[ServerGameConfig::clientMax];
+    extern uint8_t nextIDs[ServerGameConfig::clientMax];
+  }
 
   void create(Piper::ClientID piperID);
   ServerGameClientID findIDByPiperID(Piper::ClientID piperID);

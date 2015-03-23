@@ -60,14 +60,22 @@ void ClientGame::readNet() {
   while(ClientNet::readMessage(&message, &messageLength)) {
     MessageType type = *static_cast<const MessageType*>(message);
     switch(type) {
-      case MessageType::Pong:
+      case MessageType::Pong: {
         if(messageLength == 2) {
           uint8_t pingID = static_cast<const uint8_t*>(message)[1];
           PingPong::handlePong(pingID);
         }
         break;
+      }
+      case MessageType::Ping: {
+        if(messageLength == 2) {
+          uint8_t pingID = static_cast<const uint8_t*>(message)[1];
+          PingPong::handlePing(pingID);
+        }
+        break;
+      }
       default:
-        printf("Client got something unknown.");
+        printf("Client got something unknown.\n");
         break;
     }
   }
