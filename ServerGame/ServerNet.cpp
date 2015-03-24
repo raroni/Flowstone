@@ -48,6 +48,12 @@ namespace ServerNet {
     return pipe.sendMessage(piperID, message, messageLength);
   }
 
+  Piper::AckStatus getStatus(ServerGameClientID clientID, Piper::Sequence sequenceID) {
+    uint8_t index = ServerGameClientSet::indices[clientID];
+    Piper::ClientID piperID = ServerGameClientSet::piperIDs[index];
+    return pipe.getStatus(piperID, sequenceID);
+  }
+
   void dispatch() {
     ServerAckHelper::check();
     pipe.dispatch();

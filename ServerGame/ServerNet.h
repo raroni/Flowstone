@@ -4,6 +4,7 @@
 #include "Common/MessageType.h"
 #include "Common/Piper/Address.h"
 #include "Common/Piper/Sequence.h"
+#include "Common/Piper/AckStatus.h"
 #include "ServerGame/ServerGameClientID.h"
 
 namespace ServerNet {
@@ -14,6 +15,7 @@ namespace ServerNet {
   void dispatch();
   void poll();
   void clear();
+  Piper::AckStatus getStatus(ServerGameClientID clientID, Piper::Sequence sequenceID);
   uint8_t getClientCount();
   ServerGameClientID getClientID(uint8_t index);
   uint8_t getSendCount(uint8_t index);

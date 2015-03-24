@@ -21,6 +21,11 @@ namespace Piper {
     return false;
   }
 
+  AckStatus Server::getStatus(ClientID clientID, Sequence sequenceID) const {
+    uint8_t index = indices[clientID];
+    return outAcks[index].getStatus(sequenceID);
+  }
+
   Sequence Server::createSequenceID(ClientID id) {
     uint8_t index = indices[id];
     return nextSequenceIDs[index]++;

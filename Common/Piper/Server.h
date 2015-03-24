@@ -18,6 +18,7 @@ namespace Piper {
     void listen(const Address &address);
     bool readMessage(ClientID *id, const void **message, uint16_t *messageLength);
     Sequence sendMessage(ClientID clientID, const void *message, uint16_t messageLength);
+    AckStatus getStatus(ClientID clientID, Sequence sequenceID) const;
     void dispatch();
     void poll();
     void clear();
