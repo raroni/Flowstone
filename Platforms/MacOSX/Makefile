@@ -38,6 +38,7 @@ USER_SOURCES_CPP =\
 	../../ServerGame/ServerNet.cpp\
 	../../ServerGame/ServerAckHelper.cpp\
 	../../ServerGame/ServerPingPong.cpp\
+	../../ServerGame/ServerCarrier.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
 	../../UserGame/ClientNet.cpp\
@@ -49,7 +50,7 @@ USER_SOURCES_CPP =\
 	../../UserGame/Interpolation/Interpolater.cpp\
 	../../UserGame/PingPong.cpp\
 	../../UserGame/ClientCarrier.cpp\
-	../../UserGame/LoopStream.cpp\
+	../../Common/LoopStream.cpp\
 	../../UserGame/Keyboard.cpp\
 	../../UserGame/RendererFeeder.cpp\
 	../../UserGame/Rendering/Renderer.cpp\
@@ -174,7 +175,7 @@ TEST_SOURCES =\
 	../../Common/Piper/Util.cpp\
 	../../Common/Piper/AckSet128.cpp\
 	../../Common/Piper/AckSet32.cpp\
-	../../UserGame/LoopStream.cpp\
+	../../Common/LoopStream.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\

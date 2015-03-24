@@ -1,8 +1,8 @@
 #include <assert.h>
+#include "Common/LoopStream.h"
 #include "PingPong.h"
 #include "ClientNet.h"
 #include "ClientCarrier.h"
-#include "LoopStream.h"
 
 namespace ClientCarrier {
   const uint8_t max = 128;
@@ -49,7 +49,6 @@ namespace ClientCarrier {
       else if(ClientNet::getStatus(piperIDs[i]) == Piper::AckStatus::Yes) {
         remove(i);
         i--;
-      } else {
       }
 
       // todo: better handling, disconnect?

@@ -1,19 +1,24 @@
 #include <string.h>
 #include "LoopStream.h"
 
+LoopStream::LoopStream() { }
+
 LoopStream::LoopStream(
   uint16_t *offsets,
   uint16_t *lengths,
   uint16_t max,
   void *storage,
   uint16_t capacity
-) :
-offsets(offsets),
-lengths(lengths),
-max(max),
-storage(static_cast<char*>(storage)),
-capacity(capacity) {
+) {
+  configure(offsets, lengths, max, storage, capacity);
+}
 
+void LoopStream::configure(uint16_t *offsets, uint16_t *lengths, uint16_t max, void *storage, uint16_t capacity) {
+  this->offsets = offsets;
+  this->lengths = lengths;
+  this->max = max;
+  this->storage = static_cast<char*>(storage);
+  this->capacity = capacity;
 }
 
 uint16_t LoopStream::read(uint16_t handle, const void **message) {

@@ -1,11 +1,14 @@
 #include "Common/MessageType.h"
 #include "ServerGame/ServerNet.h"
+#include "ServerGame/ServerGameClientSet.h"
 #include "ServerPingPong.h"
+#include "ServerCarrier.h"
 #include "ServerGame.h"
 
 #include <stdio.h>
 
 void ServerGame::initialize() {
+  ServerGameClientSet::initialize();
   ServerNet::initialize();
 
   Piper::Address address;
@@ -22,6 +25,7 @@ void ServerGame::update(double timeDelta) {
 
   // do game logic
   ServerPingPong::update(timeDelta);
+  ServerCarrier::update(timeDelta);
 
   ServerNet::dispatch();
 }

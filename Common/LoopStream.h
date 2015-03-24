@@ -11,6 +11,8 @@ public:
     void *storage,
     uint16_t capacity
   );
+  LoopStream();
+  void configure(uint16_t *offsets, uint16_t *lengths, uint16_t max, void *storage, uint16_t capacity);
   uint16_t read(uint16_t handle, const void **message);
   bool write(uint16_t *handle, const void *message, uint16_t length);
   void release(uint16_t handle);

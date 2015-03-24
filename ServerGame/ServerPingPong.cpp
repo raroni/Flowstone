@@ -26,7 +26,6 @@ namespace ServerPingPong {
     int32_t packetRTT = GameTime::get()-startTimes[index].list[pingID];
     int32_t difference = packetRTT-rtts[index];
     rtts[index] += difference/10;
-    printf("%d\n", rtts[index]);
   }
 
   void update(double timeDelta) {

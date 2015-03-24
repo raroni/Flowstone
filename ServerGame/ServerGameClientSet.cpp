@@ -3,6 +3,9 @@
 #include "ServerGame/ServerGameClientIDPool.h"
 #include "ServerGame/ServerGameClientSet.h"
 
+// dummy:
+#include "ServerGame/ServerCarrier.h"
+
 namespace ServerGameClientSet {
   static ServerGameClientIDPool idPool;
 
@@ -20,6 +23,39 @@ namespace ServerGameClientSet {
     uint8_t nextIDs[ServerGameConfig::clientMax];
   }
 
+  namespace Carrying {
+    uint8_t counts[ServerGameConfig::clientMax];
+    DurationSet durationSets[ServerGameConfig::clientMax];
+    TimeoutSet timeoutSets[ServerGameConfig::clientMax];
+    HandleSet handleSets[ServerGameConfig::clientMax];
+    PiperIDSet piperIDSets[ServerGameConfig::clientMax];
+    LoopStream messageBuffers[ServerGameConfig::clientMax];
+
+    static const uint16_t messageMax = 128;
+    static const uint16_t messageCapacity = 1024*20;
+    typedef char MessageBuffer[messageCapacity];
+    typedef uint16_t OffsetSet[messageMax];
+    typedef uint16_t LengthSet[messageMax];
+
+    struct {
+      MessageBuffer buffers[ServerGameConfig::clientMax];
+      OffsetSet offsetSets[ServerGameConfig::clientMax];
+      LengthSet lengthSets[ServerGameConfig::clientMax];
+    } messageData;
+  }
+
+  void initialize() {
+    for(uint8_t i=0; i<ServerGameConfig::clientMax; ++i) {
+      Carrying::messageBuffers[i].configure(
+        Carrying::messageData.offsetSets[i],
+        Carrying::messageData.lengthSets[i],
+        Carrying::messageMax,
+        Carrying::messageData.buffers[i],
+        Carrying::messageCapacity
+      );
+    }
+  }
+
   void create(Piper::ClientID piperID) {
     assert(count != ServerGameConfig::clientMax);
 
@@ -32,6 +68,9 @@ namespace ServerGameClientSet {
     PingPong::timeouts[count] = 0;
     PingPong::nextIDs[count] = 0;
     count++;
+
+    // dummy:
+    ServerCarrier::send(id, "hey", 4, 40);
   }
 
   uint8_t getCount() {
