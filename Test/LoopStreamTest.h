@@ -14,7 +14,7 @@ namespace LoopStreamTest {
     LoopStream stream(offsets, lengths, max, buffer, capacity);
     uint16_t handle;
     assertTrue(stream.write(&handle, "hey", 3));
-    void *message = nullptr;
+    const void *message = nullptr;
     assertEqual(3, stream.read(handle, &message));
     assertTrue(memcmp("hey", message, 3) == 0);
   }
@@ -60,7 +60,7 @@ namespace LoopStreamTest {
     assertTrue(stream.write(&handle2, "hi", 2));
     stream.release(handle1);
     assertTrue(stream.write(&handle3, "hi", 2));
-    void *message = nullptr;
+    const void *message = nullptr;
     stream.read(handle3, &message);
     assertTrue(message == &buffer);
   }
