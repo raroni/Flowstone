@@ -148,6 +148,19 @@ namespace AckSet128Test {
     assertEqual(128, totalNo);
   }
 
+  void testAckZero() {
+    AckSet128 set;
+    set.ack(0);
+
+    assertEqual(0, set.getHead());
+
+    uint8_t totalNo = 0;
+    for(uint8_t i=1; i<=128; i++) {
+      totalNo += set.getStatus(i) == AckStatus::No;
+    }
+    assertEqual(128, totalNo);
+  }
+
   void setup() {
     unsigned suite = Orwell::createSuite("AckSet128Test");
     Orwell::addTest(suite, testBasic, "Basic");
@@ -160,5 +173,6 @@ namespace AckSet128Test {
     Orwell::addTest(suite, testGetHead, "GetHead");
     Orwell::addTest(suite, testGetBits, "GetBits");
     Orwell::addTest(suite, testInitialState, "InitialState");
+    Orwell::addTest(suite, testAckZero, "AckZero");
   }
 }

@@ -73,7 +73,7 @@ namespace AckSet32Test {
 
   void testInitialState() {
     AckSet32 acks;
-    assertEqual(SEQUENCE_MAX, acks.getHead());
+    assertEqual(SEQUENCE_MAX-32, acks.getHead());
     uint8_t totalOn = 0;
     for(uint8_t i=0; i<=32; i++) {
       if(acks.getBits().get(i)) {
@@ -121,6 +121,20 @@ namespace AckSet32Test {
     assertEqual(100, acks.getHead());
   }
 
+  void testAckZero() {
+    AckSet32 set;
+    set.ack(0);
+
+    assertEqual(0, set.getHead());
+
+    const BitSet32 &bits = set.getBits();
+    uint8_t totalUnset = 0;
+    for(uint8_t i=0; i<32; i++) {
+      totalUnset += bits.get(i);
+    }
+    assertEqual(0, totalUnset);
+  }
+
   void setup() {
     unsigned suite = Orwell::createSuite("AckSet32Test");
     Orwell::addTest(suite, testBasic, "Basic");
@@ -130,5 +144,6 @@ namespace AckSet32Test {
     Orwell::addTest(suite, testInitialState, "InitialState");
     Orwell::addTest(suite, testWrapAround, "WrapAround");
     Orwell::addTest(suite, testGetHead, "GetHead");
+    Orwell::addTest(suite, testAckZero, "AckZero");
   }
 }

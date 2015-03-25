@@ -12,7 +12,7 @@ namespace Piper {
     Sequence getHead() const;
     const BitSet32& getBits() const;
   private:
-    Sequence head = SEQUENCE_MAX;
+    Sequence head = SEQUENCE_MAX-32;
     BitSet32 bits;
   };
 }
