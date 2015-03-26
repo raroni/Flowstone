@@ -4,7 +4,6 @@ CC = clang++
 CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
-	Source/Timing.cpp\
 	../../Common/Error.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\

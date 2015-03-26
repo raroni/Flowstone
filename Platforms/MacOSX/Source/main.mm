@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#import "MacOSX/Timing.h"
 #import "MacOSX/SysKey.h"
 #import "MacOSX/Util.h"
 #import "MacOSX/GameApplication.h"
@@ -156,15 +155,12 @@ static void terminate() {
 int main() {
   initialize();
   UserGame::initialize(resolution.width, resolution.height);
-  timingInitialize();
 
   while(shouldTerminate == NO) {
-    timingStartFrame();
     pollEvents();
-    UserGame::update(timingGetDelta());
+    UserGame::update();
     [context flushBuffer];
     SysKey::clear();
-    timingWaitForNextFrame();
   }
 
   terminate();

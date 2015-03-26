@@ -12,6 +12,7 @@ namespace SysTime {
   typedef uint64_t USecond64;
 
   USecond64 get();
+  void sleep(USecond64 duration);
 }
 
 #endif

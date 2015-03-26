@@ -5,7 +5,7 @@
 
 namespace UserGame {
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
-  void update(double timeDelta);
+  void update();
   void startServer();
 }
 
