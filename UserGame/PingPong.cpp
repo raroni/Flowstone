@@ -5,22 +5,20 @@
 #include "PingPong.h"
 
 namespace PingPong {
-  static double timeUntilPing = 0;
-  static const double interval = 1.5;
+  static GameTime::MSecond16S timeUntilPing = 0;
+  static const GameTime::MSecond16 interval = 1500;
   uint8_t nextPingID = 0;
-
-  uint32_t rtt = 0;
-
-  uint64_t startTimes[UINT8_MAX];
+  GameTime::MSecond16 rtt = 250;
+  GameTime::MSecond32 startTimes[UINT8_MAX];
 
   GameTime::MSecond16 getRTT() {
-    return rtt/1000;
+    return rtt;
   }
 
   void update(double timeDelta) {
-    timeUntilPing -= timeDelta;
+    timeUntilPing -= timeDelta*1000;
     if(timeUntilPing <= 0) {
-      startTimes[nextPingID] = GameTime::get();
+      startTimes[nextPingID] = GameTime::get()/1000;
 
       // todo: generalize this code, no need to do this manually on both client/server
       char message[2];
@@ -34,8 +32,8 @@ namespace PingPong {
 
   void handlePong(uint8_t pingID) {
     // todo: check if already received pong for pingID
-    int32_t packetRTT = GameTime::get()-startTimes[pingID];
-    int32_t difference = packetRTT-rtt;
+    GameTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[pingID];
+    GameTime::MSecond32S difference = packetRTT-rtt;
     rtt += difference/10;
   }
 

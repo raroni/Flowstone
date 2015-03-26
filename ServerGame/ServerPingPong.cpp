@@ -5,8 +5,6 @@
 #include "ServerGame/ServerNet.h"
 #include "ServerPingPong.h"
 
-#include <stdio.h>
-
 namespace ServerPingPong {
   using namespace ServerGameClientSet;
   using namespace ServerGameClientSet::PingPong;
@@ -23,8 +21,8 @@ namespace ServerPingPong {
   void handlePong(ServerGameClientID clientID, uint8_t pingID) {
     // todo: check if already received pong for pingID
     uint8_t index = indices[clientID];
-    int32_t packetRTT = GameTime::get()-startTimes[index].list[pingID];
-    int32_t difference = packetRTT-rtts[index];
+    GameTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[index].list[pingID];
+    GameTime::MSecond32S difference = packetRTT-rtts[index];
     rtts[index] += difference/10;
   }
 
@@ -33,7 +31,7 @@ namespace ServerPingPong {
       timeouts[i] -= timeDelta;
       if(timeouts[i] <= 0) {
         uint8_t nextID = nextIDs[i];
-        startTimes[i].list[nextID] = GameTime::get();
+        startTimes[i].list[nextID] = GameTime::get()/1000;
 
         // todo: generalize this code, no need to do this manually on both client/server
         char message[2];
