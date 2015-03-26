@@ -91,6 +91,7 @@ USER_SOURCES_CPP =\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
 	../../Sys/Net/Source/SysNet.cpp\
 	Source/SysNet.cpp\
+	Source/SysThread.cpp\
 	Source/SysTime.cpp
 
 USER_SOURCES_OBJC = \
@@ -114,6 +115,7 @@ USER_HEADER_DIRS =\
 	-I../../Sys/GFX/Include\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../Sys/Time/Include\
+	-I../../Sys/Thread/Include\
 	-I../../UserGame\
 	-I../..\
 	-IInclude

@@ -11,7 +11,6 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   renderer.updateResolution({ resolutionWidth, resolutionHeight });
   flow.initialize(renderer);
 
-
   ClientNet::initialize();
   Piper::Address address;
   address.ip[0] = 127;
