@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 namespace UserGame {
-  void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
-  void update();
+  void run();
   void startServer();
+  void requestTermination();
 }
 
 #endif

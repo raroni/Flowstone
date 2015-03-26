@@ -91,19 +91,19 @@ USER_SOURCES_CPP =\
 	../../Sys/Net/Source/SysNet.cpp\
 	Source/SysNet.cpp\
 	Source/SysThread.cpp\
-	Source/SysTime.cpp
+	Source/SysTime.cpp\
+	Source/main.cpp
 
 USER_SOURCES_OBJC = \
-	Source/Util.m\
-	Source/GameAppDelegate.m\
 	Source/GameWindow.m\
-	Source/GameWindowDelegate.m\
 	Source/GameApplication.m
 
 USER_SOURCES_OBJCPP = \
-	Source/main.mm\
 	Source/SysFile.mm\
-	Source/SysKey.mm
+	Source/GameAppDelegate.mm\
+	Source/GameWindowDelegate.mm\
+	Source/SysKey.mm\
+	Source/Platform.mm
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
