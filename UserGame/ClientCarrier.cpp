@@ -6,7 +6,7 @@
 
 namespace ClientCarrier {
   const uint8_t max = 128;
-  GameTime::MSecond16 durations[max];
+  SysTime::MSecond16 durations[max];
   float timeouts[max];
   uint16_t handles[max];
   uint8_t count = 0;

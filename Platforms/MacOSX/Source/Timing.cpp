@@ -6,9 +6,9 @@
 #include "MacOSX/Config.h"
 #include "MacOSX/Timing.h"
 
-static GameTime::USecond64 gameStartTime;
-static GameTime::USecond64 frameStartTime;
-static GameTime::USecond64 frameLastTime;
+static SysTime::USecond64 gameStartTime;
+static SysTime::USecond64 frameStartTime;
+static SysTime::USecond64 frameLastTime;
 
 void timingInitialize() {
   gameStartTime = SysTime::get();
@@ -20,8 +20,8 @@ void timingStartFrame() {
 }
 
 void timingWaitForNextFrame() {
-  GameTime::USecond64 now = GameTime::get();
-  GameTime::USecond64 duration = now-frameStartTime;
+  SysTime::USecond64 now = GameTime::get();
+  SysTime::USecond64 duration = now-frameStartTime;
   double rest = Config::targetFrameDuration-0.000001*duration;
   usleep(Quanta::max(rest*1000000.0, 0.0));
   frameLastTime = frameStartTime;

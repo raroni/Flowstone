@@ -5,13 +5,13 @@
 #include "PingPong.h"
 
 namespace PingPong {
-  static GameTime::MSecond16S timeUntilPing = 0;
-  static const GameTime::MSecond16 interval = 1500;
+  static SysTime::MSecond16S timeUntilPing = 0;
+  static const SysTime::MSecond16 interval = 1500;
   uint8_t nextPingID = 0;
-  GameTime::MSecond16 rtt = 250;
-  GameTime::MSecond32 startTimes[UINT8_MAX];
+  SysTime::MSecond16 rtt = 250;
+  SysTime::MSecond32 startTimes[UINT8_MAX];
 
-  GameTime::MSecond16 getRTT() {
+  SysTime::MSecond16 getRTT() {
     return rtt;
   }
 
@@ -32,8 +32,8 @@ namespace PingPong {
 
   void handlePong(uint8_t pingID) {
     // todo: check if already received pong for pingID
-    GameTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[pingID];
-    GameTime::MSecond32S difference = packetRTT-rtt;
+    SysTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[pingID];
+    SysTime::MSecond32S difference = packetRTT-rtt;
     rtt += difference/10;
   }
 
