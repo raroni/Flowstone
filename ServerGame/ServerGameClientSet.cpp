@@ -5,6 +5,7 @@
 
 // dummy:
 #include "ServerGame/ServerCarrier.h"
+#include "Common/MessageType.h"
 
 namespace ServerGameClientSet {
   static ServerGameClientIDPool idPool;
@@ -14,7 +15,7 @@ namespace ServerGameClientSet {
   ServerGameClientID ids[ServerGameConfig::clientMax];
   Piper::ClientID piperIDs[ServerGameConfig::clientMax];
   uint8_t sendCounts[ServerGameConfig::clientMax];
-  uint32_t rtts[ServerGameConfig::clientMax];
+  uint32_t rtts[ServerGameConfig::clientMax] = { 5000 };
   uint8_t count = 0;
 
   namespace PingPong {
@@ -69,8 +70,10 @@ namespace ServerGameClientSet {
     PingPong::nextIDs[count] = 0;
     count++;
 
+
     // dummy:
-    ServerCarrier::send(id, "hey", 4, 40);
+    char test[] = { static_cast<char>(MessageType::Test) };
+    ServerCarrier::send(id, test, 1, 30);
   }
 
   uint8_t getCount() {

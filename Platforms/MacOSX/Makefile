@@ -42,6 +42,7 @@ USER_SOURCES_CPP =\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
 	../../UserGame/ClientNet.cpp\
+	../../UserGame/ClientAckHelper.cpp\
 	../../UserGame/TorchManager.cpp\
 	../../UserGame/Animation/Animator.cpp\
 	../../UserGame/Animation/Registry.cpp\

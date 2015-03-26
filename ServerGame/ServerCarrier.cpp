@@ -3,8 +3,6 @@
 #include "ServerGame/ServerGameClientSet.h"
 #include "ServerGame/ServerCarrier.h"
 
-#include <stdio.h>
-
 namespace ServerCarrier {
   using namespace ServerGameClientSet;
   using namespace ServerGameClientSet::Carrying;
@@ -38,10 +36,8 @@ namespace ServerCarrier {
           uint16_t handle = handleSets[ci].handles[mi];
           uint16_t length = messageBuffers[ci].read(handle, &message);
           piperIDSets[ci].ids[mi] = ServerNet::sendMessage(clientID, message, length);
-          printf("Sent!\n");
         }
         else if(ServerNet::getStatus(clientID, piperIDSets[ci].ids[mi]) == Piper::AckStatus::Yes) {
-          printf("Yeah delivered!\n");
           remove(ci, mi);
           mi--;
         }

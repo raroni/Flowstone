@@ -6,13 +6,13 @@
 #include "ClientCarrier.h"
 #include "ClientGame.h"
 
-#include <stdio.h>
-
 void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   renderer.initialize();
   renderer.updateResolution({ resolutionWidth, resolutionHeight });
   flow.initialize(renderer);
 
+
+  ClientNet::initialize();
   Piper::Address address;
   address.ip[0] = 127;
   address.ip[1] = 0;
@@ -24,8 +24,8 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   // dummy
   UserGame::startServer();
 
-  char test[] = { static_cast<char>(MessageType::Test) };
-  ClientCarrier::send(test, 4, 30);
+  //char test[] = { static_cast<char>(MessageType::Test) };
+  //ClientCarrier::send(test, 4, 30);
 }
 
 void ClientGame::update(double timeDelta) {
@@ -54,28 +54,28 @@ void ClientGame::updateKeyboard() {
 void ClientGame::readNet() {
   ClientNet::poll();
 
+  MessageType type;
   const void *message = nullptr;
   uint16_t messageLength = 0;
 
-  while(ClientNet::readMessage(&message, &messageLength)) {
-    MessageType type = *static_cast<const MessageType*>(message);
+  while(ClientNet::readMessage(&type, &message, &messageLength)) {
     switch(type) {
       case MessageType::Pong: {
-        if(messageLength == 2) {
-          uint8_t pingID = static_cast<const uint8_t*>(message)[1];
+        if(messageLength == 1) {
+          uint8_t pingID = *static_cast<const uint8_t*>(message);
           PingPong::handlePong(pingID);
         }
         break;
       }
       case MessageType::Ping: {
-        if(messageLength == 2) {
-          uint8_t pingID = static_cast<const uint8_t*>(message)[1];
+        if(messageLength == 1) {
+          uint8_t pingID = *static_cast<const uint8_t*>(message);
           PingPong::handlePing(pingID);
         }
         break;
       }
       default:
-        printf("Client got something unknown.\n");
+        //printf("Client got something unknown.\n");
         break;
     }
   }

@@ -1,8 +1,13 @@
 #include "Common/Piper/Client.h"
+#include "ClientAckHelper.h"
 #include "ClientNet.h"
 
 namespace ClientNet {
   Piper::Client pipe;
+
+  void initialize() {
+    ClientAckHelper::initialize();
+  }
 
   void setAddress(Piper::Address address) {
     pipe.setAddress(address);
@@ -16,15 +21,24 @@ namespace ClientNet {
     pipe.clear();
   }
 
-  bool readMessage(const void **message, uint16_t *messageLength) {
-    return pipe.readMessage(message, messageLength);
+  bool readMessage(MessageType *type, const void **message, uint16_t *messageLength) {
+    bool result = pipe.readMessage(message, messageLength);
+    if(result) {
+      *messageLength = (*messageLength)-1;
+      *type = *static_cast<const MessageType*>(*message);
+      *message = static_cast<const char*>(*message)+1;
+      ClientAckHelper::handleReceive(*type);
+    }
+    return result;
   }
 
   Piper::Sequence sendMessage(const void *message, uint16_t messageLength) {
+    ClientAckHelper::handleSend();
     return pipe.sendMessage(message, messageLength);
   }
 
   void dispatch() {
+    ClientAckHelper::check();
     pipe.dispatch();
   }
 
