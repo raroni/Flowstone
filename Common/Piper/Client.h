@@ -7,7 +7,8 @@
 #include "Common/Piper/Packet.h"
 #include "Common/Piper/MessageBuffer.h"
 #include "Common/Piper/ClientOutBuffer.h"
-#include "Common/Piper/AckSet.h"
+#include "Common/Piper/AckSet128.h"
+#include "Common/Piper/AckSet32.h"
 
 namespace Piper {
   class Client {
@@ -17,19 +18,19 @@ namespace Piper {
     void poll();
     void clear();
     bool readMessage(const void **message, uint16_t *messageLength);
-    void sendMessage(Sequence id, const void *message, uint16_t messageLength);
+    Sequence sendMessage(const void *message, uint16_t messageLength);
     void dispatch();
-    uint16_t createID();
+    AckStatus getStatus(Sequence id) const;
   private:
-    uint16_t nextID = 0;
     uint16_t inBufferPosition = 0;
     struct {
       uint16_t offsets[Config::Client::inMessageMax];
       uint16_t lengths[Config::Client::inMessageMax];
       char storage[Config::Client::inMessageCapacity];
     } inData;
-    AckSet inAcks;
-    AckSet outAcks;
+    Sequence nextID = 0;
+    AckSet32 inAcks;
+    AckSet128 outAcks;
     MessageBuffer inBuffer;
     ClientOutBuffer outBuffer;
     Socket socket;

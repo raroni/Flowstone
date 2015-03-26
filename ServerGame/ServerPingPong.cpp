@@ -1,35 +1,46 @@
 #include <string.h>
+#include "Common/GameTime.h"
 #include "Common/MessageType.h"
+#include "ServerGameClientSet.h"
+#include "ServerGame/ServerNet.h"
 #include "ServerPingPong.h"
 
-#include <stdio.h>
-
 namespace ServerPingPong {
-  static Piper::Server *pipe;
-  static Piper::Sequence *nextSequenceID;
+  using namespace ServerGameClientSet;
+  using namespace ServerGameClientSet::PingPong;
 
-  void configure(Piper::Server *aPipe, Piper::Sequence *aNextSequenceID) {
-    pipe = aPipe;
-    nextSequenceID = aNextSequenceID;
-  }
+  static const double interval = 1.5;
 
-  void handlePing(Piper::ClientID clientID, uint8_t pingID) {
+  void handlePing(ServerGameClientID clientID, uint8_t pingID) {
     char message[2];
     message[0] = static_cast<char>(MessageType::Pong);
     memcpy(message+1, &pingID, 1);
-    pipe->sendMessage(
-      clientID,
-      pipe->createSequenceID(clientID),
-      message,
-      sizeof(message)
-    );
+    ServerNet::sendMessage(clientID, message, sizeof(message));
+  }
+
+  void handlePong(ServerGameClientID clientID, uint8_t pingID) {
+    // todo: check if already received pong for pingID
+    uint8_t index = indices[clientID];
+    GameTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[index].list[pingID];
+    GameTime::MSecond32S difference = packetRTT-rtts[index];
+    rtts[index] += difference/10;
   }
 
   void update(double timeDelta) {
-    /*
-    for(uint8_t i=0; i<pipe->getClientCount(); ++i) {
-      // what to do?
+    for(uint8_t i=0; i<getCount(); ++i) {
+      timeouts[i] -= timeDelta;
+      if(timeouts[i] <= 0) {
+        uint8_t nextID = nextIDs[i];
+        startTimes[i].list[nextID] = GameTime::get()/1000;
+
+        // todo: generalize this code, no need to do this manually on both client/server
+        char message[2];
+        message[0] = static_cast<char>(MessageType::Ping);
+        memcpy(message+1, &nextID, 1);
+        nextIDs[i]++;
+        ServerNet::sendMessage(ids[i], message, sizeof(message));
+        timeouts[i] += interval;
+      }
     }
-    */
   }
 }

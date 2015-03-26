@@ -19,8 +19,8 @@ namespace Piper {
     serverAddress = address;
   }
 
-  uint16_t Client::createID() {
-    return nextID++;
+  AckStatus Client::getStatus(Sequence id) const {
+    return outAcks.getStatus(id);
   }
 
   void Client::poll() {
@@ -41,10 +41,8 @@ namespace Piper {
         }
       }
 
-      if(inAcks.getStatus(packet.id) == AckStatus::No) {
-        inAcks.ack(packet.id);
-        inBuffer.write(packet.message, packet.messageLength);
-      }
+      inAcks.ack(packet.id);
+      inBuffer.write(packet.message, packet.messageLength);
     }
   }
 
@@ -58,8 +56,9 @@ namespace Piper {
     inBufferPosition = 0;
   }
 
-  void Client::sendMessage(Sequence id, const void *message, uint16_t messageLength) {
-    outBuffer.write(id, message, messageLength);
+  Sequence Client::sendMessage(const void *message, uint16_t messageLength) {
+    outBuffer.write(nextID, message, messageLength);
+    return nextID++;
   }
 
   void Client::dispatch() {

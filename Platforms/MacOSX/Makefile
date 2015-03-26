@@ -22,7 +22,8 @@ USER_SOURCES_CPP =\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
-	../../Common/Piper/AckSet.cpp\
+	../../Common/Piper/AckSet128.cpp\
+	../../Common/Piper/AckSet32.cpp\
 	../../Common/Piper/ClientOutBuffer.cpp\
 	../../Common/Piper/Util.cpp\
 	../../Common/Piper/ClientIDPool.cpp\
@@ -32,9 +33,16 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/ServerOutBuffer.cpp\
 	../../Common/Piper/Transmission.cpp\
 	../../ServerGame/ServerGame.cpp\
+	../../ServerGame/ServerGameClientSet.cpp\
+	../../ServerGame/ServerGameClientIDPool.cpp\
+	../../ServerGame/ServerNet.cpp\
+	../../ServerGame/ServerAckHelper.cpp\
 	../../ServerGame/ServerPingPong.cpp\
+	../../ServerGame/ServerCarrier.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ClientGame.cpp\
+	../../UserGame/ClientNet.cpp\
+	../../UserGame/ClientAckHelper.cpp\
 	../../UserGame/TorchManager.cpp\
 	../../UserGame/Animation/Animator.cpp\
 	../../UserGame/Animation/Registry.cpp\
@@ -42,6 +50,8 @@ USER_SOURCES_CPP =\
 	../../UserGame/AtmosphereColor.cpp\
 	../../UserGame/Interpolation/Interpolater.cpp\
 	../../UserGame/PingPong.cpp\
+	../../UserGame/ClientCarrier.cpp\
+	../../Common/LoopStream.cpp\
 	../../UserGame/Keyboard.cpp\
 	../../UserGame/RendererFeeder.cpp\
 	../../UserGame/Rendering/Renderer.cpp\
@@ -164,7 +174,9 @@ TEST_SOURCES =\
 	../../Common/Physics/CollisionResolver.cpp\
 	../../Common/Physics/CollisionDetector.cpp\
 	../../Common/Piper/Util.cpp\
-	../../Common/Piper/AckSet.cpp\
+	../../Common/Piper/AckSet128.cpp\
+	../../Common/Piper/AckSet32.cpp\
+	../../Common/LoopStream.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\

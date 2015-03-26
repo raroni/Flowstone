@@ -3,7 +3,10 @@
 
 enum class MessageType : char {
   Ping,
-  Pong
+  Pong,
+  Test,
+
+  Count
 };
 
 #endif

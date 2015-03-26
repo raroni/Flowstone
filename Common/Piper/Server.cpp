@@ -21,6 +21,11 @@ namespace Piper {
     return false;
   }
 
+  AckStatus Server::getStatus(ClientID clientID, Sequence sequenceID) const {
+    uint8_t index = indices[clientID];
+    return outAcks[index].getStatus(sequenceID);
+  }
+
   Sequence Server::createSequenceID(ClientID id) {
     uint8_t index = indices[id];
     return nextSequenceIDs[index]++;
@@ -47,29 +52,29 @@ namespace Piper {
       }
 
       uint8_t index = indices[id];
-      AckSet &outAckSet = outAcks[index];
-      outAckSet.ack(packet.ackHead);
+      AckSet128 &outAckSet128 = outAcks[index];
+      outAckSet128.ack(packet.ackHead);
       for(uint8_t i=0; i<32; ++i) {
         if(packet.ackBits.get(i)) {
-          outAckSet.ack(packet.ackHead-1-i);
+          outAckSet128.ack(packet.ackHead-1-i);
         }
       }
 
-      AckSet &inAckSet = inAcks[index];
-      if(inAckSet.getStatus(packet.id) == AckStatus::No) {
-        inAckSet.ack(packet.id);
-        inBuffer.write(id, packet.message, packet.messageLength);
-      }
+      AckSet32 &inAckSet = inAcks[index];
+      inAckSet.ack(packet.id);
+      inBuffer.write(id, packet.message, packet.messageLength);
     }
   }
 
-  void Server::sendMessage(ClientID clientID, Sequence sequenceID, const void *message, uint16_t messageLength) {
+  Sequence Server::sendMessage(ClientID clientID, const void *message, uint16_t messageLength) {
+    Sequence sequenceID = createSequenceID(clientID);
     outBuffer.write(
       clientID,
       sequenceID,
       message,
       messageLength
     );
+    return sequenceID;
   }
 
   void Server::clear() {
@@ -93,7 +98,7 @@ namespace Piper {
       outBuffer.read(p, &clientID, &sequenceID, &message, &messageLength);
 
       uint8_t index = indices[clientID];
-      const AckSet &acks = inAcks[index];
+      const AckSet32 &acks = inAcks[index];
       packet.address = addresses[index];
       packet.id = sequenceID;
       packet.ackHead = acks.getHead();

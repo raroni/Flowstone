@@ -1,45 +1,46 @@
 #include <string.h>
 #include "Common/GameTime.h"
 #include "Common/MessageType.h"
+#include "ClientNet.h"
 #include "PingPong.h"
 
-#include <stdio.h>
-#include <inttypes.h>
-
 namespace PingPong {
-  Piper::Client *pipe;
-  static double timeUntilPing = 0;
-  static const double interval = 1.5;
+  static GameTime::MSecond16S timeUntilPing = 0;
+  static const GameTime::MSecond16 interval = 1500;
   uint8_t nextPingID = 0;
+  GameTime::MSecond16 rtt = 250;
+  GameTime::MSecond32 startTimes[UINT8_MAX];
 
-  uint32_t rtt = 0;
-
-  uint64_t startTimes[UINT8_MAX];
-
-  void setPipe(Piper::Client &aPipe) {
-    pipe = &aPipe;
+  GameTime::MSecond16 getRTT() {
+    return rtt;
   }
 
   void update(double timeDelta) {
-    timeUntilPing -= timeDelta;
+    timeUntilPing -= timeDelta*1000;
     if(timeUntilPing <= 0) {
-      Piper::Sequence id = pipe->createID();
+      startTimes[nextPingID] = GameTime::get()/1000;
+
       // todo: generalize this code, no need to do this manually on both client/server
-
-      startTimes[nextPingID] = GameTime::get();
-
       char message[2];
       message[0] = static_cast<char>(MessageType::Ping);
       memcpy(message+1, &nextPingID, 1);
       nextPingID++;
-      pipe->sendMessage(id, message, sizeof(message));
+      ClientNet::sendMessage(message, sizeof(message));
       timeUntilPing += interval;
     }
   }
 
   void handlePong(uint8_t pingID) {
-    int32_t packetRTT = GameTime::get()-startTimes[pingID];
-    int32_t difference = packetRTT-rtt;
+    // todo: check if already received pong for pingID
+    GameTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[pingID];
+    GameTime::MSecond32S difference = packetRTT-rtt;
     rtt += difference/10;
+  }
+
+  void handlePing(uint8_t pingID) {
+    char message[2];
+    message[0] = static_cast<char>(MessageType::Pong);
+    memcpy(message+1, &pingID, 1);
+    ClientNet::sendMessage(message, sizeof(message));
   }
 }
