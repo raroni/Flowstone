@@ -4,6 +4,7 @@
 #include "UserGame.h"
 #include "PingPong.h"
 #include "ClientCarrier.h"
+#include "PresentationSync.h"
 #include "ClientGame.h"
 
 void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
@@ -35,7 +36,11 @@ void ClientGame::update(double timeDelta) {
   flow.update(timeDelta, keyboard);
   ClientCarrier::update(timeDelta);
 
-  renderer.draw();
+  if(PresentationSync::shouldDraw()) {
+    renderer.draw();
+    PresentationSync::handleDrawCompletion();
+  }
+
   ClientNet::dispatch();
 }
 

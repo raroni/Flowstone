@@ -4,11 +4,10 @@
 #include "ServerGame/ServerGame.h"
 #include "UserGame/ClientGame.h"
 #include "UserGame/UserGame.h"
+#include "PresentationSync.h"
+#include "Presentation.h"
 #include "SysThread.h"
-
-// dummy
 #include "SysTime/SysTime.h"
-#include <stdio.h>
 
 namespace UserGame {
   static struct {
@@ -21,7 +20,7 @@ namespace UserGame {
   static SysTime::USecond64 gameStartTime;
   static SysTime::USecond64 frameStartTime;
   static SysTime::USecond64 frameLastTime;
-  const double targetFrameDuration = 1.0/60;
+  const double targetFrameDuration = 1.0/500;
   bool terminationRequested = false;
   SysThread::Mutex terminateMutex;
   SysThread::Thread presenter;
@@ -31,15 +30,6 @@ namespace UserGame {
     bool copy = terminationRequested;
     SysThread::unlock(&terminateMutex);
     return copy;
-  }
-
-  void* present(void *data) {
-    while(!shouldTerminate()) {
-      printf("Background going on!\n");
-      SysTime::sleep(200000);
-    }
-    printf("thread quitting\n");
-    return NULL;
   }
 
   void startServer() {
@@ -54,6 +44,7 @@ namespace UserGame {
   }
 
   void initialize() {
+    PresentationSync::initialize();
     Platform::initialize(resolution.width, resolution.height);
     GameTime::initialize();
     clientGame.initialize(resolution.width, resolution.height);
@@ -62,13 +53,14 @@ namespace UserGame {
     frameLastTime = GameTime::get();
 
     SysThread::initMutex(&terminateMutex);
-    SysThread::init(&presenter, present);
+    SysThread::init(&presenter, Presentation::run);
   }
 
   void terminate() {
     SysThread::join(&presenter);
     SysThread::destroyMutex(&terminateMutex);
     Platform::terminate();
+    PresentationSync::terminate();
   }
 
   void update() {

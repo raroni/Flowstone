@@ -39,6 +39,8 @@ USER_SOURCES_CPP =\
 	../../ServerGame/ServerPingPong.cpp\
 	../../ServerGame/ServerCarrier.cpp\
 	../../UserGame/UserGame.cpp\
+	../../UserGame/Presentation.cpp\
+	../../UserGame/PresentationSync.cpp\
 	../../UserGame/ClientGame.cpp\
 	../../UserGame/ClientNet.cpp\
 	../../UserGame/ClientAckHelper.cpp\

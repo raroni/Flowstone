@@ -8,6 +8,7 @@ namespace Platform {
   void handlePreFrame();
   void handlePostFrame();
   void terminate();
+  void present();
 }
 
 #endif

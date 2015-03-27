@@ -139,8 +139,11 @@ namespace Platform {
   }
 
   void handlePostFrame() {
-    [context flushBuffer];
     SysKey::clear();
+  }
+
+  void present() {
+    [context flushBuffer];
   }
 
   void terminate() {
