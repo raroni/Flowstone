@@ -11,8 +11,12 @@ public:
   void initialize();
   void update(double timeDelta);
   void terminate();
+  void requestTermination();
+  bool shouldTerminate();
 private:
   SysThread::Thread presenter;
+  bool terminationRequested = false;
+  SysThread::Mutex terminateMutex;
   struct {
     const uint16_t width = 800;
     const uint16_t height = 600;

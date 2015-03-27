@@ -1,13 +1,14 @@
 #ifndef USER_GAME_H
 #define USER_GAME_H
 
-#include <stdint.h>
+// todo: fix hack
+#include "ClientGame.h"
 
 namespace UserGame {
   void run();
   void startServer();
   void requestTermination();
-  bool shouldTerminate();
+  extern ClientGame *stupidHack; // remember to remove header above
 }
 
 #endif

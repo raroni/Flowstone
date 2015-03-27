@@ -12,6 +12,7 @@
 
 void ClientGame::initialize() {
   ClientPlatform::initialize(resolution.width, resolution.height);
+  SysThread::initMutex(&terminateMutex);
   PresentationSync::initialize();
   SysThread::init(&presenter, Presentation::run);
 
@@ -38,6 +39,7 @@ void ClientGame::initialize() {
 void ClientGame::terminate() {
   SysThread::join(&presenter);
   PresentationSync::terminate();
+  SysThread::destroyMutex(&terminateMutex);
   ClientPlatform::terminate();
 }
 
@@ -70,6 +72,19 @@ void ClientGame::updateKeyboard() {
       keyboard.handleUp(event.key);
     }
   }
+}
+
+bool ClientGame::shouldTerminate() {
+  SysThread::lock(&terminateMutex);
+  bool copy = terminationRequested;
+  SysThread::unlock(&terminateMutex);
+  return copy;
+}
+
+void ClientGame::requestTermination() {
+  SysThread::lock(&terminateMutex);
+  terminationRequested = true;
+  SysThread::unlock(&terminateMutex);
 }
 
 void ClientGame::readNet() {

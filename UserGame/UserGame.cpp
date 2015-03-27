@@ -13,15 +13,7 @@ namespace UserGame {
   static SysTime::USecond64 frameStartTime;
   static SysTime::USecond64 frameLastTime;
   const double targetFrameDuration = 1.0/500;
-  bool terminationRequested = false;
-  SysThread::Mutex terminateMutex;
-
-  bool shouldTerminate() {
-    SysThread::lock(&terminateMutex);
-    bool copy = terminationRequested;
-    SysThread::unlock(&terminateMutex);
-    return copy;
-  }
+  ClientGame *stupidHack = nullptr;
 
   void startServer() {
     serverGame = new ServerGame();
@@ -29,13 +21,11 @@ namespace UserGame {
   }
 
   void requestTermination() {
-    SysThread::lock(&terminateMutex);
-    terminationRequested = true;
-    SysThread::unlock(&terminateMutex);
+    clientGame.requestTermination();
   }
 
   void initialize() {
-    SysThread::initMutex(&terminateMutex);
+    stupidHack = &clientGame;
     GameTime::initialize();
     clientGame.initialize();
 
@@ -45,7 +35,6 @@ namespace UserGame {
 
   void terminate() {
     clientGame.terminate();
-    SysThread::destroyMutex(&terminateMutex);
   }
 
   void update() {
@@ -67,7 +56,7 @@ namespace UserGame {
   void run() {
     initialize();
 
-    while(!shouldTerminate()) {
+    while(!clientGame.shouldTerminate()) {
       update();
     }
 
