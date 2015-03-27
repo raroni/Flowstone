@@ -7,9 +7,14 @@
 
 class ClientGame {
 public:
-  void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
+  void initialize();
   void update(double timeDelta);
+  void terminate();
 private:
+  struct {
+    const uint16_t width = 800;
+    const uint16_t height = 600;
+  } resolution;
   void readNet();
   void updateKeyboard();
   Keyboard keyboard;

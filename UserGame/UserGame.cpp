@@ -1,5 +1,4 @@
 #include "Quanta/Util.h"
-#include "UserGame/ClientPlatform.h"
 #include "Common/GameTime.h"
 #include "ServerGame/ServerGame.h"
 #include "UserGame/ClientGame.h"
@@ -10,11 +9,6 @@
 #include "SysTime/SysTime.h"
 
 namespace UserGame {
-  static struct {
-    const uint16_t width = 800;
-    const uint16_t height = 600;
-  } resolution;
-
   ClientGame clientGame;
   ServerGame *serverGame = nullptr;
   static SysTime::USecond64 gameStartTime;
@@ -45,9 +39,8 @@ namespace UserGame {
 
   void initialize() {
     PresentationSync::initialize();
-    ClientPlatform::initialize(resolution.width, resolution.height);
     GameTime::initialize();
-    clientGame.initialize(resolution.width, resolution.height);
+    clientGame.initialize();
 
     gameStartTime = SysTime::get();
     frameLastTime = GameTime::get();
@@ -59,7 +52,7 @@ namespace UserGame {
   void terminate() {
     SysThread::join(&presenter);
     SysThread::destroyMutex(&terminateMutex);
-    ClientPlatform::terminate();
+    clientGame.terminate();
     PresentationSync::terminate();
   }
 
@@ -83,9 +76,7 @@ namespace UserGame {
     initialize();
 
     while(!shouldTerminate()) {
-      ClientPlatform::handlePreFrame();
-      UserGame::update();
-      ClientPlatform::handlePostFrame();
+      update();
     }
 
     terminate();

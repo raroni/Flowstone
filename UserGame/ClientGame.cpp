@@ -1,3 +1,4 @@
+#include "UserGame/ClientPlatform.h"
 #include "SysKey/SysKey.h"
 #include "Common/MessageType.h"
 #include "ClientNet.h"
@@ -7,9 +8,10 @@
 #include "PresentationSync.h"
 #include "ClientGame.h"
 
-void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
+void ClientGame::initialize() {
+  ClientPlatform::initialize(resolution.width, resolution.height);
   renderer.initialize();
-  renderer.updateResolution({ resolutionWidth, resolutionHeight });
+  renderer.updateResolution({ resolution.width, resolution.height });
   flow.initialize(renderer);
 
   ClientNet::initialize();
@@ -28,7 +30,13 @@ void ClientGame::initialize(uint16_t resolutionWidth, uint16_t resolutionHeight)
   //ClientCarrier::send(test, 4, 30);
 }
 
+void ClientGame::terminate() {
+  ClientPlatform::terminate();
+}
+
 void ClientGame::update(double timeDelta) {
+  ClientPlatform::handlePreFrame();
+
   readNet();
   PingPong::update(timeDelta);
 
@@ -42,6 +50,8 @@ void ClientGame::update(double timeDelta) {
   }
 
   ClientNet::dispatch();
+
+  ClientPlatform::handlePostFrame();
 }
 
 void ClientGame::updateKeyboard() {
