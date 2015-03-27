@@ -7,13 +7,11 @@
 #include "SysTime/SysTime.h"
 
 namespace UserGame {
-  ClientGame clientGame;
   ServerGame *serverGame = nullptr;
   static SysTime::USecond64 gameStartTime;
   static SysTime::USecond64 frameStartTime;
   static SysTime::USecond64 frameLastTime;
   const double targetFrameDuration = 1.0/500;
-  ClientGame *stupidHack = nullptr;
 
   void startServer() {
     serverGame = new ServerGame();
@@ -21,20 +19,19 @@ namespace UserGame {
   }
 
   void requestTermination() {
-    clientGame.requestTermination();
+    ClientGame::requestTermination();
   }
 
   void initialize() {
-    stupidHack = &clientGame;
     GameTime::initialize();
-    clientGame.initialize();
+    ClientGame::initialize();
 
     gameStartTime = SysTime::get();
     frameLastTime = GameTime::get();
   }
 
   void terminate() {
-    clientGame.terminate();
+    ClientGame::terminate();
   }
 
   void update() {
@@ -44,7 +41,7 @@ namespace UserGame {
     if(serverGame != nullptr) {
       serverGame->update(timeDelta);
     }
-    clientGame.update(timeDelta);
+    ClientGame::update(timeDelta);
 
     SysTime::USecond64 now = GameTime::get();
     SysTime::USecond64 duration = now-frameStartTime;
@@ -56,7 +53,7 @@ namespace UserGame {
   void run() {
     initialize();
 
-    while(!clientGame.shouldTerminate()) {
+    while(!ClientGame::shouldTerminate()) {
       update();
     }
 

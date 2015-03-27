@@ -1,18 +1,15 @@
 #include <stddef.h>
 #include "ClientPlatform.h"
 #include "SysTime/SysTime.h"
-#include "UserGame.h"
 #include "PresentationSync.h"
 #include "Presentation.h"
-
-// todo: fix this hack
-#include "UserGame.h"
+#include "ClientGame.h"
 
 namespace Presentation {
   using namespace PresentationSync;
 
   void* run(void *data) {
-    while(!UserGame::stupidHack->shouldTerminate()) {
+    while(!ClientGame::shouldTerminate()) {
       if(shouldPresent()) {
         ClientPlatform::present();
         handlePresentationCompletion();
