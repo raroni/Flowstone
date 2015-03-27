@@ -3,6 +3,7 @@
 
 #include "Rendering/Renderer.h"
 #include "Keyboard.h"
+#include "SysThread.h"
 #include "MainFlow/Manager.h"
 
 class ClientGame {
@@ -11,6 +12,7 @@ public:
   void update(double timeDelta);
   void terminate();
 private:
+  SysThread::Thread presenter;
   struct {
     const uint16_t width = 800;
     const uint16_t height = 600;

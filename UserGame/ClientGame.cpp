@@ -1,4 +1,6 @@
 #include "UserGame/ClientPlatform.h"
+#include "PresentationSync.h"
+#include "Presentation.h"
 #include "SysKey/SysKey.h"
 #include "Common/MessageType.h"
 #include "ClientNet.h"
@@ -10,6 +12,9 @@
 
 void ClientGame::initialize() {
   ClientPlatform::initialize(resolution.width, resolution.height);
+  PresentationSync::initialize();
+  SysThread::init(&presenter, Presentation::run);
+
   renderer.initialize();
   renderer.updateResolution({ resolution.width, resolution.height });
   flow.initialize(renderer);
@@ -31,6 +36,8 @@ void ClientGame::initialize() {
 }
 
 void ClientGame::terminate() {
+  SysThread::join(&presenter);
+  PresentationSync::terminate();
   ClientPlatform::terminate();
 }
 

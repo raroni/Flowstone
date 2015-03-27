@@ -3,8 +3,6 @@
 #include "ServerGame/ServerGame.h"
 #include "UserGame/ClientGame.h"
 #include "UserGame/UserGame.h"
-#include "PresentationSync.h"
-#include "Presentation.h"
 #include "SysThread.h"
 #include "SysTime/SysTime.h"
 
@@ -17,7 +15,6 @@ namespace UserGame {
   const double targetFrameDuration = 1.0/500;
   bool terminationRequested = false;
   SysThread::Mutex terminateMutex;
-  SysThread::Thread presenter;
 
   bool shouldTerminate() {
     SysThread::lock(&terminateMutex);
@@ -38,22 +35,17 @@ namespace UserGame {
   }
 
   void initialize() {
-    PresentationSync::initialize();
+    SysThread::initMutex(&terminateMutex);
     GameTime::initialize();
     clientGame.initialize();
 
     gameStartTime = SysTime::get();
     frameLastTime = GameTime::get();
-
-    SysThread::initMutex(&terminateMutex);
-    SysThread::init(&presenter, Presentation::run);
   }
 
   void terminate() {
-    SysThread::join(&presenter);
-    SysThread::destroyMutex(&terminateMutex);
     clientGame.terminate();
-    PresentationSync::terminate();
+    SysThread::destroyMutex(&terminateMutex);
   }
 
   void update() {
