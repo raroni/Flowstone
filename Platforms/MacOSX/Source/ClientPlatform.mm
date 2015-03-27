@@ -6,7 +6,7 @@
 #include "MacOSX/GameWindow.h"
 #include "MacOSX/GameWindowDelegate.h"
 #include "UserGame.h"
-#include "Platform.h"
+#include "ClientPlatform.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
@@ -107,7 +107,7 @@ static void pollEvents() {
   }
 }
 
-namespace Platform {
+namespace ClientPlatform {
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
     autoreleasePool = [[NSAutoreleasePool alloc] init];
 

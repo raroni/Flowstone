@@ -1,5 +1,5 @@
 #include "Quanta/Util.h"
-#include "UserGame/Platform.h"
+#include "UserGame/ClientPlatform.h"
 #include "Common/GameTime.h"
 #include "ServerGame/ServerGame.h"
 #include "UserGame/ClientGame.h"
@@ -45,7 +45,7 @@ namespace UserGame {
 
   void initialize() {
     PresentationSync::initialize();
-    Platform::initialize(resolution.width, resolution.height);
+    ClientPlatform::initialize(resolution.width, resolution.height);
     GameTime::initialize();
     clientGame.initialize(resolution.width, resolution.height);
 
@@ -59,7 +59,7 @@ namespace UserGame {
   void terminate() {
     SysThread::join(&presenter);
     SysThread::destroyMutex(&terminateMutex);
-    Platform::terminate();
+    ClientPlatform::terminate();
     PresentationSync::terminate();
   }
 
@@ -83,12 +83,11 @@ namespace UserGame {
     initialize();
 
     while(!shouldTerminate()) {
-      Platform::handlePreFrame();
+      ClientPlatform::handlePreFrame();
       UserGame::update();
-      Platform::handlePostFrame();
+      ClientPlatform::handlePostFrame();
     }
 
-    printf("Will terminate\n");
     terminate();
   }
 }

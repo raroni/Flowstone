@@ -1,4 +1,5 @@
-#include "Platform.h"
+#include <stddef.h>
+#include "ClientPlatform.h"
 #include "SysTime/SysTime.h"
 #include "UserGame.h"
 #include "PresentationSync.h"
@@ -10,7 +11,7 @@ namespace Presentation {
   void* run(void *data) {
     while(!UserGame::shouldTerminate()) {
       if(shouldPresent()) {
-        Platform::present();
+        ClientPlatform::present();
         handlePresentationCompletion();
       } else {
         SysTime::sleep(1000);

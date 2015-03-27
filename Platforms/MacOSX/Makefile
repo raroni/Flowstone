@@ -105,7 +105,7 @@ USER_SOURCES_OBJCPP = \
 	Source/GameAppDelegate.mm\
 	Source/GameWindowDelegate.mm\
 	Source/SysKey.mm\
-	Source/Platform.mm
+	Source/ClientPlatform.mm
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\

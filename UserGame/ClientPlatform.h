@@ -1,9 +1,9 @@
-#ifndef PLATFORM_H
-#define PLATFORM_H
+#ifndef CLIENT_PLATFORM_H
+#define CLIENT_PLATFORM_H
 
 #include <stdint.h>
 
-namespace Platform {
+namespace ClientPlatform {
   void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight);
   void handlePreFrame();
   void handlePostFrame();
