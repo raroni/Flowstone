@@ -40,6 +40,7 @@ USER_SOURCES_CPP =\
 	../../ServerGame/ServerCarrier.cpp\
 	../../UserGame/UserGame.cpp\
 	../../UserGame/ServerControl.cpp\
+	../../UserGame/ServerControlQueue.cpp\
 	../../UserGame/Presentation.cpp\
 	../../UserGame/PresentationSync.cpp\
 	../../UserGame/ClientGame.cpp\

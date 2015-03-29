@@ -2,6 +2,7 @@
 #include "SysTime/SysTime.h"
 #include "SysThread.h"
 #include "ServerGame/ServerGame.h"
+#include "ServerControlQueue.h"
 #include "ServerControl.h"
 
 namespace ServerControl {
@@ -13,39 +14,8 @@ namespace ServerControl {
     Completed
   };
 
-  enum Command {
-    Start,
-    Stop
-  };
-
-  class CommandQueue {
-    const static uint8_t max = 8;
-    uint8_t head = 0;
-    uint8_t tail = 0;
-    uint8_t count = 0;
-    Command list[max];
-  public:
-    Command getNext() const {
-      return list[tail];
-    }
-    void next() {
-      assert(count != 0);
-      count--;
-      tail = (tail+1) % 8;
-    }
-    void push(Command command) {
-      assert(count != max);
-      list[head] = command;
-      count++;
-      head = (head+1) % max;
-    }
-    uint16_t getCount() const {
-      return count;
-    }
-  };
-
   State state = Ready;
-  CommandQueue queue;
+  ServerControlQueue queue;
   SysThread::Mutex mutex;
   SysThread::Thread thread;
 
@@ -114,7 +84,7 @@ namespace ServerControl {
   }
 
   bool runNextCommand() {
-    Command command = queue.getNext();
+    ServerControlCommand command = queue.getNext();
     bool success;
 
     switch(command) {
