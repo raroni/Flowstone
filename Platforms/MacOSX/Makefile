@@ -43,7 +43,6 @@ USER_SOURCES_CPP =\
 	../../UserGame/ServerControlQueue.cpp\
 	../../UserGame/Presentation.cpp\
 	../../UserGame/PresentationSync.cpp\
-	../../UserGame/ClientGame.cpp\
 	../../UserGame/ClientNet.cpp\
 	../../UserGame/ClientAckHelper.cpp\
 	../../UserGame/TorchManager.cpp\

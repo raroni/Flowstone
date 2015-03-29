@@ -3,8 +3,7 @@
 
 namespace UserGame {
   void run();
-  void startServer();
-  void stopServer();
+  bool shouldTerminate();
   void requestTermination();
 }
 
