@@ -12,7 +12,7 @@ namespace ServerCarrier {
     uint8_t count = counts[clientIndex];
     uint16_t *handles = handleSets[clientIndex].handles;
     Piper::Sequence *piperIDs = piperIDSets[clientIndex].ids;
-    GameTime::MSecond16 *durations = durationSets[clientIndex].durations;
+    SysTime::MSecond16 *durations = durationSets[clientIndex].durations;
     float *timeouts = timeoutSets[clientIndex].timeouts;
 
     messageBuffers[clientIndex].release(handles[messageIndex]);
@@ -24,11 +24,11 @@ namespace ServerCarrier {
 
   void update(double timeDelta) {
     for(uint8_t ci=0; ci<getCount(); ++ci) {
-      GameTime::MSecond16 rtt = rtts[ci]/1000;
+      SysTime::MSecond16 rtt = rtts[ci]/1000;
       ServerGameClientID clientID = ids[ci];
       for(uint8_t mi=0; mi<counts[ci]; ++mi) {
-        GameTime::MSecond16 *durations = durationSets[ci].durations;
-        GameTime::MSecond16 duration = durations[mi];
+        SysTime::MSecond16 *durations = durationSets[ci].durations;
+        SysTime::MSecond16 duration = durations[mi];
         float timeout = timeoutSets[ci].timeouts[mi];
         if(duration > rtt*timeout) {
           durations[mi] = 0;

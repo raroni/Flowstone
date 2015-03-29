@@ -1,13 +1,12 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#import "MacOSX/Timing.h"
-#import "MacOSX/SysKey.h"
-#import "MacOSX/Util.h"
-#import "MacOSX/GameApplication.h"
-#import "MacOSX/GameAppDelegate.h"
-#import "MacOSX/GameWindow.h"
-#import "MacOSX/GameWindowDelegate.h"
-#import "UserGame.h"
+#include "MacOSX/SysKey.h"
+#include "MacOSX/GameApplication.h"
+#include "MacOSX/GameAppDelegate.h"
+#include "MacOSX/GameWindow.h"
+#include "MacOSX/GameWindowDelegate.h"
+#include "UserGame.h"
+#include "ClientPlatform.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
@@ -15,18 +14,13 @@ static GameWindow *window;
 static id windowDelegate;
 static NSOpenGLContext *context;
 
-static struct {
-  const uint16_t width = 800;
-  const uint16_t height = 600;
-} resolution;
-
 static void fatalError(NSString *message) {
   NSLog(@"Mac OSX system error: %@\n", message);
   exit(1);
 }
 
 static void handleSigint(int signum) {
-  requestTermination();
+  UserGame::requestTermination();
 }
 
 static void setupMenu() {
@@ -47,10 +41,10 @@ static void setupMenu() {
   [bar release];
 }
 
-static void createWindow() {
+static void createWindow(uint16_t resolutionWidth, uint16_t resolutionHeight) {
   unsigned int styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
 
-  window = [[GameWindow alloc] initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
+  window = [[GameWindow alloc] initWithContentRect:NSMakeRect(0, 0, resolutionWidth, resolutionHeight)
                                                  styleMask:styleMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
@@ -113,60 +107,56 @@ static void pollEvents() {
   }
 }
 
-static void initialize() {
-  autoreleasePool = [[NSAutoreleasePool alloc] init];
+namespace ClientPlatform {
+  void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
+    autoreleasePool = [[NSAutoreleasePool alloc] init];
 
-  CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
-  if(openglFramework == NULL) {
-    fatalError(@"Could not load Apple OpenGL.");
+    CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
+    if(openglFramework == NULL) {
+      fatalError(@"Could not load Apple OpenGL.");
+    }
+
+    signal(SIGINT, handleSigint);
+
+    [GameApplication sharedApplication];
+    [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+
+    setupMenu();
+
+    [NSApp finishLaunching];
+
+    appDelegate = [[GameAppDelegate alloc] init];
+    [NSApp setDelegate:appDelegate];
+
+    createWindow(resolutionWidth, resolutionHeight);
+    createContext();
+    [context makeCurrentContext];
+    [context setView:window.contentView];
   }
 
-  signal(SIGINT, handleSigint);
-
-  [GameApplication sharedApplication];
-  [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-
-  setupMenu();
-
-  [NSApp finishLaunching];
-
-  appDelegate = [[GameAppDelegate alloc] init];
-  [NSApp setDelegate:appDelegate];
-
-  createWindow();
-  createContext();
-  [context makeCurrentContext];
-  [context setView:window.contentView];
-}
-
-static void terminate() {
-  [context release];
-
-  [windowDelegate release];
-  window.delegate = nil;
-
-  [window release];
-
-  [NSApp setDelegate:nil];
-  [appDelegate release];
-
-  [autoreleasePool release];
-}
-
-int main() {
-  initialize();
-  UserGame::initialize(resolution.width, resolution.height);
-  timingInitialize();
-
-  while(shouldTerminate == NO) {
-    timingStartFrame();
+  void handlePreFrame() {
     pollEvents();
-    UserGame::update(timingGetDelta());
-    [context flushBuffer];
-    SysKey::clear();
-    timingWaitForNextFrame();
   }
 
-  terminate();
-  return 0;
+  void handlePostFrame() {
+    SysKey::clear();
+  }
+
+  void present() {
+    [context flushBuffer];
+  }
+
+  void terminate() {
+    [context release];
+
+    [windowDelegate release];
+    window.delegate = nil;
+
+    [window release];
+
+    [NSApp setDelegate:nil];
+    [appDelegate release];
+
+    [autoreleasePool release];
+  }
 }

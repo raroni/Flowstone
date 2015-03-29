@@ -15,11 +15,11 @@ namespace ServerGameClientSet {
   extern ServerGameClientID ids[ServerGameConfig::clientMax];
   extern Piper::ClientID piperIDs[ServerGameConfig::clientMax];
   extern uint8_t sendCounts[ServerGameConfig::clientMax];
-  extern GameTime::MSecond16 rtts[ServerGameConfig::clientMax];
+  extern SysTime::MSecond16 rtts[ServerGameConfig::clientMax];
 
   namespace PingPong {
     struct StartTimeSet {
-      GameTime::MSecond32 list[UINT8_MAX];
+      SysTime::MSecond32 list[UINT8_MAX];
     };
 
     extern StartTimeSet startTimes[ServerGameConfig::clientMax];
@@ -31,7 +31,7 @@ namespace ServerGameClientSet {
     const uint8_t max = 128;
 
     struct DurationSet {
-      GameTime::MSecond16 durations[max];
+      SysTime::MSecond16 durations[max];
     };
     struct TimeoutSet {
       float timeouts[max];

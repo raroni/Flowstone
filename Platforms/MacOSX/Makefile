@@ -4,7 +4,6 @@ CC = clang++
 CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
-	Source/Timing.cpp\
 	../../Common/Error.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\
@@ -40,7 +39,10 @@ USER_SOURCES_CPP =\
 	../../ServerGame/ServerPingPong.cpp\
 	../../ServerGame/ServerCarrier.cpp\
 	../../UserGame/UserGame.cpp\
-	../../UserGame/ClientGame.cpp\
+	../../UserGame/ServerControl.cpp\
+	../../UserGame/ServerControlQueue.cpp\
+	../../UserGame/Presentation.cpp\
+	../../UserGame/PresentationSync.cpp\
 	../../UserGame/ClientNet.cpp\
 	../../UserGame/ClientAckHelper.cpp\
 	../../UserGame/TorchManager.cpp\
@@ -91,19 +93,20 @@ USER_SOURCES_CPP =\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
 	../../Sys/Net/Source/SysNet.cpp\
 	Source/SysNet.cpp\
-	Source/SysTime.cpp
+	Source/SysThread.cpp\
+	Source/SysTime.cpp\
+	Source/main.cpp
 
 USER_SOURCES_OBJC = \
-	Source/Util.m\
-	Source/GameAppDelegate.m\
 	Source/GameWindow.m\
-	Source/GameWindowDelegate.m\
 	Source/GameApplication.m
 
 USER_SOURCES_OBJCPP = \
-	Source/main.mm\
 	Source/SysFile.mm\
-	Source/SysKey.mm
+	Source/GameAppDelegate.mm\
+	Source/GameWindowDelegate.mm\
+	Source/SysKey.mm\
+	Source/ClientPlatform.mm
 
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
@@ -114,6 +117,7 @@ USER_HEADER_DIRS =\
 	-I../../Sys/GFX/Include\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../Sys/Time/Include\
+	-I../../Sys/Thread/Include\
 	-I../../UserGame\
 	-I../..\
 	-IInclude

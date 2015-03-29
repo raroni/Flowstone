@@ -4,7 +4,15 @@
 #include <stdint.h>
 
 namespace SysTime {
-  uint64_t get();
+  typedef uint16_t MSecond16;
+  typedef int16_t MSecond16S;
+  typedef uint32_t MSecond32;
+  typedef int32_t MSecond32S;
+  typedef uint64_t MSecond64;
+  typedef uint64_t USecond64;
+
+  USecond64 get();
+  void sleep(USecond64 duration);
 }
 
 #endif

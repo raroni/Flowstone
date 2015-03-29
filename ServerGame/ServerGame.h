@@ -1,11 +1,11 @@
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
 
-class ServerGame {
-public:
+namespace ServerGame {
   void initialize();
-  void update(double timeDelta);
-  void readPipe();
+  void run();
+  void terminate();
+  void requestTermination();
 };
 
 #endif

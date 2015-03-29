@@ -1,10 +1,10 @@
-#import "MacOSX/Util.h"
+#include "UserGame.h"
 #import "MacOSX/GameWindowDelegate.h"
 
 @implementation GameWindowDelegate
 
 - (BOOL)windowShouldClose:(id)sender {
-    requestTermination();
+    UserGame::requestTermination();
     return NO;
 }
 

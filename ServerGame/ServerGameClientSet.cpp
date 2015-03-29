@@ -15,7 +15,7 @@ namespace ServerGameClientSet {
   ServerGameClientID ids[ServerGameConfig::clientMax];
   Piper::ClientID piperIDs[ServerGameConfig::clientMax];
   uint8_t sendCounts[ServerGameConfig::clientMax];
-  GameTime::MSecond16 rtts[ServerGameConfig::clientMax] = { 250 };
+  SysTime::MSecond16 rtts[ServerGameConfig::clientMax] = { 250 };
   uint8_t count = 0;
 
   namespace PingPong {

@@ -21,8 +21,8 @@ namespace ServerPingPong {
   void handlePong(ServerGameClientID clientID, uint8_t pingID) {
     // todo: check if already received pong for pingID
     uint8_t index = indices[clientID];
-    GameTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[index].list[pingID];
-    GameTime::MSecond32S difference = packetRTT-rtts[index];
+    SysTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[index].list[pingID];
+    SysTime::MSecond32S difference = packetRTT-rtts[index];
     rtts[index] += difference/10;
   }
 
