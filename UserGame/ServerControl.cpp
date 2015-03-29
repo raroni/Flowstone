@@ -135,15 +135,7 @@ namespace ServerControl {
     return success;
   }
 
-  void runCommandsBlocking() {
-    while(queue.getCount() != 0) {
-      if(!runNextCommand()) {
-        SysTime::sleep(1000);
-      }
-    }
-  }
-
-  void runCommandsNonBlocking() {
+  void runCommands() {
     while(queue.getCount() != 0) {
       if(!runNextCommand()) {
         return;
@@ -151,21 +143,17 @@ namespace ServerControl {
     }
   }
 
-  void joinThread() {
-    SysThread::join(&thread);
-    state = Ready;
-  }
-
   void checkCompleted() {
     lock();
     if(state == Completed) {
-      joinThread();
+      SysThread::join(&thread);
+      state = Ready;
     }
     unlock();
   }
 
   void update() {
-    runCommandsNonBlocking();
+    runCommands();
     checkCompleted();
   }
 
@@ -173,43 +161,24 @@ namespace ServerControl {
     SysThread::initMutex(&mutex);
   }
 
-  State getState() {
-    lock();
-    State copy = state;
-    unlock();
-    return copy;
+  void terminate() {
+    sync();
+    SysThread::destroyMutex(&mutex);
   }
 
-  void waitForCompleted() {
+  void sync() {
     while(1) {
-      if(getState() == Completed) {
+      update();
+      lock();
+      bool synced = (
+        queue.getCount() == 0 &&
+        (state == Ready || state == Running)
+      );
+      unlock();
+      if(synced) {
         return;
       }
       SysTime::sleep(1000);
     }
-  }
-
-  void sync() {
-    runCommandsBlocking();
-    // todo: ensure we arrive at either
-    // ready or running
-    // that all commands are executed does
-    // not mean all work has been done
-  }
-
-  void terminate() {
-    runCommandsBlocking();
-
-    State stateCopy = getState();
-    assert(stateCopy != Starting || stateCopy != Running);
-    if(stateCopy == Terminating) {
-      waitForCompleted();
-      joinThread();
-    }
-    else if(stateCopy == Completed) {
-      joinThread();
-    }
-
-    SysThread::destroyMutex(&mutex);
   }
 }
