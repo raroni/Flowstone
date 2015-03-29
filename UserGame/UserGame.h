@@ -4,6 +4,7 @@
 namespace UserGame {
   void run();
   void startServer();
+  void stopServer();
   void requestTermination();
 }
 

@@ -55,6 +55,7 @@ namespace ClientGame {
   }
 
   void terminate() {
+    UserGame::stopServer();
     SysThread::join(&presenter);
     PresentationSync::terminate();
     SysThread::destroyMutex(&terminateMutex);
