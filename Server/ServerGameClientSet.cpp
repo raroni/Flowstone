@@ -1,10 +1,10 @@
 #include <assert.h>
 #include <string.h>
-#include "ServerGame/ServerGameClientIDPool.h"
-#include "ServerGame/ServerGameClientSet.h"
+#include "Server/ServerGameClientIDPool.h"
+#include "Server/ServerGameClientSet.h"
 
 // dummy:
-#include "ServerGame/ServerCarrier.h"
+#include "Server/ServerCarrier.h"
 #include "Common/MessageType.h"
 
 namespace ServerGameClientSet {

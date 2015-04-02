@@ -5,9 +5,9 @@
 #include "Common/Piper/Config.h"
 #include "Common/Piper/Sequence.h"
 #include "Common/LoopStream.h"
-#include "ServerGame/ServerGameConfig.h"
+#include "Server/ServerGameConfig.h"
 #include "Common/Piper/ClientID.h"
-#include "ServerGame/ServerGameClientID.h"
+#include "Server/ServerGameClientID.h"
 
 namespace ServerGameClientSet {
   extern int8_t indicesByPiperIDs[Piper::Config::Server::clientMax];

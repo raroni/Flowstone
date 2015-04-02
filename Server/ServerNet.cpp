@@ -1,8 +1,8 @@
 #include <assert.h>
 #include "Common/Piper/Server.h"
-#include "ServerGame/ServerGameClientSet.h"
-#include "ServerGame/ServerAckHelper.h"
-#include "ServerGame/ServerNet.h"
+#include "Server/ServerGameClientSet.h"
+#include "Server/ServerAckHelper.h"
+#include "Server/ServerNet.h"
 
 namespace ServerNet {
   Piper::Server pipe;

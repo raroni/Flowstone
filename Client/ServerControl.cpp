@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "SysTime/SysTime.h"
 #include "SysThread.h"
-#include "ServerGame/ServerGame.h"
+#include "Server/ServerGame.h"
 #include "ServerControlQueue.h"
 #include "ServerControl.h"
 

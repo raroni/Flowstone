@@ -32,13 +32,13 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/ServerInBuffer.cpp\
 	../../Common/Piper/ServerOutBuffer.cpp\
 	../../Common/Piper/Transmission.cpp\
-	../../ServerGame/ServerGame.cpp\
-	../../ServerGame/ServerGameClientSet.cpp\
-	../../ServerGame/ServerGameClientIDPool.cpp\
-	../../ServerGame/ServerNet.cpp\
-	../../ServerGame/ServerAckHelper.cpp\
-	../../ServerGame/ServerPingPong.cpp\
-	../../ServerGame/ServerCarrier.cpp\
+	../../Server/ServerGame.cpp\
+	../../Server/ServerGameClientSet.cpp\
+	../../Server/ServerGameClientIDPool.cpp\
+	../../Server/ServerNet.cpp\
+	../../Server/ServerAckHelper.cpp\
+	../../Server/ServerPingPong.cpp\
+	../../Server/ServerCarrier.cpp\
 	../../Client/Game.cpp\
 	../../Client/ServerControl.cpp\
 	../../Client/ServerControlQueue.cpp\

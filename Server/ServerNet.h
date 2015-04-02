@@ -5,7 +5,7 @@
 #include "Common/Piper/Address.h"
 #include "Common/Piper/Sequence.h"
 #include "Common/Piper/AckStatus.h"
-#include "ServerGame/ServerGameClientID.h"
+#include "Server/ServerGameClientID.h"
 
 namespace ServerNet {
   void initialize();

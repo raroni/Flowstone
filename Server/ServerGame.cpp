@@ -1,6 +1,6 @@
 #include "Common/MessageType.h"
-#include "ServerGame/ServerNet.h"
-#include "ServerGame/ServerGameClientSet.h"
+#include "Server/ServerNet.h"
+#include "Server/ServerGameClientSet.h"
 #include "SysThread.h"
 #include "ServerPingPong.h"
 #include "ServerCarrier.h"

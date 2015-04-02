@@ -1,8 +1,8 @@
 #include <string.h>
-#include "ServerGame/ServerGameConfig.h"
-#include "ServerGame/ServerGameClientSet.h"
-#include "ServerGame/ServerNet.h"
-#include "ServerGame/ServerAckHelper.h"
+#include "Server/ServerGameConfig.h"
+#include "Server/ServerGameClientSet.h"
+#include "Server/ServerNet.h"
+#include "Server/ServerAckHelper.h"
 
 namespace ServerAckHelper {
   bool reliableReceived[ServerGameConfig::clientMax] = { false };

@@ -1,7 +1,7 @@
 #include <assert.h>
-#include "ServerGame/ServerNet.h"
-#include "ServerGame/ServerGameClientSet.h"
-#include "ServerGame/ServerCarrier.h"
+#include "Server/ServerNet.h"
+#include "Server/ServerGameClientSet.h"
+#include "Server/ServerCarrier.h"
 
 namespace ServerCarrier {
   using namespace ServerGameClientSet;

@@ -2,7 +2,7 @@
 #include "Common/GameTime.h"
 #include "Common/MessageType.h"
 #include "ServerGameClientSet.h"
-#include "ServerGame/ServerNet.h"
+#include "Server/ServerNet.h"
 #include "ServerPingPong.h"
 
 namespace ServerPingPong {
