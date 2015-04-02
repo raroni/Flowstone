@@ -9,7 +9,7 @@ namespace Rendering {
   struct BoneMeshInstance {
     BoneMeshIndex *mesh;
     Quanta::Matrix4 *transform;
-    Pose *pose;
+    Client::Pose *pose;
   };
 }
 

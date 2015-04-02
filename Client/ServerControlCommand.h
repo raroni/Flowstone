@@ -1,9 +1,11 @@
-#ifndef SERVER_CONTROL_COMMAND_H
-#define SERVER_CONTROL_COMMAND_H
+#ifndef CLIENT_SERVER_CONTROL_COMMAND_H
+#define CLIENT_SERVER_CONTROL_COMMAND_H
 
-enum ServerControlCommand {
-  Start,
-  Stop
-};
+namespace Client {
+  enum ServerControlCommand {
+    Start,
+    Stop
+  };
+}
 
 #endif

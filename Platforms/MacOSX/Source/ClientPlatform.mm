@@ -6,7 +6,7 @@
 #include "MacOSX/GameWindow.h"
 #include "MacOSX/GameWindowDelegate.h"
 #include "Client/Game.h"
-#include "Client/ClientPlatform.h"
+#include "Client/Platform.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
@@ -107,56 +107,58 @@ static void pollEvents() {
   }
 }
 
-namespace ClientPlatform {
-  void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
-    autoreleasePool = [[NSAutoreleasePool alloc] init];
+namespace Client {
+  namespace Platform {
+    void initialize(uint16_t resolutionWidth, uint16_t resolutionHeight) {
+      autoreleasePool = [[NSAutoreleasePool alloc] init];
 
-    CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
-    if(openglFramework == NULL) {
-      fatalError(@"Could not load Apple OpenGL.");
+      CFBundleRef openglFramework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
+      if(openglFramework == NULL) {
+        fatalError(@"Could not load Apple OpenGL.");
+      }
+
+      signal(SIGINT, handleSigint);
+
+      [GameApplication sharedApplication];
+      [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+
+      setupMenu();
+
+      [NSApp finishLaunching];
+
+      appDelegate = [[GameAppDelegate alloc] init];
+      [NSApp setDelegate:appDelegate];
+
+      createWindow(resolutionWidth, resolutionHeight);
+      createContext();
+      [context makeCurrentContext];
+      [context setView:window.contentView];
     }
 
-    signal(SIGINT, handleSigint);
+    void handlePreFrame() {
+      pollEvents();
+    }
 
-    [GameApplication sharedApplication];
-    [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+    void handlePostFrame() {
+      SysKey::clear();
+    }
 
-    setupMenu();
+    void present() {
+      [context flushBuffer];
+    }
 
-    [NSApp finishLaunching];
+    void terminate() {
+      [context release];
 
-    appDelegate = [[GameAppDelegate alloc] init];
-    [NSApp setDelegate:appDelegate];
+      [windowDelegate release];
+      window.delegate = nil;
 
-    createWindow(resolutionWidth, resolutionHeight);
-    createContext();
-    [context makeCurrentContext];
-    [context setView:window.contentView];
-  }
+      [window release];
 
-  void handlePreFrame() {
-    pollEvents();
-  }
+      [NSApp setDelegate:nil];
+      [appDelegate release];
 
-  void handlePostFrame() {
-    SysKey::clear();
-  }
-
-  void present() {
-    [context flushBuffer];
-  }
-
-  void terminate() {
-    [context release];
-
-    [windowDelegate release];
-    window.delegate = nil;
-
-    [window release];
-
-    [NSApp setDelegate:nil];
-    [appDelegate release];
-
-    [autoreleasePool release];
+      [autoreleasePool release];
+    }
   }
 }

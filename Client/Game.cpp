@@ -8,12 +8,12 @@
 #include "Client/ServerControl.h"
 #include "Client/Keyboard.h"
 #include "Client/MainFlow/Manager.h"
-#include "Client/ClientPlatform.h"
+#include "Client/Platform.h"
 #include "Client/PresentationSync.h"
 #include "Client/Presentation.h"
-#include "Client/ClientNet.h"
+#include "Client/Net.h"
 #include "Client/PingPong.h"
-#include "Client/ClientCarrier.h"
+#include "Client/Carrier.h"
 #include "Client/PresentationSync.h"
 #include "Client/Game.h"
 
@@ -62,13 +62,13 @@ namespace Client {
     }
 
     void readNet() {
-      ClientNet::poll();
+      Net::poll();
 
       MessageType type;
       const void *message = nullptr;
       uint16_t messageLength = 0;
 
-      while(ClientNet::readMessage(&type, &message, &messageLength)) {
+      while(Net::readMessage(&type, &message, &messageLength)) {
         switch(type) {
           case MessageType::Pong: {
             if(messageLength == 1) {
@@ -89,14 +89,14 @@ namespace Client {
             break;
         }
       }
-      ClientNet::clear();
+      Net::clear();
     }
 
     void initialize() {
       ServerControl::initialize();
       GameTime::initialize();
 
-      ClientPlatform::initialize(resolution.width, resolution.height);
+      Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);
       PresentationSync::initialize();
       SysThread::init(&presenter, Presentation::run);
@@ -105,14 +105,14 @@ namespace Client {
       renderer.updateResolution({ resolution.width, resolution.height });
       flow.initialize(renderer);
 
-      ClientNet::initialize();
+      Net::initialize();
       Piper::Address address;
       address.ip[0] = 127;
       address.ip[1] = 0;
       address.ip[2] = 0;
       address.ip[3] = 1;
       address.port = 4242;
-      ClientNet::setAddress(address);
+      Net::setAddress(address);
 
       // dummy
       ServerControl::requestInit();
@@ -126,7 +126,7 @@ namespace Client {
       SysThread::join(&presenter);
       PresentationSync::terminate();
       SysThread::destroyMutex(&terminateMutex);
-      ClientPlatform::terminate();
+      Platform::terminate();
 
       ServerControl::terminate();
     }
@@ -135,23 +135,23 @@ namespace Client {
       frameStartTime = GameTime::get();
       double timeDelta = 0.000001*(frameStartTime-frameLastTime);
 
-      ClientPlatform::handlePreFrame();
+      Platform::handlePreFrame();
 
       readNet();
       PingPong::update(timeDelta);
 
       updateKeyboard();
       flow.update(timeDelta, keyboard);
-      ClientCarrier::update(timeDelta);
+      Carrier::update(timeDelta);
 
       if(PresentationSync::shouldDraw()) {
         renderer.draw();
         PresentationSync::handleDrawCompletion();
       }
 
-      ClientNet::dispatch();
+      Net::dispatch();
 
-      ClientPlatform::handlePostFrame();
+      Platform::handlePostFrame();
 
       ServerControl::update();
 

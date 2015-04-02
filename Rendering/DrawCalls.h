@@ -9,7 +9,7 @@ namespace Rendering {
   struct BoneMeshDrawCall {
     SysGFX::ObjectHandle object;
     uint16_t indexCount;
-    Pose pose;
+    Client::Pose pose;
     Quanta::Matrix4 transform;
   };
 

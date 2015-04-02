@@ -3,7 +3,7 @@
 namespace Rendering {
   namespace BoneMeshInstances {
     static uint16_t count = 0;
-    Pose poses[Config::maxBoneMeshInstances];
+    Client::Pose poses[Config::maxBoneMeshInstances];
     BoneMeshIndex meshes[Config::maxBoneMeshInstances];
     float boundingRadii[Config::maxBoneMeshInstances];
     Quanta::Matrix4 transforms[Config::maxBoneMeshInstances];

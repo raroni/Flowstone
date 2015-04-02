@@ -1,22 +1,24 @@
 #include <stddef.h>
-#include "ClientPlatform.h"
 #include "SysTime/SysTime.h"
-#include "PresentationSync.h"
-#include "Presentation.h"
+#include "Client/PresentationSync.h"
+#include "Client/Presentation.h"
+#include "Client/Platform.h"
 #include "Client/Game.h"
 
-namespace Presentation {
-  using namespace PresentationSync;
+namespace Client {
+  namespace Presentation {
+    using namespace PresentationSync;
 
-  void* run(void *data) {
-    while(!Client::Game::shouldTerminate()) {
-      if(shouldPresent()) {
-        ClientPlatform::present();
-        handlePresentationCompletion();
-      } else {
-        SysTime::sleep(1000);
+    void* run(void *data) {
+      while(!Client::Game::shouldTerminate()) {
+        if(shouldPresent()) {
+          Platform::present();
+          handlePresentationCompletion();
+        } else {
+          SysTime::sleep(1000);
+        }
       }
+      return NULL;
     }
-    return NULL;
   }
 }

@@ -1,10 +1,12 @@
-#ifndef INTERPOLATION_INDEX_H
-#define INTERPOLATION_INDEX_H
+#ifndef CLIENT_INTERPOLATION_INDEX_H
+#define CLIENT_INTERPOLATION_INDEX_H
 
 #include <stdint.h>
 
-namespace Interpolation {
-  typedef uint16_t Index;
+namespace Client {
+  namespace Interpolation {
+    typedef uint16_t Index;
+  }
 }
 
 #endif

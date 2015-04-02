@@ -1,8 +1,10 @@
-#ifndef PRESENTATION_H
-#define PRESENTATION_H
+#ifndef CLIENT_PRESENTATION_H
+#define CLIENT_PRESENTATION_H
 
-namespace Presentation {
-  void* run(void *data);
+namespace Client {
+  namespace Presentation {
+    void* run(void *data);
+  }
 }
 
 #endif

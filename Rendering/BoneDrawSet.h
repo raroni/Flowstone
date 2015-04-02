@@ -10,9 +10,9 @@ namespace Rendering {
   struct BoneDrawSet {
     Quanta::Matrix4 transforms[Config::DrawSet::boneCount];
     BoneMeshIndex meshes[Config::DrawSet::boneCount];
-    Pose poses[Config::DrawSet::boneCount];
+    Client::Pose poses[Config::DrawSet::boneCount];
     uint16_t count;
-    void add(const Quanta::Matrix4 &transform, const BoneMeshIndex mesh, const Pose &pose);
+    void add(const Quanta::Matrix4 &transform, const BoneMeshIndex mesh, const Client::Pose &pose);
   };
 }
 

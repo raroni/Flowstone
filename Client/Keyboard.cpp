@@ -1,17 +1,19 @@
-#include "Keyboard.h"
+#include "Client/Keyboard.h"
 
-bool Keyboard::isDown(SysKey::Key key) const {
-  return keys[static_cast<unsigned>(key)];
-}
+namespace Client {
+  bool Keyboard::isDown(SysKey::Key key) const {
+    return keys[static_cast<unsigned>(key)];
+  }
 
-void Keyboard::handleDown(SysKey::Key key) {
-  update(key, true);
-}
+  void Keyboard::handleDown(SysKey::Key key) {
+    update(key, true);
+  }
 
-void Keyboard::handleUp(SysKey::Key key) {
-  update(key, false);
-}
+  void Keyboard::handleUp(SysKey::Key key) {
+    update(key, false);
+  }
 
-void Keyboard::update(SysKey::Key key, bool value) {
-  keys[static_cast<unsigned>(key)] = value;
+  void Keyboard::update(SysKey::Key key, bool value) {
+    keys[static_cast<unsigned>(key)] = value;
+  }
 }

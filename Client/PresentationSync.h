@@ -1,18 +1,20 @@
-#ifndef PRESENTATION_SYNC_H
-#define PRESENTATION_SYNC_H
+#ifndef CLIENT_PRESENTATION_SYNC_H
+#define CLIENT_PRESENTATION_SYNC_H
 
-namespace PresentationSync {
-  enum State {
-    AwaitingDraw,
-    AwaitingPresentation
-  };
+namespace Client {
+  namespace PresentationSync {
+    enum State {
+      AwaitingDraw,
+      AwaitingPresentation
+    };
 
-  void initialize();
-  void terminate();
-  bool shouldPresent();
-  bool shouldDraw();
-  void handleDrawCompletion();
-  void handlePresentationCompletion();
+    void initialize();
+    void terminate();
+    bool shouldPresent();
+    bool shouldDraw();
+    void handleDrawCompletion();
+    void handlePresentationCompletion();
+  }
 }
 
 #endif

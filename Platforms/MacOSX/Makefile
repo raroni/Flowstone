@@ -44,14 +44,14 @@ USER_SOURCES_CPP =\
 	../../Client/ServerControlQueue.cpp\
 	../../Client/Presentation.cpp\
 	../../Client/PresentationSync.cpp\
-	../../Client/ClientNet.cpp\
-	../../Client/ClientAckHelper.cpp\
+	../../Client/Net.cpp\
+	../../Client/AckHelper.cpp\
 	../../Client/TorchManager.cpp\
 	../../Client/MainFlow/PlayState.cpp\
 	../../Client/AtmosphereColor.cpp\
 	../../Client/Interpolation/Interpolater.cpp\
 	../../Client/PingPong.cpp\
-	../../Client/ClientCarrier.cpp\
+	../../Client/Carrier.cpp\
 	../../Client/Keyboard.cpp\
 	../../Client/RendererFeeder.cpp\
 	../../Animation/Animator.cpp\
