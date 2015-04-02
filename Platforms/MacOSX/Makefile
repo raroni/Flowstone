@@ -39,21 +39,21 @@ USER_SOURCES_CPP =\
 	../../ServerGame/ServerAckHelper.cpp\
 	../../ServerGame/ServerPingPong.cpp\
 	../../ServerGame/ServerCarrier.cpp\
-	../../UserGame/UserGame.cpp\
-	../../UserGame/ServerControl.cpp\
-	../../UserGame/ServerControlQueue.cpp\
-	../../UserGame/Presentation.cpp\
-	../../UserGame/PresentationSync.cpp\
-	../../UserGame/ClientNet.cpp\
-	../../UserGame/ClientAckHelper.cpp\
-	../../UserGame/TorchManager.cpp\
-	../../UserGame/Mainflow/PlayState.cpp\
-	../../UserGame/AtmosphereColor.cpp\
-	../../UserGame/Interpolation/Interpolater.cpp\
-	../../UserGame/PingPong.cpp\
-	../../UserGame/ClientCarrier.cpp\
-	../../UserGame/Keyboard.cpp\
-	../../UserGame/RendererFeeder.cpp\
+	../../Client/Game.cpp\
+	../../Client/ServerControl.cpp\
+	../../Client/ServerControlQueue.cpp\
+	../../Client/Presentation.cpp\
+	../../Client/PresentationSync.cpp\
+	../../Client/ClientNet.cpp\
+	../../Client/ClientAckHelper.cpp\
+	../../Client/TorchManager.cpp\
+	../../Client/Mainflow/PlayState.cpp\
+	../../Client/AtmosphereColor.cpp\
+	../../Client/Interpolation/Interpolater.cpp\
+	../../Client/PingPong.cpp\
+	../../Client/ClientCarrier.cpp\
+	../../Client/Keyboard.cpp\
+	../../Client/RendererFeeder.cpp\
 	../../Animation/Animator.cpp\
 	../../Animation/Registry.cpp\
 	../../Rendering/Renderer.cpp\
@@ -118,7 +118,7 @@ USER_HEADER_DIRS =\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../Sys/Time/Include\
 	-I../../Sys/Thread/Include\
-	-I../../UserGame\
+	-I../../Client\
 	-I../..\
 	-IInclude
 

@@ -5,7 +5,7 @@
 #include "MacOSX/GameAppDelegate.h"
 #include "MacOSX/GameWindow.h"
 #include "MacOSX/GameWindowDelegate.h"
-#include "UserGame.h"
+#include "Client/Game.h"
 #include "ClientPlatform.h"
 
 NSAutoreleasePool *autoreleasePool;
@@ -20,7 +20,7 @@ static void fatalError(NSString *message) {
 }
 
 static void handleSigint(int signum) {
-  UserGame::requestTermination();
+  Client::Game::requestTermination();
 }
 
 static void setupMenu() {

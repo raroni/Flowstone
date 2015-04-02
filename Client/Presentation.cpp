@@ -3,13 +3,13 @@
 #include "SysTime/SysTime.h"
 #include "PresentationSync.h"
 #include "Presentation.h"
-#include "UserGame.h"
+#include "Client/Game.h"
 
 namespace Presentation {
   using namespace PresentationSync;
 
   void* run(void *data) {
-    while(!UserGame::shouldTerminate()) {
+    while(!Client::Game::shouldTerminate()) {
       if(shouldPresent()) {
         ClientPlatform::present();
         handlePresentationCompletion();

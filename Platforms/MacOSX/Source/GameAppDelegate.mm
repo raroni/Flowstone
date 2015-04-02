@@ -1,10 +1,10 @@
-#include "UserGame.h"
+#include "Client/Game.h"
 #import "MacOSX/GameAppDelegate.h"
 
 @implementation GameAppDelegate
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication*)sender {
-  UserGame::requestTermination();
+  Client::Game::requestTermination();
   return NSTerminateCancel;
 }
 
