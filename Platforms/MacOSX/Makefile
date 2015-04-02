@@ -32,7 +32,7 @@ USER_SOURCES_CPP =\
 	../../Common/Piper/ServerInBuffer.cpp\
 	../../Common/Piper/ServerOutBuffer.cpp\
 	../../Common/Piper/Transmission.cpp\
-	../../Server/ServerGame.cpp\
+	../../Server/Game.cpp\
 	../../Server/ServerGameClientSet.cpp\
 	../../Server/ServerGameClientIDPool.cpp\
 	../../Server/ServerNet.cpp\

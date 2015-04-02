@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "SysTime/SysTime.h"
 #include "SysThread.h"
-#include "Server/ServerGame.h"
+#include "Server/Game.h"
 #include "ServerControlQueue.h"
 #include "ServerControl.h"
 
@@ -29,14 +29,14 @@ namespace ServerControl {
 
   void* run(void *data) {
     lock();
-    ServerGame::initialize();
+    Server::Game::initialize();
     state = Running;
     unlock();
 
-    ServerGame::run();
+    Server::Game::run();
 
     lock();
-    ServerGame::terminate();
+    Server::Game::terminate();
     state = Completed;
     unlock();
 
@@ -67,7 +67,7 @@ namespace ServerControl {
 
   void requestServerTermination() {
     state = Terminating;
-    ServerGame::requestTermination();
+    Server::Game::requestTermination();
   }
 
   bool tryServerTerminationRequest() {
