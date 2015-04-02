@@ -16,6 +16,7 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Library/Source/Random.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
+	../../Common/LoopStream.cpp\
 	../../Common/GameTime.cpp\
 	../../Common/Physics/Engine.cpp\
 	../../Common/Physics/CollisionDetector.cpp\
@@ -46,50 +47,49 @@ USER_SOURCES_CPP =\
 	../../UserGame/ClientNet.cpp\
 	../../UserGame/ClientAckHelper.cpp\
 	../../UserGame/TorchManager.cpp\
-	../../UserGame/Animation/Animator.cpp\
-	../../UserGame/Animation/Registry.cpp\
 	../../UserGame/Mainflow/PlayState.cpp\
 	../../UserGame/AtmosphereColor.cpp\
 	../../UserGame/Interpolation/Interpolater.cpp\
 	../../UserGame/PingPong.cpp\
 	../../UserGame/ClientCarrier.cpp\
-	../../Common/LoopStream.cpp\
 	../../UserGame/Keyboard.cpp\
 	../../UserGame/RendererFeeder.cpp\
-	../../UserGame/Rendering/Renderer.cpp\
-	../../UserGame/Rendering/WorldRenderer.cpp\
-	../../UserGame/Rendering/BoneMeshRegistry.cpp\
-	../../UserGame/Rendering/Programs.cpp\
-	../../UserGame/Rendering/BoneMeshInstances.cpp\
-	../../UserGame/Rendering/CommandStream.cpp\
-	../../UserGame/Rendering/DrawQueue.cpp\
-	../../UserGame/Rendering/Uniforms.cpp\
-	../../UserGame/Rendering/Buffers.cpp\
-	../../UserGame/Rendering/CullResult.cpp\
-	../../UserGame/Rendering/RenderTargets.cpp\
-	../../UserGame/Rendering/FullscreenQuad.cpp\
-	../../UserGame/Rendering/Textures.cpp\
-	../../UserGame/Rendering/StaticMeshes.cpp\
-	../../UserGame/Rendering/StaticMeshInstances.cpp\
-	../../UserGame/Rendering/MeshHelper.cpp\
-	../../UserGame/Rendering/Culler.cpp\
-	../../UserGame/Rendering/LightTransforms.cpp\
-	../../UserGame/Rendering/DrawSet.cpp\
-	../../UserGame/Rendering/BoneDrawSet.cpp\
-	../../UserGame/Rendering/StaticDrawSet.cpp\
-	../../UserGame/Rendering/PointLightDrawSet.cpp\
-	../../UserGame/Rendering/Frustum.cpp\
-	../../UserGame/Rendering/Shadow.cpp\
-	../../UserGame/Rendering/ShadowBlur.cpp\
-	../../UserGame/Rendering/ShadowBasePass.cpp\
-	../../UserGame/Rendering/MergePass.cpp\
-	../../UserGame/Rendering/GeometryPass.cpp\
-	../../UserGame/Rendering/SSAO.cpp\
-	../../UserGame/Rendering/SSAOGrainPass.cpp\
-	../../UserGame/Rendering/SSAOBlurPass.cpp\
-	../../UserGame/Rendering/DownsamplePass.cpp\
-	../../UserGame/Rendering/PointLights.cpp\
-	../../UserGame/Rendering/PointLightPass.cpp\
+	../../Animation/Animator.cpp\
+	../../Animation/Registry.cpp\
+	../../Rendering/Renderer.cpp\
+	../../Rendering/WorldRenderer.cpp\
+	../../Rendering/BoneMeshRegistry.cpp\
+	../../Rendering/Programs.cpp\
+	../../Rendering/BoneMeshInstances.cpp\
+	../../Rendering/CommandStream.cpp\
+	../../Rendering/DrawQueue.cpp\
+	../../Rendering/Uniforms.cpp\
+	../../Rendering/Buffers.cpp\
+	../../Rendering/CullResult.cpp\
+	../../Rendering/RenderTargets.cpp\
+	../../Rendering/FullscreenQuad.cpp\
+	../../Rendering/Textures.cpp\
+	../../Rendering/StaticMeshes.cpp\
+	../../Rendering/StaticMeshInstances.cpp\
+	../../Rendering/MeshHelper.cpp\
+	../../Rendering/Culler.cpp\
+	../../Rendering/LightTransforms.cpp\
+	../../Rendering/DrawSet.cpp\
+	../../Rendering/BoneDrawSet.cpp\
+	../../Rendering/StaticDrawSet.cpp\
+	../../Rendering/PointLightDrawSet.cpp\
+	../../Rendering/Frustum.cpp\
+	../../Rendering/Shadow.cpp\
+	../../Rendering/ShadowBlur.cpp\
+	../../Rendering/ShadowBasePass.cpp\
+	../../Rendering/MergePass.cpp\
+	../../Rendering/GeometryPass.cpp\
+	../../Rendering/SSAO.cpp\
+	../../Rendering/SSAOGrainPass.cpp\
+	../../Rendering/SSAOBlurPass.cpp\
+	../../Rendering/DownsamplePass.cpp\
+	../../Rendering/PointLights.cpp\
+	../../Rendering/PointLightPass.cpp\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
 	../../Sys/Net/Source/SysNet.cpp\
 	Source/SysNet.cpp\
