@@ -1,9 +1,9 @@
 #include "Common/MessageType.h"
-#include "Server/ServerNet.h"
-#include "Server/ServerGameClientSet.h"
 #include "SysThread.h"
-#include "ServerPingPong.h"
-#include "ServerCarrier.h"
+#include "Server/Net.h"
+#include "Server/ClientSet.h"
+#include "Server/PingPong.h"
+#include "Server/Carrier.h"
 #include "Server/Game.h"
 
 #include <stdio.h>
@@ -15,8 +15,8 @@ namespace Server {
 
     void initialize() {
       SysThread::initMutex(&terminationMutex);
-      ServerGameClientSet::initialize();
-      ServerNet::initialize();
+      ClientSet::initialize();
+      Net::initialize();
 
       Piper::Address address;
       address.ip[0] = 0;
@@ -24,7 +24,7 @@ namespace Server {
       address.ip[2] = 0;
       address.ip[3] = 0;
       address.port = 4242;
-      ServerNet::listen(address);
+      Net::listen(address);
     }
 
     void terminate() {
@@ -45,25 +45,25 @@ namespace Server {
     }
 
     void readPipe() {
-      ServerNet::poll();
+      Net::poll();
 
       const void *message = nullptr;
       uint16_t messageLength = 0;
-      ServerGameClientID id;
+      ClientID id;
       MessageType type;
-      while(ServerNet::readMessage(&id, &type, &message, &messageLength)) {
+      while(Net::readMessage(&id, &type, &message, &messageLength)) {
         switch(type) {
           case MessageType::Ping: {
             if(messageLength == 1) {
               uint8_t pingID = *static_cast<const uint8_t*>(message);
-              ServerPingPong::handlePing(id, pingID);
+              PingPong::handlePing(id, pingID);
             }
             break;
           }
           case MessageType::Pong: {
             if(messageLength == 1) {
               uint8_t pingID = *static_cast<const uint8_t*>(message);
-              ServerPingPong::handlePong(id, pingID);
+              PingPong::handlePong(id, pingID);
             }
             break;
           }
@@ -73,17 +73,17 @@ namespace Server {
         }
       }
 
-      ServerNet::clear();
+      Net::clear();
     }
 
     void update(double timeDelta) {
       readPipe();
 
       // do game logic
-      ServerPingPong::update(timeDelta);
-      ServerCarrier::update(timeDelta);
+      PingPong::update(timeDelta);
+      Carrier::update(timeDelta);
 
-      ServerNet::dispatch();
+      Net::dispatch();
     }
 
     void run() {

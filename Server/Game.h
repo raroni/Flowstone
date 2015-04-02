@@ -1,5 +1,5 @@
-#ifndef SERVER_GAME_H
-#define SERVER_GAME_H
+#ifndef SERVER_H
+#define SERVER_H
 
 namespace Server {
   namespace Game {
