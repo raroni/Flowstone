@@ -47,7 +47,7 @@ USER_SOURCES_CPP =\
 	../../Client/ClientNet.cpp\
 	../../Client/ClientAckHelper.cpp\
 	../../Client/TorchManager.cpp\
-	../../Client/Mainflow/PlayState.cpp\
+	../../Client/MainFlow/PlayState.cpp\
 	../../Client/AtmosphereColor.cpp\
 	../../Client/Interpolation/Interpolater.cpp\
 	../../Client/PingPong.cpp\
@@ -118,7 +118,6 @@ USER_HEADER_DIRS =\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../Sys/Time/Include\
 	-I../../Sys/Thread/Include\
-	-I../../Client\
 	-I../..\
 	-IInclude
 

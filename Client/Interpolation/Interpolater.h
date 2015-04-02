@@ -5,9 +5,9 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Quaternion.h"
-#include "Interpolation/Index.h"
-#include "Common/Physics/DynamicBodyIndex.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
+#include "Common/Physics/DynamicBodyIndex.h"
+#include "Client/Interpolation/Index.h"
 
 namespace Interpolation {
   class Interpolater {

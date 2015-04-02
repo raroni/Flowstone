@@ -1,7 +1,7 @@
 #ifndef MAIN_FLOW_STATE
 #define MAIN_FLOW_STATE
 
-#include "Keyboard.h"
+#include "Client/Keyboard.h"
 
 namespace MainFlow {
   class State {

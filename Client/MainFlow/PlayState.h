@@ -2,16 +2,16 @@
 #define MAIN_FLOW_SINGLE_PLAYER_H
 
 #include <stddef.h>
-#include "MainFlow/State.h"
-#include "AtmosphereColor.h"
+#include "Common/Physics/Engine.h"
 #include "Animation/Animator.h"
 #include "Rendering/BoneMeshIndex.h"
-#include "TorchManager.h"
 #include "Rendering/StaticMeshIndex.h"
-#include "RendererFeeder.h"
-#include "AirDrag.h"
-#include "Common/Physics/Engine.h"
-#include "Interpolation/Interpolater.h"
+#include "Client/MainFlow/State.h"
+#include "Client/AtmosphereColor.h"
+#include "Client/TorchManager.h"
+#include "Client/RendererFeeder.h"
+#include "Client/AirDrag.h"
+#include "Client/Interpolation/Interpolater.h"
 
 namespace Rendering {
   class Renderer;

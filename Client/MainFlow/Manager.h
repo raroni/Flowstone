@@ -1,8 +1,8 @@
 #ifndef MAIN_FLOW_MANAGER_H
 #define MAIN_FLOW_MANAGER_H
 
-#include "Mainflow/PlayState.h"
-#include "Mainflow/State.h"
+#include "Client/MainFlow/PlayState.h"
+#include "Client/MainFlow/State.h"
 
 namespace MainFlow {
   class Manager {

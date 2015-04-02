@@ -4,7 +4,7 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Pose.h"
+#include "Client/Pose.h"
 #include "Animation/Registry.h"
 #include "Animation/Animator.h"
 

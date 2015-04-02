@@ -1,7 +1,7 @@
 #ifndef RENDERING_DRAW_CALLS_H
 #define RENDERING_DRAW_CALLS_H
 
-#include "Pose.h"
+#include "Client/Pose.h"
 #include "Rendering/BoneMeshInstanceHandle.h"
 #include "SysGFX/ObjectHandle.h"
 

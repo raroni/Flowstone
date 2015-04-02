@@ -2,7 +2,7 @@
 #define RENDERING_BONE_DRAW_SET_H
 
 #include "Quanta/Math/Matrix4.h"
-#include "Pose.h"
+#include "Client/Pose.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/Config.h"
 

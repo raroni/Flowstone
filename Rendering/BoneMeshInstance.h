@@ -1,7 +1,7 @@
 #ifndef RENDERING_BONE_MESH_INSTANCE_H
 #define RENDERING_BONE_MESH_INSTANCE_H
 
-#include "Pose.h"
+#include "Client/Pose.h"
 #include "Quanta/Math/Matrix4.h"
 #include "Rendering/BoneMeshIndex.h"
 

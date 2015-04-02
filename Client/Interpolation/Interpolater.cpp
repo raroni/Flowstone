@@ -1,4 +1,4 @@
-#include "Interpolation/Interpolater.h"
+#include "Client/Interpolation/Interpolater.h"
 
 namespace Interpolation {
   void Interpolater::initialize(const Quanta::Vector3 *positions, const Quanta::Quaternion *orientations) {

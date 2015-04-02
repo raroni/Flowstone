@@ -1,7 +1,7 @@
 #ifndef ANIMATION_ANIMATOR_H
 #define ANIMATION_ANIMATOR_H
 
-#include "Pose.h"
+#include "Client/Pose.h"
 #include "Animation/Registry.h"
 #include "Animation/PoseIndex.h"
 

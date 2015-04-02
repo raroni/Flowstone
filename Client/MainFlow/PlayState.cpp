@@ -1,11 +1,11 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Rendering/Renderer.h"
-#include "Animation/JointConfig.h"
 #include "Rendering/PointLightHandle.h"
-#include "PlayerControl.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
-#include "MainFlow/PlayState.h"
+#include "Animation/JointConfig.h"
+#include "Client/PlayerControl.h"
+#include "Client/MainFlow/PlayState.h"
 
 namespace MainFlow {
   PlayState::PlayState(Rendering::Renderer &renderer) :

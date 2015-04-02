@@ -6,7 +6,7 @@
 #include "MacOSX/GameWindow.h"
 #include "MacOSX/GameWindowDelegate.h"
 #include "Client/Game.h"
-#include "ClientPlatform.h"
+#include "Client/ClientPlatform.h"
 
 NSAutoreleasePool *autoreleasePool;
 static id appDelegate;
