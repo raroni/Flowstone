@@ -42,8 +42,8 @@ USER_SOURCES_CPP =\
 	../../Client/Game.cpp\
 	../../Client/ServerControl.cpp\
 	../../Client/ServerControlQueue.cpp\
-	../../Client/Presentation.cpp\
-	../../Client/PresentationSync.cpp\
+	../../Client/Screen.cpp\
+	../../Client/ScreenSync.cpp\
 	../../Client/Net.cpp\
 	../../Client/AckHelper.cpp\
 	../../Client/TorchManager.cpp\

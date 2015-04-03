@@ -1,8 +1,8 @@
-#ifndef CLIENT_PRESENTATION_SYNC_H
-#define CLIENT_PRESENTATION_SYNC_H
+#ifndef CLIENT_SCREEN_SYNC_H
+#define CLIENT_SCREEN_SYNC_H
 
 namespace Client {
-  namespace PresentationSync {
+  namespace ScreenSync {
     enum State {
       AwaitingDraw,
       AwaitingPresentation

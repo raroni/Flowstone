@@ -1,13 +1,13 @@
 #include <stddef.h>
 #include "SysTime/SysTime.h"
-#include "Client/PresentationSync.h"
-#include "Client/Presentation.h"
+#include "Client/ScreenSync.h"
+#include "Client/Screen.h"
 #include "Client/Platform.h"
 #include "Client/Game.h"
 
 namespace Client {
-  namespace Presentation {
-    using namespace PresentationSync;
+  namespace Screen {
+    using namespace ScreenSync;
 
     void* run(void *data) {
       while(!Client::Game::shouldTerminate()) {

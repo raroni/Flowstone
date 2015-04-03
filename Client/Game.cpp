@@ -9,12 +9,11 @@
 #include "Client/Keyboard.h"
 #include "Client/MainFlow/Manager.h"
 #include "Client/Platform.h"
-#include "Client/PresentationSync.h"
-#include "Client/Presentation.h"
+#include "Client/Screen.h"
+#include "Client/ScreenSync.h"
 #include "Client/Net.h"
 #include "Client/PingPong.h"
 #include "Client/Carrier.h"
-#include "Client/PresentationSync.h"
 #include "Client/Game.h"
 
 namespace Client {
@@ -98,8 +97,8 @@ namespace Client {
 
       Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);
-      PresentationSync::initialize();
-      SysThread::init(&presenter, Presentation::run);
+      ScreenSync::initialize();
+      SysThread::init(&presenter, Screen::run);
 
       renderer.initialize();
       renderer.updateResolution({ resolution.width, resolution.height });
@@ -124,7 +123,7 @@ namespace Client {
     void terminate() {
       ServerControl::requestTermination();
       SysThread::join(&presenter);
-      PresentationSync::terminate();
+      ScreenSync::terminate();
       SysThread::destroyMutex(&terminateMutex);
       Platform::terminate();
 
@@ -144,9 +143,9 @@ namespace Client {
       flow.update(timeDelta, keyboard);
       Carrier::update(timeDelta);
 
-      if(PresentationSync::shouldDraw()) {
+      if(ScreenSync::shouldDraw()) {
         renderer.draw();
-        PresentationSync::handleDrawCompletion();
+        ScreenSync::handleDrawCompletion();
       }
 
       Net::dispatch();

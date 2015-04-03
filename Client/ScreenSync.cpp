@@ -1,9 +1,9 @@
 #include <assert.h>
 #include "SysThread.h"
-#include "PresentationSync.h"
+#include "ScreenSync.h"
 
 namespace Client {
-  namespace PresentationSync {
+  namespace ScreenSync {
     State state;
     SysThread::Mutex mutex;
 
