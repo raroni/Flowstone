@@ -1,7 +1,7 @@
 #ifndef SERVER_ACK_HELPER_H
 #define SERVER_ACK_HELPER_H
 
-#include "Common/MessageType.h"
+#include "Misc/MessageType.h"
 #include "Server/ClientID.h"
 
 namespace Server {

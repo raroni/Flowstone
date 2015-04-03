@@ -4,7 +4,9 @@ CC = clang++
 CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 
 USER_SOURCES_CPP =\
-	../../Common/Error.cpp\
+	../../Misc/Error.cpp\
+	../../Misc/LoopStream.cpp\
+	../../Misc/GameTime.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\
 	../../Libraries/Quanta/Library/Source/Math/Vector4.cpp\
@@ -27,8 +29,6 @@ USER_SOURCES_CPP =\
 	../../Libraries/Piper/Library/Source/ServerInBuffer.cpp\
 	../../Libraries/Piper/Library/Source/ServerOutBuffer.cpp\
 	../../Libraries/Piper/Library/Source/Transmission.cpp\
-	../../Common/LoopStream.cpp\
-	../../Common/GameTime.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionDetector.cpp\
 	../../Physics/CollisionResolver.cpp\
@@ -180,7 +180,7 @@ TEST_SOURCES =\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
-	../../Common/LoopStream.cpp\
+	../../Misc/LoopStream.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\

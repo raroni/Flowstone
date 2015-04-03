@@ -1,7 +1,7 @@
 #ifndef CLIENT_PING_PONG_H
 #define CLIENT_PING_PONG_H
 
-#include "Common/GameTime.h"
+#include "Misc/GameTime.h"
 
 namespace Client {
   namespace PingPong {

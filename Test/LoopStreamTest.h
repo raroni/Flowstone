@@ -1,5 +1,5 @@
 #include "Orwell.h"
-#include "Common/LoopStream.h"
+#include "Misc/LoopStream.h"
 
 namespace LoopStreamTest {
   using namespace Orwell::Assertions;

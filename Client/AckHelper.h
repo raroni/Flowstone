@@ -1,7 +1,7 @@
 #ifndef CLIENT_ACK_HELPER_H
 #define CLIENT_ACK_HELPER_H
 
-#include "Common/MessageType.h"
+#include "Misc/MessageType.h"
 
 namespace Client {
   namespace AckHelper {

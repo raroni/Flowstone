@@ -4,7 +4,7 @@
 #include "Piper/Address.h"
 #include "Piper/Sequence.h"
 #include "Piper/AckStatus.h"
-#include "Common/MessageType.h"
+#include "Misc/MessageType.h"
 
 namespace Client {
   namespace Net {

@@ -1,5 +1,5 @@
 #include "SysTime/SysTime.h"
-#include "Common/GameTime.h"
+#include "Misc/GameTime.h"
 
 namespace GameTime {
   SysTime::USecond64 startTime;

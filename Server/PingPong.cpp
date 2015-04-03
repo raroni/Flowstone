@@ -1,6 +1,6 @@
 #include <string.h>
-#include "Common/GameTime.h"
-#include "Common/MessageType.h"
+#include "Misc/GameTime.h"
+#include "Misc/MessageType.h"
 #include "ClientSet.h"
 #include "Server/Net.h"
 #include "Server/PingPong.h"

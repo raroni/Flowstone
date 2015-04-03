@@ -1,4 +1,4 @@
-#include "Common/MessageType.h"
+#include "Misc/MessageType.h"
 #include "SysThread.h"
 #include "Server/Net.h"
 #include "Server/ClientSet.h"

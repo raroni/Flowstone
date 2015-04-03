@@ -5,7 +5,7 @@
 
 // dummy:
 #include "Server/Carrier.h"
-#include "Common/MessageType.h"
+#include "Misc/MessageType.h"
 
 namespace Server {
   namespace ClientSet {

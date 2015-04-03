@@ -1,6 +1,6 @@
 #include <OpenGL/gl3.h>
 #include <cstddef>
-#include "Common/Error.h"
+#include "Misc/Error.h"
 #include "SysGFX/SysGFX.h"
 
 namespace SysGFX {

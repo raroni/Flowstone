@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "Common/LoopStream.h"
+#include "Misc/LoopStream.h"
 #include "PingPong.h"
 #include "Net.h"
 #include "Carrier.h"

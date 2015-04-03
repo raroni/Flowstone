@@ -1,7 +1,7 @@
 #ifndef SERVER_NET_H
 #define SERVER_NET_H
 
-#include "Common/MessageType.h"
+#include "Misc/MessageType.h"
 #include "Piper/Address.h"
 #include "Piper/Sequence.h"
 #include "Piper/AckStatus.h"

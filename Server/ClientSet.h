@@ -1,10 +1,10 @@
 #ifndef SERVER_CLIENT_SET_H
 #define SERVER_CLIENT_SET_H
 
-#include "Common/GameTime.h"
+#include "Misc/GameTime.h"
 #include "Piper/Config.h"
 #include "Piper/Sequence.h"
-#include "Common/LoopStream.h"
+#include "Misc/LoopStream.h"
 #include "Server/Config.h"
 #include "Piper/ClientID.h"
 #include "Server/ClientID.h"
