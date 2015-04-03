@@ -1,15 +1,15 @@
 #ifndef PIPER_SERVER_H
 #define PIPER_SERVER_H
 
-#include "Common/Piper/Config.h"
-#include "Common/Piper/ClientIDPool.h"
-#include "Common/Piper/ServerInBuffer.h"
-#include "Common/Piper/ServerOutBuffer.h"
-#include "Common/Piper/Address.h"
-#include "Common/Piper/Socket.h"
-#include "Common/Piper/AckSet32.h"
-#include "Common/Piper/AckSet128.h"
-#include "Common/Piper/Packet.h"
+#include "Piper/Config.h"
+#include "Piper/ClientIDPool.h"
+#include "Piper/ServerInBuffer.h"
+#include "Piper/ServerOutBuffer.h"
+#include "Piper/Address.h"
+#include "Piper/Socket.h"
+#include "Piper/AckSet32.h"
+#include "Piper/AckSet128.h"
+#include "Piper/Packet.h"
 
 namespace Piper {
   class Server {

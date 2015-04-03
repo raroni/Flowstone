@@ -2,9 +2,9 @@
 #define SERVER_NET_H
 
 #include "Common/MessageType.h"
-#include "Common/Piper/Address.h"
-#include "Common/Piper/Sequence.h"
-#include "Common/Piper/AckStatus.h"
+#include "Piper/Address.h"
+#include "Piper/Sequence.h"
+#include "Piper/AckStatus.h"
 #include "Server/ClientID.h"
 
 namespace Server {

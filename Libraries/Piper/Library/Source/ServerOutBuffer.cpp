@@ -1,4 +1,4 @@
-#include "Common/Piper/ServerOutBuffer.h"
+#include "Piper/ServerOutBuffer.h"
 
 namespace Piper {
   ServerOutBuffer::ServerOutBuffer() :

@@ -1,6 +1,6 @@
 #include "SysNet/SysNet.h"
-#include "Common/Piper/Transmission.h"
-#include "Common/Piper/Server.h"
+#include "Piper/Transmission.h"
+#include "Piper/Server.h"
 
 namespace Piper {
   Server::Server() {

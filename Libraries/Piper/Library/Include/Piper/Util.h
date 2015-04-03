@@ -1,7 +1,7 @@
 #ifndef PIPER_UTIL_H
 #define PIPER_UTIL_H
 
-#include "Common/Piper/Sequence.h"
+#include "Piper/Sequence.h"
 
 namespace Piper {
   namespace Util {

@@ -2,11 +2,11 @@
 #define SERVER_CLIENT_SET_H
 
 #include "Common/GameTime.h"
-#include "Common/Piper/Config.h"
-#include "Common/Piper/Sequence.h"
+#include "Piper/Config.h"
+#include "Piper/Sequence.h"
 #include "Common/LoopStream.h"
 #include "Server/Config.h"
-#include "Common/Piper/ClientID.h"
+#include "Piper/ClientID.h"
 #include "Server/ClientID.h"
 
 namespace Server {

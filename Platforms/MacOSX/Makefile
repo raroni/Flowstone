@@ -16,22 +16,22 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Library/Source/Random.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
+	../../Libraries/Piper/Library/Source/Client.cpp\
+	../../Libraries/Piper/Library/Source/AckSet128.cpp\
+	../../Libraries/Piper/Library/Source/AckSet32.cpp\
+	../../Libraries/Piper/Library/Source/ClientOutBuffer.cpp\
+	../../Libraries/Piper/Library/Source/Util.cpp\
+	../../Libraries/Piper/Library/Source/ClientIDPool.cpp\
+	../../Libraries/Piper/Library/Source/MessageBuffer.cpp\
+	../../Libraries/Piper/Library/Source/Server.cpp\
+	../../Libraries/Piper/Library/Source/ServerInBuffer.cpp\
+	../../Libraries/Piper/Library/Source/ServerOutBuffer.cpp\
+	../../Libraries/Piper/Library/Source/Transmission.cpp\
 	../../Common/LoopStream.cpp\
 	../../Common/GameTime.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionDetector.cpp\
 	../../Physics/CollisionResolver.cpp\
-	../../Common/Piper/Client.cpp\
-	../../Common/Piper/AckSet128.cpp\
-	../../Common/Piper/AckSet32.cpp\
-	../../Common/Piper/ClientOutBuffer.cpp\
-	../../Common/Piper/Util.cpp\
-	../../Common/Piper/ClientIDPool.cpp\
-	../../Common/Piper/MessageBuffer.cpp\
-	../../Common/Piper/Server.cpp\
-	../../Common/Piper/ServerInBuffer.cpp\
-	../../Common/Piper/ServerOutBuffer.cpp\
-	../../Common/Piper/Transmission.cpp\
 	../../Server/Game.cpp\
 	../../Server/ClientSet.cpp\
 	../../Server/ClientIDPool.cpp\
@@ -111,6 +111,7 @@ USER_SOURCES_OBJCPP = \
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
+	-I../../Libraries/Piper/Library/Include\
 	-I../../Sys/File/Include\
 	-I../../Sys/Net/Include\
 	-I../../Sys/Key/Include\
@@ -173,12 +174,12 @@ TEST_SOURCES =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
 	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
+	../../Libraries/Piper/Util.cpp\
+	../../Libraries/Piper/AckSet128.cpp\
+	../../Libraries/Piper/AckSet32.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
-	../../Common/Piper/Util.cpp\
-	../../Common/Piper/AckSet128.cpp\
-	../../Common/Piper/AckSet32.cpp\
 	../../Common/LoopStream.cpp\
 	../../Test/main.cpp
 

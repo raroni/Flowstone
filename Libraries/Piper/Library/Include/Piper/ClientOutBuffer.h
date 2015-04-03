@@ -2,9 +2,9 @@
 #define PIPER_CLIENT_OUT_BUFFER_H
 
 #include <stdint.h>
-#include "Common/Piper/Config.h"
-#include "Common/Piper/Sequence.h"
-#include "Common/Piper/MessageBuffer.h"
+#include "Piper/Config.h"
+#include "Piper/Sequence.h"
+#include "Piper/MessageBuffer.h"
 
 namespace Piper {
   class ClientOutBuffer {

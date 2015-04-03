@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "Common/Piper/Server.h"
+#include "Piper/Server.h"
 #include "Server/ClientSet.h"
 #include "Server/AckHelper.h"
 #include "Server/Net.h"

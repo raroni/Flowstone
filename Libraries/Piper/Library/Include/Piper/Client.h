@@ -1,14 +1,14 @@
 #ifndef PIPER_CLIENT_H
 #define PIPER_CLIENT_H
 
-#include "Common/Piper/Config.h"
-#include "Common/Piper/Socket.h"
-#include "Common/Piper/Address.h"
-#include "Common/Piper/Packet.h"
-#include "Common/Piper/MessageBuffer.h"
-#include "Common/Piper/ClientOutBuffer.h"
-#include "Common/Piper/AckSet128.h"
-#include "Common/Piper/AckSet32.h"
+#include "Piper/Config.h"
+#include "Piper/Socket.h"
+#include "Piper/Address.h"
+#include "Piper/Packet.h"
+#include "Piper/MessageBuffer.h"
+#include "Piper/ClientOutBuffer.h"
+#include "Piper/AckSet128.h"
+#include "Piper/AckSet32.h"
 
 namespace Piper {
   class Client {

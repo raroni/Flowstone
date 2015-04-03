@@ -1,4 +1,4 @@
-#include "Common/Piper/ServerInBuffer.h"
+#include "Piper/ServerInBuffer.h"
 
 namespace Piper {
   ServerInBuffer::ServerInBuffer() :

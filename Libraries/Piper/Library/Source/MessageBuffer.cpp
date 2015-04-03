@@ -1,6 +1,6 @@
 #include <string.h>
 #include <assert.h>
-#include "Common/Piper/MessageBuffer.h"
+#include "Piper/MessageBuffer.h"
 
 namespace Piper {
   MessageBuffer::MessageBuffer(

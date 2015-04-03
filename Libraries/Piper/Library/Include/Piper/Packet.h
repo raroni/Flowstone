@@ -2,8 +2,8 @@
 #define PIPER_PACKET_H
 
 #include "Conrad/BitSet32.h"
-#include "Common/Piper/Address.h"
-#include "Common/Piper/Sequence.h"
+#include "Piper/Address.h"
+#include "Piper/Sequence.h"
 
 namespace Piper {
   struct Packet {

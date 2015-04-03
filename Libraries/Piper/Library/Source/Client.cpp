@@ -1,7 +1,7 @@
 #include "SysNet/SysNet.h"
-#include "Common/Piper/AckStatus.h"
-#include "Common/Piper/Transmission.h"
-#include "Common/Piper/Client.h"
+#include "Piper/AckStatus.h"
+#include "Piper/Transmission.h"
+#include "Piper/Client.h"
 
 namespace Piper {
   Client::Client() :

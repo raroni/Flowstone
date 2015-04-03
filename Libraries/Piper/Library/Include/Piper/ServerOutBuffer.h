@@ -1,10 +1,10 @@
 #ifndef PIPER_SERVER_OUT_BUFFER_H
 #define PIPER_SERVER_OUT_BUFFER_H
 
-#include "Common/Piper/Config.h"
-#include "Common/Piper/ClientID.h"
-#include "Common/Piper/MessageBuffer.h"
-#include "Common/Piper/Sequence.h"
+#include "Piper/Config.h"
+#include "Piper/ClientID.h"
+#include "Piper/MessageBuffer.h"
+#include "Piper/Sequence.h"
 
 namespace Piper {
   class ServerOutBuffer {

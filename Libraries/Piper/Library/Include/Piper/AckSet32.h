@@ -2,8 +2,8 @@
 #define PIPER_ACK_SET_32_H
 
 #include "Conrad/BitSet32.h"
-#include "Common/Piper/AckStatus.h"
-#include "Common/Piper/Sequence.h"
+#include "Piper/AckStatus.h"
+#include "Piper/Sequence.h"
 
 namespace Piper {
   class AckSet32 {

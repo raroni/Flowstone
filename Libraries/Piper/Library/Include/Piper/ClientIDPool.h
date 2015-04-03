@@ -1,8 +1,8 @@
 #ifndef PIPER_CLIENT_ID_POOL_H
 #define PIPER_CLIENT_ID_POOL_H
 
-#include "Common/Piper/ClientID.h"
-#include "Common/Piper/Config.h"
+#include "Piper/ClientID.h"
+#include "Piper/Config.h"
 
 namespace Piper {
   class ClientIDPool {

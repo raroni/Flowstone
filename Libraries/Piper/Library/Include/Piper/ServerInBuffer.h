@@ -1,9 +1,9 @@
 #ifndef PIPER_SERVER_BUFFER_H
 #define PIPER_SERVER_BUFFER_H
 
-#include "Common/Piper/Config.h"
-#include "Common/Piper/MessageBuffer.h"
-#include "Common/Piper/ClientID.h"
+#include "Piper/Config.h"
+#include "Piper/MessageBuffer.h"
+#include "Piper/ClientID.h"
 
 namespace Piper {
   class ServerInBuffer {

@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <string.h>
 #include "SysNet/SysNet.h"
-#include "Common/Piper/Transmission.h"
+#include "Piper/Transmission.h"
 
 namespace Piper {
   namespace Transmission {
