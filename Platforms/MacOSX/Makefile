@@ -174,9 +174,9 @@ TEST_SOURCES =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
 	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Libraries/Piper/Util.cpp\
-	../../Libraries/Piper/AckSet128.cpp\
-	../../Libraries/Piper/AckSet32.cpp\
+	../../Libraries/Piper/Library/Source/Util.cpp\
+	../../Libraries/Piper/Library/Source/AckSet128.cpp\
+	../../Libraries/Piper/Library/Source/AckSet32.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
@@ -186,6 +186,7 @@ TEST_SOURCES =\
 TEST_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
+	-I../../Libraries/Piper/Library/Include\
 	-I../../Source\
 	-I../../Source/User\
 	-I../..
