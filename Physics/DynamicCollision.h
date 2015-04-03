@@ -2,7 +2,7 @@
 #define PHYSICS_DYNAMIC_COLLISION_H
 
 #include "Quanta/Math/Vector3.h"
-#include "Common/Physics/DynamicBodyIndex.h"
+#include "Physics/DynamicBodyIndex.h"
 
 namespace Physics {
   struct DynamicCollision {

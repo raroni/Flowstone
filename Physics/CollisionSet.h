@@ -2,8 +2,8 @@
 #define PHYSICS_COLLISION_SET_H
 
 #include "Conrad/List.h"
-#include "Common/Physics/DynamicCollision.h"
-#include "Common/Physics/StaticCollision.h"
+#include "Physics/DynamicCollision.h"
+#include "Physics/StaticCollision.h"
 
 namespace Physics {
   class CollisionSet {

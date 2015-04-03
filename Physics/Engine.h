@@ -5,13 +5,13 @@
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
-#include "Common/Physics/CollisionDetector.h"
-#include "Common/Physics/DynamicBodyIndex.h"
-#include "Common/Physics/CollisionSet.h"
-#include "Common/Physics/Integrator.h"
-#include "Common/Physics/Config.h"
-#include "Common/Physics/DynamicBody.h"
-#include "Common/Physics/StaticBody.h"
+#include "Physics/CollisionDetector.h"
+#include "Physics/DynamicBodyIndex.h"
+#include "Physics/CollisionSet.h"
+#include "Physics/Integrator.h"
+#include "Physics/Config.h"
+#include "Physics/DynamicBody.h"
+#include "Physics/StaticBody.h"
 
 namespace Physics {
   class Engine {

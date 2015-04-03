@@ -2,7 +2,7 @@
 #define CLIENT_AIR_DRAG_H
 
 #include <math.h>
-#include "Common/Physics/DynamicBodyIndex.h"
+#include "Physics/DynamicBodyIndex.h"
 
 namespace Client {
   class AirDrag {

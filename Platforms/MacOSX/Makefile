@@ -18,9 +18,9 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
 	../../Common/LoopStream.cpp\
 	../../Common/GameTime.cpp\
-	../../Common/Physics/Engine.cpp\
-	../../Common/Physics/CollisionDetector.cpp\
-	../../Common/Physics/CollisionResolver.cpp\
+	../../Physics/Engine.cpp\
+	../../Physics/CollisionDetector.cpp\
+	../../Physics/CollisionResolver.cpp\
 	../../Common/Piper/Client.cpp\
 	../../Common/Piper/AckSet128.cpp\
 	../../Common/Piper/AckSet32.cpp\
@@ -173,9 +173,9 @@ TEST_SOURCES =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
 	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Common/Physics/Engine.cpp\
-	../../Common/Physics/CollisionResolver.cpp\
-	../../Common/Physics/CollisionDetector.cpp\
+	../../Physics/Engine.cpp\
+	../../Physics/CollisionResolver.cpp\
+	../../Physics/CollisionDetector.cpp\
 	../../Common/Piper/Util.cpp\
 	../../Common/Piper/AckSet128.cpp\
 	../../Common/Piper/AckSet32.cpp\

@@ -2,7 +2,7 @@
 #define PHYSICS_INTEGRATION_H
 
 #include "Quanta/Math/Vector3.h"
-#include "Common/Physics/Config.h"
+#include "Physics/Config.h"
 
 namespace Physics {
   class Integrator {

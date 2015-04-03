@@ -2,7 +2,7 @@
 #define CLIENT_PLAYER_CONTROL_H
 
 #include <math.h>
-#include "Common/Physics/DynamicBody.h"
+#include "Physics/DynamicBody.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 #include "Keyboard.h"
 #include "SysKey/Key.h"

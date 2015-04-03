@@ -6,7 +6,7 @@
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Common/Physics/DynamicBodyIndex.h"
+#include "Physics/DynamicBodyIndex.h"
 #include "Client/Interpolation/Index.h"
 
 namespace Client {

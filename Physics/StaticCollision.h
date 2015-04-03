@@ -2,7 +2,7 @@
 #define PHYSICS_STATIC_COLLISION_H
 
 #include "Quanta/Math/Vector3.h"
-#include "Common/Physics/StaticBodyIndex.h"
+#include "Physics/StaticBodyIndex.h"
 
 namespace Physics {
   struct StaticCollision {
