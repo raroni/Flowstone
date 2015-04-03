@@ -1,4 +1,4 @@
-#include "Common/Piper/Util.h"
+#include "Piper/Util.h"
 
 namespace PiperUtilTest {
   using namespace Orwell::Assertions;

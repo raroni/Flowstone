@@ -1,6 +1,6 @@
-#include "UserGame.h"
+#include "Client/Game.h"
 
 int main() {
-  UserGame::run();
+  Client::Game::run();
   return 0;
 }

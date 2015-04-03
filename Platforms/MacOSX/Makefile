@@ -16,80 +16,80 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Library/Source/Random.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Common/GameTime.cpp\
-	../../Common/Physics/Engine.cpp\
-	../../Common/Physics/CollisionDetector.cpp\
-	../../Common/Physics/CollisionResolver.cpp\
-	../../Common/Piper/Client.cpp\
-	../../Common/Piper/AckSet128.cpp\
-	../../Common/Piper/AckSet32.cpp\
-	../../Common/Piper/ClientOutBuffer.cpp\
-	../../Common/Piper/Util.cpp\
-	../../Common/Piper/ClientIDPool.cpp\
-	../../Common/Piper/MessageBuffer.cpp\
-	../../Common/Piper/Server.cpp\
-	../../Common/Piper/ServerInBuffer.cpp\
-	../../Common/Piper/ServerOutBuffer.cpp\
-	../../Common/Piper/Transmission.cpp\
-	../../ServerGame/ServerGame.cpp\
-	../../ServerGame/ServerGameClientSet.cpp\
-	../../ServerGame/ServerGameClientIDPool.cpp\
-	../../ServerGame/ServerNet.cpp\
-	../../ServerGame/ServerAckHelper.cpp\
-	../../ServerGame/ServerPingPong.cpp\
-	../../ServerGame/ServerCarrier.cpp\
-	../../UserGame/UserGame.cpp\
-	../../UserGame/ServerControl.cpp\
-	../../UserGame/ServerControlQueue.cpp\
-	../../UserGame/Presentation.cpp\
-	../../UserGame/PresentationSync.cpp\
-	../../UserGame/ClientNet.cpp\
-	../../UserGame/ClientAckHelper.cpp\
-	../../UserGame/TorchManager.cpp\
-	../../UserGame/Animation/Animator.cpp\
-	../../UserGame/Animation/Registry.cpp\
-	../../UserGame/Mainflow/PlayState.cpp\
-	../../UserGame/AtmosphereColor.cpp\
-	../../UserGame/Interpolation/Interpolater.cpp\
-	../../UserGame/PingPong.cpp\
-	../../UserGame/ClientCarrier.cpp\
+	../../Libraries/Piper/Library/Source/Client.cpp\
+	../../Libraries/Piper/Library/Source/AckSet128.cpp\
+	../../Libraries/Piper/Library/Source/AckSet32.cpp\
+	../../Libraries/Piper/Library/Source/ClientOutBuffer.cpp\
+	../../Libraries/Piper/Library/Source/Util.cpp\
+	../../Libraries/Piper/Library/Source/ClientIDPool.cpp\
+	../../Libraries/Piper/Library/Source/MessageBuffer.cpp\
+	../../Libraries/Piper/Library/Source/Server.cpp\
+	../../Libraries/Piper/Library/Source/ServerInBuffer.cpp\
+	../../Libraries/Piper/Library/Source/ServerOutBuffer.cpp\
+	../../Libraries/Piper/Library/Source/Transmission.cpp\
 	../../Common/LoopStream.cpp\
-	../../UserGame/Keyboard.cpp\
-	../../UserGame/RendererFeeder.cpp\
-	../../UserGame/Rendering/Renderer.cpp\
-	../../UserGame/Rendering/WorldRenderer.cpp\
-	../../UserGame/Rendering/BoneMeshRegistry.cpp\
-	../../UserGame/Rendering/Programs.cpp\
-	../../UserGame/Rendering/BoneMeshInstances.cpp\
-	../../UserGame/Rendering/CommandStream.cpp\
-	../../UserGame/Rendering/DrawQueue.cpp\
-	../../UserGame/Rendering/Uniforms.cpp\
-	../../UserGame/Rendering/Buffers.cpp\
-	../../UserGame/Rendering/CullResult.cpp\
-	../../UserGame/Rendering/RenderTargets.cpp\
-	../../UserGame/Rendering/FullscreenQuad.cpp\
-	../../UserGame/Rendering/Textures.cpp\
-	../../UserGame/Rendering/StaticMeshes.cpp\
-	../../UserGame/Rendering/StaticMeshInstances.cpp\
-	../../UserGame/Rendering/MeshHelper.cpp\
-	../../UserGame/Rendering/Culler.cpp\
-	../../UserGame/Rendering/LightTransforms.cpp\
-	../../UserGame/Rendering/DrawSet.cpp\
-	../../UserGame/Rendering/BoneDrawSet.cpp\
-	../../UserGame/Rendering/StaticDrawSet.cpp\
-	../../UserGame/Rendering/PointLightDrawSet.cpp\
-	../../UserGame/Rendering/Frustum.cpp\
-	../../UserGame/Rendering/Shadow.cpp\
-	../../UserGame/Rendering/ShadowBlur.cpp\
-	../../UserGame/Rendering/ShadowBasePass.cpp\
-	../../UserGame/Rendering/MergePass.cpp\
-	../../UserGame/Rendering/GeometryPass.cpp\
-	../../UserGame/Rendering/SSAO.cpp\
-	../../UserGame/Rendering/SSAOGrainPass.cpp\
-	../../UserGame/Rendering/SSAOBlurPass.cpp\
-	../../UserGame/Rendering/DownsamplePass.cpp\
-	../../UserGame/Rendering/PointLights.cpp\
-	../../UserGame/Rendering/PointLightPass.cpp\
+	../../Common/GameTime.cpp\
+	../../Physics/Engine.cpp\
+	../../Physics/CollisionDetector.cpp\
+	../../Physics/CollisionResolver.cpp\
+	../../Server/Game.cpp\
+	../../Server/ClientSet.cpp\
+	../../Server/ClientIDPool.cpp\
+	../../Server/Net.cpp\
+	../../Server/AckHelper.cpp\
+	../../Server/PingPong.cpp\
+	../../Server/Carrier.cpp\
+	../../Client/Game.cpp\
+	../../Client/ServerControl.cpp\
+	../../Client/ServerControlQueue.cpp\
+	../../Client/Presentation.cpp\
+	../../Client/PresentationSync.cpp\
+	../../Client/Net.cpp\
+	../../Client/AckHelper.cpp\
+	../../Client/TorchManager.cpp\
+	../../Client/MainFlow/PlayState.cpp\
+	../../Client/AtmosphereColor.cpp\
+	../../Client/Interpolation/Interpolater.cpp\
+	../../Client/PingPong.cpp\
+	../../Client/Carrier.cpp\
+	../../Client/Keyboard.cpp\
+	../../Client/RendererFeeder.cpp\
+	../../Animation/Animator.cpp\
+	../../Animation/Registry.cpp\
+	../../Rendering/Renderer.cpp\
+	../../Rendering/WorldRenderer.cpp\
+	../../Rendering/BoneMeshRegistry.cpp\
+	../../Rendering/Programs.cpp\
+	../../Rendering/BoneMeshInstances.cpp\
+	../../Rendering/CommandStream.cpp\
+	../../Rendering/DrawQueue.cpp\
+	../../Rendering/Uniforms.cpp\
+	../../Rendering/Buffers.cpp\
+	../../Rendering/CullResult.cpp\
+	../../Rendering/RenderTargets.cpp\
+	../../Rendering/FullscreenQuad.cpp\
+	../../Rendering/Textures.cpp\
+	../../Rendering/StaticMeshes.cpp\
+	../../Rendering/StaticMeshInstances.cpp\
+	../../Rendering/MeshHelper.cpp\
+	../../Rendering/Culler.cpp\
+	../../Rendering/LightTransforms.cpp\
+	../../Rendering/DrawSet.cpp\
+	../../Rendering/BoneDrawSet.cpp\
+	../../Rendering/StaticDrawSet.cpp\
+	../../Rendering/PointLightDrawSet.cpp\
+	../../Rendering/Frustum.cpp\
+	../../Rendering/Shadow.cpp\
+	../../Rendering/ShadowBlur.cpp\
+	../../Rendering/ShadowBasePass.cpp\
+	../../Rendering/MergePass.cpp\
+	../../Rendering/GeometryPass.cpp\
+	../../Rendering/SSAO.cpp\
+	../../Rendering/SSAOGrainPass.cpp\
+	../../Rendering/SSAOBlurPass.cpp\
+	../../Rendering/DownsamplePass.cpp\
+	../../Rendering/PointLights.cpp\
+	../../Rendering/PointLightPass.cpp\
 	../../Sys/GFX/OpenGL/Source/SysGFX.cpp\
 	../../Sys/Net/Source/SysNet.cpp\
 	Source/SysNet.cpp\
@@ -111,6 +111,7 @@ USER_SOURCES_OBJCPP = \
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
+	-I../../Libraries/Piper/Library/Include\
 	-I../../Sys/File/Include\
 	-I../../Sys/Net/Include\
 	-I../../Sys/Key/Include\
@@ -118,7 +119,6 @@ USER_HEADER_DIRS =\
 	-I../../Sys/GFX/OpenGL/Include\
 	-I../../Sys/Time/Include\
 	-I../../Sys/Thread/Include\
-	-I../../UserGame\
 	-I../..\
 	-IInclude
 
@@ -174,18 +174,19 @@ TEST_SOURCES =\
 	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
 	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
 	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Common/Physics/Engine.cpp\
-	../../Common/Physics/CollisionResolver.cpp\
-	../../Common/Physics/CollisionDetector.cpp\
-	../../Common/Piper/Util.cpp\
-	../../Common/Piper/AckSet128.cpp\
-	../../Common/Piper/AckSet32.cpp\
+	../../Libraries/Piper/Library/Source/Util.cpp\
+	../../Libraries/Piper/Library/Source/AckSet128.cpp\
+	../../Libraries/Piper/Library/Source/AckSet32.cpp\
+	../../Physics/Engine.cpp\
+	../../Physics/CollisionResolver.cpp\
+	../../Physics/CollisionDetector.cpp\
 	../../Common/LoopStream.cpp\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Library/Include\
 	-I../../Libraries/Quanta/Library/Include\
+	-I../../Libraries/Piper/Library/Include\
 	-I../../Source\
 	-I../../Source/User\
 	-I../..
