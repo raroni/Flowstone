@@ -31,6 +31,6 @@ namespace FixieUtilTest {
   void setup() {
     unsigned group = Orwell::createGroup("FixieUtilTest");
     Orwell::addTest(group, testFloor, "floor");
-    Orwell::addTest(group, testFmod, "Fmod");
+    Orwell::addTest(group, testFmod, "fmod");
   }
 }
