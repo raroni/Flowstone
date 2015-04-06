@@ -12,10 +12,13 @@ namespace FixieNumTest {
     assertEqual(10, n);
 
     n = 10.0;
-    assertInDelta(10.0, 0.00001, n);
+    assertEqual(n, 10);
 
     n = 10.0f;
-    assertInDelta(10.0, 0.00001, n);
+    assertEqual(n, 10);
+
+    n = 10.99999;
+    assertEqual(n, 11);
   }
 
   void testAddition() {

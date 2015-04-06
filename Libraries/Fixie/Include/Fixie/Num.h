@@ -1,6 +1,7 @@
 #ifndef FIXIE_NUM_H
 #define FIXIE_NUM_H
 
+#include <math.h>
 #include <stdint.h>
 #include "Fixie/Config.h"
 
@@ -9,13 +10,13 @@ namespace Fixie {
 
   class Num {
   public:
-    int32_t raw;
+    int32_t raw = 0;
     Num() { }
     Num(int32_t x) {
       raw = x << fractionBits;
     }
     Num(double x) {
-      raw = x * (1 << fractionBits);
+      raw = round(x * (1 << fractionBits));
     }
     Num& operator+=(const Num &rhs) {
       raw += rhs.raw;
