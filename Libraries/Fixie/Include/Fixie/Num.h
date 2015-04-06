@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include "Fixie/Config.h"
 
-#include <stdio.h>
-
 namespace Fixie {
   using namespace Config;
 
@@ -28,9 +26,9 @@ namespace Fixie {
       return *this;
     }
     Num operator%(Num rhs) {
-      Num result = *this / rhs;
-      result.raw &= 0x3ff;
-      return result;
+      int32_t a = *this;
+      int32_t b = rhs;
+      return a % b;
     }
     operator float() const {
       return static_cast<float>(raw) / (1 << fractionBits);

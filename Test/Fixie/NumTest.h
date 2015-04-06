@@ -83,11 +83,15 @@ namespace FixieNumTest {
 
     a = 10;
     b = 3;
-    assertInDelta(0.33333, 0.005, a % b);
+    assertEqual(1, a % b);
 
-    a = 65;
+    a = 25;
     b = 5;
-    assertInDelta(0.0, 0.005, a%b);
+    assertEqual(0, a % b);
+
+    a = 7;
+    b = 16;
+    assertEqual(7, a % b);
   }
 
   void setup() {
