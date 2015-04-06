@@ -78,7 +78,7 @@ namespace FixieNumTest {
     assertInDelta(0.5, 0.005, a/b);
   }
 
-  void testModulo() {
+  void testModulus() {
     Num a, b;
 
     a = 10;
@@ -97,6 +97,6 @@ namespace FixieNumTest {
     Orwell::addTest(group, testSubtraction, "Subtraction");
     Orwell::addTest(group, testMultiplication, "Multiplication");
     Orwell::addTest(group, testDivision, "Division");
-    Orwell::addTest(group, testModulo, "Modulo");
+    Orwell::addTest(group, testModulus, "Modulus");
   }
 }
