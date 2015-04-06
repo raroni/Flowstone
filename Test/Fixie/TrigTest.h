@@ -25,6 +25,8 @@ namespace FixieTrigTest {
     n = Trig::sin(0.3);
     assertInDelta(0.2955, 0.01, n);
 
+    /*
+    work in progress:
     n = Trig::sin(-0.3);
     assertInDelta(-0.2955, 0.01, n);
 
@@ -33,12 +35,12 @@ namespace FixieTrigTest {
 
     n = Trig::sin(-100);
     assertInDelta(-0.5064, 0.01, n);
+    */
   }
 
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testConstants, "Constants");
-    // temporarily disabled
-    //Orwell::addTest(group, testSine, "Sine");
+    Orwell::addTest(group, testSine, "Sine");
   }
 }

@@ -34,22 +34,22 @@ namespace Fixie {
       raw = (static_cast<uint64_t>(raw) * rhs.raw) >> fractionBits;
       return *this;
     }
-    Num operator+(const Num &other) {
+    Num operator+(const Num &other) const {
       Num result = *this;
       result += other;
       return result;
     }
-    Num operator-(const Num &other) {
+    Num operator-(const Num &other) const {
       Num result = *this;
       result -= other;
       return result;
     }
-    Num operator*(const Num &other) {
+    Num operator*(const Num &other) const {
       Num result = *this;
       result *= other;
       return result;
     }
-    Num operator/(const Num &other) {
+    Num operator/(const Num &other) const {
       Num result = *this;
       result /= other;
       return result;

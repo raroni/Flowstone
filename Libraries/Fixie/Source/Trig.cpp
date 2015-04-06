@@ -1,10 +1,12 @@
 #include "Fixie/Num.h"
+#include "Fixie/Util.h"
 #include "Fixie/Trig.h"
 
 namespace Fixie {
   namespace Trig {
-    const Num pi = Num::createByRaw(3216);
-    const Num pi2 = Num::createByRaw(6433);
+    const Num pi = Num::createByRaw(3217);
+    const Num pi2 = Num::createByRaw(6434);
+    const Num rpi2 = Num::createByRaw(163);
 
     int32_t sineTable[] = {
       0, 6, 12, 18, 25, 31, 37, 43,
@@ -138,10 +140,10 @@ namespace Fixie {
     };
 
     Num sin(Num n) {
-      const Num rest = n % pi2;
-      const int32_t lookup = sineTable[rest.raw];
+      const Num rest = Util::fmod(n, pi2);
+      const Num ratio = rest*rpi2;
       Num result;
-      result.raw = lookup;
+      result.raw = sineTable[ratio.raw];
       return result;
     }
   }
