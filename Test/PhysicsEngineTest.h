@@ -16,7 +16,7 @@ namespace PhysicsEngineTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("PhysicsEngine");
-    Orwell::addTest(suite, testRetrieval, "Retrieval");
+    unsigned group = Orwell::createGroup("PhysicsEngine");
+    Orwell::addTest(group, testRetrieval, "Retrieval");
   }
 }

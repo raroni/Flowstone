@@ -72,10 +72,10 @@ namespace CollisionDetectorTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("CollisionDetectionTest");
-    Orwell::addTest(suite, testSphereColliderDestruction, "SphereColliderDestruction");
-    Orwell::addTest(suite, testSphereCollision, "SphereCollision");
-    Orwell::addTest(suite, testSphereMiss, "SphereMiss");
-    Orwell::addTest(suite, testSphereSeparation, "SphereSeparation");
+    unsigned group = Orwell::createGroup("CollisionDetectionTest");
+    Orwell::addTest(group, testSphereColliderDestruction, "SphereColliderDestruction");
+    Orwell::addTest(group, testSphereCollision, "SphereCollision");
+    Orwell::addTest(group, testSphereMiss, "SphereMiss");
+    Orwell::addTest(group, testSphereSeparation, "SphereSeparation");
   }
 }

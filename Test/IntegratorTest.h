@@ -45,9 +45,9 @@ namespace IntegratorTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("Integrator");
-    Orwell::addTest(suite, testPositionChange, "PositionChange");
-    Orwell::addTest(suite, testVelocityChange, "VelocityChange");
-    Orwell::addTest(suite, testForceReset, "ForceReset");
+    unsigned group = Orwell::createGroup("Integrator");
+    Orwell::addTest(group, testPositionChange, "PositionChange");
+    Orwell::addTest(group, testVelocityChange, "VelocityChange");
+    Orwell::addTest(group, testForceReset, "ForceReset");
   }
 }

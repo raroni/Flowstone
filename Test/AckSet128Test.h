@@ -162,17 +162,17 @@ namespace AckSet128Test {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("AckSet128Test");
-    Orwell::addTest(suite, testBasic, "Basic");
-    Orwell::addTest(suite, testLatecomers, "Latecomers");
-    Orwell::addTest(suite, testRange, "Range");
-    Orwell::addTest(suite, testDouble, "Double");
-    Orwell::addTest(suite, testScroll, "Scroll");
-    Orwell::addTest(suite, testLargeJump, "LargeJump");
-    Orwell::addTest(suite, testWrapAround, "WrapAround");
-    Orwell::addTest(suite, testGetHead, "GetHead");
-    Orwell::addTest(suite, testGetBits, "GetBits");
-    Orwell::addTest(suite, testInitialState, "InitialState");
-    Orwell::addTest(suite, testAckZero, "AckZero");
+    unsigned group = Orwell::createGroup("AckSet128Test");
+    Orwell::addTest(group, testBasic, "Basic");
+    Orwell::addTest(group, testLatecomers, "Latecomers");
+    Orwell::addTest(group, testRange, "Range");
+    Orwell::addTest(group, testDouble, "Double");
+    Orwell::addTest(group, testScroll, "Scroll");
+    Orwell::addTest(group, testLargeJump, "LargeJump");
+    Orwell::addTest(group, testWrapAround, "WrapAround");
+    Orwell::addTest(group, testGetHead, "GetHead");
+    Orwell::addTest(group, testGetBits, "GetBits");
+    Orwell::addTest(group, testInitialState, "InitialState");
+    Orwell::addTest(group, testAckZero, "AckZero");
   }
 }

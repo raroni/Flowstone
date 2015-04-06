@@ -109,12 +109,12 @@ namespace LoopStreamTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("LoopStream");
-    Orwell::addTest(suite, testBasic, "testBasic");
-    Orwell::addTest(suite, testMax, "testMax");
-    Orwell::addTest(suite, testCapacityOverflow, "testCapacityOverflow");
-    Orwell::addTest(suite, testWrapAround, "testWrapAround");
-    Orwell::addTest(suite, testHoledRelease, "holedRelease");
-    Orwell::addTest(suite, testHoledWrapAroundRelease, "holedWrapAroundRelease");
+    unsigned group = Orwell::createGroup("LoopStream");
+    Orwell::addTest(group, testBasic, "testBasic");
+    Orwell::addTest(group, testMax, "testMax");
+    Orwell::addTest(group, testCapacityOverflow, "testCapacityOverflow");
+    Orwell::addTest(group, testWrapAround, "testWrapAround");
+    Orwell::addTest(group, testHoledRelease, "holedRelease");
+    Orwell::addTest(group, testHoledWrapAroundRelease, "holedWrapAroundRelease");
   }
 }

@@ -7,9 +7,9 @@
 
 namespace Orwell {
   const static unsigned maxNameLength = 32;
-  const static unsigned maxSuites = 32;
-  char suiteNames[maxSuites][maxNameLength];
-  unsigned suiteCount = 0;
+  const static unsigned maxGroups = 32;
+  char groupNames[maxGroups][maxNameLength];
+  unsigned groupCount = 0;
 
   typedef void (*TestFunction)();
   const static unsigned maxTests = 1024;
@@ -18,19 +18,19 @@ namespace Orwell {
   unsigned testSuites[maxTests];
   unsigned testFunctionsCount = 0;
 
-  unsigned createSuite(const char *name) {
-    assert(suiteCount != maxSuites);
-    strncpy(suiteNames[suiteCount], name, maxNameLength);
-    return suiteCount++;
+  unsigned createGroup(const char *name) {
+    assert(groupCount != maxGroups);
+    strncpy(groupNames[groupCount], name, maxNameLength);
+    return groupCount++;
   }
 
   unsigned currentTest;
 
-  void addTest(unsigned suite, TestFunction func, const char *name) {
+  void addTest(unsigned group, TestFunction func, const char *name) {
     assert(testFunctionsCount != maxTests);
     strncpy(testNames[testFunctionsCount], name, maxNameLength);
     testFunctions[testFunctionsCount] = func;
-    testSuites[testFunctionsCount] = suite;
+    testSuites[testFunctionsCount] = group;
     testFunctionsCount++;
   }
 
@@ -42,8 +42,8 @@ namespace Orwell {
   }
 
   void reportFailure(const char *failure) {
-    unsigned suite = testSuites[currentTest];
-    printf("%s::%s\n", suiteNames[suite], testNames[currentTest]);
+    unsigned group = testSuites[currentTest];
+    printf("%s::%s\n", groupNames[group], testNames[currentTest]);
     printf("%s\n\n", failure);
   }
 

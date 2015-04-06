@@ -136,14 +136,14 @@ namespace AckSet32Test {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("AckSet32Test");
-    Orwell::addTest(suite, testBasic, "Basic");
-    Orwell::addTest(suite, testLatecomers, "Latecomers");
-    Orwell::addTest(suite, testDouble, "Double");
-    Orwell::addTest(suite, testLargeJump, "largeJump");
-    Orwell::addTest(suite, testInitialState, "InitialState");
-    Orwell::addTest(suite, testWrapAround, "WrapAround");
-    Orwell::addTest(suite, testGetHead, "GetHead");
-    Orwell::addTest(suite, testAckZero, "AckZero");
+    unsigned group = Orwell::createGroup("AckSet32Test");
+    Orwell::addTest(group, testBasic, "Basic");
+    Orwell::addTest(group, testLatecomers, "Latecomers");
+    Orwell::addTest(group, testDouble, "Double");
+    Orwell::addTest(group, testLargeJump, "largeJump");
+    Orwell::addTest(group, testInitialState, "InitialState");
+    Orwell::addTest(group, testWrapAround, "WrapAround");
+    Orwell::addTest(group, testGetHead, "GetHead");
+    Orwell::addTest(group, testAckZero, "AckZero");
   }
 }

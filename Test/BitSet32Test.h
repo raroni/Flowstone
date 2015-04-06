@@ -77,11 +77,11 @@ namespace BitSet32Test {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("BitSet32");
-    Orwell::addTest(suite, testInitialState, "InitialState");
-    Orwell::addTest(suite, testSetGet, "SetGet");
-    Orwell::addTest(suite, testUnset, "Unset");
-    Orwell::addTest(suite, testClear, "Clear");
-    Orwell::addTest(suite, testLeft, "Left");
+    unsigned group = Orwell::createGroup("BitSet32");
+    Orwell::addTest(group, testInitialState, "InitialState");
+    Orwell::addTest(group, testSetGet, "SetGet");
+    Orwell::addTest(group, testUnset, "Unset");
+    Orwell::addTest(group, testClear, "Clear");
+    Orwell::addTest(group, testLeft, "Left");
   }
 }

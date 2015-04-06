@@ -23,7 +23,7 @@ namespace PiperUtilTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("PiperUtil");
-    Orwell::addTest(suite, testSequenceGreaterThan, "SequenceGreaterThan");
+    unsigned group = Orwell::createGroup("PiperUtil");
+    Orwell::addTest(group, testSequenceGreaterThan, "SequenceGreaterThan");
   }
 }

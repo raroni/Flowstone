@@ -27,7 +27,7 @@ namespace CollisionResolverTest {
   }
 
   void setup() {
-    unsigned suite = Orwell::createSuite("CollisionResolverTest");
-    Orwell::addTest(suite, testDynamicPositionResolution, "DynamicPositionResolution");
+    unsigned group = Orwell::createGroup("CollisionResolverTest");
+    Orwell::addTest(group, testDynamicPositionResolution, "DynamicPositionResolution");
   }
 }
