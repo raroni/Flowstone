@@ -187,8 +187,6 @@ TEST_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Include\
 	-I../../Libraries/Quanta/Include\
 	-I../../Libraries/Piper/Include\
-	-I../../Source\
-	-I../../Source/User\
 	-I../..
 
 TEST_OBJECTS = $(patsubst %.cpp,$(BUILD_DIR)/Objects/Test/%.o,$(TEST_SOURCES))
