@@ -35,6 +35,11 @@ namespace Fixie {
     operator float() const {
       return static_cast<float>(raw) / (1 << fractionBits);
     }
+    static Num createByRaw(int32_t raw) {
+      Num n;
+      n.raw = raw;
+      return n;
+    }
   };
 }
 
