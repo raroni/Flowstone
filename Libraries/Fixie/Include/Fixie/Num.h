@@ -17,13 +17,41 @@ namespace Fixie {
     Num(double x) {
       raw = x * (1 << fractionBits);
     }
+    Num& operator+=(const Num &rhs) {
+      raw += rhs.raw;
+      return *this;
+    }
+    Num& operator-=(const Num &rhs) {
+      raw -= rhs.raw;
+      return *this;
+    }
     Num& operator/=(const Num &rhs) {
       raw = (static_cast<uint64_t>(raw) << fractionBits) / rhs.raw;
       return *this;
     }
     Num& operator*=(const Num &rhs) {
-      raw = (static_cast<uint64_t>(raw) << fractionBits) / rhs.raw;
+      raw = (static_cast<uint64_t>(raw) * rhs.raw) >> fractionBits;
       return *this;
+    }
+    Num operator+(const Num &other) {
+      Num result = *this;
+      result += other;
+      return result;
+    }
+    Num operator-(const Num &other) {
+      Num result = *this;
+      result -= other;
+      return result;
+    }
+    Num operator*(const Num &other) {
+      Num result = *this;
+      result *= other;
+      return result;
+    }
+    Num operator/(const Num &other) {
+      Num result = *this;
+      result /= other;
+      return result;
     }
     Num operator%(Num rhs) {
       int32_t a = *this;
@@ -32,6 +60,9 @@ namespace Fixie {
     }
     operator float() const {
       return static_cast<float>(raw) / (1 << fractionBits);
+    }
+    operator int32_t() const {
+      return raw / (1 << fractionBits);
     }
     static Num createByRaw(int32_t raw) {
       Num n;
