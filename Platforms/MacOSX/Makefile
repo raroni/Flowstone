@@ -7,28 +7,28 @@ USER_SOURCES_CPP =\
 	../../Misc/Error.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Misc/GameTime.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Vector2.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Vector4.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
-	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
-	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
-	../../Libraries/Quanta/Library/Source/Geometry/Plane.cpp\
-	../../Libraries/Quanta/Library/Source/Geometry/Transformer.cpp\
-	../../Libraries/Quanta/Library/Source/Random.cpp\
-	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Libraries/Piper/Library/Source/Client.cpp\
-	../../Libraries/Piper/Library/Source/AckSet128.cpp\
-	../../Libraries/Piper/Library/Source/AckSet32.cpp\
-	../../Libraries/Piper/Library/Source/ClientOutBuffer.cpp\
-	../../Libraries/Piper/Library/Source/Util.cpp\
-	../../Libraries/Piper/Library/Source/ClientIDPool.cpp\
-	../../Libraries/Piper/Library/Source/MessageBuffer.cpp\
-	../../Libraries/Piper/Library/Source/Server.cpp\
-	../../Libraries/Piper/Library/Source/ServerInBuffer.cpp\
-	../../Libraries/Piper/Library/Source/ServerOutBuffer.cpp\
-	../../Libraries/Piper/Library/Source/Transmission.cpp\
+	../../Libraries/Quanta/Source/Math/Vector2.cpp\
+	../../Libraries/Quanta/Source/Math/Vector3.cpp\
+	../../Libraries/Quanta/Source/Math/Vector4.cpp\
+	../../Libraries/Quanta/Source/Math/Matrix4.cpp\
+	../../Libraries/Quanta/Source/Math/Quaternion.cpp\
+	../../Libraries/Quanta/Source/Geometry/Transform.cpp\
+	../../Libraries/Quanta/Source/Geometry/TransformFactory3D.cpp\
+	../../Libraries/Quanta/Source/Geometry/Plane.cpp\
+	../../Libraries/Quanta/Source/Geometry/Transformer.cpp\
+	../../Libraries/Quanta/Source/Random.cpp\
+	../../Libraries/Quanta/Source/Util.cpp\
+	../../Libraries/Piper/Source/Client.cpp\
+	../../Libraries/Piper/Source/AckSet128.cpp\
+	../../Libraries/Piper/Source/AckSet32.cpp\
+	../../Libraries/Piper/Source/ClientOutBuffer.cpp\
+	../../Libraries/Piper/Source/Util.cpp\
+	../../Libraries/Piper/Source/ClientIDPool.cpp\
+	../../Libraries/Piper/Source/MessageBuffer.cpp\
+	../../Libraries/Piper/Source/Server.cpp\
+	../../Libraries/Piper/Source/ServerInBuffer.cpp\
+	../../Libraries/Piper/Source/ServerOutBuffer.cpp\
+	../../Libraries/Piper/Source/Transmission.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionDetector.cpp\
 	../../Physics/CollisionResolver.cpp\
@@ -109,9 +109,9 @@ USER_SOURCES_OBJCPP = \
 	Source/ClientPlatform.mm
 
 USER_HEADER_DIRS =\
-	-I../../Libraries/Conrad/Library/Include\
-	-I../../Libraries/Quanta/Library/Include\
-	-I../../Libraries/Piper/Library/Include\
+	-I../../Libraries/Conrad/Include\
+	-I../../Libraries/Quanta/Include\
+	-I../../Libraries/Piper/Include\
 	-I../../Sys/File/Include\
 	-I../../Sys/Net/Include\
 	-I../../Sys/Key/Include\
@@ -167,16 +167,16 @@ run: user
 
 
 TEST_SOURCES =\
-	../../Libraries/Quanta/Library/Source/Math/Matrix4.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Quaternion.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Vector3.cpp\
-	../../Libraries/Quanta/Library/Source/Math/Vector4.cpp\
-	../../Libraries/Quanta/Library/Source/Geometry/Transform.cpp\
-	../../Libraries/Quanta/Library/Source/Geometry/TransformFactory3D.cpp\
-	../../Libraries/Quanta/Library/Source/Util.cpp\
-	../../Libraries/Piper/Library/Source/Util.cpp\
-	../../Libraries/Piper/Library/Source/AckSet128.cpp\
-	../../Libraries/Piper/Library/Source/AckSet32.cpp\
+	../../Libraries/Quanta/Source/Math/Matrix4.cpp\
+	../../Libraries/Quanta/Source/Math/Quaternion.cpp\
+	../../Libraries/Quanta/Source/Math/Vector3.cpp\
+	../../Libraries/Quanta/Source/Math/Vector4.cpp\
+	../../Libraries/Quanta/Source/Geometry/Transform.cpp\
+	../../Libraries/Quanta/Source/Geometry/TransformFactory3D.cpp\
+	../../Libraries/Quanta/Source/Util.cpp\
+	../../Libraries/Piper/Source/Util.cpp\
+	../../Libraries/Piper/Source/AckSet128.cpp\
+	../../Libraries/Piper/Source/AckSet32.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
@@ -184,9 +184,9 @@ TEST_SOURCES =\
 	../../Test/main.cpp
 
 TEST_HEADER_DIRS =\
-	-I../../Libraries/Conrad/Library/Include\
-	-I../../Libraries/Quanta/Library/Include\
-	-I../../Libraries/Piper/Library/Include\
+	-I../../Libraries/Conrad/Include\
+	-I../../Libraries/Quanta/Include\
+	-I../../Libraries/Piper/Include\
 	-I../../Source\
 	-I../../Source/User\
 	-I../..
