@@ -1,8 +1,6 @@
 #include "Orwell.h"
 #include "Fixie/Util.h"
 
-#include <math.h>
-
 namespace FixieUtilTest {
   using namespace Orwell::Assertions;
   using namespace Fixie;
@@ -20,17 +18,8 @@ namespace FixieUtilTest {
     assertEqual(-3, a);
   }
 
-  void testFmod() {
-    Num a, b;
-
-    a = 7;
-    b = 3.14*2;
-    assertInDelta(0.72, 0.005, Util::fmod(a, b));
-  }
-
   void setup() {
     unsigned group = Orwell::createGroup("FixieUtilTest");
     Orwell::addTest(group, testFloor, "floor");
-    Orwell::addTest(group, testFmod, "fmod");
   }
 }

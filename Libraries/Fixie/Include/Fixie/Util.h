@@ -6,7 +6,6 @@
 namespace Fixie {
   namespace Util {
     Num floor(Num n);
-    Num fmod(Num a, Num b);
   }
 }
 
