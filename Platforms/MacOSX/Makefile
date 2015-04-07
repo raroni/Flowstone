@@ -177,8 +177,8 @@ TEST_SOURCES =\
 	../../Libraries/Piper/Source/Util.cpp\
 	../../Libraries/Piper/Source/AckSet128.cpp\
 	../../Libraries/Piper/Source/AckSet32.cpp\
-	../../Libraries/Fixie/Source/Trig.cpp\
-	../../Libraries/Fixie/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Trig.cpp\
+	../../Libraries/Fixie/Library/Source/Util.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
@@ -189,7 +189,7 @@ TEST_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Include\
 	-I../../Libraries/Quanta/Include\
 	-I../../Libraries/Piper/Include\
-	-I../../Libraries/Fixie/Include\
+	-I../../Libraries/Fixie/Library/Include\
 	-I../../Test\
 	-I../..
 
