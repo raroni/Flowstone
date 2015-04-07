@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
-#include "Fixie/Config.h"
 #include "Fixie/Num.h"
 
 int main() {
