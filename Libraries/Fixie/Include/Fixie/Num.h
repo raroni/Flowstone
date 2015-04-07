@@ -27,11 +27,11 @@ namespace Fixie {
       return *this;
     }
     Num& operator/=(const Num &rhs) {
-      raw = (static_cast<uint64_t>(raw) << fractionBits) / rhs.raw;
+      raw = (static_cast<int64_t>(raw) << fractionBits) / rhs.raw;
       return *this;
     }
     Num& operator*=(const Num &rhs) {
-      raw = (static_cast<uint64_t>(raw) * rhs.raw) >> fractionBits;
+      raw = (static_cast<int64_t>(raw) * rhs.raw) >> fractionBits;
       return *this;
     }
     Num operator+(const Num &other) const {

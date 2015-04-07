@@ -79,6 +79,10 @@ namespace FixieNumTest {
     a = 1;
     b = 2;
     assertInDelta(0.5, 0.005, a/b);
+
+    a = -1;
+    b = 3;
+    assertInDelta(-0.33333, 0.005, a/b);
   }
 
   void testModulus() {
