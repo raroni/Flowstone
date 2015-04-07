@@ -140,15 +140,11 @@ namespace Fixie {
     };
 
     Num sin(Num n) {
-      return 0;
-      // todo
-      /*
-      const Num rest = Util::fmod(n, pi2);
-      const Num ratio = rest*rpi2;
+      const Num radians = n - pi2 * Util::floor(n/pi2);
+      const Num ratio = radians*rpi2;
       Num result;
       result.raw = sineTable[ratio.raw];
       return result;
-      */
     }
   }
 }

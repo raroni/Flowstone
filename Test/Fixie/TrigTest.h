@@ -25,14 +25,15 @@ namespace FixieTrigTest {
     n = Trig::sin(0.3);
     assertInDelta(0.2955, 0.01, n);
 
-    /*
-    work in progress:
     n = Trig::sin(-0.3);
     assertInDelta(-0.2955, 0.01, n);
 
     n = Trig::sin(30);
     assertInDelta(-0.9880, 0.01, n);
 
+    /*
+    Todo: Let's try this after updating the sine table with
+    proper values that takes rounding into account
     n = Trig::sin(-100);
     assertInDelta(-0.5064, 0.01, n);
     */
@@ -41,6 +42,6 @@ namespace FixieTrigTest {
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testConstants, "Constants");
-    // Orwell::addTest(group, testSine, "Sine");
+    Orwell::addTest(group, testSine, "Sine");
   }
 }
