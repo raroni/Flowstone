@@ -60,10 +60,30 @@ namespace FixieTrigTest {
     assertInDelta(-0.86676, 0.01, n);
   }
 
+  void testArcCosine() {
+    Num a;
+
+    a = Trig::acos(-1);
+    assertInDelta(Trig::pi, 0.01, a);
+
+    a = Trig::acos(0);
+    assertInDelta(Trig::piHalf, 0.01, a);
+
+    a = Trig::acos(1);
+    assertEqual(0, a);
+
+    a = Trig::acos(0.5);
+    assertInDelta(1.04719, 0.01, a);
+
+    a = Trig::acos(0.7);
+    assertInDelta(0.79539, 0.01, a);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testConstants, "Constants");
     Orwell::addTest(group, testSine, "Sine");
     Orwell::addTest(group, testCosine, "Cosine");
+    Orwell::addTest(group, testArcCosine, "ArcCosine");
   }
 }
