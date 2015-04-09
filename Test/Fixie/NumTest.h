@@ -154,6 +154,50 @@ namespace FixieNumTest {
     assertFalse(a != b);
   }
 
+  void testGreaterThan() {
+    Num a, b;
+
+    a = 5;
+    b = 10;
+    assertTrue(a < b);
+
+    a = -5;
+    b = 2;
+    assertTrue(a < b);
+
+    a = 10;
+    b = 5;
+    assertFalse(a < b);
+
+    a = 2;
+    b = -5;
+    assertFalse(a < b);
+  }
+
+  void testGreaterThanOrEqual() {
+    Num a, b;
+
+    a = 5;
+    b = 10;
+    assertTrue(a <= b);
+
+    a = -5;
+    b = 2;
+    assertTrue(a <= b);
+
+    a = 2;
+    b = 2;
+    assertTrue(a <= b);
+
+    a = 10;
+    b = 5;
+    assertFalse(a <= b);
+
+    a = 2;
+    b = -5;
+    assertFalse(a <= b);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieNumTest");
     Orwell::addTest(group, testConversion, "Conversion");
@@ -164,5 +208,7 @@ namespace FixieNumTest {
     Orwell::addTest(group, testModulus, "Modulus");
     Orwell::addTest(group, testEquality, "Equality");
     Orwell::addTest(group, testInequality, "Inequality");
+    Orwell::addTest(group, testGreaterThan, "GreaterThan");
+    Orwell::addTest(group, testGreaterThanOrEqual, "GreaterThanOrEqual");
   }
 }

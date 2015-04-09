@@ -74,6 +74,12 @@ namespace Fixie {
     bool operator!=(const Num &other) {
       return !(*this == other);
     }
+    bool operator<(const Num &other) {
+      return raw < other.raw;
+    }
+    bool operator<=(const Num &other) {
+      return raw <= other.raw;
+    }
     operator float() const {
       return static_cast<float>(raw) / (1 << fractionBits);
     }
