@@ -99,11 +99,39 @@ namespace FixieVector3Test {
     assertEqual(8, crossProduct[2]);
   }
 
+  void testLength() {
+    Vector3 v;
+    Num length;
+
+    v = { 3, 2, 8 };
+    length = v.calcLength();
+    assertInDelta(8.77496, 0.002, length);
+
+    v = { -7.9, 7, 2 };
+    length = v.calcLength();
+    assertInDelta(10.74290, 0.002, length);
+  }
+
+  void testSquaredLength() {
+    Vector3 v;
+    Num squaredLength;
+
+    v = { 3, -4, 7.7 };
+    squaredLength = v.calcSquaredLength();
+    assertInDelta(84.29, 0.005, squaredLength);
+
+    v = { 4, 81, -3.1 };
+    squaredLength = v.calcSquaredLength();
+    assertInDelta(6586.61, 0.005, squaredLength);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testSubtraction, "Subtraction");
+    Orwell::addTest(group, testLength, "Length");
+    Orwell::addTest(group, testSquaredLength, "SquaredLength");
     Orwell::addTest(group, testDot, "Dot");
     Orwell::addTest(group, testCross, "Cross");
   }

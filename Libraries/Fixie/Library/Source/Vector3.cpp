@@ -1,3 +1,4 @@
+#include "Fixie/Util.h"
 #include "Fixie/Vector3.h"
 
 namespace Fixie {
@@ -52,6 +53,18 @@ namespace Fixie {
       a[1]*b[2] - a[2]*b[1],
       a[2]*b[0] - a[0]*b[2],
       a[0]*b[1] - a[1]*b[0]
+    );
+  }
+
+  Num Vector3::calcLength() const {
+    return Util::sqrt(calcSquaredLength());
+  }
+
+  Num Vector3::calcSquaredLength() const {
+    return (
+      components[0] * components[0] +
+      components[1] * components[1] +
+      components[2] * components[2]
     );
   }
 }
