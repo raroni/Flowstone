@@ -23,10 +23,20 @@ namespace FixieVector3Test {
   }
 
   void testDot() {
-    Vector3 a(1, 2, 3);
-    Vector3 b(4, -5, 6);
-    Num dotProduct = Vector3::dot(a, b);
+    Vector3 a;
+    Vector3 b;
+    Num dotProduct;
+
+    a = { 1, 2, 3 };
+    b = { 4, -5, 6 };
+    dotProduct = Vector3::dot(a, b);
     assertEqual(12, dotProduct);
+
+    a = { 2, -3, 7 };
+    b = { -4, 2, -4 };
+    dotProduct = Vector3::dot(a, b);
+    assertEqual(-42, dotProduct);
+
   }
 
   void testCross() {
