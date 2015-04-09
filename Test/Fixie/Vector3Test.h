@@ -125,6 +125,16 @@ namespace FixieVector3Test {
     assertInDelta(6586.61, 0.005, squaredLength);
   }
 
+  void testNormalize() {
+    Vector3 v;
+
+    v = { 9, -4, 1.7 };
+    v = Vector3::normalize(v);
+    assertInDelta(0.90049, 0.005, v[0]);
+    assertInDelta(-0.40022, 0.005, v[1]);
+    assertInDelta(0.17009, 0.005, v[2]);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testInit, "Init");
@@ -132,6 +142,7 @@ namespace FixieVector3Test {
     Orwell::addTest(group, testSubtraction, "Subtraction");
     Orwell::addTest(group, testLength, "Length");
     Orwell::addTest(group, testSquaredLength, "SquaredLength");
+    //Orwell::addTest(group, testNormalize, "Normalize");
     Orwell::addTest(group, testDot, "Dot");
     Orwell::addTest(group, testCross, "Cross");
   }

@@ -56,6 +56,10 @@ namespace Fixie {
     );
   }
 
+  Vector3 Vector3::normalize(Vector3 v) {
+    return Vector3(0, 0, 0);
+  }
+
   Num Vector3::calcLength() const {
     return Util::sqrt(calcSquaredLength());
   }
