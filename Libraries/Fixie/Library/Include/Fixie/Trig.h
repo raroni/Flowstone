@@ -8,6 +8,7 @@ namespace Fixie {
     extern const Num rpi2;
 
     Num sin(Num n);
+    Num cos(Num n);
   }
 }
 

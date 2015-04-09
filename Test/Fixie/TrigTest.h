@@ -14,13 +14,13 @@ namespace FixieTrigTest {
     Num n;
 
     n = Trig::sin(0);
-    assertInDelta(0, 0.00001, n);
+    assertEqual(0, n);
 
     n = Trig::sin(Trig::pi);
-    assertInDelta(0, 0.01, n);
+    assertEqual(0, n);
 
     n = Trig::sin(Trig::pi2);
-    assertInDelta(0, 0.00001, n);
+    assertEqual(0, n);
 
     n = Trig::sin(0.3);
     assertInDelta(0.2955, 0.01, n);
@@ -35,9 +35,35 @@ namespace FixieTrigTest {
     assertInDelta(0.5064, 0.01, n);
   }
 
+  void testCosine() {
+    Num n;
+
+    n = Trig::cos(0);
+    assertEqual(1, n);
+
+    n = Trig::cos(Trig::pi);
+    assertEqual(-1, n);
+
+    n = Trig::cos(Trig::pi2);
+    assertEqual(1, n);
+
+    n = Trig::cos(0.3);
+    assertInDelta(0.95533, 0.01, n);
+
+    n = Trig::cos(-0.3);
+    assertInDelta(0.95533, 0.01, n);
+
+    n = Trig::cos(30);
+    assertInDelta(0.15425, 0.01, n);
+
+    n = Trig::cos(-122);
+    assertInDelta(-0.86676, 0.01, n);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testConstants, "Constants");
     Orwell::addTest(group, testSine, "Sine");
+    Orwell::addTest(group, testCosine, "Cosine");
   }
 }
