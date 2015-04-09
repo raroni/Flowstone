@@ -7,9 +7,11 @@ namespace Fixie {
   class Vector3 {
   public:
     Vector3(double x, double y, double z);
+    Vector3();
     Num& operator[](const int index);
     const Num& operator[](const int index) const;
     static Num dot(Vector3 a, Vector3 b);
+    static Vector3 cross(Vector3 a, Vector3 b);
   private:
     Num components[3];
   };

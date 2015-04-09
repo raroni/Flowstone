@@ -29,9 +29,30 @@ namespace FixieVector3Test {
     assertEqual(12, dotProduct);
   }
 
+  void testCross() {
+    Vector3 a;
+    Vector3 b;
+    Vector3 crossProduct;
+
+    a = { 3, -3, 1 };
+    b = { 4, 9, 2 };
+    crossProduct = Vector3::cross(a, b);
+    assertEqual(-15, crossProduct[0]);
+    assertEqual(-2, crossProduct[1]);
+    assertEqual(39, crossProduct[2]);
+
+    a = { 2, 1, -3 };
+    b = { 0, 4, 5 };
+    crossProduct = Vector3::cross(a, b);
+    assertEqual(17, crossProduct[0]);
+    assertEqual(-10, crossProduct[1]);
+    assertEqual(8, crossProduct[2]);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testDot, "Dot");
+    Orwell::addTest(group, testCross, "Cross");
   }
 }
