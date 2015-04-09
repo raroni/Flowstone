@@ -27,7 +27,11 @@ namespace Fixie {
       return *this;
     }
     Num& operator/=(const Num &rhs) {
-      raw = (static_cast<int64_t>(raw) << fractionBits) / rhs.raw;
+      const int32_t resultNegative = ((raw ^ rhs.raw) & 0x80000000) >> 31;
+      const int32_t sign = resultNegative*-2+1;
+      int64_t temp = static_cast<int64_t>(raw) << fractionBits;
+      temp += rhs.raw/2*sign;
+      raw = temp / rhs.raw;
       return *this;
     }
     Num& operator*=(const Num &rhs) {
@@ -61,6 +65,9 @@ namespace Fixie {
     }
     operator float() const {
       return static_cast<float>(raw) / (1 << fractionBits);
+    }
+    operator double() const {
+      return static_cast<double>(raw) / (1 << fractionBits);
     }
     operator int32_t() const {
       return raw / (1 << fractionBits);
