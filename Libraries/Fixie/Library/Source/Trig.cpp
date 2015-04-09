@@ -8,7 +8,7 @@ namespace Fixie {
     const Num pi2 = Num::createByRaw(6434);
     const Num rpi2 = Num::createByRaw(163);
 
-    int32_t sineTable[] = {
+    int16_t sineTable[] = {
       0, 6, 13, 19, 25, 31, 38, 44,
       50, 57, 63, 69, 75, 82, 88, 94,
       100, 107, 113, 119, 125, 132, 138, 144,
