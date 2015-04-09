@@ -8,9 +8,9 @@
 namespace Fixie {
   namespace Trig {
     const Num pi = Num::createByRaw(3217);
-    const Num pi2 = Num::createByRaw(6434);
-    const Num piHalf = Num::createByRaw(1608);
-    const Num rpi2 = Num::createByRaw(163);
+    const Num twoPi = Num::createByRaw(6434);
+    const Num halfPi = Num::createByRaw(1608);
+    const Num inverseTwoPi = Num::createByRaw(163);
 
     int16_t sineTable[] = {
       0, 6, 13, 19, 25, 31, 38, 44,
@@ -407,18 +407,18 @@ namespace Fixie {
     };
 
     Num normalizeAngle(Num angle) {
-      return angle - pi2 * Util::floor(angle*rpi2);
+      return angle - twoPi * Util::floor(angle*inverseTwoPi);
     }
 
     Num sin(Num n) {
       const Num radians = normalizeAngle(n);
-      const Num ratio = radians*rpi2;
+      const Num ratio = radians*inverseTwoPi;
       return Num::createByRaw(sineTable[ratio.raw]);
     }
 
     Num cos(Num n) {
       const Num radians = normalizeAngle(n);
-      const Num ratio = radians*rpi2;
+      const Num ratio = radians*inverseTwoPi;
       return Num::createByRaw(cosineTable[ratio.raw]);
     }
 

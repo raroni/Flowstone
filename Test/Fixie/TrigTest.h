@@ -7,7 +7,7 @@ namespace FixieTrigTest {
 
   void testConstants() {
     assertInDelta(3.1415, 0.005, Trig::pi);
-    assertInDelta(6.2831, 0.005, Trig::pi2);
+    assertInDelta(6.2831, 0.005, Trig::twoPi);
   }
 
   void testSine() {
@@ -19,7 +19,7 @@ namespace FixieTrigTest {
     n = Trig::sin(Trig::pi);
     assertEqual(0, n);
 
-    n = Trig::sin(Trig::pi2);
+    n = Trig::sin(Trig::twoPi);
     assertEqual(0, n);
 
     n = Trig::sin(0.3);
@@ -44,7 +44,7 @@ namespace FixieTrigTest {
     n = Trig::cos(Trig::pi);
     assertEqual(-1, n);
 
-    n = Trig::cos(Trig::pi2);
+    n = Trig::cos(Trig::twoPi);
     assertEqual(1, n);
 
     n = Trig::cos(0.3);
@@ -67,7 +67,7 @@ namespace FixieTrigTest {
     assertInDelta(Trig::pi, 0.01, a);
 
     a = Trig::acos(0);
-    assertInDelta(Trig::piHalf, 0.01, a);
+    assertInDelta(Trig::halfPi, 0.01, a);
 
     a = Trig::acos(1);
     assertEqual(0, a);
