@@ -114,6 +114,46 @@ namespace FixieNumTest {
     assertEqual(7, a % b);
   }
 
+  void testEquality() {
+    Num a, b;
+
+    a = 10;
+    b = 10;
+    assertTrue(a == b);
+
+    a = -10;
+    b = -10;
+    assertTrue(a == b);
+
+    a = 10;
+    b = 5;
+    assertFalse(a == b);
+
+    a = 10;
+    b = -10;
+    assertFalse(a == b);
+  }
+
+  void testInequality() {
+    Num a, b;
+
+    a = 10;
+    b = 5;
+    assertTrue(a != b);
+
+    a = 10;
+    b = -10;
+    assertTrue(a != b);
+
+    a = 10;
+    b = 10;
+    assertFalse(a != b);
+
+    a = -10;
+    b = -10;
+    assertFalse(a != b);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieNumTest");
     Orwell::addTest(group, testConversion, "Conversion");
@@ -122,5 +162,7 @@ namespace FixieNumTest {
     Orwell::addTest(group, testMultiplication, "Multiplication");
     Orwell::addTest(group, testDivision, "Division");
     Orwell::addTest(group, testModulus, "Modulus");
+    Orwell::addTest(group, testEquality, "Equality");
+    Orwell::addTest(group, testInequality, "Inequality");
   }
 }
