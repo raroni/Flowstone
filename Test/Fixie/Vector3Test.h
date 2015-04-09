@@ -159,7 +159,7 @@ namespace FixieVector3Test {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("FixieTrigTest");
+    unsigned group = Orwell::createGroup("FixieVector3Test");
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testSubtraction, "Subtraction");

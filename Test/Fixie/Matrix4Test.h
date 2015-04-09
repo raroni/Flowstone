@@ -67,7 +67,7 @@ namespace FixieMatrix4Test {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("FixieTrigTest");
+    unsigned group = Orwell::createGroup("FixieMatrix4Test");
     Orwell::addTest(group, testSetGet, "SetGet");
     Orwell::addTest(group, testIdentity, "Identity");
     Orwell::addTest(group, testMultiplication, "Multiplication");
