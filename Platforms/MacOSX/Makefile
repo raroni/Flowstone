@@ -179,6 +179,7 @@ TEST_SOURCES =\
 	../../Libraries/Piper/Source/AckSet32.cpp\
 	../../Libraries/Fixie/Library/Source/Trig.cpp\
 	../../Libraries/Fixie/Library/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Vector3.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
