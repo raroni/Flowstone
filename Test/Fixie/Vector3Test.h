@@ -62,6 +62,15 @@ namespace FixieVector3Test {
     assertEqual(10, sum[2]);
   }
 
+  void testMultiplication() {
+    Vector3 v(2, 6, 10);
+    Vector3 r = v*4;
+
+    assertEqual(8, r[0]);
+    assertEqual(24, r[1]);
+    assertEqual(40, r[2]);
+  }
+
   void testDivision() {
     Vector3 v;
     Vector3 quotient;
@@ -163,6 +172,7 @@ namespace FixieVector3Test {
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testSubtraction, "Subtraction");
+    Orwell::addTest(group, testMultiplication, "Multiplication");
     Orwell::addTest(group, testDivision, "Division");
     Orwell::addTest(group, testLength, "Length");
     Orwell::addTest(group, testSquaredLength, "SquaredLength");

@@ -14,6 +14,8 @@ namespace Fixie {
     Vector3& operator+=(Vector3 other);
     Vector3 operator-(Vector3 other);
     Vector3& operator-=(Vector3 other);
+    Vector3 operator*(Num divisor);
+    Vector3& operator*=(Num divisor);
     Vector3 operator/(Num divisor);
     Vector3& operator/=(Num divisor);
     Num calcLength() const;
