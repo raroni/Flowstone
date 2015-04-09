@@ -31,12 +31,8 @@ namespace FixieTrigTest {
     n = Trig::sin(30);
     assertInDelta(-0.9880, 0.01, n);
 
-    /*
-    Todo: Let's try this after updating the sine table with
-    proper values that takes rounding into account
     n = Trig::sin(-100);
-    assertInDelta(-0.5064, 0.01, n);
-    */
+    assertInDelta(0.5064, 0.01, n);
   }
 
   void setup() {
