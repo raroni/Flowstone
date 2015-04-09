@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "Fixie/Util.h"
 
 namespace Fixie {
@@ -12,6 +13,7 @@ namespace Fixie {
     }
 
     Num sqrt(Num n) {
+      assert(n >= Num(0));
       Num s = halve(n);
       for(uint8_t i=0; i<6; ++i) {
         s = halve(s + n/s);

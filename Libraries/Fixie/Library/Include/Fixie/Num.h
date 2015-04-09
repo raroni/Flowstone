@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <stdint.h>
+#include <assert.h>
 #include "Fixie/Config.h"
 
 namespace Fixie {
@@ -27,6 +28,7 @@ namespace Fixie {
       return *this;
     }
     Num& operator/=(const Num &rhs) {
+      assert(rhs.raw != 0);
       const int32_t resultNegative = ((raw ^ rhs.raw) & 0x80000000) >> 31;
       const int32_t sign = resultNegative*-2+1;
       int64_t temp = static_cast<int64_t>(raw) << fractionBits;
