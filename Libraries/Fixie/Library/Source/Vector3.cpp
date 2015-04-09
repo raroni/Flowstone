@@ -4,7 +4,7 @@
 namespace Fixie {
   Vector3::Vector3() { }
 
-  Vector3::Vector3(double x, double y, double z) {
+  Vector3::Vector3(Num x, Num y, Num z) {
     components[0] = x;
     components[1] = y;
     components[2] = z;

@@ -6,7 +6,7 @@
 namespace Fixie {
   class Vector3 {
   public:
-    Vector3(double x, double y, double z);
+    Vector3(Num x, Num y, Num z);
     Vector3();
     Num& operator[](const int index);
     const Num& operator[](const int index) const;
