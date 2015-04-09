@@ -18,8 +18,22 @@ namespace FixieUtilTest {
     assertEqual(-3, a);
   }
 
+  void testSqrt() {
+    Num a;
+
+    a = Util::sqrt(25);
+    assertEqual(5, a);
+
+    a = Util::sqrt(2);
+    assertInDelta(1.4142, 0.001, a);
+
+    a = Util::sqrt(99);
+    assertInDelta(9.9498, 0.001, a);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieUtilTest");
     Orwell::addTest(group, testFloor, "floor");
+    Orwell::addTest(group, testSqrt, "sqrt");
   }
 }

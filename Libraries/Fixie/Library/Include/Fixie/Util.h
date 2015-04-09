@@ -6,6 +6,7 @@
 namespace Fixie {
   namespace Util {
     Num floor(Num n);
+    Num sqrt(Num n);
   }
 }
 
