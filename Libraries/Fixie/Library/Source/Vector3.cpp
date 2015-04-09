@@ -70,7 +70,7 @@ namespace Fixie {
   }
 
   Vector3 Vector3::normalize(Vector3 v) {
-    return Vector3(0, 0, 0);
+    return v/v.calcLength();
   }
 
   Num Vector3::calcLength() const {
