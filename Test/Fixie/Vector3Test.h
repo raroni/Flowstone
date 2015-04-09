@@ -22,8 +22,16 @@ namespace FixieVector3Test {
     assertEqual(5, v3[2]);
   }
 
+  void testDot() {
+    Vector3 a(1, 2, 3);
+    Vector3 b(4, -5, 6);
+    Num dotProduct = Vector3::dot(a, b);
+    assertEqual(12, dotProduct);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testInit, "Init");
+    Orwell::addTest(group, testDot, "Dot");
   }
 }

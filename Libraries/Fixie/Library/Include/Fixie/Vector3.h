@@ -9,6 +9,7 @@ namespace Fixie {
     Vector3(double x, double y, double z);
     Num& operator[](const int index);
     const Num& operator[](const int index) const;
+    static Num dot(Vector3 a, Vector3 b);
   private:
     Num components[3];
   };
