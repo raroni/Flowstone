@@ -58,11 +58,6 @@ namespace Fixie {
       result /= other;
       return result;
     }
-    Num operator/(int32_t other) const {
-      Num result = *this;
-      result /= Num(other);
-      return result;
-    }
     Num operator%(Num rhs) {
       int32_t a = *this;
       int32_t b = rhs;
