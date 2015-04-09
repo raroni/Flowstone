@@ -181,6 +181,7 @@ TEST_SOURCES =\
 	../../Libraries/Fixie/Library/Source/Util.cpp\
 	../../Libraries/Fixie/Library/Source/Vector3.cpp\
 	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
+	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
