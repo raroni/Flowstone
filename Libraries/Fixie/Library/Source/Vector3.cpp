@@ -69,6 +69,12 @@ namespace Fixie {
     );
   }
 
+  void Vector3::reset() {
+    components[0] = 0;
+    components[1] = 0;
+    components[2] = 0;
+  }
+
   Vector3 Vector3::normalize(Vector3 v) {
     return v/v.calcLength();
   }

@@ -18,6 +18,7 @@ namespace Fixie {
     Vector3& operator/=(Num divisor);
     Num calcLength() const;
     Num calcSquaredLength() const;
+    void reset();
     static Num dot(Vector3 a, Vector3 b);
     static Vector3 cross(Vector3 a, Vector3 b);
     static Vector3 normalize(Vector3 v);
