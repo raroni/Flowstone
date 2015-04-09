@@ -43,9 +43,33 @@ namespace FixieMatrix4Test {
     assertEqual(1, m[15]);
   }
 
+  void testMultiplication() {
+    Matrix4 a(4, 64, 5, 8, 87, 32, -1, 2, 2, 8, 4, 0, 3, -5, 9, 1);
+    Matrix4 b(23, 5, 5, 3, 4, 7, 44, 3, 9, 5, -9, 7, 7, 6, 0, 5);
+    Matrix4 r = a*b;
+
+    assertEqual(546, r[0]);
+    assertEqual(1657, r[1]);
+    assertEqual(157, r[2]);
+    assertEqual(197, r[3]);
+    assertEqual(722, r[4]);
+    assertEqual(817, r[5]);
+    assertEqual(216, r[6]);
+    assertEqual(49, r[7]);
+    assertEqual(474, r[8]);
+    assertEqual(629, r[9]);
+    assertEqual(67, r[10]);
+    assertEqual(89, r[11]);
+    assertEqual(565, r[12]);
+    assertEqual(615, r[13]);
+    assertEqual(74, r[14]);
+    assertEqual(73, r[15]);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testSetGet, "SetGet");
     Orwell::addTest(group, testIdentity, "Identity");
+    Orwell::addTest(group, testMultiplication, "Multiplication");
   }
 }
