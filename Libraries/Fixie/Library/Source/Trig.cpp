@@ -140,7 +140,7 @@ namespace Fixie {
     };
 
     Num sin(Num n) {
-      const Num radians = n - pi2 * Util::floor(n/pi2);
+      const Num radians = n - pi2 * Util::floor(n*rpi2);
       const Num ratio = radians*rpi2;
       Num result;
       result.raw = sineTable[ratio.raw];
