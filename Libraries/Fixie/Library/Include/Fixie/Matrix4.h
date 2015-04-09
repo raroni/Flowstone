@@ -8,6 +8,7 @@ namespace Fixie {
   public:
     Num& operator[](const int index);
     const Num& operator[](const int index) const;
+    static Matrix4 identity();
   private:
     Num components[16];
   };
