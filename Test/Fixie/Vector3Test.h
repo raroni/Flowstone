@@ -42,6 +42,23 @@ namespace FixieVector3Test {
     assertEqual(0, sum[2]);
   }
 
+  void testDivision() {
+    Vector3 v;
+    Vector3 quotient;
+
+    v = { 3, 4, 5 };
+    quotient = v/3.3;
+    assertInDelta(0.90909, 0.002, quotient[0]);
+    assertInDelta(1.21212, 0.002, quotient[1]);
+    assertInDelta(1.51515, 0.002, quotient[2]);
+
+    v = { -7, 1.1, 91.9 };
+    quotient = v/-6.1;
+    assertInDelta(1.14754, 0.002, quotient[0]);
+    assertInDelta(-0.18032, 0.002, quotient[1]);
+    assertInDelta(-15.0655, 0.002, quotient[2]);
+  }
+
   void testSubtraction() {
     Vector3 v1;
     Vector3 v2;
@@ -140,6 +157,7 @@ namespace FixieVector3Test {
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testSubtraction, "Subtraction");
+    Orwell::addTest(group, testDivision, "Division");
     Orwell::addTest(group, testLength, "Length");
     Orwell::addTest(group, testSquaredLength, "SquaredLength");
     //Orwell::addTest(group, testNormalize, "Normalize");

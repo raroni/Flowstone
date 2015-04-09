@@ -44,6 +44,19 @@ namespace Fixie {
     return *this;
   }
 
+  Vector3 Vector3::operator/(Num divisor) {
+    Vector3 result = *this;
+    result /= divisor;
+    return result;
+  }
+
+  Vector3& Vector3::operator/=(Num divisor) {
+    components[0] /= divisor;
+    components[1] /= divisor;
+    components[2] /= divisor;
+    return *this;
+  }
+
   Num Vector3::dot(Vector3 a, Vector3 b) {
     return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
   }
