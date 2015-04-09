@@ -10,6 +10,8 @@ namespace Fixie {
     Vector3();
     Num& operator[](const int index);
     const Num& operator[](const int index) const;
+    Vector3 operator+(Vector3 other);
+    Vector3& operator+=(Vector3 other);
     static Num dot(Vector3 a, Vector3 b);
     static Vector3 cross(Vector3 a, Vector3 b);
   private:

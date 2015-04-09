@@ -22,6 +22,26 @@ namespace FixieVector3Test {
     assertEqual(5, v3[2]);
   }
 
+  void testAddition() {
+    Vector3 v1;
+    Vector3 v2;
+    Vector3 sum;
+
+    v1 = { 3, 4, 5 };
+    v2 = { 11, 6.7, 1 };
+    sum = v1+v2;
+    assertEqual(14, sum[0]);
+    assertInDelta(10.7, 0.001, sum[1]);
+    assertEqual(6, sum[2]);
+
+    v1 = { 3, 4, 5 };
+    v2 = { -3, -4, -5 };
+    sum = v1+v2;
+    assertEqual(0, sum[0]);
+    assertEqual(0, sum[1]);
+    assertEqual(0, sum[2]);
+  }
+
   void testDot() {
     Vector3 a;
     Vector3 b;
@@ -62,6 +82,7 @@ namespace FixieVector3Test {
   void setup() {
     unsigned group = Orwell::createGroup("FixieTrigTest");
     Orwell::addTest(group, testInit, "Init");
+    Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testDot, "Dot");
     Orwell::addTest(group, testCross, "Cross");
   }

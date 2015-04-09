@@ -17,6 +17,20 @@ namespace Fixie {
     return components[index];
   }
 
+  Vector3 Vector3::operator+(Vector3 vector) {
+    Vector3 result = *this;
+    result += vector;
+    return result;
+  }
+
+  Vector3& Vector3::operator+=(Vector3 other) {
+    components[0] += other[0];
+    components[1] += other[1];
+    components[2] += other[2];
+    return *this;
+  }
+
+
   Num Vector3::dot(Vector3 a, Vector3 b) {
     return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
   }
