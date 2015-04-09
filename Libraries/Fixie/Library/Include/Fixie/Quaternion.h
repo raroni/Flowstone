@@ -11,6 +11,7 @@ namespace Fixie {
     Quaternion(Num real, Vector3 imaginaries);
     Num real;
     Vector3 imaginaries;
+    static Quaternion identity();
   };
 }
 
