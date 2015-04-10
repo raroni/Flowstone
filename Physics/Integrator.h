@@ -25,11 +25,13 @@ namespace Physics {
       bodyIndices[destroyOffset] = bodyIndices[bodyCount];
     }
     void integrate(Quanta::Vector3 *positions, Quanta::Vector3 *velocities, Quanta::Vector3 *forces) {
+      double stepDuration = static_cast<double>(Config::stepDuration)/1000.0;
+      double halfStepDuration = stepDuration*0.5;
       for(uint8_t i=0; bodyCount>i; i++) {
         DynamicBodyIndex bodyIndex = bodyIndices[i];
-        Quanta::Vector3 halfVelocityChange = forces[bodyIndex]*Config::stepDuration*0.5;
+        Quanta::Vector3 halfVelocityChange = forces[bodyIndex]*halfStepDuration;
         velocities[bodyIndex] += halfVelocityChange;
-        positions[bodyIndex] += velocities[bodyIndex]*Config::stepDuration;
+        positions[bodyIndex] += velocities[bodyIndex]*stepDuration;
         velocities[bodyIndex] += halfVelocityChange;
         forces[bodyIndex].reset();
       }

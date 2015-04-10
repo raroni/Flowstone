@@ -531,18 +531,18 @@ namespace Client {
       timeOfDay = fmod(timeOfDay, 1.0);
 
       stepTimeBank += timeDelta;
-      if(stepTimeBank >= Physics::Config::stepDuration) {
+      if(stepTimeBank*1000 >= Physics::Config::stepDuration) {
         Physics::DynamicBody body = physics.getDynamicBody(playerBody);
         do {
           playerControlUpdateForce(body, keyboard);
           airDrag.update(physics.getDynamicVelocities(), physics.getDynamicForces());
           physics.simulate();
-          stepTimeBank -= Physics::Config::stepDuration;
-        } while(stepTimeBank >= Physics::Config::stepDuration);
+          stepTimeBank -= static_cast<double>(Physics::Config::stepDuration)/1000;
+        } while(stepTimeBank*1000 >= Physics::Config::stepDuration);
         playerControlReact(body, animator);
         interpolater.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
       }
-      interpolater.interpolate(stepTimeBank/Physics::Config::stepDuration);
+      interpolater.interpolate((stepTimeBank*1000)/Physics::Config::stepDuration);
       updateAtmosphereColor();
       updateLightDirection();
       rendererFeeder.update();
