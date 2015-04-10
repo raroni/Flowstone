@@ -9,5 +9,13 @@ namespace Fixie {
       matrix[14] = translation[2];
       return matrix;
     }
+
+    Quaternion rotation(Vector3 axis, float angle) {
+      Num halfAngle = Util::halve(angle);
+      Num real = Trig::cos(halfAngle);
+      Vector3 imaginaries = axis*Trig::sin(halfAngle);
+      Quaternion rotation(real, imaginaries);
+      return rotation;
+    }
   }
 }
