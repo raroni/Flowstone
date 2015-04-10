@@ -18,7 +18,7 @@ namespace Fixie {
     return components[index];
   }
 
-  Vector3 Vector3::operator+(Vector3 vector) {
+  Vector3 Vector3::operator+(const Vector3 &vector) const {
     Vector3 result = *this;
     result += vector;
     return result;
@@ -31,7 +31,7 @@ namespace Fixie {
     return *this;
   }
 
-  Vector3 Vector3::operator-(Vector3 vector) {
+  Vector3 Vector3::operator-(const Vector3 &vector) const {
     Vector3 result = *this;
     result -= vector;
     return result;
@@ -44,7 +44,7 @@ namespace Fixie {
     return *this;
   }
 
-  Vector3 Vector3::operator*(Num divisor) {
+  Vector3 Vector3::operator*(Num divisor) const {
     Vector3 result = *this;
     result *= divisor;
     return result;
@@ -57,7 +57,7 @@ namespace Fixie {
     return *this;
   }
 
-  Vector3 Vector3::operator/(Num divisor) {
+  Vector3 Vector3::operator/(Num divisor) const {
     Vector3 result = *this;
     result /= divisor;
     return result;
