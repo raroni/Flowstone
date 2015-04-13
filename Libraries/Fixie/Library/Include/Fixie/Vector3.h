@@ -24,6 +24,7 @@ namespace Fixie {
     static Num dot(Vector3 a, Vector3 b);
     static Vector3 cross(Vector3 a, Vector3 b);
     static Vector3 normalize(Vector3 v);
+    static Vector3 zero();
   private:
     Num components[3];
   };

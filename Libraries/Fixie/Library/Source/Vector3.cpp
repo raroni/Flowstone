@@ -103,4 +103,8 @@ namespace Fixie {
       components[2] * components[2]
     );
   }
+
+  Vector3 Vector3::zero() {
+    return Vector3(0, 0, 0);
+  }
 }
