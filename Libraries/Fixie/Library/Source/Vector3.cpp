@@ -98,6 +98,13 @@ namespace Fixie {
     return v/v.calcLength();
   }
 
+  void Vector3::normalize() {
+    Vector3 r = Vector3::normalize(*this);
+    components[0] = r[0];
+    components[1] = r[1];
+    components[2] = r[2];
+  }
+
   Num Vector3::calcLength() const {
     return Util::sqrt(calcSquaredLength());
   }

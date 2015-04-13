@@ -151,7 +151,7 @@ namespace FixieVector3Test {
     assertInDelta(6586.61, 0.005, squaredLength);
   }
 
-  void testNormalize() {
+  void testStaticNormalize() {
     Vector3 v;
 
     v = { 9, -4, 1.7 };
@@ -162,6 +162,22 @@ namespace FixieVector3Test {
 
     v = { -2, 7, 23 };
     v = Vector3::normalize(v);
+    assertInDelta(-0.082902, 0.005, v[0]);
+    assertInDelta(0.29015, 0.005, v[1]);
+    assertInDelta(0.95338, 0.005, v[2]);
+  }
+
+  void testInstanceNormalize() {
+    Vector3 v;
+
+    v = { 9, -4, 1.7 };
+    v.normalize();
+    assertInDelta(0.90049, 0.005, v[0]);
+    assertInDelta(-0.40022, 0.005, v[1]);
+    assertInDelta(0.17009, 0.005, v[2]);
+
+    v = { -2, 7, 23 };
+    v.normalize();
     assertInDelta(-0.082902, 0.005, v[0]);
     assertInDelta(0.29015, 0.005, v[1]);
     assertInDelta(0.95338, 0.005, v[2]);
@@ -191,7 +207,8 @@ namespace FixieVector3Test {
     Orwell::addTest(group, testDivision, "Division");
     Orwell::addTest(group, testLength, "Length");
     Orwell::addTest(group, testSquaredLength, "SquaredLength");
-    Orwell::addTest(group, testNormalize, "Normalize");
+    Orwell::addTest(group, testStaticNormalize, "StaticNormalize");
+    Orwell::addTest(group, testInstanceNormalize, "InstanceNormalize");
     Orwell::addTest(group, testDot, "Dot");
     Orwell::addTest(group, testCross, "Cross");
     Orwell::addTest(group, testIsZero, "Cross");
