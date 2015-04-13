@@ -2,6 +2,8 @@
 #include "Fixie/Vector3.h"
 
 namespace Fixie {
+  static Num numZero(0);
+
   Vector3::Vector3() { }
 
   Vector3::Vector3(Num x, Num y, Num z) {
@@ -16,6 +18,10 @@ namespace Fixie {
 
   const Num& Vector3::operator[](const int index) const {
     return components[index];
+  }
+
+  bool Vector3::isZero() const {
+    return components[0] == numZero && components[1] == numZero && components[2] == numZero;
   }
 
   Vector3 Vector3::operator+(const Vector3 &vector) const {

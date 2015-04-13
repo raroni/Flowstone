@@ -60,27 +60,27 @@ namespace Fixie {
       result /= other;
       return result;
     }
-    Num operator%(Num rhs) {
+    Num operator%(Num rhs) const {
       int32_t a = *this;
       int32_t b = rhs;
       return a % b;
     }
-    bool operator==(const Num &other) {
+    bool operator==(const Num &other) const {
       return raw == other.raw;
     }
-    bool operator!=(const Num &other) {
+    bool operator!=(const Num &other) const {
       return !(*this == other);
     }
-    bool operator<(const Num &other) {
+    bool operator<(const Num &other) const {
       return raw < other.raw;
     }
-    bool operator<=(const Num &other) {
+    bool operator<=(const Num &other) const {
       return raw <= other.raw;
     }
-    bool operator>(const Num &other) {
+    bool operator>(const Num &other) const {
       return raw > other.raw;
     }
-    bool operator>=(const Num &other) {
+    bool operator>=(const Num &other) const {
       return raw >= other.raw;
     }
     operator float() const {
