@@ -177,6 +177,11 @@ TEST_SOURCES =\
 	../../Libraries/Piper/Source/Util.cpp\
 	../../Libraries/Piper/Source/AckSet128.cpp\
 	../../Libraries/Piper/Source/AckSet32.cpp\
+	../../Libraries/Fixie/Library/Source/Trig.cpp\
+	../../Libraries/Fixie/Library/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Vector3.cpp\
+	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
+	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/CollisionDetector.cpp\
@@ -187,6 +192,8 @@ TEST_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Include\
 	-I../../Libraries/Quanta/Include\
 	-I../../Libraries/Piper/Include\
+	-I../../Libraries/Fixie/Library/Include\
+	-I../../Test\
 	-I../..
 
 TEST_OBJECTS = $(patsubst %.cpp,$(BUILD_DIR)/Objects/Test/%.o,$(TEST_SOURCES))

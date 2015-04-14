@@ -56,7 +56,7 @@ namespace Orwell {
       }
     }
 
-    void assertInDelta(float expected, float delta, float actual) {
+    void assertInDelta(double expected, double delta, double actual) {
       if(expected-delta > actual || expected+delta < actual) {
         char message[256];
         sprintf(message, "%f was not within %f+-%f.", actual, expected, delta);
