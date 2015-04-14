@@ -18,6 +18,12 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Source/Geometry/Transformer.cpp\
 	../../Libraries/Quanta/Source/Random.cpp\
 	../../Libraries/Quanta/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Trig.cpp\
+	../../Libraries/Fixie/Library/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Vector3.cpp\
+	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
+	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
+	../../Libraries/Fixie/Library/Source/TransformFactory.cpp\
 	../../Libraries/Piper/Source/Client.cpp\
 	../../Libraries/Piper/Source/AckSet128.cpp\
 	../../Libraries/Piper/Source/AckSet32.cpp\
@@ -40,6 +46,7 @@ USER_SOURCES_CPP =\
 	../../Server/PingPong.cpp\
 	../../Server/Carrier.cpp\
 	../../Client/Game.cpp\
+	../../Client/MathConversion.cpp\
 	../../Client/ServerControl.cpp\
 	../../Client/ServerControlQueue.cpp\
 	../../Client/Screen.cpp\
@@ -111,6 +118,7 @@ USER_SOURCES_OBJCPP = \
 USER_HEADER_DIRS =\
 	-I../../Libraries/Conrad/Include\
 	-I../../Libraries/Quanta/Include\
+	-I../../Libraries/Fixie/Library/Include\
 	-I../../Libraries/Piper/Include\
 	-I../../Sys/File/Include\
 	-I../../Sys/Net/Include\

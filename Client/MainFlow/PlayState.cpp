@@ -1,4 +1,5 @@
 #include "Quanta/Geometry/Transformer.h"
+#include "Quanta/Geometry/TransformFactory3D.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
 #include "Rendering/MeshInfo.h"

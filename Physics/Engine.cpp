@@ -1,19 +1,19 @@
-#include "Quanta/Geometry/TransformFactory3D.h"
+#include "Fixie/TransformFactory.h"
 #include "Physics/DynamicSphereColliderHandle.h"
 #include "Physics/CollisionResolver.h"
 #include "Physics/Engine.h"
 
 namespace Physics {
   DynamicBodyIndex Engine::createDynamicBody() {
-    dynamics.orientations[dynamics.count] = Quanta::Quaternion::identity();
+    dynamics.orientations[dynamics.count] = Fixie::Quaternion::identity();
     DynamicBodyIndex index = dynamics.count++;
     integrator.activate(index);
     return index;
   }
 
   StaticBodyIndex Engine::createStaticBody() {
-    statics.orientations[statics.count] = Quanta::Quaternion::identity();
-    statics.transforms[statics.count] = Quanta::Matrix4::identity();
+    statics.orientations[statics.count] = Fixie::Quaternion::identity();
+    statics.transforms[statics.count] = Fixie::Matrix4::identity();
     StaticBodyIndex index = statics.count++;
     return index;
   }
@@ -35,30 +35,30 @@ namespace Physics {
   }
 
   void Engine::updateStaticTransforms() {
-    Quanta::Matrix4 transform;
+    Fixie::Matrix4 transform;
     for(uint16_t i=0; statics.count>i; i++) {
-      statics.transforms[i] = Quanta::TransformFactory3D::translation(statics.positions[i]);
+      statics.transforms[i] = Fixie::TransformFactory::translation(statics.positions[i]);
       // todo rotation
     }
   }
 
-  const Quanta::Vector3* Engine::getDynamicPositions() const {
+  const Fixie::Vector3* Engine::getDynamicPositions() const {
     return dynamics.positions;
   }
 
-  Quanta::Vector3* Engine::getDynamicForces() {
+  Fixie::Vector3* Engine::getDynamicForces() {
     return dynamics.forces;
   }
 
-  const Quanta::Vector3* Engine::getDynamicVelocities() const {
+  const Fixie::Vector3* Engine::getDynamicVelocities() const {
     return dynamics.velocities;
   }
 
-  const Quanta::Quaternion* Engine::getDynamicOrientations() const {
+  const Fixie::Quaternion* Engine::getDynamicOrientations() const {
     return dynamics.orientations;
   }
 
-  const Quanta::Matrix4* Engine::getStaticTransforms() const {
+  const Fixie::Matrix4* Engine::getStaticTransforms() const {
     return statics.transforms;
   }
 

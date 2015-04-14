@@ -1,14 +1,18 @@
+#include "Quanta/Geometry/TransformFactory3D.h"
+#include "Client/MathConversion.h"
 #include "Client/Interpolation/Interpolater.h"
 
 namespace Client {
   namespace Interpolation {
-    void Interpolater::initialize(const Quanta::Vector3 *positions, const Quanta::Quaternion *orientations) {
+    using namespace MathConversion;
+
+    void Interpolater::initialize(const Fixie::Vector3 *positions, const Fixie::Quaternion *orientations) {
       for(uint8_t i=0; bodyCount>i; i++) {
         Physics::DynamicBodyIndex bodyIndex = bodyIndices[i];
-        oldPositions[i] = positions[bodyIndex];
-        newPositions[i] = positions[bodyIndex];
-        newOrientations[i] = orientations[bodyIndex];
-        oldOrientations[i] = orientations[bodyIndex];
+        convertVector(oldPositions[i], positions[bodyIndex]);
+        convertVector(newPositions[i], positions[bodyIndex]);
+        convertQuaternion(newOrientations[i], orientations[bodyIndex]);
+        convertQuaternion(oldOrientations[i], orientations[bodyIndex]);
       }
       interpolate(0);
     }
@@ -27,13 +31,13 @@ namespace Client {
       return bodyCount++;
     }
 
-    void Interpolater::reload(const Quanta::Vector3 *newPositions, const Quanta::Quaternion *newOrientations) {
+    void Interpolater::reload(const Fixie::Vector3 *newPositions, const Fixie::Quaternion *newOrientations) {
       for(uint8_t i=0; bodyCount>i; i++) {
         oldPositions[i] = this->newPositions[i];
         oldOrientations[i] = this->newOrientations[i];
         Physics::DynamicBodyIndex bodyIndex = bodyIndices[i];
-        this->newPositions[i] = newPositions[bodyIndex];
-        this->newOrientations[i] = newOrientations[bodyIndex];
+        convertVector(this->newPositions[i], newPositions[bodyIndex]);
+        convertQuaternion(this->newOrientations[i], newOrientations[bodyIndex]);
       }
     }
 

@@ -1,13 +1,13 @@
 #ifndef PHYSICS_STATIC_BODY_H
 #define PHYSICS_STATIC_BODY_H
 
-#include "Quanta/Math/Vector3.h"
-#include "Quanta/Math/Quaternion.h"
+#include "Fixie/Vector3.h"
+#include "Fixie/Quaternion.h"
 
 namespace Physics {
   struct StaticBody {
-    Quanta::Vector3 *position;
-    Quanta::Quaternion *orientation;
+    Fixie::Vector3 *position;
+    Fixie::Quaternion *orientation;
   };
 }
 

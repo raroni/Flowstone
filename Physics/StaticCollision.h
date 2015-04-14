@@ -1,14 +1,14 @@
 #ifndef PHYSICS_STATIC_COLLISION_H
 #define PHYSICS_STATIC_COLLISION_H
 
-#include "Quanta/Math/Vector3.h"
+#include "Fixie/Vector3.h"
 #include "Physics/StaticBodyIndex.h"
 
 namespace Physics {
   struct StaticCollision {
     StaticBodyIndex staticBody;
     DynamicBodyIndex dynamicBody;
-    Quanta::Vector3 separation;
+    Fixie::Vector3 separation;
   };
 }
 

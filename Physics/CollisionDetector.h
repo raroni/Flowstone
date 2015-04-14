@@ -5,7 +5,7 @@
 #include "Physics/DynamicSphereColliderHandle.h"
 #include "Physics/StaticSphereColliderHandle.h"
 #include "Physics/FreeList.h"
-#include "Quanta/Math/Vector3.h"
+#include "Fixie/Vector3.h"
 #include "Physics/CollisionSet.h"
 #include "Physics/SphereColliderList.h"
 
@@ -21,12 +21,12 @@ namespace Physics {
     void destroyDynamicSphere(DynamicSphereColliderHandle handle) {
       dynamicSphereColliders.destroy(handle);
     }
-    void detect(CollisionSet &set, const Quanta::Vector3 *dynamicPositions, const Quanta::Vector3 *staticPositions);
+    void detect(CollisionSet &set, const Fixie::Vector3 *dynamicPositions, const Fixie::Vector3 *staticPositions);
   private:
     SphereColliderList<DynamicSphereColliderHandle, DynamicBodyIndex> dynamicSphereColliders;
     SphereColliderList<StaticSphereColliderHandle, StaticBodyIndex> staticSphereColliders;
-    void detectDynamics(CollisionSet::DynamicList &collisions, const Quanta::Vector3 *positions);
-    void detectStatics(CollisionSet::StaticList &collisions, const Quanta::Vector3 *staticPositions, const Quanta::Vector3 *dynamicPositions);
+    void detectDynamics(CollisionSet::DynamicList &collisions, const Fixie::Vector3 *positions);
+    void detectStatics(CollisionSet::StaticList &collisions, const Fixie::Vector3 *staticPositions, const Fixie::Vector3 *dynamicPositions);
   };
 }
 

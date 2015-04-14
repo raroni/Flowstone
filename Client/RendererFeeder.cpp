@@ -5,6 +5,7 @@
 #include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
+#include "Client/MathConversion.h"
 #include "RendererFeeder.h"
 
 namespace Client {
@@ -28,10 +29,14 @@ namespace Client {
       (*instance.pose) = poses[binding.pose];
     }
 
-    const Quanta::Matrix4 *staticTransforms = physicsEngine.getStaticTransforms();
+    // todo:
+    // come up with a way to interpolate static transform
+    Quanta::Matrix4 quantaTransform;
+    const Fixie::Matrix4 *staticTransforms = physicsEngine.getStaticTransforms();
     for(uint8_t i=0; staticStaticBindings.count>i; i++) {
       StaticStaticBinding &binding = staticStaticBindings.list[i];
-      renderer.updateStaticMeshTransform(binding.mesh, staticTransforms[binding.body]);
+      MathConversion::convertMatrix(quantaTransform, staticTransforms[binding.body]);
+      renderer.updateStaticMeshTransform(binding.mesh, quantaTransform);
     }
   }
 
