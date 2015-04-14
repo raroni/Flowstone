@@ -1,8 +1,11 @@
 #ifndef PHYSICS_INTEGRATION_H
 #define PHYSICS_INTEGRATION_H
 
-#include "Quanta/Math/Vector3.h"
+#include "Fixie/Util.h"
+#include "Fixie/Vector3.h"
 #include "Physics/Config.h"
+
+#include <stdio.h>
 
 namespace Physics {
   class Integrator {
@@ -24,12 +27,14 @@ namespace Physics {
       offsets[lastBodyIndex] = destroyOffset;
       bodyIndices[destroyOffset] = bodyIndices[bodyCount];
     }
-    void integrate(Quanta::Vector3 *positions, Quanta::Vector3 *velocities, Quanta::Vector3 *forces) {
+    void integrate(Fixie::Vector3 *positions, Fixie::Vector3 *velocities, Fixie::Vector3 *forces) {
+      Fixie::Num stepDuration = static_cast<Fixie::Num>(Config::stepDuration)/Fixie::Num(1000);
+      Fixie::Num halfStepDuration = Fixie::Util::halve(stepDuration);
       for(uint8_t i=0; bodyCount>i; i++) {
         DynamicBodyIndex bodyIndex = bodyIndices[i];
-        Quanta::Vector3 halfVelocityChange = forces[bodyIndex]*Config::stepDuration*0.5;
+        Fixie::Vector3 halfVelocityChange = forces[bodyIndex]*halfStepDuration;
         velocities[bodyIndex] += halfVelocityChange;
-        positions[bodyIndex] += velocities[bodyIndex]*Config::stepDuration;
+        positions[bodyIndex] += velocities[bodyIndex]*stepDuration;
         velocities[bodyIndex] += halfVelocityChange;
         forces[bodyIndex].reset();
       }

@@ -1,15 +1,15 @@
 #ifndef PHYSICS_DYNAMIC_BODY_H
 #define PHYSICS_DYNAMIC_BODY_H
 
-#include "Quanta/Math/Vector3.h"
-#include "Quanta/Math/Quaternion.h"
+#include "Fixie/Vector3.h"
+#include "Fixie/Quaternion.h"
 
 namespace Physics {
   struct DynamicBody {
-    Quanta::Vector3 *position;
-    Quanta::Vector3 *velocity;
-    Quanta::Vector3 *force;
-    Quanta::Quaternion *orientation;
+    Fixie::Vector3 *position;
+    Fixie::Vector3 *velocity;
+    Fixie::Vector3 *force;
+    Fixie::Quaternion *orientation;
   };
 }
 

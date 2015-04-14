@@ -2,10 +2,12 @@
 #define CLIENT_INTERPOLATION_INTERPOLATER_H
 
 #include <stdint.h>
+#include "Fixie/Matrix4.h"
+#include "Fixie/Vector3.h"
+#include "Fixie/Quaternion.h"
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Quaternion.h"
-#include "Quanta/Geometry/TransformFactory3D.h"
 #include "Physics/DynamicBodyIndex.h"
 #include "Client/Interpolation/Index.h"
 
@@ -13,9 +15,9 @@ namespace Client {
   namespace Interpolation {
     class Interpolater {
     public:
-      void initialize(const Quanta::Vector3 *positions, const Quanta::Quaternion *orientations);
+      void initialize(const Fixie::Vector3 *positions, const Fixie::Quaternion *orientations);
       Index createInterpolation(Physics::DynamicBodyIndex body);
-      void reload(const Quanta::Vector3 *newPositions, const Quanta::Quaternion *newOrientations);
+      void reload(const Fixie::Vector3 *newPositions, const Fixie::Quaternion *newOrientations);
       void interpolate(double progress);
       const Quanta::Matrix4* getTransforms() const;
     private:

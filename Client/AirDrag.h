@@ -14,11 +14,13 @@ namespace Client {
     void add(BodyIndex index) {
       bodyIndices[bodyIndexCount++] = index;
     }
-    void update(const Quanta::Vector3 *velocities, Quanta::Vector3 *forces) const {
+    void update(const Fixie::Vector3 *velocities, Fixie::Vector3 *forces) const {
       for(uint8_t i=0; bodyIndexCount>i; i++) {
-        const Quanta::Vector3 &velocity = velocities[i];
-        if(!velocity.isZero()) {
-          forces[i] += velocity.getNormalized() * pow(velocity.getLength(), 2) * -1.5;
+        const Fixie::Vector3 &velocity = velocities[i];
+        Fixie::Num speed = velocity.calcLength();
+        if(speed != Fixie::Num(0)) {
+          Fixie::Vector3 direction = velocity/speed;
+          forces[i] += direction*speed*speed*Fixie::Num(-1.5);
         }
       }
     }

@@ -1,3 +1,5 @@
+#include "Fixie/Util.h"
+#include "Fixie/Trig.h"
 #include "Fixie/TransformFactory.h"
 
 namespace Fixie {
