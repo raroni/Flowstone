@@ -46,6 +46,8 @@ USER_SOURCES_CPP =\
 	../../Server/PingPong.cpp\
 	../../Server/Carrier.cpp\
 	../../Client/Game.cpp\
+	../../Client/CommandList.cpp\
+	../../Client/LocalSimulationDriver.cpp\
 	../../Client/MathConversion.cpp\
 	../../Client/ServerControl.cpp\
 	../../Client/ServerControlQueue.cpp\
@@ -59,6 +61,7 @@ USER_SOURCES_CPP =\
 	../../Client/Carrier.cpp\
 	../../Client/Keyboard.cpp\
 	../../Client/RendererFeeder.cpp\
+	../../Simulation/Base.cpp\
 	../../Animation/Animator.cpp\
 	../../Animation/Registry.cpp\
 	../../Rendering/Renderer.cpp\

@@ -1,21 +1,29 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
+#include "Simulation/Base.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
 #include "Client/PlayerControl.h"
+#include "Client/LocalSimulationDriver.h"
 #include "Client/MainFlow/PlayState.h"
 
 namespace Client {
   namespace MainFlow {
-    PlayState::PlayState(Rendering::Renderer &renderer) :
+    PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
+    playMode(playMode),
     renderer(renderer),
     rendererFeeder(physics, interpolater, animator, renderer),
     torches(renderer) { }
 
     void PlayState::enter() {
+      if(playMode == PlayMode::Local) {
+        playerID = Simulation::Base::createPlayer();
+      }
+      Simulation::Base::start();
+
       torches.initialize();
 
       uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
@@ -527,9 +535,30 @@ namespace Client {
       rendererFeeder.setupBoneMesh(interpolationTransformID, pose, meshInstance);
     }
 
+    void PlayState::updateSimulation(double timeDelta) {
+      if(playMode == PlayMode::Local) {
+        LocalSimulationDriver::update(timeDelta, clientCommands, simulationCommands);
+      } else {
+        // NetworkSimulationDriver::update(timeDelta, commandList);
+        assert(false); // not implemented yet
+      }
+    }
+
+    void PlayState::writeCommands() {
+      if(Simulation::Base::getFrame() == 0) {
+        clientCommands.writeTestCommand(playerID);
+      }
+    }
+
     void PlayState::update(double timeDelta, const Keyboard &keyboard) {
       timeOfDay += timeDelta*0.03;
       timeOfDay = fmod(timeOfDay, 1.0);
+
+      if(playerID != -1) {
+        writeCommands();
+      }
+      updateSimulation(timeDelta);
+      clientCommands.clear();
 
       stepTimeBank += timeDelta;
       if(stepTimeBank*1000 >= Physics::Config::stepDuration) {
