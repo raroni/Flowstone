@@ -62,6 +62,7 @@ USER_SOURCES_CPP =\
 	../../Client/Keyboard.cpp\
 	../../Client/RendererFeeder.cpp\
 	../../Simulation/Base.cpp\
+	../../Simulation/CommandList.cpp\
 	../../Animation/Animator.cpp\
 	../../Animation/Registry.cpp\
 	../../Rendering/Renderer.cpp\

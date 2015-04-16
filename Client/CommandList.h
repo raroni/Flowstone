@@ -12,10 +12,11 @@ namespace Client {
     CommandType readType(uint8_t index) const;
     TestCommand readTestCommand(uint8_t index) const;
     void clear();
+    uint8_t getCount() const;
   private:
     void writeType(CommandType type);
     void writeUInt8(uint8_t n);
-    void write(void *data, uint16_t length);
+    void write(const void *data, uint16_t length);
     static const uint8_t max = 20;
     static const uint16_t capacityPerCommand = 1024;
     static const uint16_t capacity = capacityPerCommand*max;

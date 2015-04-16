@@ -1,11 +1,15 @@
 #include "Simulation/CommandList.h"
 
 namespace Simulation {
-  void SimulationCommandList::writeTestCommand(Actor actor, Fixie::Num x) {
-
+  void CommandList::writeTestCommand(PlayerID player, uint8_t x) {
+    count++;
   }
 
-  void SimulationCommandList::clear() {
+  void CommandList::clear() {
+    count = 0;
+  }
 
+  uint8_t CommandList::getCount() const {
+    return count;
   }
 }

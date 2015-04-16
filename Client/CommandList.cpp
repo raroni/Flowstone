@@ -2,6 +2,10 @@
 #include "Client/CommandList.h"
 
 namespace Client {
+  uint8_t CommandList::getCount() const {
+    return count;
+  }
+
   void CommandList::writeTestCommand(uint8_t x) {
     writeType(CommandType::Test);
     writeUInt8(x);
@@ -15,12 +19,14 @@ namespace Client {
   }
 
   CommandType CommandList::readType(uint8_t index) const {
-    return *reinterpret_cast<const CommandType*>(buffer+offsets[index]);
+    const CommandType *type = reinterpret_cast<const CommandType*>(buffer+offsets[index]);
+    return *type;
   }
 
   void CommandList::writeType(CommandType type) {
     offsets[count] = position;
     count++;
+    char *x = buffer+position;
     write(&type, sizeof(type));
   }
 
@@ -28,8 +34,8 @@ namespace Client {
     write(&x, sizeof(x));
   }
 
-  void CommandList::write(void *data, uint16_t length) {
-    memcpy(buffer+position, &data, length);
+  void CommandList::write(const void *data, uint16_t length) {
+    memcpy(buffer+position, data, length);
     position += length;
   }
 

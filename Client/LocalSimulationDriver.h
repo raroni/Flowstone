@@ -6,7 +6,12 @@
 
 namespace Client {
   namespace LocalSimulationDriver {
-    void update(double timeDelta, const CommandList &clientCommands, Simulation::CommandList &simulationCommands);
+    void update(
+      Simulation::PlayerID playerID,
+      double timeDelta,
+      const CommandList &clientCommands,
+      Simulation::CommandList &simulationCommands
+    );
   }
 }
 

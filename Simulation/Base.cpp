@@ -13,8 +13,10 @@ namespace Simulation {
 
     }
 
-    void tick() {
+    void tick(const CommandList &commands) {
+      // do stuff
 
+      frame++;
     }
 
     uint16_t getFrame() {

@@ -537,7 +537,7 @@ namespace Client {
 
     void PlayState::updateSimulation(double timeDelta) {
       if(playMode == PlayMode::Local) {
-        LocalSimulationDriver::update(timeDelta, clientCommands, simulationCommands);
+        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands);
       } else {
         // NetworkSimulationDriver::update(timeDelta, commandList);
         assert(false); // not implemented yet
