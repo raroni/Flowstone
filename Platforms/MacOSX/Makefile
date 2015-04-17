@@ -63,8 +63,12 @@ USER_SOURCES_CPP =\
 	../../Client/RendererFeeder.cpp\
 	../../Simulation/Base.cpp\
 	../../Simulation/Mode.cpp\
+	../../Simulation/PhysicsHack.cpp\
 	../../Simulation/PlayMode.cpp\
 	../../Simulation/CommandList.cpp\
+	../../Simulation/Database.cpp\
+	../../Simulation/ComponentManager.cpp\
+	../../Simulation/EntityManager.cpp\
 	../../Animation/Animator.cpp\
 	../../Animation/Registry.cpp\
 	../../Rendering/Renderer.cpp\

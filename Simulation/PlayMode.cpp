@@ -1,8 +1,28 @@
+#include "Simulation/EntityHandle.h"
+#include "Simulation/Database.h"
 #include "Simulation/PlayMode.h"
+
+#include "Simulation/PhysicsHack.h"
+#include <stdio.h>
 
 namespace Simulation {
   namespace PlayMode {
     void enter() {
+      EntityHandle tree = Database::createEntity();
+      Physics::DynamicBodyIndex i = Database::createDynamicBody(tree);
+
+      Physics::DynamicBody body2 = Database::getDynamicBody(tree);
+      Physics::DynamicBody body3 = physicsEngine.getDynamicBody(i);
+
+
+      EntityHandle treeb = Database::createEntity();
+      Physics::DynamicBodyIndex ib = Database::createDynamicBody(tree);
+
+      Physics::DynamicBody body2b = Database::getDynamicBody(tree);
+      Physics::DynamicBody body3b = physicsEngine.getDynamicBody(ib);
+
+      printf("%p, %p\b\n", body2.position, body3.position);
+      printf("%p, %p\b\n", body2b.position, body3b.position);
     }
 
     void tick(const CommandList &commands) {
