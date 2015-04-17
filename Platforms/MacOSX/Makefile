@@ -61,7 +61,7 @@ USER_SOURCES_CPP =\
 	../../Client/Carrier.cpp\
 	../../Client/Keyboard.cpp\
 	../../Client/RendererFeeder.cpp\
-	../../Simulation/Base.cpp\
+	../../Simulation/Control.cpp\
 	../../Simulation/Mode.cpp\
 	../../Simulation/PhysicsHack.cpp\
 	../../Simulation/PlayMode.cpp\

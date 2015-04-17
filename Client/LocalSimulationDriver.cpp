@@ -1,6 +1,6 @@
 #include "Misc/Error.h"
 #include "Simulation/Config.h"
-#include "Simulation/Base.h"
+#include "Simulation/Control.h"
 #include "Client/LocalSimulationDriver.h"
 
 namespace Client {
@@ -34,7 +34,7 @@ namespace Client {
 
       timeBank += timeDelta;
       do {
-        Simulation::Base::tick(simulationCommands, simulationEvents);
+        Simulation::Control::tick(simulationCommands, simulationEvents);
         simulationCommands.clear();
         timeBank -= static_cast<double>(Simulation::Config::tickDuration)/1000;
       } while(timeBank*1000 >= Simulation::Config::tickDuration);

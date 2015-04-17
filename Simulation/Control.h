@@ -1,12 +1,12 @@
-#ifndef SIMULATION_BASE_H
-#define SIMULATION_BASE_H
+#ifndef SIMULATION_CONTROL_H
+#define SIMULATION_CONTROL_H
 
 #include "Simulation/CommandList.h"
 #include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
 
 namespace Simulation {
-  namespace Base {
+  namespace Control {
     PlayerHandle createPlayer();
     void start();
     void stop();

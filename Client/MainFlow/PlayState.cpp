@@ -1,7 +1,7 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 #include "Simulation/Database/EntityList.h"
-#include "Simulation/Base.h"
+#include "Simulation/Control.h"
 #include "Simulation/Database/Database.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
@@ -26,9 +26,9 @@ namespace Client {
 
     void PlayState::enter() {
       if(playMode == PlayMode::Local) {
-        playerID = Simulation::Base::createPlayer();
+        playerID = Simulation::Control::createPlayer();
       }
-      Simulation::Base::start();
+      Simulation::Control::start();
 
       Simulation::EntityList entities = SimDB::getEntityList();
       for(uint16_t i=0; i<entities.count; ++i) {
@@ -261,7 +261,7 @@ namespace Client {
     }
 
     void PlayState::exit() {
-      Simulation::Base::stop();
+      Simulation::Control::stop();
     }
 
     void PlayState::configureGreenTree() {
@@ -566,7 +566,7 @@ namespace Client {
     }
 
     void PlayState::writeCommands() {
-      if(Simulation::Base::getFrame() == 0) {
+      if(Simulation::Control::getFrame() == 0) {
         clientCommands.writeTestCommand(playerID);
       }
     }
