@@ -17,6 +17,7 @@
 namespace Client {
   namespace MainFlow {
     namespace SimDB = Simulation::Database;
+    namespace SimControl = Simulation::Control;
 
     PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
     playMode(playMode),
@@ -26,9 +27,9 @@ namespace Client {
 
     void PlayState::enter() {
       if(playMode == PlayMode::Local) {
-        playerID = Simulation::Control::createPlayer();
+        playerID = SimControl::createPlayer();
       }
-      Simulation::Control::start();
+      SimControl::start();
 
       Simulation::EntityList entities = SimDB::getEntityList();
       for(uint16_t i=0; i<entities.count; ++i) {
@@ -261,7 +262,7 @@ namespace Client {
     }
 
     void PlayState::exit() {
-      Simulation::Control::stop();
+      SimControl::stop();
     }
 
     void PlayState::configureGreenTree() {
@@ -566,7 +567,7 @@ namespace Client {
     }
 
     void PlayState::writeCommands() {
-      if(Simulation::Control::getFrame() == 0) {
+      if(SimControl::getFrame() == 0) {
         clientCommands.writeTestCommand(playerID);
       }
     }
