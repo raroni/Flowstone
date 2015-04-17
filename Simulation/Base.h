@@ -8,6 +8,7 @@ namespace Simulation {
   namespace Base {
     PlayerID createPlayer();
     void start();
+    void stop();
     void tick(const CommandList &commands);
     uint16_t getFrame();
   }

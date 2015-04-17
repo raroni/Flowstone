@@ -29,6 +29,7 @@ namespace Client {
     public:
       PlayState(Rendering::Renderer &renderer, PlayMode playMode);
       void enter();
+      void exit();
       void update(double deltaTime, const Keyboard &keyboard);
       State* checkTransition();
     private:

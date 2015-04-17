@@ -243,6 +243,10 @@ namespace Client {
       camera.rotateX(1);
     }
 
+    void PlayState::exit() {
+      Simulation::Base::stop();
+    }
+
     void PlayState::configureGreenTree() {
       float trunkWidth = 0.25;
       float trunkHeight = 0.6;
