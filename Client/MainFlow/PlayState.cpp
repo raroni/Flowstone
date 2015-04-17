@@ -1,6 +1,8 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
+#include "Simulation/Database/EntityList.h"
 #include "Simulation/Base.h"
+#include "Simulation/Database/Database.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
 #include "Rendering/MeshInfo.h"
@@ -10,8 +12,12 @@
 #include "Client/LocalSimulationDriver.h"
 #include "Client/MainFlow/PlayState.h"
 
+#include <stdio.h>
+
 namespace Client {
   namespace MainFlow {
+    namespace SimDB = Simulation::Database;
+
     PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
     playMode(playMode),
     renderer(renderer),
@@ -23,6 +29,17 @@ namespace Client {
         playerID = Simulation::Base::createPlayer();
       }
       Simulation::Base::start();
+
+      Simulation::EntityList entities = SimDB::getEntityList();
+      for(uint16_t i=0; i<entities.count; ++i) {
+        Simulation::EntityHandle entity = entities.values[i];
+
+        if(SimDB::hasComponent(entity, Simulation::ComponentType::Tag)) {
+          printf("Yes\n");
+        } else {
+          printf("No\n");
+        }
+      }
 
       torches.initialize();
 

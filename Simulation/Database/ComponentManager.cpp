@@ -22,5 +22,9 @@ namespace Simulation {
     ComponentHandle get(EntityHandle entity, ComponentType type) {
       return sets[entity].list[static_cast<uint8_t>(type)];
     }
+
+    bool has(EntityHandle entity, ComponentType type) {
+      return existances[entity].get(static_cast<uint8_t>(type));
+    }
   }
 }

@@ -1,9 +1,7 @@
 #include "Simulation/Database/EntityHandle.h"
 #include "Simulation/Database/Database.h"
 #include "Simulation/PlayMode.h"
-
 #include "Simulation/PhysicsHack.h"
-#include <stdio.h>
 
 namespace Simulation {
   namespace PlayMode {
@@ -16,13 +14,10 @@ namespace Simulation {
 
 
       EntityHandle treeb = Database::createEntity();
-      Physics::DynamicBodyIndex ib = Database::createDynamicBody(tree);
+      Physics::DynamicBodyIndex ib = Database::createDynamicBody(treeb);
 
       Physics::DynamicBody body2b = Database::getDynamicBody(tree);
       Physics::DynamicBody body3b = physicsEngine.getDynamicBody(ib);
-
-      printf("%p, %p\b\n", body2.position, body3.position);
-      printf("%p, %p\b\n", body2b.position, body3b.position);
     }
 
     void tick(const CommandList &commands, EventList &events) {

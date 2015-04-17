@@ -4,6 +4,8 @@
 namespace Simulation {
   enum class ComponentType : uint8_t {
     PhysicsDynamicBody,
+    Tag,
+
     Count
   };
 }

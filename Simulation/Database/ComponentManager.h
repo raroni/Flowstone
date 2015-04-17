@@ -12,6 +12,7 @@ namespace Simulation {
 
     void link(EntityHandle entity, ComponentType type, ComponentHandle componentHandle);
     ComponentHandle get(EntityHandle entity, ComponentType type);
+    bool has(EntityHandle entity, ComponentType);
   }
 }
 

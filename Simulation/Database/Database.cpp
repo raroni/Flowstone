@@ -5,8 +5,19 @@
 
 namespace Simulation {
   namespace Database {
+    EntityList getEntityList() {
+      EntityList list;
+      list.values = EntityManager::handles;
+      list.count = EntityManager::getCount();
+      return list;
+    }
+
     EntityHandle createEntity() {
       return EntityManager::create();
+    }
+
+    bool hasComponent(EntityHandle entity, ComponentType type) {
+      return ComponentManager::has(entity, type);
     }
 
     Physics::DynamicBodyIndex createDynamicBody(EntityHandle entity) {
