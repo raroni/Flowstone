@@ -8,7 +8,7 @@ namespace Simulation {
     uint16_t frame = 0;
     Mode mode;
 
-    PlayerID createPlayer() {
+    PlayerHandle createPlayer() {
       // todo: fix me!
       return 0;
     }

@@ -5,7 +5,7 @@
 #include "Physics/Engine.h"
 #include "Animation/Animator.h"
 #include "Simulation/CommandList.h"
-#include "Simulation/PlayerID.h"
+#include "Simulation/PlayerHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Client/MainFlow/State.h"
@@ -33,7 +33,7 @@ namespace Client {
       void update(double deltaTime, const Keyboard &keyboard);
       State* checkTransition();
     private:
-      Simulation::PlayerID playerID = -1;
+      Simulation::PlayerHandle playerID = -1;
       PlayMode playMode;
       Animation::Animator animator;
       Physics::Engine physics;

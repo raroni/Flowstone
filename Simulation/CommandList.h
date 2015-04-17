@@ -2,12 +2,12 @@
 #define SIMULATION_INPUT_LIST_H
 
 #include <stdint.h>
-#include "Simulation/PlayerID.h"
+#include "Simulation/PlayerHandle.h"
 
 namespace Simulation {
   class CommandList {
   public:
-    void writeTestCommand(PlayerID player, uint8_t x);
+    void writeTestCommand(PlayerHandle player, uint8_t x);
     void clear();
     uint8_t getCount() const;
   private:

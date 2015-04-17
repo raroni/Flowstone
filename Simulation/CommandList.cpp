@@ -1,7 +1,7 @@
 #include "Simulation/CommandList.h"
 
 namespace Simulation {
-  void CommandList::writeTestCommand(PlayerID player, uint8_t x) {
+  void CommandList::writeTestCommand(PlayerHandle player, uint8_t x) {
     count++;
   }
 

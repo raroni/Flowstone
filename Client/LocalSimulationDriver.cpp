@@ -7,7 +7,7 @@ namespace Client {
   namespace LocalSimulationDriver {
     static double timeBank = 0;
 
-    void convertCommands(Simulation::PlayerID playerID, const CommandList &clientCommands, Simulation::CommandList &simulationCommands) {
+    void convertCommands(Simulation::PlayerHandle playerID, const CommandList &clientCommands, Simulation::CommandList &simulationCommands) {
       for(uint8_t i=0; i<clientCommands.getCount(); ++i) {
         CommandType type = clientCommands.readType(i);
         switch(type) {
@@ -23,7 +23,7 @@ namespace Client {
       }
     }
 
-    void update(Simulation::PlayerID playerID, double timeDelta, const CommandList &clientCommands, Simulation::CommandList &simulationCommands) {
+    void update(Simulation::PlayerHandle playerID, double timeDelta, const CommandList &clientCommands, Simulation::CommandList &simulationCommands) {
       convertCommands(playerID, clientCommands, simulationCommands);
 
       timeBank += timeDelta;
