@@ -1,8 +1,9 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Simulation/Database/EntityList.h"
 #include "Simulation/Control.h"
+#include "Simulation/Database/EntityList.h"
 #include "Simulation/Database/Database.h"
+#include "Simulation/Database/ComponentType.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
 #include "Rendering/MeshInfo.h"
@@ -18,6 +19,7 @@ namespace Client {
   namespace MainFlow {
     namespace SimDB = Simulation::Database;
     namespace SimControl = Simulation::Control;
+    typedef Simulation::ComponentType SimComponentType;
 
     PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
     playMode(playMode),
@@ -35,7 +37,7 @@ namespace Client {
       for(uint16_t i=0; i<entities.count; ++i) {
         Simulation::EntityHandle entity = entities.values[i];
 
-        if(SimDB::hasComponent(entity, Simulation::ComponentType::Tag)) {
+        if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
           printf("Yes\n");
         } else {
           printf("No\n");

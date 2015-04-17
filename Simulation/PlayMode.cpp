@@ -1,5 +1,6 @@
 #include "Simulation/Database/EntityHandle.h"
 #include "Simulation/Database/Database.h"
+#include "Simulation/ResourceType.h"
 #include "Simulation/PlayMode.h"
 #include "Simulation/PhysicsHack.h"
 
@@ -18,6 +19,8 @@ namespace Simulation {
 
       Physics::DynamicBody body2b = Database::getDynamicBody(tree);
       Physics::DynamicBody body3b = physicsEngine.getDynamicBody(ib);
+
+      Database::createResource(tree, ResourceType::Tree);
     }
 
     void tick(const CommandList &commands, EventList &events) {

@@ -4,6 +4,8 @@
 #include "Simulation/Database/EntityHandle.h"
 #include "Simulation/Database/EntityList.h"
 #include "Simulation/Database/ComponentType.h"
+#include "Simulation/ResourceHandle.h"
+#include "Simulation/ResourceType.h"
 #include "Physics/DynamicBody.h"
 #include "Physics/DynamicBodyIndex.h"
 
@@ -14,6 +16,7 @@ namespace Simulation {
     bool hasComponent(EntityHandle entity, ComponentType type);
     Physics::DynamicBodyIndex createDynamicBody(EntityHandle entity);
     Physics::DynamicBody getDynamicBody(EntityHandle entity);
+    ResourceHandle createResource(EntityHandle entity, ResourceType type);
   }
 }
 
