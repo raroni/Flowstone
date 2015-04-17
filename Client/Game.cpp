@@ -18,7 +18,6 @@
 
 namespace Client {
   namespace Game {
-    static SysTime::USecond64 frameStartTime;
     static SysTime::USecond64 frameLastTime;
     const double targetFrameDuration = 1.0/500;
 
@@ -129,7 +128,7 @@ namespace Client {
     }
 
     void update() {
-      frameStartTime = GameTime::get();
+      SysTime::USecond64 frameStartTime = GameTime::get();
       double timeDelta = 0.000001*(frameStartTime-frameLastTime);
 
       Platform::handlePreFrame();
