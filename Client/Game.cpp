@@ -18,7 +18,6 @@
 
 namespace Client {
   namespace Game {
-    static SysTime::USecond64 gameStartTime;
     static SysTime::USecond64 frameStartTime;
     static SysTime::USecond64 frameLastTime;
     const double targetFrameDuration = 1.0/500;
@@ -116,7 +115,6 @@ namespace Client {
       // dummy
       ServerControl::requestInit();
 
-      gameStartTime = SysTime::get();
       frameLastTime = GameTime::get();
     }
 
