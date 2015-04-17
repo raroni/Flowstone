@@ -25,7 +25,7 @@ namespace Simulation {
       printf("%p, %p\b\n", body2b.position, body3b.position);
     }
 
-    void tick(const CommandList &commands) {
+    void tick(const CommandList &commands, EventList &events) {
     }
 
     void exit() {

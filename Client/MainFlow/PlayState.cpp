@@ -541,7 +541,7 @@ namespace Client {
 
     void PlayState::updateSimulation(double timeDelta) {
       if(playMode == PlayMode::Local) {
-        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands);
+        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands, simulationEvents);
       } else {
         // NetworkSimulationDriver::update(timeDelta, commandList);
         assert(false); // not implemented yet
@@ -554,6 +554,13 @@ namespace Client {
       }
     }
 
+    void PlayState::processSimulationEvents() {
+      for(uint8_t i=0; i<simulationEvents.getCount(); ++i) {
+
+      }
+      simulationEvents.clear();
+    }
+
     void PlayState::update(double timeDelta, const Keyboard &keyboard) {
       timeOfDay += timeDelta*0.03;
       timeOfDay = fmod(timeOfDay, 1.0);
@@ -563,6 +570,8 @@ namespace Client {
       }
       updateSimulation(timeDelta);
       clientCommands.clear();
+
+      processSimulationEvents();
 
       stepTimeBank += timeDelta;
       if(stepTimeBank*1000 >= Physics::Config::stepDuration) {

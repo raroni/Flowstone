@@ -22,7 +22,7 @@ namespace Simulation {
       mode.exit();
     }
 
-    void tick(const CommandList &commands) {
+    void tick(const CommandList &commands, EventList &events) {
       if(mode.getTransition() != ModeName::None) {
         switch(mode.getTransition()) {
           // todo: handle transitions here
@@ -32,7 +32,7 @@ namespace Simulation {
           }
         }
       }
-      mode.tick(commands);
+      mode.tick(commands, events);
       frame++;
     }
 

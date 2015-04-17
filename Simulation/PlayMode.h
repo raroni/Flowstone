@@ -3,11 +3,12 @@
 
 #include "Simulation/ModeName.h"
 #include "Simulation/CommandList.h"
+#include "Simulation/EventList.h"
 
 namespace Simulation {
   namespace PlayMode {
     void enter();
-    void tick(const CommandList &commands);
+    void tick(const CommandList &commands, EventList &events);
     void exit();
     ModeName getTransition();
   }

@@ -5,6 +5,7 @@
 #include "Physics/Engine.h"
 #include "Animation/Animator.h"
 #include "Simulation/CommandList.h"
+#include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
@@ -49,7 +50,9 @@ namespace Client {
       Rendering::StaticMeshIndex redTreeMesh;
       TorchManager torches;
       Simulation::CommandList simulationCommands;
+      Simulation::EventList simulationEvents;
       CommandList clientCommands;
+      void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
       void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
