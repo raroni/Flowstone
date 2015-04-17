@@ -9,8 +9,6 @@
 #include "Client/Keyboard.h"
 #include "Client/MainFlow/Manager.h"
 #include "Client/Platform.h"
-#include "Client/Screen.h"
-#include "Client/ScreenSync.h"
 #include "Client/Net.h"
 #include "Client/PingPong.h"
 #include "Client/Carrier.h"
@@ -19,9 +17,7 @@
 namespace Client {
   namespace Game {
     static SysTime::USecond64 frameLastTime;
-    const double targetFrameDuration = 1.0/500;
-
-    SysThread::Thread presenter;
+    const double targetFrameDuration = 1.0/60;
     bool terminationRequested = false;
     SysThread::Mutex terminateMutex;
     struct {
@@ -95,8 +91,6 @@ namespace Client {
 
       Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);
-      ScreenSync::initialize();
-      SysThread::init(&presenter, Screen::run);
 
       renderer.initialize();
       renderer.updateResolution({ resolution.width, resolution.height });
@@ -119,8 +113,6 @@ namespace Client {
 
     void terminate() {
       ServerControl::requestTermination();
-      SysThread::join(&presenter);
-      ScreenSync::terminate();
       SysThread::destroyMutex(&terminateMutex);
       Platform::terminate();
 
@@ -140,10 +132,7 @@ namespace Client {
       flow.update(timeDelta, keyboard);
       Carrier::update(timeDelta);
 
-      if(ScreenSync::shouldDraw()) {
-        renderer.draw();
-        ScreenSync::handleDrawCompletion();
-      }
+      renderer.draw();
 
       Net::dispatch();
 
@@ -151,6 +140,7 @@ namespace Client {
 
       ServerControl::update();
 
+      Platform::present();
       SysTime::USecond64 now = GameTime::get();
       SysTime::USecond64 duration = now-frameStartTime;
       double rest = targetFrameDuration-0.000001*duration;

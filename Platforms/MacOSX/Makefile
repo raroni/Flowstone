@@ -49,8 +49,6 @@ USER_SOURCES_CPP =\
 	../../Client/MathConversion.cpp\
 	../../Client/ServerControl.cpp\
 	../../Client/ServerControlQueue.cpp\
-	../../Client/Screen.cpp\
-	../../Client/ScreenSync.cpp\
 	../../Client/Net.cpp\
 	../../Client/AckHelper.cpp\
 	../../Client/TorchManager.cpp\
