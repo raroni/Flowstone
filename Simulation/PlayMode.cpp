@@ -8,18 +8,9 @@ namespace Simulation {
   namespace PlayMode {
     void enter() {
       EntityHandle tree = Database::createEntity();
-      Physics::DynamicBodyIndex i = Database::createDynamicBody(tree);
-
-      Physics::DynamicBody body2 = Database::getDynamicBody(tree);
-      Physics::DynamicBody body3 = physicsEngine.getDynamicBody(i);
-
-
-      EntityHandle treeb = Database::createEntity();
-      Physics::DynamicBodyIndex ib = Database::createDynamicBody(treeb);
-
-      Physics::DynamicBody body2b = Database::getDynamicBody(tree);
-      Physics::DynamicBody body3b = physicsEngine.getDynamicBody(ib);
-
+      Database::createDynamicBody(tree);
+      Physics::DynamicBody body = Database::getDynamicBody(tree);
+      (*body.position)[0] = 2;
       Database::createResource(tree, ResourceType::Tree);
     }
 

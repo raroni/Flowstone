@@ -39,6 +39,7 @@ namespace Client {
       Animation::Animator animator;
       Physics::Engine physics;
       Rendering::Renderer &renderer;
+      uint8_t walkAnimationSkeleton;
       Interpolation::Interpolater interpolater;
       AirDrag airDrag;
       double stepTimeBank = 0;
@@ -48,15 +49,18 @@ namespace Client {
       AtmosphereColor atmosphereColor;
       Rendering::StaticMeshIndex greenTreeMesh;
       Rendering::StaticMeshIndex redTreeMesh;
+      Rendering::BoneMeshIndex characterMesh;
       TorchManager torches;
       Simulation::CommandList simulationCommands;
       Simulation::EventList simulationEvents;
       CommandList clientCommands;
+      void configureAnimation();
+      void configureRenderer();
       void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
-      void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
-      void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
+      void setupPlayer();
+      void setupMonster(float x, float z);
       void setupGround();
       void setupRock();
       void setupBox();
