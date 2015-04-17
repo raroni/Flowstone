@@ -1,7 +1,7 @@
 #include "Simulation/PhysicsHack.h"
-#include "Simulation/EntityManager.h"
-#include "Simulation/ComponentManager.h"
-#include "Simulation/Database.h"
+#include "Simulation/Database/EntityManager.h"
+#include "Simulation/Database/ComponentManager.h"
+#include "Simulation/Database/Database.h"
 
 namespace Simulation {
   namespace Database {

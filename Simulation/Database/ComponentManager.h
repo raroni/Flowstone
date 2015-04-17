@@ -2,9 +2,9 @@
 #define SIMULATION_COMPONENT_MANAGER_H
 
 #include <stdint.h>
-#include "Simulation/EntityHandle.h"
-#include "Simulation/ComponentType.h"
-#include "Simulation/ComponentHandle.h"
+#include "Simulation/Database/EntityHandle.h"
+#include "Simulation/Database/ComponentType.h"
+#include "Simulation/Database/ComponentHandle.h"
 
 namespace Simulation {
   namespace ComponentManager {

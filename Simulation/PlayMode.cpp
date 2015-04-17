@@ -1,5 +1,5 @@
-#include "Simulation/EntityHandle.h"
-#include "Simulation/Database.h"
+#include "Simulation/Database/EntityHandle.h"
+#include "Simulation/Database/Database.h"
 #include "Simulation/PlayMode.h"
 
 #include "Simulation/PhysicsHack.h"

@@ -1,7 +1,7 @@
 #ifndef SIMULATION_DATABASE_H
 #define SIMULATION_DATABASE_H
 
-#include "Simulation/EntityHandle.h"
+#include "Simulation/Database/EntityHandle.h"
 #include "Physics/DynamicBody.h"
 #include "Physics/DynamicBodyIndex.h"
 

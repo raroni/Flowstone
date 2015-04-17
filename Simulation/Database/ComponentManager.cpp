@@ -1,6 +1,6 @@
 #include "Conrad/BitSet32.h"
 #include "Simulation/Config.h"
-#include "Simulation/ComponentManager.h"
+#include "Simulation/Database/ComponentManager.h"
 
 namespace Simulation {
   namespace ComponentManager {
