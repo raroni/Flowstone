@@ -1,9 +1,9 @@
 #include <assert.h>
 #include "Simulation/Config.h"
-#include "Simulation/ResourceManager.h"
+#include "Simulation/ResourceSystem.h"
 
 namespace Simulation {
-  namespace ResourceManager {
+  namespace ResourceSystem {
     uint16_t count = 0;
     ResourceType types[Config::resourceMax];
 

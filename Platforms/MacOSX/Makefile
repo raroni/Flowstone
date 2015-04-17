@@ -65,7 +65,7 @@ USER_SOURCES_CPP =\
 	../../Simulation/Mode.cpp\
 	../../Simulation/PhysicsHack.cpp\
 	../../Simulation/PlayMode.cpp\
-	../../Simulation/ResourceManager.cpp\
+	../../Simulation/ResourceSystem.cpp\
 	../../Simulation/CommandList.cpp\
 	../../Simulation/EventList.cpp\
 	../../Simulation/Database/Database.cpp\

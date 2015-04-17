@@ -5,7 +5,7 @@
 #include "Simulation/ResourceHandle.h"
 
 namespace Simulation {
-  namespace ResourceManager {
+  namespace ResourceSystem {
     ResourceHandle create(ResourceType type);
   }
 }

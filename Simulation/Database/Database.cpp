@@ -1,5 +1,5 @@
 #include "Simulation/PhysicsHack.h"
-#include "Simulation/ResourceManager.h"
+#include "Simulation/ResourceSystem.h"
 #include "Simulation/Database/EntityManager.h"
 #include "Simulation/Database/ComponentManager.h"
 #include "Simulation/Database/Database.h"
@@ -37,7 +37,7 @@ namespace Simulation {
         ComponentHandle componentHandle;
       } caster;
 
-      caster.resourceHandle = ResourceManager::create(type);
+      caster.resourceHandle = ResourceSystem::create(type);
       ComponentManager::link(entity, ComponentType::Resource, caster.componentHandle);
       return caster.resourceHandle;
     }
