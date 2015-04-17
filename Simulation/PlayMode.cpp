@@ -6,15 +6,33 @@
 
 namespace Simulation {
   namespace PlayMode {
-    void enter() {
+    EntityHandle monster;
+
+    void createTree() {
       EntityHandle tree = Database::createEntity();
       Database::createDynamicBody(tree);
       Physics::DynamicBody body = Database::getDynamicBody(tree);
-      (*body.position)[0] = 2;
+      (*body.position)[0] = -2;
       Database::createResource(tree, ResourceType::Tree);
     }
 
+    void createMonster() {
+      monster = Database::createEntity();
+      Database::createDynamicBody(monster);
+      Physics::DynamicBody body = Database::getDynamicBody(monster);
+      (*body.position)[0] = 2;
+      (*body.position)[2] = -0.25;
+      Database::createMonster(monster);
+    }
+
+    void enter() {
+      createTree();
+      createMonster();
+    }
+
     void tick(const CommandList &commands, EventList &events) {
+      Physics::DynamicBody body = Database::getDynamicBody(monster);
+      (*body.position)[0] += Fixie::Num(-0.01);
     }
 
     void exit() {

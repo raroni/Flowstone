@@ -1,6 +1,7 @@
 #include "Physics/Engine.h"
 #include "Physics/DynamicBody.h"
 #include "Physics/StaticBody.h"
+#include "Simulation/PhysicsHack.h"
 #include "Interpolation/Interpolater.h"
 #include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
@@ -10,11 +11,9 @@
 
 namespace Client {
   RendererFeeder::RendererFeeder(
-    const Physics::Engine &physicsEngine,
     const Interpolation::Interpolater &interpolator,
     const Animation::Animator &animator,
     Rendering::Renderer &renderer) :
-  physicsEngine(physicsEngine),
   interpolator(interpolator),
   animator(animator),
   renderer(renderer) { }
@@ -32,7 +31,7 @@ namespace Client {
     // todo:
     // come up with a way to interpolate static transform
     Quanta::Matrix4 quantaTransform;
-    const Fixie::Matrix4 *staticTransforms = physicsEngine.getStaticTransforms();
+    const Fixie::Matrix4 *staticTransforms = Simulation::physicsEngine.getStaticTransforms();
     for(uint8_t i=0; staticStaticBindings.count>i; i++) {
       StaticStaticBinding &binding = staticStaticBindings.list[i];
       MathConversion::convertMatrix(quantaTransform, staticTransforms[binding.body]);

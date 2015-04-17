@@ -27,7 +27,6 @@ namespace Client {
   class RendererFeeder {
   public:
     RendererFeeder(
-      const Physics::Engine &physicsEngine,
       const Interpolation::Interpolater &interpolator,
       const Animation::Animator &animator,
       Rendering::Renderer &renderer
@@ -53,7 +52,6 @@ namespace Client {
       StaticStaticBinding list[128];
       uint8_t count = 0;
     } staticStaticBindings;
-    const Physics::Engine &physicsEngine;
     const Interpolation::Interpolater &interpolator;
     const Animation::Animator &animator;
     Rendering::Renderer &renderer;

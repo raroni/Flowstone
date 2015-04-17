@@ -15,8 +15,10 @@ namespace Simulation {
     EntityHandle createEntity();
     bool hasComponent(EntityHandle entity, ComponentType type);
     Physics::DynamicBodyIndex createDynamicBody(EntityHandle entity);
+    Physics::DynamicBodyIndex getDynamicBodyIndex(EntityHandle);
     Physics::DynamicBody getDynamicBody(EntityHandle entity);
     ResourceHandle createResource(EntityHandle entity, ResourceType type);
+    void createMonster(EntityHandle entity);
   }
 }
 

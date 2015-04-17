@@ -31,6 +31,16 @@ namespace Simulation {
       return caster.index;
     }
 
+    Physics::DynamicBodyIndex getDynamicBodyIndex(EntityHandle entity) {
+      union {
+        Physics::DynamicBodyIndex index;
+        ComponentHandle componentHandle;
+      } caster;
+
+      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsDynamicBody);
+      return caster.index;
+    }
+
     ResourceHandle createResource(EntityHandle entity, ResourceType type) {
       union {
         ResourceHandle resourceHandle;
@@ -40,6 +50,10 @@ namespace Simulation {
       caster.resourceHandle = ResourceSystem::create(type);
       ComponentManager::link(entity, ComponentType::Resource, caster.componentHandle);
       return caster.resourceHandle;
+    }
+
+    void createMonster(EntityHandle entity) {
+      ComponentManager::link(entity, ComponentType::Monster, ComponentHandle());
     }
 
     Physics::DynamicBody getDynamicBody(EntityHandle entity) {

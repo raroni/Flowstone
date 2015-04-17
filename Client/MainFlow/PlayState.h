@@ -2,11 +2,11 @@
 #define CLIENT_MAIN_FLOW_PLAY_STATE_H
 
 #include <stddef.h>
-#include "Physics/Engine.h"
 #include "Animation/Animator.h"
 #include "Simulation/CommandList.h"
 #include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
+#include "Simulation/Database/EntityHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Client/MainFlow/State.h"
@@ -37,7 +37,6 @@ namespace Client {
       Simulation::PlayerHandle playerID = -1;
       PlayMode playMode;
       Animation::Animator animator;
-      Physics::Engine physics;
       Rendering::Renderer &renderer;
       uint8_t walkAnimationSkeleton;
       Interpolation::Interpolater interpolater;
@@ -59,11 +58,8 @@ namespace Client {
       void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
-      void setupPlayer();
-      void setupMonster(float x, float z);
+      void setupMonster(Simulation::EntityHandle monster);
       void setupGround();
-      void setupRock();
-      void setupBox();
       void setupPointLight();
       void updateAtmosphereColor();
       void updateLightDirection();
