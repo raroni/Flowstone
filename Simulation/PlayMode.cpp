@@ -1,3 +1,4 @@
+#include "Simulation/Config.h"
 #include "Simulation/Database/EntityHandle.h"
 #include "Simulation/Database/Database.h"
 #include "Simulation/ResourceType.h"
@@ -15,6 +16,8 @@ namespace Simulation {
       Physics::StaticBody body = Database::getStaticBody(tree);
       (*body.position)[0] = -2;
 
+      Database::createStaticSphereCollider(tree, Fixie::Num(0.25));
+
       Database::createResource(tree, ResourceType::Tree);
     }
 
@@ -23,8 +26,10 @@ namespace Simulation {
 
       Database::createDynamicBody(monster);
       Physics::DynamicBody body = Database::getDynamicBody(monster);
-      (*body.position)[0] = 2;
+      (*body.position)[0] = -0.5;
       (*body.position)[2] = -0.25;
+
+      Database::createDynamicSphereCollider(monster, Fixie::Num(0.25));
 
       Database::createMonster(monster);
     }
@@ -36,7 +41,11 @@ namespace Simulation {
 
     void tick(const CommandList &commands, EventList &events) {
       Physics::DynamicBody body = Database::getDynamicBody(monster);
-      (*body.position)[0] += Fixie::Num(-0.01);
+      (*body.force)[0] *= Fixie::Num(0.5);
+      (*body.force)[0] += Fixie::Num(-0.02);
+
+      static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
+      physicsEngine.simulate();
     }
 
     void exit() {

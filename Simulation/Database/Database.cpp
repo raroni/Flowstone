@@ -31,6 +31,30 @@ namespace Simulation {
       return caster.index;
     }
 
+    Physics::StaticSphereColliderHandle createStaticSphereCollider(EntityHandle entity, Fixie::Num radius) {
+      Physics::StaticBodyIndex body = getStaticBodyIndex(entity);
+      union {
+        Physics::StaticSphereColliderHandle collider;
+        ComponentHandle component;
+      } caster;
+
+      caster.collider = physicsEngine.createStaticSphereCollider(body, radius);
+      ComponentManager::link(entity, ComponentType::PhysicsStaticSphereCollider, caster.component);
+      return caster.collider;
+    }
+
+    Physics::DynamicSphereColliderHandle createDynamicSphereCollider(EntityHandle entity, Fixie::Num radius) {
+      Physics::DynamicBodyIndex body = getDynamicBodyIndex(entity);
+      union {
+        Physics::DynamicSphereColliderHandle collider;
+        ComponentHandle component;
+      } caster;
+
+      caster.collider = physicsEngine.createDynamicSphereCollider(body, radius);
+      ComponentManager::link(entity, ComponentType::PhysicsDynamicSphereCollider, caster.component);
+      return caster.collider;
+    }
+
     Physics::StaticBodyIndex createStaticBody(EntityHandle entity) {
       union {
         Physics::StaticBodyIndex index = physicsEngine.createStaticBody();
@@ -48,6 +72,16 @@ namespace Simulation {
       } caster;
 
       caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsDynamicBody);
+      return caster.index;
+    }
+
+    Physics::StaticBodyIndex getStaticBodyIndex(EntityHandle entity) {
+      union {
+        Physics::StaticBodyIndex index;
+        ComponentHandle componentHandle;
+      } caster;
+
+      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsStaticBody);
       return caster.index;
     }
 

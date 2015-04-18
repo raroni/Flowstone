@@ -14,8 +14,6 @@
 #include "Client/LocalSimulationDriver.h"
 #include "Client/MainFlow/PlayState.h"
 
-#include <stdio.h>
-
 namespace Client {
   namespace MainFlow {
     namespace SimDB = Simulation::Database;

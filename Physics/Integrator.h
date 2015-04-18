@@ -5,8 +5,6 @@
 #include "Fixie/Vector3.h"
 #include "Physics/Config.h"
 
-#include <stdio.h>
-
 namespace Physics {
   class Integrator {
     const static uint8_t maxBodyIndices = 128;
