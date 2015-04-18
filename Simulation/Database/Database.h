@@ -8,6 +8,8 @@
 #include "Simulation/ResourceType.h"
 #include "Physics/DynamicBody.h"
 #include "Physics/DynamicBodyIndex.h"
+#include "Physics/StaticBody.h"
+#include "Physics/StaticBodyIndex.h"
 
 namespace Simulation {
   namespace Database {
@@ -15,8 +17,10 @@ namespace Simulation {
     EntityHandle createEntity();
     bool hasComponent(EntityHandle entity, ComponentType type);
     Physics::DynamicBodyIndex createDynamicBody(EntityHandle entity);
+    Physics::StaticBodyIndex createStaticBody(EntityHandle entity);
     Physics::DynamicBodyIndex getDynamicBodyIndex(EntityHandle);
     Physics::DynamicBody getDynamicBody(EntityHandle entity);
+    Physics::StaticBody getStaticBody(EntityHandle entity);
     ResourceHandle createResource(EntityHandle entity, ResourceType type);
     void createMonster(EntityHandle entity);
   }

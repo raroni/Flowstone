@@ -253,7 +253,7 @@ namespace Client {
         Simulation::EntityHandle entity = entities.values[i];
 
         if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
-          Physics::DynamicBody body = SimDB::getDynamicBody(entity);
+          Physics::StaticBody body = SimDB::getStaticBody(entity);
           setupTree((*body.position)[0], (*body.position)[1], greenTreeMesh);
         }
         else if(SimDB::hasComponent(entity, SimComponentType::Monster)) {

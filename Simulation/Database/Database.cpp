@@ -31,6 +31,16 @@ namespace Simulation {
       return caster.index;
     }
 
+    Physics::StaticBodyIndex createStaticBody(EntityHandle entity) {
+      union {
+        Physics::StaticBodyIndex index = physicsEngine.createStaticBody();
+        ComponentHandle componentHandle;
+      } caster;
+
+      ComponentManager::link(entity, ComponentType::PhysicsStaticBody, caster.componentHandle);
+      return caster.index;
+    }
+
     Physics::DynamicBodyIndex getDynamicBodyIndex(EntityHandle entity) {
       union {
         Physics::DynamicBodyIndex index;
@@ -64,6 +74,16 @@ namespace Simulation {
 
       caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsDynamicBody);
       return physicsEngine.getDynamicBody(caster.index);
+    }
+
+    Physics::StaticBody getStaticBody(EntityHandle entity) {
+      union {
+        Physics::StaticBodyIndex index;
+        ComponentHandle componentHandle;
+      } caster;
+
+      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsStaticBody);
+      return physicsEngine.getStaticBody(caster.index);
     }
   }
 }
