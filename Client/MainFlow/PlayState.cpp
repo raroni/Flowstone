@@ -428,94 +428,6 @@ namespace Client {
       renderer.createStaticMeshInstance(mesh);
     }
 
-    /*
-    void PlayState::setupBox() {
-      Rendering::StaticVertex vertices[] = {
-        { { -0.5, 0.5, -0.5 } },
-        { { 0.5, 0.5, -0.5 } },
-        { { -0.5, -0.5, -0.5 } },
-        { { 0.5, -0.5, -0.5 } },
-        { { -0.5, 0.5, 0.5 } },
-        { { 0.5, 0.5, 0.5 } },
-        { { -0.5, -0.5, 0.5 } },
-        { { 0.5, -0.5, 0.5 } }
-      };
-
-      uint16_t indices[] = {
-        0, 2, 1, 1, 2, 3, // front
-        1, 3, 7, 1, 7, 5, // right
-        4, 7, 6, 4, 5, 7, // back
-        0, 6, 2, 0, 4, 6, // right
-        2, 7, 3, 2, 6, 7,  // bottom
-        5, 0, 1, 5, 4, 0 // top
-      };
-
-      Rendering::Shape shapes[] = {
-        { { 0.5, 0.5, 0.5 }, 0.0, 0, 12 }
-      };
-
-      Rendering::MeshInfo info;
-      info.vertexCount = sizeof(vertices)/sizeof(Rendering::BoneVertex);
-      info.indexCount = sizeof(indices)/sizeof(uint16_t);
-      info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
-
-      Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
-
-      Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
-      physics.createStaticSphereCollider(bodyIndex, 0.5);
-      Physics::StaticBody body = physics.getStaticBody(bodyIndex);
-      (*body.position)[0] = 4;
-      Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
-      rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
-    }
-    */
-
-    /*
-    void PlayState::setupRock() {
-      Rendering::StaticVertex vertices[] = {
-        { { -0.4, 1, -0.4 } },
-        { { 0.4, 1, -0.4 } },
-        { { -1, -1, -1 } },
-        { { 1, -1, -1 } },
-        { { -0.4, 1, 0.4 } },
-        { { 0.4, 1, 0.4 } },
-        { { -1, -1, 1 } },
-        { { 1, -1, 1 } }
-      };
-
-      uint16_t indices[] = {
-        0, 2, 1, 1, 2, 3, // front
-        1, 3, 7, 1, 7, 5, // right
-        4, 7, 6, 4, 5, 7, // back
-        0, 6, 2, 0, 4, 6, // right
-        2, 7, 3, 2, 6, 7,  // bottom
-        5, 0, 1, 5, 4, 0 // top
-      };
-
-      Rendering::Shape shapes[] = {
-        { { 0.5, 0.5, 0.5 }, 0.0, 0, 10 },
-        { { 0.3, 0.3, 0.3 }, 0.0, 10, 2 }
-      };
-
-      Rendering::MeshInfo info;
-      info.vertexCount = sizeof(vertices)/sizeof(Rendering::BoneVertex);
-      info.indexCount = sizeof(indices)/sizeof(uint16_t);
-      info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
-
-      Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
-
-      Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
-      physics.createStaticSphereCollider(bodyIndex, 0.8);
-      Physics::StaticBody body = physics.getStaticBody(bodyIndex);
-      (*body.position)[0] = 2;
-      (*body.position)[2] = 2;
-
-      Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
-
-      rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
-    }
-    */
-
     void PlayState::setupMonster(SimEntityHandle monster) {
       Animation::PoseIndex pose = animator.createPose(walkAnimationSkeleton);
 
@@ -562,23 +474,6 @@ namespace Client {
       interpolater.interpolate(0.5); // fix
 
       processSimulationEvents();
-
-      /*
-      stepTimeBank += timeDelta;
-      if(stepTimeBank*1000 >= Physics::Config::stepDuration) {
-        Physics::DynamicBody body = physics.getDynamicBody(playerBody);
-        do {
-          playerControlUpdateForce(body, keyboard);
-          airDrag.update(physics.getDynamicVelocities(), physics.getDynamicForces());
-          physics.simulate();
-          stepTimeBank -= static_cast<double>(Physics::Config::stepDuration)/1000;
-        } while(stepTimeBank*1000 >= Physics::Config::stepDuration);
-        playerControlReact(body, animator);
-        interpolater.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
-      }
-
-      interpolater.interpolate((stepTimeBank*1000)/Physics::Config::stepDuration);
-      */
 
       updateAtmosphereColor();
       updateLightDirection();
