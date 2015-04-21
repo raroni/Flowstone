@@ -1,35 +1,39 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
+#include "Simulation/Control.h"
+#include "Simulation/Database/EntityList.h"
+#include "Simulation/Database/Database.h"
+#include "Simulation/Database/ComponentType.h"
+#include "Simulation/PhysicsHack.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
 #include "Client/PlayerControl.h"
+#include "Client/LocalSimulationDriver.h"
 #include "Client/MainFlow/PlayState.h"
 
 namespace Client {
   namespace MainFlow {
-    PlayState::PlayState(Rendering::Renderer &renderer) :
+    namespace SimDB = Simulation::Database;
+    namespace SimControl = Simulation::Control;
+    typedef Simulation::ComponentType SimComponentType;
+    typedef Simulation::EntityHandle SimEntityHandle;
+
+    PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
+    playMode(playMode),
     renderer(renderer),
-    rendererFeeder(physics, interpolater, animator, renderer),
+    rendererFeeder(interpolater, animator, renderer),
     torches(renderer) { }
 
-    void PlayState::enter() {
-      torches.initialize();
-
+    void PlayState::configureAnimation() {
       uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
       float animationDurations[] = { 3.0f, 1.0f };
       uint8_t animationKeyCounts[] = { 2, 4 };
 
       float keyTimes[] = { 0, 1.5f, 0, 0.25f, 0.5f, 0.75f };
-
-      updateAtmosphereColor();
-      updateLightDirection();
-
-      Quanta::Vector3 secondaryLightDirection = Quanta::Vector3(2, 1, 5).getNormalized()*-1;
-      renderer.setSecondaryLightDirection(secondaryLightDirection);
 
       Animation::JointConfig keyJointConfigs[] = {
         // idle standard
@@ -81,7 +85,7 @@ namespace Client {
         { 0, 0, -0.2, 1, 0, 0, 0 }
       };
 
-      uint8_t skeletonID = animator.createSkeleton(
+      walkAnimationSkeleton = animator.createSkeleton(
         jointParentIndices,
         sizeof(jointParentIndices)/sizeof(uint8_t),
         animationDurations,
@@ -90,7 +94,9 @@ namespace Client {
         keyTimes,
         keyJointConfigs
       );
+    }
 
+    void PlayState::configureRenderer() {
       Rendering::BoneVertex vertices[] = {
         // body, front
         { { -0.25, 0.8, -0.25 }, 1 }, // the 1 is the joint number this vertex will follow
@@ -190,37 +196,35 @@ namespace Client {
         35, 39, 34, 39, 38, 34,  // bottom
       };
 
-      Rendering::BoneMeshIndex meshIndex = renderer.createBoneMesh(
+      characterMesh = renderer.createBoneMesh(
         vertices,
         sizeof(vertices)/sizeof(Rendering::BoneVertex),
         indices,
         sizeof(indices)/sizeof(uint16_t)
       );
+    }
 
-      setupPlayer(meshIndex, skeletonID);
-      setupMonster(meshIndex, skeletonID, 2, 1);
-      setupMonster(meshIndex, skeletonID, 1, -1);
-      setupMonster(meshIndex, skeletonID, -1, -1);
+    void PlayState::enter() {
+      torches.initialize();
 
+      updateAtmosphereColor();
+      updateLightDirection();
+
+      interpolater.initialize(
+        Simulation::physicsEngine.getDynamicPositions(),
+        Simulation::physicsEngine.getDynamicOrientations()
+      );
+
+      Quanta::Vector3 secondaryLightDirection = Quanta::Vector3(2, 1, 5).getNormalized()*-1;
+      renderer.setSecondaryLightDirection(secondaryLightDirection);
+
+      configureAnimation();
+      configureRenderer();
       configureRedTree();
       configureGreenTree();
 
-      setupTree(-3, 0, greenTreeMesh);
-      setupTree(-3, -1, greenTreeMesh);
-      setupTree(-3, -2, redTreeMesh);
-
-      setupTree(-2, 1, redTreeMesh);
-      setupTree(-1, 1, redTreeMesh);
-      setupTree(0, 1, redTreeMesh);
-
-      setupTree(-3, 3, greenTreeMesh);
-      setupTree(-2, 3, redTreeMesh);
-      setupTree(0, 3, redTreeMesh);
-      setupTree(1, 3, greenTreeMesh);
-      setupTree(2, 3, greenTreeMesh);
-
+      /*
       setupRock();
-      setupGround();
       setupBox();
 
       torches.create(1, 2);
@@ -228,11 +232,36 @@ namespace Client {
       torches.create(1, -2);
       torches.create(-1, 3);
       torches.create(-4, 2);
+      */
+
+      setupGround();
 
       Quanta::Transform& camera = renderer.getCameraTransform();
       camera.position[2] = -3.75;
       camera.position[1] = 6;
       camera.rotateX(1);
+
+      if(playMode == PlayMode::Local) {
+        playerID = SimControl::createPlayer();
+      }
+      SimControl::start();
+
+      Simulation::EntityList entities = SimDB::getEntityList();
+      for(uint16_t i=0; i<entities.count; ++i) {
+        Simulation::EntityHandle entity = entities.values[i];
+
+        if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
+          Physics::StaticBody body = SimDB::getStaticBody(entity);
+          setupTree((*body.position)[0], (*body.position)[1], greenTreeMesh);
+        }
+        else if(SimDB::hasComponent(entity, SimComponentType::Monster)) {
+          setupMonster(entity);
+        }
+      }
+    }
+
+    void PlayState::exit() {
+      SimControl::stop();
     }
 
     void PlayState::configureGreenTree() {
@@ -360,14 +389,9 @@ namespace Client {
     }
 
     void PlayState::setupTree(float x, float z, Rendering::StaticMeshIndex mesh) {
-      Physics::StaticBodyIndex bodyIndex = physics.createStaticBody();
-      physics.createStaticSphereCollider(bodyIndex, 0.4);
-      Physics::StaticBody body = physics.getStaticBody(bodyIndex);
-      (*body.position)[0] = x;
-      (*body.position)[2] = z;
-
-      Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
-      rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
+      Rendering::StaticMeshInstanceHandle instance = renderer.createStaticMeshInstance(mesh);
+      Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
+      renderer.updateStaticMeshTransform(instance, transform);
     }
 
     void PlayState::setupGround() {
@@ -401,29 +425,10 @@ namespace Client {
       info.shapeCount = 1;
 
       Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
-
-      Physics::StaticBodyIndex body = physics.createStaticBody();
-      Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
-
-      rendererFeeder.bindStaticStatic(body, meshInstance);
+      renderer.createStaticMeshInstance(mesh);
     }
 
-    void PlayState::setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t skeletonID) {
-      Animation::PoseIndex pose = animator.createPose(skeletonID);
-
-      playerBody = physics.createDynamicBody();
-      physics.createDynamicSphereCollider(playerBody, 0.25);
-
-      Interpolation::Index interpolation = interpolater.createInterpolation(playerBody);
-      interpolater.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
-
-      airDrag.add(playerBody);
-
-      Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(mesh);
-
-      rendererFeeder.setupBoneMesh(interpolation, pose, meshInstance);
-    }
-
+    /*
     void PlayState::setupBox() {
       Rendering::StaticVertex vertices[] = {
         { { -0.5, 0.5, -0.5 } },
@@ -463,7 +468,9 @@ namespace Client {
       Rendering::StaticMeshInstanceHandle meshInstance = renderer.createStaticMeshInstance(mesh);
       rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
     }
+    */
 
+    /*
     void PlayState::setupRock() {
       Rendering::StaticVertex vertices[] = {
         { { -0.4, 1, -0.4 } },
@@ -507,30 +514,56 @@ namespace Client {
 
       rendererFeeder.bindStaticStatic(bodyIndex, meshInstance);
     }
+    */
 
-    void PlayState::setupMonster(Rendering::BoneMeshIndex mesh, uint8_t skeletonID, float x, float z) {
-      Animation::PoseIndex pose = animator.createPose(skeletonID);
+    void PlayState::setupMonster(SimEntityHandle monster) {
+      Animation::PoseIndex pose = animator.createPose(walkAnimationSkeleton);
 
-      Physics::DynamicBodyIndex bodyIndex = physics.createDynamicBody();
-      Physics::DynamicBody body = physics.getDynamicBody(bodyIndex);
-      (*body.position)[0] = x;
-      (*body.position)[2] = z;
-      physics.createDynamicSphereCollider(bodyIndex, 0.25);
+      Physics::DynamicBodyIndex index = SimDB::getDynamicBodyIndex(monster);
+      uint8_t interpolationTransformID = interpolater.createInterpolation(index);
 
-      uint8_t interpolationTransformID = interpolater.createInterpolation(bodyIndex);
-      interpolater.initialize(physics.getDynamicPositions(), physics.getDynamicOrientations());
-
-      airDrag.add(bodyIndex);
-
-      Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(mesh);
+      Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(characterMesh);
 
       rendererFeeder.setupBoneMesh(interpolationTransformID, pose, meshInstance);
+    }
+
+    void PlayState::updateSimulation(double timeDelta) {
+      if(playMode == PlayMode::Local) {
+        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands, simulationEvents);
+      } else {
+        // NetworkSimulationDriver::update(timeDelta, commandList);
+        assert(false); // not implemented yet
+      }
+    }
+
+    void PlayState::writeCommands() {
+      if(SimControl::getFrame() == 0) {
+        clientCommands.writeTestCommand(playerID);
+      }
+    }
+
+    void PlayState::processSimulationEvents() {
+      for(uint8_t i=0; i<simulationEvents.getCount(); ++i) {
+
+      }
+      simulationEvents.clear();
     }
 
     void PlayState::update(double timeDelta, const Keyboard &keyboard) {
       timeOfDay += timeDelta*0.03;
       timeOfDay = fmod(timeOfDay, 1.0);
 
+      if(playerID != -1) {
+        writeCommands();
+      }
+      updateSimulation(timeDelta);
+      clientCommands.clear();
+      interpolater.reload(Simulation::physicsEngine.getDynamicPositions(), Simulation::physicsEngine.getDynamicOrientations());
+      interpolater.interpolate(0.5); // fix
+
+      processSimulationEvents();
+
+      /*
       stepTimeBank += timeDelta;
       if(stepTimeBank*1000 >= Physics::Config::stepDuration) {
         Physics::DynamicBody body = physics.getDynamicBody(playerBody);
@@ -543,7 +576,10 @@ namespace Client {
         playerControlReact(body, animator);
         interpolater.reload(physics.getDynamicPositions(), physics.getDynamicOrientations());
       }
+
       interpolater.interpolate((stepTimeBank*1000)/Physics::Config::stepDuration);
+      */
+
       updateAtmosphereColor();
       updateLightDirection();
       rendererFeeder.update();

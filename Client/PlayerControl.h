@@ -8,8 +8,6 @@
 #include "SysKey/Key.h"
 #include "Animation/Animator.h"
 
-#include <stdio.h>
-
 namespace Client {
   static void updateForce(Physics::DynamicBody &body, const Keyboard &keyboard) {
     Fixie::Vector3 force = Fixie::Vector3::zero();

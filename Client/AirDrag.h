@@ -2,6 +2,8 @@
 #define CLIENT_AIR_DRAG_H
 
 #include <math.h>
+#include "Fixie/Num.h"
+#include "Fixie/Vector3.h"
 #include "Physics/DynamicBodyIndex.h"
 
 namespace Client {

@@ -10,7 +10,7 @@ namespace Client {
       State *state = nullptr;
     public:
       void initialize(Rendering::Renderer &renderer) {
-        State *state = new PlayState(renderer);
+        State *state = new PlayState(renderer, PlayMode::Local);
         changeState(state);
       }
       void update(double timeDelta, const Keyboard &keyboard) {

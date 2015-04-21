@@ -2,13 +2,18 @@
 #define CLIENT_MAIN_FLOW_PLAY_STATE_H
 
 #include <stddef.h>
-#include "Physics/Engine.h"
 #include "Animation/Animator.h"
+#include "Simulation/CommandList.h"
+#include "Simulation/EventList.h"
+#include "Simulation/PlayerHandle.h"
+#include "Simulation/Database/EntityHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Client/MainFlow/State.h"
+#include "Client/CommandList.h"
 #include "Client/AtmosphereColor.h"
 #include "Client/TorchManager.h"
+#include "Client/PlayMode.h"
 #include "Client/RendererFeeder.h"
 #include "Client/AirDrag.h"
 #include "Client/Interpolation/Interpolater.h"
@@ -22,9 +27,18 @@ namespace Client {
     class Manager;
 
     class PlayState : public State {
+    public:
+      PlayState(Rendering::Renderer &renderer, PlayMode playMode);
+      void enter();
+      void exit();
+      void update(double deltaTime, const Keyboard &keyboard);
+      State* checkTransition();
+    private:
+      Simulation::PlayerHandle playerID = -1;
+      PlayMode playMode;
       Animation::Animator animator;
-      Physics::Engine physics;
       Rendering::Renderer &renderer;
+      uint8_t walkAnimationSkeleton;
       Interpolation::Interpolater interpolater;
       AirDrag airDrag;
       double stepTimeBank = 0;
@@ -34,23 +48,24 @@ namespace Client {
       AtmosphereColor atmosphereColor;
       Rendering::StaticMeshIndex greenTreeMesh;
       Rendering::StaticMeshIndex redTreeMesh;
+      Rendering::BoneMeshIndex characterMesh;
       TorchManager torches;
-      void setupPlayer(Rendering::BoneMeshIndex mesh, uint8_t pose);
-      void setupMonster(Rendering::BoneMeshIndex mesh, uint8_t pose, float x, float z);
+      Simulation::CommandList simulationCommands;
+      Simulation::EventList simulationEvents;
+      CommandList clientCommands;
+      void configureAnimation();
+      void configureRenderer();
+      void processSimulationEvents();
+      void writeCommands();
+      void updateSimulation(double timeDelta);
+      void setupMonster(Simulation::EntityHandle monster);
       void setupGround();
-      void setupRock();
-      void setupBox();
       void setupPointLight();
       void updateAtmosphereColor();
       void updateLightDirection();
       void configureGreenTree();
       void configureRedTree();
       void setupTree(float x, float z, Rendering::StaticMeshIndex mesh);
-    public:
-      PlayState(Rendering::Renderer &renderer);
-      void enter();
-      void update(double deltaTime, const Keyboard &keyboard);
-      State* checkTransition();
     };
   }
 }

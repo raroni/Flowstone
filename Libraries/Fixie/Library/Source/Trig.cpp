@@ -3,8 +3,6 @@
 #include "Fixie/Util.h"
 #include "Fixie/Trig.h"
 
-#include <stdio.h>
-
 namespace Fixie {
   namespace Trig {
     const Num pi = Num::createByRaw(3217);
