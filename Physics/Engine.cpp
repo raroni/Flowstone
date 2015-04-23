@@ -1,80 +1,40 @@
 #include "Fixie/TransformFactory.h"
-#include "Physics/DynamicSphereColliderHandle.h"
 #include "Physics/CollisionResolver.h"
 #include "Physics/Engine.h"
 
 namespace Physics {
-  DynamicBodyIndex Engine::createDynamicBody() {
-    dynamics.orientations[dynamics.count] = Fixie::Quaternion::identity();
-    DynamicBodyIndex index = dynamics.count++;
-    integrator.activate(index);
-    return index;
-  }
-
-  StaticBodyIndex Engine::createStaticBody() {
-    statics.orientations[statics.count] = Fixie::Quaternion::identity();
-    statics.transforms[statics.count] = Fixie::Matrix4::identity();
-    StaticBodyIndex index = statics.count++;
-    return index;
-  }
-
-  DynamicSphereColliderHandle Engine::createDynamicSphereCollider(DynamicBodyIndex body, float radius) {
-    return collisionDetector.createDynamicSphere(body, radius);
-  }
-
-  StaticSphereColliderHandle Engine::createStaticSphereCollider(StaticBodyIndex body, float radius) {
-    return collisionDetector.createStaticSphere(body, radius);
-  }
-
   void Engine::simulate() {
-    updateStaticTransforms();
-    integrator.integrate(dynamics.positions, dynamics.velocities, dynamics.forces);
-    collisionDetector.detect(collisionSet, dynamics.positions, statics.positions);
-    resolveCollisions(collisionSet, dynamics.positions, dynamics.velocities);
+    integrator.integrate(bodies);
+    collisionDetector.detect(collisionSet, bodies);
+    resolveCollisions(collisionSet, bodies);
     collisionSet.clear();
   }
 
-  void Engine::updateStaticTransforms() {
-    Fixie::Matrix4 transform;
-    for(uint16_t i=0; statics.count>i; i++) {
-      statics.transforms[i] = Fixie::TransformFactory::translation(statics.positions[i]);
-      // todo rotation
-    }
+  BodyList& Engine::getBodies() {
+    return bodies;
   }
 
-  const Fixie::Vector3* Engine::getDynamicPositions() const {
-    return dynamics.positions;
+  BodyHandle Engine::createBody() {
+    return bodies.create();
   }
 
-  Fixie::Vector3* Engine::getDynamicForces() {
-    return dynamics.forces;
+  Body Engine::getBody(BodyHandle handle) {
+    return bodies.get(handle);
   }
 
-  const Fixie::Vector3* Engine::getDynamicVelocities() const {
-    return dynamics.velocities;
+  ForceDriver Engine::getForceDriver(ForceDriverHandle handle) {
+    return integrator.getForceDriver(handle);
   }
 
-  const Fixie::Quaternion* Engine::getDynamicOrientations() const {
-    return dynamics.orientations;
+  ForceDriverHandle Engine::createForceDriver(BodyHandle body) {
+    return integrator.createForceDriver(body);
   }
 
-  const Fixie::Matrix4* Engine::getStaticTransforms() const {
-    return statics.transforms;
+  VelocityDriverHandle Engine::createVelocityDriver(BodyHandle body) {
+    return integrator.createVelocityDriver(body);
   }
 
-  DynamicBody Engine::getDynamicBody(DynamicBodyIndex index) {
-    DynamicBody body;
-    body.position = &dynamics.positions[index];
-    body.velocity = &dynamics.velocities[index];
-    body.force = &dynamics.forces[index];
-    body.orientation = &dynamics.orientations[index];
-    return body;
-  }
-
-  StaticBody Engine::getStaticBody(StaticBodyIndex index) {
-    StaticBody body;
-    body.position = &statics.positions[index];
-    body.orientation = &statics.orientations[index];
-    return body;
+  SphereColliderHandle Engine::createSphereCollider(BodyHandle body, ColliderType type, Fixie::Num radius) {
+    return collisionDetector.createSphereCollider(body, type, radius);
   }
 }

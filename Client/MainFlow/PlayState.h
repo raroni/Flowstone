@@ -15,7 +15,6 @@
 #include "Client/TorchManager.h"
 #include "Client/PlayMode.h"
 #include "Client/RendererFeeder.h"
-#include "Client/AirDrag.h"
 #include "Client/Interpolation/Interpolater.h"
 
 namespace Rendering {
@@ -40,10 +39,8 @@ namespace Client {
       Rendering::Renderer &renderer;
       uint8_t walkAnimationSkeleton;
       Interpolation::Interpolater interpolater;
-      AirDrag airDrag;
       double stepTimeBank = 0;
       float timeOfDay = 0.3;
-      Physics::DynamicBodyIndex playerBody;
       RendererFeeder rendererFeeder;
       AtmosphereColor atmosphereColor;
       Rendering::StaticMeshIndex greenTreeMesh;

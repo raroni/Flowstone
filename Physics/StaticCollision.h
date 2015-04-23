@@ -2,12 +2,12 @@
 #define PHYSICS_STATIC_COLLISION_H
 
 #include "Fixie/Vector3.h"
-#include "Physics/StaticBodyIndex.h"
+#include "Physics/BodyHandle.h"
 
 namespace Physics {
   struct StaticCollision {
-    StaticBodyIndex staticBody;
-    DynamicBodyIndex dynamicBody;
+    BodyHandle staticBody;
+    BodyHandle dynamicBody;
     Fixie::Vector3 separation;
   };
 }

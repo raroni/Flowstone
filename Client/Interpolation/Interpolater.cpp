@@ -6,19 +6,21 @@ namespace Client {
   namespace Interpolation {
     using namespace MathConversion;
 
-    void Interpolater::initialize(const Fixie::Vector3 *positions, const Fixie::Quaternion *orientations) {
-      for(uint8_t i=0; bodyCount>i; i++) {
-        Physics::DynamicBodyIndex bodyIndex = bodyIndices[i];
-        convertVector(oldPositions[i], positions[bodyIndex]);
-        convertVector(newPositions[i], positions[bodyIndex]);
-        convertQuaternion(newOrientations[i], orientations[bodyIndex]);
-        convertQuaternion(oldOrientations[i], orientations[bodyIndex]);
+    void Interpolater::prepare(const Physics::BodyList &bodies) {
+      for(uint8_t i=0; count>i; i++) {
+        Physics::BodyHandle handle = bodyHandles[i];
+        Physics::ConstBody body = bodies.get(handle);
+
+        convertVector(oldPositions[i], *(body.position));
+        convertVector(newPositions[i], *(body.position));
+        convertQuaternion(newOrientations[i], *(body.orientation));
+        convertQuaternion(oldOrientations[i], *(body.orientation));
       }
       interpolate(0);
     }
 
     void Interpolater::interpolate(double progress) {
-      for(uint8_t i=0; bodyCount>i; i++) {
+      for(uint8_t i=0; count>i; i++) {
         Quanta::Vector3 position = oldPositions[i] + (newPositions[i]-oldPositions[i])*progress;
         Quanta::Matrix4 translation = Quanta::TransformFactory3D::translation(position);
         Quanta::Quaternion orientation = Quanta::Quaternion::slerp(oldOrientations[i], newOrientations[i], progress);
@@ -26,18 +28,21 @@ namespace Client {
       }
     }
 
-    Index Interpolater::createInterpolation(Physics::DynamicBodyIndex body) {
-      bodyIndices[bodyCount] = body;
-      return bodyCount++;
+    Index Interpolater::createInterpolation(Physics::BodyHandle body) {
+      assert(max != count);
+      bodyHandles[count] = body;
+      return count++;
     }
 
-    void Interpolater::reload(const Fixie::Vector3 *newPositions, const Fixie::Quaternion *newOrientations) {
-      for(uint8_t i=0; bodyCount>i; i++) {
+    void Interpolater::reload(const Physics::BodyList &bodies) {
+      for(uint8_t i=0; count>i; i++) {
+        Physics::BodyHandle handle = bodyHandles[i];
+        Physics::ConstBody body = bodies.get(handle);
+
         oldPositions[i] = this->newPositions[i];
         oldOrientations[i] = this->newOrientations[i];
-        Physics::DynamicBodyIndex bodyIndex = bodyIndices[i];
-        convertVector(this->newPositions[i], newPositions[bodyIndex]);
-        convertQuaternion(this->newOrientations[i], newOrientations[bodyIndex]);
+        convertVector(this->newPositions[i], *(body.position));
+        convertQuaternion(this->newOrientations[i], *(body.orientation));
       }
     }
 
