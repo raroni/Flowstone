@@ -22,6 +22,13 @@ namespace Physics {
       uint16_t count = 0;
     } staticSphereColliders;
     SphereColliderList sphereColliders;
+    void loadSphereCollider(
+      SphereColliderHandle sphereColliderHandle,
+      const BodyList &bodies,
+      uint16_t *colliderIndex,
+      BodyHandle *bodyHandle,
+      uint16_t *bodyIndex
+    );
     void detectDynamics(DynamicCollision *collisions, uint16_t *collisionsCount, const BodyList &bodies);
     void detectStatics(StaticCollision *collisions, uint16_t *collisionsCount, const BodyList &bodies);
   };

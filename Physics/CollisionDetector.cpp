@@ -9,21 +9,30 @@ namespace Physics {
     detectStatics(set.statics.values, &set.statics.count, bodies);
   }
 
+  void CollisionDetector::loadSphereCollider(
+    SphereColliderHandle sphereColliderHandle,
+    const BodyList &bodies,
+    uint16_t *colliderIndex,
+    BodyHandle *bodyHandle,
+    uint16_t *bodyIndex
+  ) {
+    *colliderIndex = sphereColliders.getIndex(sphereColliderHandle);
+    *bodyHandle = sphereColliders.bodyHandles[*colliderIndex];
+    *bodyIndex = bodies.getIndex(*bodyHandle);
+  }
+
   void CollisionDetector::detectDynamics(DynamicCollision *collisions, uint16_t *collisionCount, const BodyList &bodies) {
     const Fixie::Vector3 *positions = bodies.positions;
     const Fixie::Num *radii = sphereColliders.radii;
     uint16_t colliderCount = dynamicSphereColliders.count;
+    uint16_t colliderIndex1, bodyIndex1, colliderIndex2, bodyIndex2;
+    BodyHandle bodyHandle1, bodyHandle2;
 
     for(uint16_t i=0; i<colliderCount-1; ++i) {
-      SphereColliderHandle colliderHandle1 = dynamicSphereColliders.handles[i];
-      uint16_t colliderIndex1 = sphereColliders.getIndex(colliderHandle1);
-      BodyHandle bodyHandle1 = sphereColliders.bodyHandles[colliderIndex1];
+      loadSphereCollider(dynamicSphereColliders.handles[i], bodies, &colliderIndex1, &bodyHandle1, &bodyIndex1);
       uint16_t bodyIndex1 = bodies.getIndex(bodyHandle1);
       for(uint16_t n=i+1; n<colliderCount; ++n) {
-        SphereColliderHandle colliderHandle2 = dynamicSphereColliders.handles[n];
-        uint16_t colliderIndex2 = sphereColliders.getIndex(colliderHandle2);
-        BodyHandle bodyHandle2 = sphereColliders.bodyHandles[colliderIndex2];
-        uint16_t bodyIndex2 = bodies.getIndex(bodyHandle2);
+        loadSphereCollider(dynamicSphereColliders.handles[n], bodies, &colliderIndex2, &bodyHandle2, &bodyIndex2);
 
         Fixie::Vector3 difference = positions[bodyIndex2]-positions[bodyIndex1];
         Fixie::Num differenceSquaredLength = difference.calcSquaredLength();
@@ -55,17 +64,13 @@ namespace Physics {
     const Fixie::Num *radii = sphereColliders.radii;
     uint16_t dynamicColliderCount = dynamicSphereColliders.count;
     uint16_t staticColliderCount = staticSphereColliders.count;
+    uint16_t dynamicColliderIndex, dynamicBodyIndex, staticColliderIndex, staticBodyIndex;
+    BodyHandle dynamicBodyHandle, staticBodyHandle;
 
     for(uint16_t d=0; d<dynamicColliderCount; ++d) {
-      SphereColliderHandle dynamicColliderHandle = dynamicSphereColliders.handles[d];
-      uint16_t dynamicColliderIndex = sphereColliders.getIndex(dynamicColliderHandle);
-      BodyHandle dynamicBodyHandle = sphereColliders.bodyHandles[dynamicColliderIndex];
-      uint16_t dynamicBodyIndex = bodies.getIndex(dynamicBodyHandle);
+      loadSphereCollider(dynamicSphereColliders.handles[d], bodies, &dynamicColliderIndex, &dynamicBodyHandle, &dynamicBodyIndex);
       for(uint16_t s=0; s<staticColliderCount; ++s) {
-        SphereColliderHandle staticColliderHandle = staticSphereColliders.handles[s];
-        uint16_t staticColliderIndex = sphereColliders.getIndex(staticColliderHandle);
-        BodyHandle staticBodyHandle = sphereColliders.bodyHandles[staticColliderIndex];
-        uint16_t staticBodyIndex = bodies.getIndex(staticBodyHandle);
+        loadSphereCollider(staticSphereColliders.handles[s], bodies, &staticColliderIndex, &staticBodyHandle, &staticBodyIndex);
 
         Fixie::Vector3 difference = positions[dynamicBodyIndex]-positions[staticBodyIndex];
         Fixie::Num differenceSquaredLength = difference.calcSquaredLength();
