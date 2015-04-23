@@ -6,27 +6,25 @@
 #include "Simulation/Database/ComponentType.h"
 #include "Simulation/ResourceHandle.h"
 #include "Simulation/ResourceType.h"
-#include "Physics/StaticSphereColliderHandle.h"
-#include "Physics/DynamicSphereColliderHandle.h"
-#include "Physics/DynamicBody.h"
-#include "Physics/DynamicBodyIndex.h"
-#include "Physics/StaticBody.h"
-#include "Physics/StaticBodyIndex.h"
+#include "Physics/SphereColliderHandle.h"
+#include "Physics/BodyHandle.h"
+#include "Physics/ForceDriverHandle.h"
+#include "Physics/ForceDriver.h"
+#include "Physics/Body.h"
+#include "Physics/ColliderType.h"
 
 namespace Simulation {
   namespace Database {
     EntityList getEntityList();
     EntityHandle createEntity();
     bool hasComponent(EntityHandle entity, ComponentType type);
-    Physics::DynamicBodyIndex createDynamicBody(EntityHandle entity);
-    Physics::StaticBodyIndex createStaticBody(EntityHandle entity);
-    Physics::DynamicBodyIndex getDynamicBodyIndex(EntityHandle);
-    Physics::StaticBodyIndex getStaticBodyIndex(EntityHandle);
-    Physics::DynamicBody getDynamicBody(EntityHandle entity);
-    Physics::StaticBody getStaticBody(EntityHandle entity);
+    Physics::BodyHandle createBody(EntityHandle entity);
+    Physics::Body getBody(EntityHandle);
+    Physics::BodyHandle getBodyHandle(EntityHandle);
+    Physics::ForceDriver getForceDriver(EntityHandle);
     ResourceHandle createResource(EntityHandle entity, ResourceType type);
-    Physics::StaticSphereColliderHandle createStaticSphereCollider(EntityHandle entity, Fixie::Num radius);
-    Physics::DynamicSphereColliderHandle createDynamicSphereCollider(EntityHandle entity, Fixie::Num radius);
+    Physics::ForceDriverHandle createForceDriver(EntityHandle);
+    Physics::SphereColliderHandle createSphereCollider(EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
     void createMonster(EntityHandle entity);
   }
 }

@@ -1,22 +1,25 @@
 #include "Fixie/Vector3.h"
-#include "Physics/CollisionSet.h"
+#include "CollisionResolver.h"
 
 namespace Physics {
-  void resolveCollisions(CollisionSet &set, Fixie::Vector3 *positions, Fixie::Vector3 *velocities) {
-    CollisionSet::DynamicList &dynamics = set.getDynamics();
-    for(uint8_t i=0; dynamics.getCount()>i; i++) {
-      Fixie::Vector3 halfSeparation = dynamics[i].separation*0.5;
+  void resolveCollisions(const CollisionSet &set, BodyList &bodies) {
+    Fixie::Vector3 *positions = bodies.positions;
 
-      DynamicBodyIndex bodyA = dynamics[i].bodyA;
-      DynamicBodyIndex bodyB = dynamics[i].bodyB;
-      positions[bodyA] -= halfSeparation;
-      positions[bodyB] += halfSeparation;
+    for(uint16_t i=0; i<set.dynamics.count; ++i) {
+      const DynamicCollision *collision = &set.dynamics.values[i];
+      Fixie::Vector3 halfSeparation = collision->separation*0.5;
+
+      uint16_t bodyAIndex = bodies.getIndex(collision->bodyA);
+      uint16_t bodyBIndex = bodies.getIndex(collision->bodyB);
+
+      positions[bodyAIndex] -= halfSeparation;
+      positions[bodyBIndex] += halfSeparation;
     }
 
-    CollisionSet::StaticList &statics = set.getStatics();
-    for(uint8_t i=0; statics.getCount()>i; i++) {
-      DynamicBodyIndex dynamicBody = statics[i].dynamicBody;
-      positions[dynamicBody] += statics[i].separation;
+    for(uint16_t i=0; i<set.statics.count; ++i) {
+      const StaticCollision *collision = &set.statics.values[i];
+      uint16_t dynamicBodyIndex = bodies.getIndex(collision->dynamicBody);
+      positions[dynamicBodyIndex] += collision->separation;
     }
   }
 }

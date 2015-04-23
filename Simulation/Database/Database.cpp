@@ -21,68 +21,48 @@ namespace Simulation {
       return ComponentManager::has(entity, type);
     }
 
-    Physics::DynamicBodyIndex createDynamicBody(EntityHandle entity) {
+    Physics::ForceDriverHandle createForceDriver(EntityHandle entity) {
+      Physics::BodyHandle bodyHandle = getBodyHandle(entity);
       union {
-        Physics::DynamicBodyIndex index = physicsEngine.createDynamicBody();
-        ComponentHandle componentHandle;
+        Physics::ForceDriverHandle physicsHandle;
+        ComponentHandle genericHandle;
       } caster;
-
-      ComponentManager::link(entity, ComponentType::PhysicsDynamicBody, caster.componentHandle);
-      return caster.index;
+      caster.physicsHandle = physicsEngine.createForceDriver(bodyHandle);
+      ComponentManager::link(entity, ComponentType::ForceDriver, caster.genericHandle);
+      return caster.physicsHandle;
     }
 
-    Physics::StaticSphereColliderHandle createStaticSphereCollider(EntityHandle entity, Fixie::Num radius) {
-      Physics::StaticBodyIndex body = getStaticBodyIndex(entity);
+    Physics::BodyHandle createBody(EntityHandle entity) {
       union {
-        Physics::StaticSphereColliderHandle collider;
-        ComponentHandle component;
+        Physics::BodyHandle physicsHandle = physicsEngine.createBody();
+        ComponentHandle genericHandle;
       } caster;
 
-      caster.collider = physicsEngine.createStaticSphereCollider(body, radius);
-      ComponentManager::link(entity, ComponentType::PhysicsStaticSphereCollider, caster.component);
-      return caster.collider;
+      ComponentManager::link(entity, ComponentType::Body, caster.genericHandle);
+      return caster.physicsHandle;
     }
 
-    Physics::DynamicSphereColliderHandle createDynamicSphereCollider(EntityHandle entity, Fixie::Num radius) {
-      Physics::DynamicBodyIndex body = getDynamicBodyIndex(entity);
+    Physics::SphereColliderHandle createSphereCollider(EntityHandle entity, Fixie::Num radius, Physics::ColliderType type) {
+      // todo: assert has body?
+      Physics::BodyHandle body = getBodyHandle(entity);
       union {
-        Physics::DynamicSphereColliderHandle collider;
-        ComponentHandle component;
+        Physics::SphereColliderHandle physicsHandle;
+        ComponentHandle genericHandle;
       } caster;
 
-      caster.collider = physicsEngine.createDynamicSphereCollider(body, radius);
-      ComponentManager::link(entity, ComponentType::PhysicsDynamicSphereCollider, caster.component);
-      return caster.collider;
+      caster.physicsHandle = physicsEngine.createSphereCollider(body, type, radius);
+      ComponentManager::link(entity, ComponentType::SphereCollider, caster.genericHandle);
+      return caster.physicsHandle;
     }
 
-    Physics::StaticBodyIndex createStaticBody(EntityHandle entity) {
+    Physics::BodyHandle getBodyHandle(EntityHandle entity) {
       union {
-        Physics::StaticBodyIndex index = physicsEngine.createStaticBody();
-        ComponentHandle componentHandle;
+        Physics::BodyHandle physicsHandle;
+        ComponentHandle genericHandle;
       } caster;
 
-      ComponentManager::link(entity, ComponentType::PhysicsStaticBody, caster.componentHandle);
-      return caster.index;
-    }
-
-    Physics::DynamicBodyIndex getDynamicBodyIndex(EntityHandle entity) {
-      union {
-        Physics::DynamicBodyIndex index;
-        ComponentHandle componentHandle;
-      } caster;
-
-      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsDynamicBody);
-      return caster.index;
-    }
-
-    Physics::StaticBodyIndex getStaticBodyIndex(EntityHandle entity) {
-      union {
-        Physics::StaticBodyIndex index;
-        ComponentHandle componentHandle;
-      } caster;
-
-      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsStaticBody);
-      return caster.index;
+      caster.genericHandle = ComponentManager::get(entity, ComponentType::Body);
+      return caster.physicsHandle;
     }
 
     ResourceHandle createResource(EntityHandle entity, ResourceType type) {
@@ -100,24 +80,17 @@ namespace Simulation {
       ComponentManager::link(entity, ComponentType::Monster, ComponentHandle());
     }
 
-    Physics::DynamicBody getDynamicBody(EntityHandle entity) {
-      union {
-        Physics::DynamicBodyIndex index;
-        ComponentHandle componentHandle;
-      } caster;
-
-      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsDynamicBody);
-      return physicsEngine.getDynamicBody(caster.index);
+    Physics::Body getBody(EntityHandle entity) {
+      return physicsEngine.getBody(getBodyHandle(entity));
     }
 
-    Physics::StaticBody getStaticBody(EntityHandle entity) {
+    Physics::ForceDriver getForceDriver(EntityHandle entity) {
       union {
-        Physics::StaticBodyIndex index;
-        ComponentHandle componentHandle;
+        Physics::ForceDriverHandle physicsHandle;
+        ComponentHandle genericHandle;
       } caster;
-
-      caster.componentHandle = ComponentManager::get(entity, ComponentType::PhysicsStaticBody);
-      return physicsEngine.getStaticBody(caster.index);
+      caster.genericHandle = ComponentManager::get(entity, ComponentType::ForceDriver);
+      return physicsEngine.getForceDriver(caster.physicsHandle);
     }
   }
 }

@@ -1,27 +1,24 @@
 #ifndef PHYSICS_COLLISION_SET_H
 #define PHYSICS_COLLISION_SET_H
 
-#include "Conrad/List.h"
+#include "Physics/Config.h"
+#include "Physics/CollisionSet.h"
 #include "Physics/DynamicCollision.h"
 #include "Physics/StaticCollision.h"
 
 namespace Physics {
-  class CollisionSet {
-  public:
-    typedef List<DynamicCollision, 64> DynamicList;
-    typedef List<StaticCollision, 64> StaticList;
-    DynamicList dynamicCollisions;
-    StaticList staticCollisions;
-  public:
-    DynamicList& getDynamics() {
-      return dynamicCollisions;
-    }
-    StaticList& getStatics() {
-      return staticCollisions;
-    }
+  struct CollisionSet {
+    struct {
+      DynamicCollision values[Config::dynamicCollisionMax];
+      uint16_t count = 0;
+    } dynamics;
+    struct {
+      StaticCollision values[Config::staticCollisionMax];
+      uint16_t count = 0;
+    } statics;
     void clear() {
-      dynamicCollisions.clear();
-      staticCollisions.clear();
+      dynamics.count = 0;
+      statics.count = 0;
     }
   };
 }

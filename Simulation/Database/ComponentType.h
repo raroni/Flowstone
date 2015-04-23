@@ -3,10 +3,9 @@
 
 namespace Simulation {
   enum class ComponentType : uint8_t {
-    PhysicsDynamicBody,
-    PhysicsStaticBody,
-    PhysicsStaticSphereCollider,
-    PhysicsDynamicSphereCollider,
+    Body,
+    SphereCollider,
+    ForceDriver,
     Resource,
     Monster,
 

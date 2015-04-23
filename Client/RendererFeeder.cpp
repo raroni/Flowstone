@@ -1,6 +1,4 @@
 #include "Physics/Engine.h"
-#include "Physics/DynamicBody.h"
-#include "Physics/StaticBody.h"
 #include "Simulation/PhysicsHack.h"
 #include "Interpolation/Interpolater.h"
 #include "Animation/Animator.h"
@@ -21,38 +19,20 @@ namespace Client {
   void RendererFeeder::update() {
     const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
     const Pose *poses = animator.getWorldPoses();
-    for(uint8_t i=0; dynamicBoneBindings.count>i; i++) {
-      DynamicBoneBinding &binding = dynamicBoneBindings.list[i];
+    for(uint16_t i=0; i<boneBindings.count; ++i) {
+      BoneBinding &binding = boneBindings.list[i];
       Rendering::BoneMeshInstance instance = renderer.getBoneMeshInstance(binding.mesh);
       (*instance.transform) = interpolatedTransforms[binding.interpolation];
       (*instance.pose) = poses[binding.pose];
     }
-
-    // todo:
-    // come up with a way to interpolate static transform
-    Quanta::Matrix4 quantaTransform;
-    const Fixie::Matrix4 *staticTransforms = Simulation::physicsEngine.getStaticTransforms();
-    for(uint8_t i=0; staticStaticBindings.count>i; i++) {
-      StaticStaticBinding &binding = staticStaticBindings.list[i];
-      MathConversion::convertMatrix(quantaTransform, staticTransforms[binding.body]);
-      renderer.updateStaticMeshTransform(binding.mesh, quantaTransform);
-    }
   }
 
   void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
-    DynamicBoneBinding binding;
+    BoneBinding binding;
     binding.interpolation = interpolation;
     binding.mesh = mesh;
     binding.pose = pose;
-    dynamicBoneBindings.list[dynamicBoneBindings.count] = binding;
-    dynamicBoneBindings.count++;
-  }
-
-  void RendererFeeder::bindStaticStatic(Physics::StaticBodyIndex body, Rendering::StaticMeshInstanceHandle mesh) {
-    StaticStaticBinding binding;
-    binding.body = body;
-    binding.mesh = mesh;
-    staticStaticBindings.list[staticStaticBindings.count] = binding;
-    staticStaticBindings.count++;
+    boneBindings.list[boneBindings.count] = binding;
+    boneBindings.count++;
   }
 }

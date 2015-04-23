@@ -10,7 +10,6 @@
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
-#include "Client/PlayerControl.h"
 #include "Client/LocalSimulationDriver.h"
 #include "Client/MainFlow/PlayState.h"
 
@@ -210,11 +209,6 @@ namespace Client {
       updateAtmosphereColor();
       updateLightDirection();
 
-      interpolater.initialize(
-        Simulation::physicsEngine.getDynamicPositions(),
-        Simulation::physicsEngine.getDynamicOrientations()
-      );
-
       Quanta::Vector3 secondaryLightDirection = Quanta::Vector3(2, 1, 5).getNormalized()*-1;
       renderer.setSecondaryLightDirection(secondaryLightDirection);
 
@@ -251,13 +245,15 @@ namespace Client {
         Simulation::EntityHandle entity = entities.values[i];
 
         if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
-          Physics::StaticBody body = SimDB::getStaticBody(entity);
+          Physics::Body body = SimDB::getBody(entity);
           setupTree((*body.position)[0], (*body.position)[1], greenTreeMesh);
         }
         else if(SimDB::hasComponent(entity, SimComponentType::Monster)) {
           setupMonster(entity);
         }
       }
+
+      interpolater.prepare(Simulation::physicsEngine.getBodies());
     }
 
     void PlayState::exit() {
@@ -431,8 +427,8 @@ namespace Client {
     void PlayState::setupMonster(SimEntityHandle monster) {
       Animation::PoseIndex pose = animator.createPose(walkAnimationSkeleton);
 
-      Physics::DynamicBodyIndex index = SimDB::getDynamicBodyIndex(monster);
-      uint8_t interpolationTransformID = interpolater.createInterpolation(index);
+      Physics::BodyHandle body = SimDB::getBodyHandle(monster);
+      uint8_t interpolationTransformID = interpolater.createInterpolation(body);
 
       Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(characterMesh);
 
@@ -470,7 +466,7 @@ namespace Client {
       }
       updateSimulation(timeDelta);
       clientCommands.clear();
-      interpolater.reload(Simulation::physicsEngine.getDynamicPositions(), Simulation::physicsEngine.getDynamicOrientations());
+      interpolater.reload(Simulation::physicsEngine.getBodies());
       interpolater.interpolate(0.5); // fix
 
       processSimulationEvents();

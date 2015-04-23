@@ -37,6 +37,11 @@ USER_SOURCES_CPP =\
 	../../Libraries/Piper/Source/Transmission.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionDetector.cpp\
+	../../Physics/Integrator.cpp\
+	../../Physics/BodyList.cpp\
+	../../Physics/SphereColliderList.cpp\
+	../../Physics/VelocityDriverList.cpp\
+	../../Physics/ForceDriverList.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Server/Game.cpp\
 	../../Server/ClientSet.cpp\
