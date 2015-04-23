@@ -5,6 +5,7 @@
 #include "Physics/BodyList.h"
 #include "Physics/CollisionSet.h"
 #include "Physics/SphereColliderList.h"
+#include "Physics/SphereSphereCheck.h"
 
 namespace Physics {
   class CollisionDetector {
@@ -28,6 +29,12 @@ namespace Physics {
       uint16_t *colliderIndex,
       BodyHandle *bodyHandle,
       uint16_t *bodyIndex
+    );
+    void checkSphereSphere(
+      const BodyList &bodies,
+      SphereColliderHandle sphereColliderHandle1,
+      SphereColliderHandle sphereColliderHandle2,
+      SphereSphereCheck &check
     );
     void detectDynamics(DynamicCollision *collisions, uint16_t *collisionsCount, const BodyList &bodies);
     void detectStatics(StaticCollision *collisions, uint16_t *collisionsCount, const BodyList &bodies);
