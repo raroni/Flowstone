@@ -7,11 +7,11 @@ namespace PhysicsEngineTest {
 
   void testRetrieval() {
     Engine engine;
-    DynamicBodyIndex index = engine.createDynamicBody();
-    DynamicBody body1 = engine.getDynamicBody(index);
+    BodyHandle handle = engine.createBody();
+    Body body1 = engine.getBody(handle);
     (*body1.velocity)[1] = 1.234;
-    engine.createDynamicBody();
-    DynamicBody body2 = engine.getDynamicBody(index);
+    engine.createBody();
+    Body body2 = engine.getBody(handle);
     assertInDelta(1.234, 0.01, (*body2.velocity)[1]);
   }
 

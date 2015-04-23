@@ -5,8 +5,8 @@ namespace Physics {
   static Fixie::Num differenceTolerance = 1.0/1024.0;
 
   void CollisionDetector::detect(CollisionSet &set, const BodyList &bodies) {
-    detectDynamics(set.dynamics.values, &set.dynamics.count, bodies);
-    detectStatics(set.statics.values, &set.statics.count, bodies);
+    detectDynamics(set.dynamics, bodies);
+    detectStatics(set.statics, bodies);
   }
 
   void CollisionDetector::loadSphereCollider(
@@ -54,7 +54,7 @@ namespace Physics {
     }
   }
 
-  void CollisionDetector::detectDynamics(DynamicCollision *collisions, uint16_t *collisionCount, const BodyList &bodies) {
+  void CollisionDetector::detectDynamics(DynamicCollisionList &list, const BodyList &bodies) {
     uint16_t colliderCount = dynamicSphereColliders.count;
     SphereSphereCheck sphereSphereCheck;
 
@@ -62,13 +62,12 @@ namespace Physics {
       for(uint16_t n=i+1; n<colliderCount; ++n) {
         checkSphereSphere(bodies, dynamicSphereColliders.handles[i], dynamicSphereColliders.handles[n], sphereSphereCheck);
         if(sphereSphereCheck.positive) {
-          collisions->bodyA = sphereSphereCheck.bodyHandle1;
-          collisions->bodyB = sphereSphereCheck.bodyHandle2;
-          collisions->separation = sphereSphereCheck.separation;
-          if(*collisionCount != Config::dynamicCollisionMax) {
-            collisions++;
-            (*collisionCount)++;
-          } else {
+          list.add(
+            sphereSphereCheck.bodyHandle1,
+            sphereSphereCheck.bodyHandle2,
+            sphereSphereCheck.separation
+          );
+          if(list.isFull()) {
             return;
           }
         }
@@ -76,7 +75,7 @@ namespace Physics {
     }
   }
 
-  void CollisionDetector::detectStatics(StaticCollision *collisions, uint16_t *collisionCount, const BodyList &bodies) {
+  void CollisionDetector::detectStatics(StaticCollisionList &list, const BodyList &bodies) {
     uint16_t dynamicColliderCount = dynamicSphereColliders.count;
     uint16_t staticColliderCount = staticSphereColliders.count;
     SphereSphereCheck sphereSphereCheck;
@@ -85,13 +84,12 @@ namespace Physics {
       for(uint16_t s=0; s<staticColliderCount; ++s) {
         checkSphereSphere(bodies, staticSphereColliders.handles[s], dynamicSphereColliders.handles[d], sphereSphereCheck);
         if(sphereSphereCheck.positive) {
-          collisions->staticBody = sphereSphereCheck.bodyHandle1;
-          collisions->dynamicBody = sphereSphereCheck.bodyHandle2;
-          collisions->separation = sphereSphereCheck.separation;
-          if(*collisionCount != Config::staticCollisionMax) {
-            collisions++;
-            (*collisionCount)++;
-          } else {
+          list.add(
+            sphereSphereCheck.bodyHandle1,
+            sphereSphereCheck.bodyHandle2,
+            sphereSphereCheck.separation
+          );
+          if(list.isFull()) {
             return;
           }
         }

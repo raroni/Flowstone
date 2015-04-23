@@ -1,3 +1,5 @@
+#include "Fixie/Vector3.h"
+#include "Physics/BodyList.h"
 #include "Physics/CollisionDetector.h"
 #include "Physics/CollisionSet.h"
 #include "Orwell.h"
@@ -7,32 +9,37 @@ namespace CollisionDetectorTest {
   using namespace Physics;
   typedef CollisionDetector Detector;
 
+  void setupSphereCollider(BodyList &bodies, Detector &detector, Fixie::Vector3 position, Fixie::Num radius) {
+    BodyHandle bodyHandle = bodies.create();
+    Body body = bodies.get(bodyHandle);
+    (*body.position) = position;
+    detector.createSphereCollider(bodyHandle, ColliderType::Dynamic, radius);
+  }
+
   void testSphereCollision() {
+    BodyList bodies;
     Detector detector;
-    detector.createDynamicSphere(0, 0.5);
-    detector.createDynamicSphere(1, 0.5);
+    setupSphereCollider(bodies, detector, { 5, 5, 5 }, 0.5);
+    setupSphereCollider(bodies, detector, { 5.1, 5.1, 5.1 }, 0.5);
+
     CollisionSet set;
-    Quanta::Vector3 positions[] = {
-      { 5, 5, 5 },
-      { 5.1, 5.1, 5.1 }
-    };
-    detector.detect(set, positions, {});
-    assertEqual(1, set.getDynamics().getCount());
+    detector.detect(set, bodies);
+    assertEqual(1, set.dynamics.getCount());
   }
 
   void testSphereMiss() {
+    BodyList bodies;
     Detector detector;
-    detector.createDynamicSphere(0, 1);
-    detector.createDynamicSphere(1, 1);
+    setupSphereCollider(bodies, detector, { -1.5, 0, 0 }, 1);
+    setupSphereCollider(bodies, detector, { 1.5, 0, 0 }, 1);
+
     CollisionSet set;
-    Quanta::Vector3 positions[] = {
-      { -1.5, 0, 0 },
-      { 1.5, 0, 0 }
-    };
-    detector.detect(set, positions, {});
-    assertEqual(0, set.getDynamics().getCount());
+    detector.detect(set, bodies);
+    assertEqual(0, set.dynamics.getCount());
   }
 
+  /*
+  temporarily disabled due to no support for destruction
   void testSphereColliderDestruction() {
     Detector detector;
     detector.createDynamicSphere(0, 0.5);
@@ -53,19 +60,19 @@ namespace CollisionDetectorTest {
     detector.detect(set, positions, {});
     assertEqual(0, set.getDynamics().getCount());
   }
+  */
 
   void testSphereSeparation() {
+    BodyList bodies;
     Detector detector;
-    detector.createDynamicSphere(0, 1);
-    detector.createDynamicSphere(1, 1);
-    Quanta::Vector3 positions[] = {
-      { 0, 0, 0 },
-      { 1.5, 0, 0 }
-    };
+    setupSphereCollider(bodies, detector, { 0, 0, 0 }, 1);
+    setupSphereCollider(bodies, detector, { 1.5, 0, 0 }, 1);
+
     CollisionSet set;
-    detector.detect(set, positions, {});
-    assertEqual(1, set.getDynamics().getCount());
-    Quanta::Vector3 separation = set.getDynamics()[0].separation;
+    detector.detect(set, bodies);
+
+    assertEqual(1, set.dynamics.getCount());
+    Fixie::Vector3 separation = set.dynamics.collisions[0].separation;
     assertInDelta(0.5, 0.01, separation[0]);
     assertInDelta(0, 0.01, separation[1]);
     assertInDelta(0, 0.01, separation[2]);
@@ -73,7 +80,7 @@ namespace CollisionDetectorTest {
 
   void setup() {
     unsigned group = Orwell::createGroup("CollisionDetectionTest");
-    Orwell::addTest(group, testSphereColliderDestruction, "SphereColliderDestruction");
+    //Orwell::addTest(group, testSphereColliderDestruction, "SphereColliderDestruction");
     Orwell::addTest(group, testSphereCollision, "SphereCollision");
     Orwell::addTest(group, testSphereMiss, "SphereMiss");
     Orwell::addTest(group, testSphereSeparation, "SphereSeparation");

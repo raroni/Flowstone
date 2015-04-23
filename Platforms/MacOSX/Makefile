@@ -205,9 +205,15 @@ TEST_SOURCES =\
 	../../Libraries/Fixie/Library/Source/Vector3.cpp\
 	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
 	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
+	../../Misc/Error.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
+	../../Physics/Integrator.cpp\
 	../../Physics/CollisionDetector.cpp\
+	../../Physics/SphereColliderList.cpp\
+	../../Physics/BodyList.cpp\
+	../../Physics/ForceDriverList.cpp\
+	../../Physics/VelocityDriverList.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Test/main.cpp
 
@@ -216,6 +222,7 @@ TEST_HEADER_DIRS =\
 	-I../../Libraries/Quanta/Include\
 	-I../../Libraries/Piper/Include\
 	-I../../Libraries/Fixie/Library/Include\
+	-I../../Sys/Time/Include\
 	-I../../Test\
 	-I../..
 

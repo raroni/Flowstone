@@ -36,8 +36,8 @@ namespace Physics {
       SphereColliderHandle sphereColliderHandle2,
       SphereSphereCheck &check
     );
-    void detectDynamics(DynamicCollision *collisions, uint16_t *collisionsCount, const BodyList &bodies);
-    void detectStatics(StaticCollision *collisions, uint16_t *collisionsCount, const BodyList &bodies);
+    void detectDynamics(DynamicCollisionList &list, const BodyList &bodies);
+    void detectStatics(StaticCollisionList &list, const BodyList &bodies);
   };
 }
 

@@ -6,8 +6,8 @@
 
 namespace Physics {
   struct DynamicCollision {
-    BodyHandle bodyA;
-    BodyHandle bodyB;
+    BodyHandle body1;
+    BodyHandle body2;
     Fixie::Vector3 separation;
   };
 }
