@@ -2,7 +2,6 @@
 #define PHYSICS_BODY_LIST_H
 
 #include "Fixie/Quaternion.h"
-#include "Fixie/Matrix4.h"
 #include "Fixie/Vector3.h"
 #include "Physics/Config.h"
 #include "Physics/ConstBody.h"
@@ -20,7 +19,6 @@ namespace Physics {
     Fixie::Vector3 positions[Config::bodyMax];
     Fixie::Quaternion orientations[Config::bodyMax];
     Fixie::Vector3 velocities[Config::bodyMax];
-    Fixie::Matrix4 transforms[Config::bodyMax];
   private:
     uint16_t count = 0;
   };

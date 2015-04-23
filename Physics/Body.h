@@ -10,7 +10,6 @@ namespace Physics {
     Fixie::Vector3 *position;
     Fixie::Quaternion *orientation;
     Fixie::Vector3 *velocity;
-    Fixie::Matrix4 *transform;
   };
 }
 
