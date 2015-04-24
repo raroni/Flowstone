@@ -7,6 +7,7 @@
 #include "PiperUtilTest.h"
 #include "IntegratorTest.h"
 #include "AckSet128Test.h"
+#include "IntegerPoolTest.h"
 #include "Fixie/TestSuite.h"
 #include "AckSet32Test.h"
 #include "LoopStreamTest.h"
@@ -22,6 +23,7 @@ int main() {
   CollisionResolverTest::setup();
   PhysicsEngineTest::setup();
   IntegratorTest::setup();
+  IntegerPoolTest::setup();
   FixieTestSuite::setup();
 
   Orwell::start();

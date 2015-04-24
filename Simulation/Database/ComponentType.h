@@ -8,6 +8,7 @@ namespace Simulation {
     ForceDriver,
     Resource,
     Monster,
+    Steering,
 
     Count
   };

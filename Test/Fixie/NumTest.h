@@ -242,6 +242,14 @@ namespace FixieNumTest {
     assertFalse(a >= b);
   }
 
+  void testInverse() {
+    Fixie::Num quarter = Fixie::Num::inverse(4);
+    assertInDelta(0.25, 0.0005, quarter);
+
+    Fixie::Num eighth = Fixie::Num::inverse(8);
+    assertInDelta(0.125, 0.0005, eighth);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieNumTest");
     Orwell::addTest(group, testConversion, "Conversion");
@@ -256,5 +264,6 @@ namespace FixieNumTest {
     Orwell::addTest(group, testGreaterThanOrEqual, "GreaterThanOrEqual");
     Orwell::addTest(group, testLessThan, "LessThan");
     Orwell::addTest(group, testLessThanOrEqual, "LessThanOrEqual");
+    Orwell::addTest(group, testInverse, "Inverse");
   }
 }

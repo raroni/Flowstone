@@ -19,6 +19,11 @@ namespace Simulation {
       sets[entity].list[typeI] = componentHandle;
     }
 
+    void unlink(EntityHandle entity, ComponentType type) {
+      uint8_t typeI = static_cast<uint8_t>(type);
+      existances[entity].unset(typeI);
+    }
+
     ComponentHandle get(EntityHandle entity, ComponentType type) {
       return sets[entity].list[static_cast<uint8_t>(type)];
     }

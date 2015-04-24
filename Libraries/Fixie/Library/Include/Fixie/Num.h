@@ -97,6 +97,11 @@ namespace Fixie {
       n.raw = raw;
       return n;
     }
+    static Num inverse(int32_t n) {
+      Num x = 1;
+      Num y = n;
+      return x/y;
+    }
   };
 }
 

@@ -6,6 +6,7 @@ CPP_CFLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 USER_SOURCES_CPP =\
 	../../Misc/Error.cpp\
 	../../Misc/LoopStream.cpp\
+	../../Misc/IntegerPool.cpp\
 	../../Misc/GameTime.cpp\
 	../../Libraries/Quanta/Source/Math/Vector2.cpp\
 	../../Libraries/Quanta/Source/Math/Vector3.cpp\
@@ -67,6 +68,8 @@ USER_SOURCES_CPP =\
 	../../Client/Keyboard.cpp\
 	../../Client/RendererFeeder.cpp\
 	../../Simulation/Control.cpp\
+	../../Simulation/Steering/SteeringSystem.cpp\
+	../../Simulation/Steering/SteeringList.cpp\
 	../../Simulation/Mode.cpp\
 	../../Simulation/PhysicsHack.cpp\
 	../../Simulation/PlayMode.cpp\
@@ -206,6 +209,7 @@ TEST_SOURCES =\
 	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
 	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
 	../../Misc/Error.cpp\
+	../../Misc/IntegerPool.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/Integrator.cpp\

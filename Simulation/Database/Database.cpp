@@ -1,5 +1,6 @@
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
+#include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Database/EntityManager.h"
 #include "Simulation/Database/ComponentManager.h"
 #include "Simulation/Database/Database.h"
@@ -84,13 +85,48 @@ namespace Simulation {
       return physicsEngine.getBody(getBodyHandle(entity));
     }
 
-    Physics::ForceDriver getForceDriver(EntityHandle entity) {
+    Physics::ForceDriverHandle getForceDriverHandle(EntityHandle entityHandle) {
       union {
         Physics::ForceDriverHandle physicsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.genericHandle = ComponentManager::get(entity, ComponentType::ForceDriver);
-      return physicsEngine.getForceDriver(caster.physicsHandle);
+      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::ForceDriver);
+      return caster.physicsHandle;
+    }
+
+    Physics::ForceDriver getForceDriver(EntityHandle entity) {
+      return physicsEngine.getForceDriver(getForceDriverHandle(entity));
+    }
+
+    SteeringHandle createSteering(EntityHandle entityHandle) {
+      static_assert(sizeof(SteeringHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        SteeringHandle steeringHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.steeringHandle = SteeringSystem::create(getForceDriverHandle(entityHandle));
+      ComponentManager::link(entityHandle, ComponentType::Steering, caster.genericHandle);
+      return caster.steeringHandle;
+    }
+
+    SteeringHandle getSteeringHandle(EntityHandle entityHandle) {
+      static_assert(sizeof(SteeringHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        SteeringHandle steeringHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::Steering);
+      return caster.steeringHandle;
+    }
+
+    Steering getSteering(EntityHandle entityHandle) {
+      return SteeringSystem::get(getSteeringHandle(entityHandle));
+    }
+
+    void destroySteering(EntityHandle entityHandle) {
+      SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
+      SteeringSystem::destroy(steeringHandle);
+      ComponentManager::unlink(entityHandle, ComponentType::Steering);
     }
   }
 }

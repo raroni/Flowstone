@@ -5,6 +5,8 @@
 #include "Simulation/Database/EntityList.h"
 #include "Simulation/Database/ComponentType.h"
 #include "Simulation/ResourceHandle.h"
+#include "Simulation/Steering/SteeringHandle.h"
+#include "Simulation/Steering/Steering.h"
 #include "Simulation/ResourceType.h"
 #include "Physics/SphereColliderHandle.h"
 #include "Physics/BodyHandle.h"
@@ -22,9 +24,13 @@ namespace Simulation {
     Physics::Body getBody(EntityHandle);
     Physics::BodyHandle getBodyHandle(EntityHandle);
     Physics::ForceDriver getForceDriver(EntityHandle);
-    ResourceHandle createResource(EntityHandle entity, ResourceType type);
+    Physics::ForceDriverHandle getForceDriverHandle(EntityHandle);
     Physics::ForceDriverHandle createForceDriver(EntityHandle);
     Physics::SphereColliderHandle createSphereCollider(EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
+    ResourceHandle createResource(EntityHandle entity, ResourceType type);
+    SteeringHandle createSteering(EntityHandle entityHandle);
+    void destroySteering(EntityHandle entityHandle);
+    Steering getSteering(EntityHandle entityHandle);
     void createMonster(EntityHandle entity);
   }
 }

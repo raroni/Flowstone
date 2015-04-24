@@ -10,6 +10,7 @@ namespace Simulation {
     const uint16_t entityMax = 512;
     const uint8_t componentMax = static_cast<uint8_t>(ComponentType::Count);
     const uint16_t resourceMax = 256;
+    const uint16_t steeringMax = 128;
   }
 }
 

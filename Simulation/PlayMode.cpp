@@ -1,9 +1,13 @@
 #include "Simulation/Config.h"
 #include "Simulation/Database/EntityHandle.h"
 #include "Simulation/Database/Database.h"
+#include "Simulation/Steering/SteeringSystem.h"
+#include "Simulation/Steering/Steering.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/PlayMode.h"
 #include "Simulation/PhysicsHack.h"
+
+#include <stdio.h>
 
 namespace Simulation {
   namespace PlayMode {
@@ -39,14 +43,28 @@ namespace Simulation {
     void enter() {
       createTree();
       monster1 = createMonster(0.5, -0.1);
+      Database::createSteering(monster1);
+      Steering steering = Database::getSteering(monster1);
+      (*steering.target) = { 2, 0, 2 };
+
       createMonster(-0.8, 0);
     }
 
     void tick(const CommandList &commands, EventList &events) {
-      Physics::ForceDriver driver = Database::getForceDriver(monster1);
-      (*driver.force)[0] *= Fixie::Num(0.5);
-      (*driver.force)[0] += Fixie::Num(-0.02);
+      Physics::Body body = Database::getBody(monster1);
+      Fixie::Vector3 positionDifference = Fixie::Vector3(2, 0, 0) - (*body.position);
+      if(positionDifference.calcLength() < Fixie::Num::inverse(32)) {
+        if(Database::hasComponent(monster1, ComponentType::Steering)) {
+          Database::destroySteering(monster1);
+        }
+      }
 
+      // poor mans drag
+      // todo: make something better
+      Physics::ForceDriver driver = Database::getForceDriver(monster1);
+      (*driver.force) += (*body.velocity) * Fixie::Num(-2);
+
+      SteeringSystem::update();
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
       physicsEngine.simulate();
     }
