@@ -1,6 +1,7 @@
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
+#include "Simulation/Drag/DragSystem.h"
 #include "Simulation/Database/EntityManager.h"
 #include "Simulation/Database/ComponentManager.h"
 #include "Simulation/Database/Database.h"
@@ -127,6 +128,17 @@ namespace Simulation {
       SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
       SteeringSystem::destroy(steeringHandle);
       ComponentManager::unlink(entityHandle, ComponentType::Steering);
+    }
+
+    DragHandle createDrag(EntityHandle entityHandle) {
+      static_assert(sizeof(DragHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        DragHandle dragHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.dragHandle = DragSystem::create(getForceDriverHandle(entityHandle));
+      ComponentManager::link(entityHandle, ComponentType::Drag, caster.genericHandle);
+      return caster.dragHandle;
     }
   }
 }

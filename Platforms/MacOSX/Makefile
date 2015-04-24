@@ -70,6 +70,7 @@ USER_SOURCES_CPP =\
 	../../Simulation/Control.cpp\
 	../../Simulation/Steering/SteeringSystem.cpp\
 	../../Simulation/Steering/SteeringList.cpp\
+	../../Simulation/Drag/DragSystem.cpp\
 	../../Simulation/Mode.cpp\
 	../../Simulation/PhysicsHack.cpp\
 	../../Simulation/PlayMode.cpp\

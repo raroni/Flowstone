@@ -9,6 +9,7 @@ namespace Simulation {
     Resource,
     Monster,
     Steering,
+    Drag,
 
     Count
   };

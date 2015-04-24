@@ -5,9 +5,8 @@
 #include "Simulation/Steering/Steering.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/PlayMode.h"
+#include "Simulation/Drag/DragSystem.h"
 #include "Simulation/PhysicsHack.h"
-
-#include <stdio.h>
 
 namespace Simulation {
   namespace PlayMode {
@@ -34,6 +33,7 @@ namespace Simulation {
       (*body.position)[2] = z;
       Database::createForceDriver(monster);
       Database::createSphereCollider(monster, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
+      Database::createDrag(monster);
 
       Database::createMonster(monster);
 
@@ -52,19 +52,15 @@ namespace Simulation {
 
     void tick(const CommandList &commands, EventList &events) {
       Physics::Body body = Database::getBody(monster1);
-      Fixie::Vector3 positionDifference = Fixie::Vector3(2, 0, 0) - (*body.position);
-      if(positionDifference.calcLength() < Fixie::Num::inverse(32)) {
+      Fixie::Vector3 positionDifference = Fixie::Vector3(2, 0, 2) - (*body.position);
+      if(positionDifference.calcLength() < Fixie::Num::inverse(8)) {
         if(Database::hasComponent(monster1, ComponentType::Steering)) {
           Database::destroySteering(monster1);
         }
       }
 
-      // poor mans drag
-      // todo: make something better
-      Physics::ForceDriver driver = Database::getForceDriver(monster1);
-      (*driver.force) += (*body.velocity) * Fixie::Num(-2);
-
       SteeringSystem::update();
+      DragSystem::update();
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
       physicsEngine.simulate();
     }
