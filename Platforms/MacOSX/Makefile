@@ -222,6 +222,8 @@ TEST_SOURCES =\
 	../../Simulation/Pathfinding/AStarPriorityQueue.cpp\
 	../../Simulation/Pathfinding/AStarCostMap.cpp\
 	../../Simulation/Pathfinding/AStarCostBucket.cpp\
+	../../Simulation/Pathfinding/Map.cpp\
+	../../Simulation/Pathfinding/MapDirectionList.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Test/main.cpp
 
