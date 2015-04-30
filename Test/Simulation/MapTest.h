@@ -21,7 +21,7 @@ namespace SimulationMapTest {
   }
 
   static void updateMap(Map &map, MapFieldType *types) {
-    for(MapFieldIndex i=0; i<map.getSize(); ++i) {
+    for(MapFieldIndex i=0; i<map.getSize().calcFieldCount(); ++i) {
       if(types[i] != MapFieldType::Grass) {
         map.set(i, types[i]);
       }

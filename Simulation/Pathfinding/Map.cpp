@@ -6,13 +6,13 @@
 namespace Simulation {
   static Fixie::Num diagonalCost = Fixie::Util::sqrt(Fixie::Num(2));
 
-  MapFieldIndex Map::calcFieldIndex(MapFieldCoors coors) {
+  MapFieldIndex Map::calcFieldIndex(MapFieldCoors coors) const {
     assert(width > coors.x);
     assert(height > coors.y);
     return coors.x + coors.y*width;
   }
 
-  MapFieldCoors Map::calcFieldCoors(MapFieldIndex index) {
+  MapFieldCoors Map::calcFieldCoors(MapFieldIndex index) const {
     assert(Config::mapSizeMax > index);
     MapFieldCoors coors;
     coors.x = index % width;
@@ -24,18 +24,10 @@ namespace Simulation {
     types[fieldIndex] = type;
     MapFieldCoors fieldCoors = calcFieldCoors(fieldIndex);
 
-    MapNeighbourIterator iterator = MapNeighbourIterator(*this, fieldCoors);
+    MapNeighbourIterator iterator = MapNeighbourIterator(getSize(), fieldCoors);
     for(;!iterator.isEmpty(); iterator.next()) {
       recalcDirections(iterator.get());
     }
-  }
-
-  uint16_t Map::getWidth() const {
-    return width;
-  }
-
-  uint16_t Map::getHeight() const {
-    return height;
   }
 
   void Map::recalcDirections(MapFieldCoors centerCoors) {
@@ -43,7 +35,7 @@ namespace Simulation {
     MapDirectionList &list = directionLists[index];
     list.clear();
 
-    MapNeighbourIterator iterator = MapNeighbourIterator(*this, centerCoors);
+    MapNeighbourIterator iterator = MapNeighbourIterator(getSize(), centerCoors);
     for(;!iterator.isEmpty(); iterator.next()) {
       MapFieldCoors neighbourCoors = iterator.get();
       if(neighbourCoors.x == centerCoors.x && neighbourCoors.y == centerCoors.y) {
@@ -70,8 +62,9 @@ namespace Simulation {
     return directionLists[field];
   }
 
-  uint32_t Map::getSize() const {
-    return width*height;
+  MapArea Map::getSize() const {
+    MapArea size = { width, height };
+    return size;
   }
 
   void Map::reset(uint16_t width, uint16_t height, const MapFieldType *types) {

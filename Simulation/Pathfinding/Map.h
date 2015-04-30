@@ -5,6 +5,7 @@
 #include "Simulation/Pathfinding/MapFieldType.h"
 #include "Simulation/Pathfinding/MapDirectionList.h"
 #include "Simulation/Pathfinding/MapFieldCoors.h"
+#include "Simulation/Pathfinding/MapArea.h"
 #include "Simulation/Pathfinding/MapFieldIndex.h"
 
 namespace Simulation {
@@ -13,11 +14,9 @@ namespace Simulation {
     void set(MapFieldIndex field, MapFieldType type);
     const MapDirectionList& getDirections(MapFieldIndex field) const;
     void reset(uint16_t width, uint16_t height, const MapFieldType *types);
-    MapFieldIndex calcFieldIndex(MapFieldCoors coors);
-    MapFieldCoors calcFieldCoors(MapFieldIndex);
-    uint32_t getSize() const;
-    uint16_t getWidth() const;
-    uint16_t getHeight() const;
+    MapFieldIndex calcFieldIndex(MapFieldCoors coors) const;
+    MapFieldCoors calcFieldCoors(MapFieldIndex) const;
+    MapArea getSize() const;
   private:
     void recalcDirections(MapFieldCoors field);
     uint16_t width = 0;
