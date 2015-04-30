@@ -5,10 +5,10 @@ namespace SimulationMapTest {
   using namespace Orwell::Assertions;
   using namespace Simulation;
 
-  static void assertDirectionListContains(MapFieldIndex field, const MapDirectionList &directions) {
+  static void assertDirectionListContains(MapFieldIndex field, Fixie::Num cost, const MapDirectionList &directions) {
     bool found = false;
     for(uint8_t i=0; i<directions.count; ++i) {
-      if(directions.destinations[i] == field) {
+      if(directions.destinations[i] == field && directions.costs[i] == cost) {
         found = true;
         break;
       }
@@ -47,10 +47,10 @@ namespace SimulationMapTest {
     MapFieldIndex right = map.calcFieldIndex({ 3, 2 });
 
     assertEqual(4, directions.count);
-    assertDirectionListContains(up, directions);
-    assertDirectionListContains(down, directions);
-    assertDirectionListContains(left, directions);
-    assertDirectionListContains(right, directions);
+    assertDirectionListContains(up, 1, directions);
+    assertDirectionListContains(down, 1, directions);
+    assertDirectionListContains(left, 1, directions);
+    assertDirectionListContains(right, 1, directions);
   }
 
   void testOrthogonalDirectionsUponSet() {
@@ -78,10 +78,10 @@ namespace SimulationMapTest {
     MapFieldIndex right = map.calcFieldIndex({ 3, 2 });
 
     assertEqual(4, directions.count);
-    assertDirectionListContains(up, directions);
-    assertDirectionListContains(down, directions);
-    assertDirectionListContains(left, directions);
-    assertDirectionListContains(right, directions);
+    assertDirectionListContains(up, 1, directions);
+    assertDirectionListContains(down, 1, directions);
+    assertDirectionListContains(left, 1, directions);
+    assertDirectionListContains(right, 1, directions);
   }
 
   void setup() {

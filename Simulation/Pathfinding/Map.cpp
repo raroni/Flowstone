@@ -59,7 +59,7 @@ namespace Simulation {
         bool isOrthogonal = x == coors.x || y == coors.y;
         if(isOrthogonal) {
           if(neighbourType == MapFieldType::Grass) {
-            list.add(neighbourIndex);
+            list.add(neighbourIndex, 1);
           }
         } else {
           // diagonal

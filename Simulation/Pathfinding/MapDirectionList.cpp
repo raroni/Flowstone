@@ -5,7 +5,9 @@ namespace Simulation {
     count = 0;
   }
 
-  void MapDirectionList::add(MapFieldIndex destination) {
-    destinations[count++] = destination;
+  void MapDirectionList::add(MapFieldIndex destination, Fixie::Num cost) {
+    destinations[count] = destination;
+    costs[count] = cost;
+    count++;
   }
 }
