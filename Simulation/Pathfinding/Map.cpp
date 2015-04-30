@@ -1,9 +1,12 @@
 #include <assert.h>
 #include <algorithm>
+#include "Fixie/Util.h"
 #include "Misc/Util.h"
 #include "Simulation/Pathfinding/Map.h"
 
 namespace Simulation {
+  static Fixie::Num diagonalCost = Fixie::Util::sqrt(Fixie::Num(2));
+
   MapFieldIndex Map::calcFieldIndex(MapFieldCoors coors) {
     assert(width > coors.x);
     assert(height > coors.y);
@@ -56,13 +59,17 @@ namespace Simulation {
         MapFieldCoors neighbourCoors = { x, y };
         MapFieldIndex neighbourIndex = calcFieldIndex(neighbourCoors);
         MapFieldType neighbourType = types[neighbourIndex];
-        bool isOrthogonal = x == coors.x || y == coors.y;
-        if(isOrthogonal) {
-          if(neighbourType == MapFieldType::Grass) {
+        if(neighbourType == MapFieldType::Grass) {
+          bool isOrthogonal = x == coors.x || y == coors.y;
+          if(isOrthogonal) {
             list.add(neighbourIndex, 1);
+          } else {
+            MapFieldIndex verticalNeighbour = calcFieldIndex({ coors.x, neighbourCoors.y });
+            MapFieldIndex horizontalNeighbour = calcFieldIndex({ neighbourCoors.x, coors.y });
+            if(types[verticalNeighbour] == MapFieldType::Grass && types[horizontalNeighbour] == MapFieldType::Grass) {
+              list.add(neighbourIndex, diagonalCost);
+            }
           }
-        } else {
-          // diagonal
         }
       }
     }

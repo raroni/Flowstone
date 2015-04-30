@@ -7,13 +7,17 @@ namespace SimulationMapTest {
 
   static void assertDirectionListContains(MapFieldIndex field, Fixie::Num cost, const MapDirectionList &directions) {
     bool found = false;
-    for(uint8_t i=0; i<directions.count; ++i) {
-      if(directions.destinations[i] == field && directions.costs[i] == cost) {
+    uint8_t i;
+    for(i=0; i<directions.count; ++i) {
+      if(directions.destinations[i] == field) {
         found = true;
         break;
       }
     }
     assertTrue(found);
+    if(found) {
+      assertInDelta(directions.costs[i], 0.01, cost);
+    }
   }
 
   static void updateMap(Map &map, MapFieldType *types) {
@@ -24,72 +28,68 @@ namespace SimulationMapTest {
     }
   }
 
-  void testOrthogonalDirectionsUponReset() {
+  void testDirectionsUponReset() {
     Map map;
-
     MapFieldType o = MapFieldType::Grass;
     MapFieldType x = MapFieldType::Rock;
     MapFieldType fields[] = {
-      o, o, o, o, o,
-      o, x, o, x, o,
-      o, o, o, o, o,
-      o, x, o, x, o,
-      o, o, o, o, o
+      x, x, o,
+      o, o, o,
+      o, o, x
     };
-    map.reset(5, 5, fields);
+    map.reset(3, 3, fields);
 
-    MapFieldIndex center = map.calcFieldIndex({ 2, 2 });
+    MapFieldIndex center = map.calcFieldIndex({ 1, 1 });
     const MapDirectionList &directions = map.getDirections(center);
 
-    MapFieldIndex up = map.calcFieldIndex({ 2, 1 });
-    MapFieldIndex down = map.calcFieldIndex({ 2, 3 });
-    MapFieldIndex left = map.calcFieldIndex({ 1, 2 });
-    MapFieldIndex right = map.calcFieldIndex({ 3, 2 });
+    MapFieldIndex down = map.calcFieldIndex({ 1, 2 });
+    MapFieldIndex left = map.calcFieldIndex({ 0, 1 });
+    MapFieldIndex right = map.calcFieldIndex({ 0, 1 });
+    MapFieldIndex leftDown = map.calcFieldIndex({ 0, 2 });
 
     assertEqual(4, directions.count);
-    assertDirectionListContains(up, 1, directions);
     assertDirectionListContains(down, 1, directions);
     assertDirectionListContains(left, 1, directions);
     assertDirectionListContains(right, 1, directions);
+    assertDirectionListContains(leftDown, 1.4142, directions);
   }
 
-  void testOrthogonalDirectionsUponSet() {
+  void testDirectionsUponSet() {
     Map map;
-    MapFieldType grassFields[25] = { MapFieldType::Grass };
-    map.reset(5, 5, grassFields);
+    MapFieldType grassFields[9] = { MapFieldType::Grass };
+    map.reset(3, 3, grassFields);
 
     MapFieldType o = MapFieldType::Grass;
     MapFieldType x = MapFieldType::Rock;
     MapFieldType rockyFields[] = {
-      o, o, o, o, o,
-      o, x, o, x, o,
-      o, o, o, o, o,
-      o, x, o, x, o,
-      o, o, o, o, o
+      o, o, o,
+      o, o, o,
+      o, x, x
     };
     updateMap(map, rockyFields);
 
-    MapFieldIndex center = map.calcFieldIndex({ 2, 2 });
+    MapFieldIndex center = map.calcFieldIndex({ 1, 1 });
     const MapDirectionList &directions = map.getDirections(center);
 
-    MapFieldIndex up = map.calcFieldIndex({ 2, 1 });
-    MapFieldIndex down = map.calcFieldIndex({ 2, 3 });
-    MapFieldIndex left = map.calcFieldIndex({ 1, 2 });
-    MapFieldIndex right = map.calcFieldIndex({ 3, 2 });
+    MapFieldIndex up = map.calcFieldIndex({ 1, 0 });
+    MapFieldIndex left = map.calcFieldIndex({ 0, 1 });
+    MapFieldIndex right = map.calcFieldIndex({ 2, 1 });
+    MapFieldIndex upLeft = map.calcFieldIndex({ 0, 0 });
+    MapFieldIndex upRight = map.calcFieldIndex({ 2, 0 });
 
-    assertEqual(4, directions.count);
+    assertEqual(5, directions.count);
     assertDirectionListContains(up, 1, directions);
-    assertDirectionListContains(down, 1, directions);
     assertDirectionListContains(left, 1, directions);
     assertDirectionListContains(right, 1, directions);
+    assertDirectionListContains(upLeft, 1.4142, directions);
+    assertDirectionListContains(upRight, 1.4142, directions);
   }
 
   void setup() {
     unsigned group = Orwell::createGroup("SimulationMapTest");
-    Orwell::addTest(group, testOrthogonalDirectionsUponReset, "OrthogonalDirectionsUponReset");
-    Orwell::addTest(group, testOrthogonalDirectionsUponSet, "OrthogonalDirectionsUponSet");
+    Orwell::addTest(group, testDirectionsUponReset, "DirectionsUponReset");
+    Orwell::addTest(group, testDirectionsUponSet, "DirectionsUponSet");
     // Todo:
-    // test diago
     // test borders/limits
   }
 }
