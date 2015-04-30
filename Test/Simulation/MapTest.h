@@ -85,11 +85,57 @@ namespace SimulationMapTest {
     assertDirectionListContains(upRight, 1.4142, directions);
   }
 
+  void testDirectionsAtUpperLeft() {
+    Map map;
+    MapFieldType o = MapFieldType::Grass;
+    MapFieldType x = MapFieldType::Rock;
+    MapFieldType fields[] = {
+      o, o, o,
+      o, x, o,
+      o, o, o
+    };
+    map.reset(3, 3, fields);
+
+    MapFieldIndex upperLeft = map.calcFieldIndex({ 0, 0 });
+    const MapDirectionList &directions = map.getDirections(upperLeft);
+
+    MapFieldIndex right = map.calcFieldIndex({ 1, 0 });
+    MapFieldIndex down = map.calcFieldIndex({ 0, 1 });
+
+    assertEqual(2, directions.count);
+    assertDirectionListContains(right, 1, directions);
+    assertDirectionListContains(down, 1, directions);
+  }
+
+  void testDirectionsAtLowerRight() {
+    Map map;
+    MapFieldType o = MapFieldType::Grass;
+    MapFieldType x = MapFieldType::Rock;
+    MapFieldType fields[] = {
+      x, x, x,
+      x, o, o,
+      x, o, o
+    };
+    map.reset(3, 3, fields);
+
+    MapFieldIndex lowerRight = map.calcFieldIndex({ 2, 2 });
+    const MapDirectionList &directions = map.getDirections(lowerRight);
+
+    MapFieldIndex left = map.calcFieldIndex({ 1, 2 });
+    MapFieldIndex up = map.calcFieldIndex({ 2, 1 });
+    MapFieldIndex upLeft = map.calcFieldIndex({ 1, 1 });
+
+    assertEqual(3, directions.count);
+    assertDirectionListContains(left, 1, directions);
+    assertDirectionListContains(up, 1, directions);
+    assertDirectionListContains(upLeft, 1.4142, directions);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("SimulationMapTest");
     Orwell::addTest(group, testDirectionsUponReset, "DirectionsUponReset");
     Orwell::addTest(group, testDirectionsUponSet, "DirectionsUponSet");
-    // Todo:
-    // test borders/limits
+    Orwell::addTest(group, testDirectionsAtUpperLeft, "DirectionsAtUpperLeft");
+    Orwell::addTest(group, testDirectionsAtLowerRight, "DirectionsAtLowerRight");
   }
 }
