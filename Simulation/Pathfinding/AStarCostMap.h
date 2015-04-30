@@ -7,11 +7,11 @@
 namespace Simulation {
   class AStarCostMap {
   public:
-    void set(MapNodeIndex node, Fixie::Num cost);
-    bool get(MapNodeIndex node, Fixie::Num &cost) const;
+    void set(MapFieldIndex field, Fixie::Num cost);
+    bool get(MapFieldIndex field, Fixie::Num &cost) const;
     void clear();
   private:
-    uint16_t calcBucketIndex(MapNodeIndex node) const;
+    uint16_t calcBucketIndex(MapFieldIndex field) const;
     AStarCostBucket buckets[Config::aStarCostBucketCount];
   };
 }

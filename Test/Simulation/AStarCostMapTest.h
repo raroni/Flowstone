@@ -5,9 +5,9 @@ namespace SimulationAStarCostMapTest {
   using namespace Orwell::Assertions;
   using namespace Simulation;
 
-  void assertSuccessfulGet(const AStarCostMap &map, MapNodeIndex node, Fixie::Num inCost) {
+  void assertSuccessfulGet(const AStarCostMap &map, MapFieldIndex field, Fixie::Num inCost) {
     Fixie::Num outCost;
-    assert(map.get(node, outCost));
+    assert(map.get(field, outCost));
     assertEqual(inCost, outCost);
   }
 

@@ -85,7 +85,7 @@ namespace SimulationAStarPriorityQueueTest {
 
   void testEqualPriorities() {
     AStarPriorityQueue queue;
-    MapNodeIndex result;
+    MapFieldIndex result;
     queue.insert(1, 2);
     queue.insert(2, 3);
     queue.insert(3, 2);

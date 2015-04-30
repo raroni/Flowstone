@@ -13,7 +13,7 @@ namespace Simulation {
     return index*2+2;
   }
 
-  void AStarPriorityQueue::insert(MapNodeIndex node, Fixie::Num priority) {
+  void AStarPriorityQueue::insert(MapFieldIndex field, Fixie::Num priority) {
     assert(count != max);
 
     uint32_t currentIndex = count++;
@@ -30,7 +30,7 @@ namespace Simulation {
       nodes[currentIndex] = nodes[parentIndex];
       currentIndex = parentIndex;
     }
-    nodes[currentIndex].mapNodeIndex = node;
+    nodes[currentIndex].field = field;
     nodes[currentIndex].priority = priority;
   }
 
@@ -44,8 +44,8 @@ namespace Simulation {
     return count == 0;
   }
 
-  MapNodeIndex AStarPriorityQueue::pop() {
-    MapNodeIndex result = nodes[0].mapNodeIndex;
+  MapFieldIndex AStarPriorityQueue::pop() {
+    MapFieldIndex result = nodes[0].field;
     nodes[0] = nodes[--count];
 
     uint32_t currentIndex = 0;

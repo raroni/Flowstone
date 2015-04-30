@@ -3,18 +3,18 @@
 
 #include "Fixie/Num.h"
 #include "Simulation/Config.h"
-#include "Simulation/Pathfinding/MapNodeIndex.h"
+#include "Simulation/Pathfinding/MapFieldIndex.h"
 
 namespace Simulation {
   class AStarPriorityQueue {
   public:
-    void insert(MapNodeIndex node, Fixie::Num priority);
-    MapNodeIndex pop();
+    void insert(MapFieldIndex field, Fixie::Num priority);
+    MapFieldIndex pop();
     bool isEmpty() const;
   private:
     static const uint32_t max = Config::mapSizeMax;
     struct Node {
-      MapNodeIndex mapNodeIndex;
+      MapFieldIndex field;
       Fixie::Num priority;
     };
     bool checkBubbleDown(uint32_t upperIndex, uint32_t lowerIndex);

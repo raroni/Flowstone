@@ -1,14 +1,14 @@
 #include "Simulation/Pathfinding/AStarCostMap.h"
 
 namespace Simulation {
-  void AStarCostMap::set(MapNodeIndex node, Fixie::Num cost) {
-    uint16_t bucketIndex = calcBucketIndex(node);
-    buckets[bucketIndex].add(node, cost);
+  void AStarCostMap::set(MapFieldIndex field, Fixie::Num cost) {
+    uint16_t bucketIndex = calcBucketIndex(field);
+    buckets[bucketIndex].add(field, cost);
   }
 
-  bool AStarCostMap::get(MapNodeIndex node, Fixie::Num &cost) const {
-    const AStarCostBucket &bucket = buckets[calcBucketIndex(node)];
-    return bucket.get(node, cost);
+  bool AStarCostMap::get(MapFieldIndex field, Fixie::Num &cost) const {
+    const AStarCostBucket &bucket = buckets[calcBucketIndex(field)];
+    return bucket.get(field, cost);
   }
 
   void AStarCostMap::clear() {
@@ -17,7 +17,7 @@ namespace Simulation {
     }
   }
 
-  uint16_t AStarCostMap::calcBucketIndex(MapNodeIndex nodeIndex) const {
-    return nodeIndex % Config::aStarCostBucketCount;
+  uint16_t AStarCostMap::calcBucketIndex(MapFieldIndex fieldIndex) const {
+    return fieldIndex % Config::aStarCostBucketCount;
   }
 }
