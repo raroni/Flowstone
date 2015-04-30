@@ -18,7 +18,6 @@ namespace Simulation {
       MapFieldIndex field;
       Fixie::Num priority;
     };
-    bool checkBubbleDown(uint32_t upperIndex, uint32_t lowerIndex);
     void swap(uint32_t indexA, uint32_t indexB);
     Node nodes[max];
     uint32_t count = 0;
