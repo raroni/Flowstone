@@ -1,6 +1,5 @@
 #include "Orwell.h"
 #include "Simulation/Pathfinding/AStarCostMap.h"
-#include <stdio.h>
 
 namespace SimulationAStarCostMapTest {
   using namespace Orwell::Assertions;

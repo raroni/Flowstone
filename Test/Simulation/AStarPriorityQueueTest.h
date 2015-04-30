@@ -1,6 +1,5 @@
 #include "Orwell.h"
 #include "Simulation/Pathfinding/AStarPriorityQueue.h"
-#include <stdio.h>
 
 namespace SimulationAStarPriorityQueueTest {
   using namespace Orwell::Assertions;
