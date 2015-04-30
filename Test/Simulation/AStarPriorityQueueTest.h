@@ -109,7 +109,7 @@ namespace SimulationAStarPriorityQueueTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("AStarPriorityQueue");
+    unsigned group = Orwell::createGroup("SimulationAStarPriorityQueue");
     Orwell::addTest(group, testBasics, "Basics");
     Orwell::addTest(group, testEvenInserts, "EvenInserst");
     Orwell::addTest(group, testOddInserts, "OddInserst");

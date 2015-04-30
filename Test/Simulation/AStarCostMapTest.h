@@ -67,7 +67,7 @@ namespace SimulationAStarCostMapTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("AStarCostMapTest");
+    unsigned group = Orwell::createGroup("SimulationAStarCostMapTest");
     Orwell::addTest(group, testBasics, "Basics");
     Orwell::addTest(group, testMany, "Many");
     Orwell::addTest(group, testOverwrite, "Overwrite");
