@@ -16,8 +16,9 @@ namespace Simulation {
     MapFieldIndex calcFieldIndex(MapFieldCoors coors);
     MapFieldCoors calcFieldCoors(MapFieldIndex);
     uint32_t getSize() const;
+    uint16_t getWidth() const;
+    uint16_t getHeight() const;
   private:
-    void calcNeighbourArea(MapFieldCoors coors, MapFieldCoors &upperLeftCoors, MapFieldCoors &lowerRightCoors);
     void recalcDirections(MapFieldCoors field);
     uint16_t width = 0;
     uint16_t height = 0;

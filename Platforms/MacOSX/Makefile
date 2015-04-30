@@ -224,6 +224,7 @@ TEST_SOURCES =\
 	../../Simulation/Pathfinding/AStarCostBucket.cpp\
 	../../Simulation/Pathfinding/Map.cpp\
 	../../Simulation/Pathfinding/MapDirectionList.cpp\
+	../../Simulation/Pathfinding/MapNeighbourIterator.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Test/main.cpp
 

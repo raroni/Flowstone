@@ -1,7 +1,6 @@
 #include <assert.h>
-#include <algorithm>
 #include "Fixie/Util.h"
-#include "Misc/Util.h"
+#include "Simulation/Pathfinding/MapNeighbourIterator.h"
 #include "Simulation/Pathfinding/Map.h"
 
 namespace Simulation {
@@ -25,50 +24,42 @@ namespace Simulation {
     types[fieldIndex] = type;
     MapFieldCoors fieldCoors = calcFieldCoors(fieldIndex);
 
-    MapFieldCoors upperLeft;
-    MapFieldCoors lowerRight;
-    // todo: byg en iterator som spytter coors ud?
-    calcNeighbourArea(fieldCoors, upperLeft, lowerRight);
-    for(uint16_t x=upperLeft.x; x<=lowerRight.x; ++x) {
-      for(uint16_t y=upperLeft.y; y<=lowerRight.y; ++y) {
-        recalcDirections({ x, y });
-      }
+    MapNeighbourIterator iterator = MapNeighbourIterator(*this, fieldCoors);
+    for(;!iterator.isEmpty(); iterator.next()) {
+      recalcDirections(iterator.get());
     }
   }
 
-  void Map::calcNeighbourArea(MapFieldCoors coors, MapFieldCoors &upperLeftCoors, MapFieldCoors &lowerRightCoors) {
-    upperLeftCoors.x = Util::maxInt32(0, static_cast<int32_t>(coors.x)-1);
-    upperLeftCoors.y = Util::maxInt32(0, static_cast<int32_t>(coors.y)-1);
-    lowerRightCoors.x = Util::minInt32(width-1, static_cast<int32_t>(coors.x)+1);
-    lowerRightCoors.y = Util::minInt32(height-1, static_cast<int32_t>(coors.y)+1);
+  uint16_t Map::getWidth() const {
+    return width;
   }
 
-  void Map::recalcDirections(MapFieldCoors coors) {
-    MapFieldIndex index = calcFieldIndex(coors);
+  uint16_t Map::getHeight() const {
+    return height;
+  }
+
+  void Map::recalcDirections(MapFieldCoors centerCoors) {
+    MapFieldIndex index = calcFieldIndex(centerCoors);
     MapDirectionList &list = directionLists[index];
     list.clear();
 
-    MapFieldCoors upperLeft;
-    MapFieldCoors lowerRight;
-    calcNeighbourArea(coors, upperLeft, lowerRight);
-    for(uint16_t x=upperLeft.x; x<=lowerRight.x; ++x) {
-      for(uint16_t y=upperLeft.y; y<=lowerRight.y; ++y) {
-        if(x == coors.x && y == coors.y) {
-          continue;
-        }
-        MapFieldCoors neighbourCoors = { x, y };
-        MapFieldIndex neighbourIndex = calcFieldIndex(neighbourCoors);
-        MapFieldType neighbourType = types[neighbourIndex];
-        if(neighbourType == MapFieldType::Grass) {
-          bool isOrthogonal = x == coors.x || y == coors.y;
-          if(isOrthogonal) {
-            list.add(neighbourIndex, 1);
-          } else {
-            MapFieldIndex verticalNeighbour = calcFieldIndex({ coors.x, neighbourCoors.y });
-            MapFieldIndex horizontalNeighbour = calcFieldIndex({ neighbourCoors.x, coors.y });
-            if(types[verticalNeighbour] == MapFieldType::Grass && types[horizontalNeighbour] == MapFieldType::Grass) {
-              list.add(neighbourIndex, diagonalCost);
-            }
+    MapNeighbourIterator iterator = MapNeighbourIterator(*this, centerCoors);
+    for(;!iterator.isEmpty(); iterator.next()) {
+      MapFieldCoors neighbourCoors = iterator.get();
+      if(neighbourCoors.x == centerCoors.x && neighbourCoors.y == centerCoors.y) {
+        continue;
+      }
+      MapFieldIndex neighbourIndex = calcFieldIndex(neighbourCoors);
+      MapFieldType neighbourType = types[neighbourIndex];
+      if(neighbourType == MapFieldType::Grass) {
+        bool isOrthogonal = neighbourCoors.x == centerCoors.x || neighbourCoors.y == centerCoors.y;
+        if(isOrthogonal) {
+          list.add(neighbourIndex, 1);
+        } else {
+          MapFieldIndex verticalNeighbour = calcFieldIndex({ centerCoors.x, neighbourCoors.y });
+          MapFieldIndex horizontalNeighbour = calcFieldIndex({ neighbourCoors.x, centerCoors.y });
+          if(types[verticalNeighbour] == MapFieldType::Grass && types[horizontalNeighbour] == MapFieldType::Grass) {
+            list.add(neighbourIndex, diagonalCost);
           }
         }
       }
