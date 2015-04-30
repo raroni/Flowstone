@@ -108,6 +108,14 @@ namespace SimulationAStarPriorityQueueTest {
     assert(queue.isEmpty());
   }
 
+  void testClear() {
+    AStarPriorityQueue queue;
+    queue.insert(1, 2);
+    queue.insert(2, 3);
+    queue.clear();
+    assert(queue.isEmpty());
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("SimulationAStarPriorityQueue");
     Orwell::addTest(group, testBasics, "Basics");
@@ -115,5 +123,6 @@ namespace SimulationAStarPriorityQueueTest {
     Orwell::addTest(group, testOddInserts, "OddInserst");
     Orwell::addTest(group, testInterleavedInsertsPops, "InterleavedInsertsPops");
     Orwell::addTest(group, testEqualPriorities, "EqualPriorities");
+    Orwell::addTest(group, testClear, "Clear");
   }
 }

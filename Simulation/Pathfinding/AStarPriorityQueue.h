@@ -11,6 +11,7 @@ namespace Simulation {
     void insert(MapFieldIndex field, Fixie::Num priority);
     MapFieldIndex pop();
     bool isEmpty() const;
+    void clear();
   private:
     static const uint32_t max = Config::mapSizeMax;
     struct Node {

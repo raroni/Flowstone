@@ -44,6 +44,10 @@ namespace Simulation {
     return count == 0;
   }
 
+  void AStarPriorityQueue::clear() {
+    count = 0;
+  }
+
   MapFieldIndex AStarPriorityQueue::pop() {
     MapFieldIndex result = nodes[0].field;
     nodes[0] = nodes[--count];
