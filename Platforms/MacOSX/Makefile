@@ -219,6 +219,7 @@ TEST_SOURCES =\
 	../../Physics/BodyList.cpp\
 	../../Physics/ForceDriverList.cpp\
 	../../Physics/VelocityDriverList.cpp\
+	../../Simulation/Pathfinding/AStarPriorityQueue.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Test/main.cpp
 

@@ -1,0 +1,27 @@
+#ifndef SIMULATION_A_STAR_PRIORITY_QUEUE_H
+#define SIMULATION_A_STAR_PRIORITY_QUEUE_H
+
+#include "Fixie/Num.h"
+#include "Simulation/Config.h"
+#include "Simulation/Pathfinding/MapNodeIndex.h"
+
+namespace Simulation {
+  class AStarPriorityQueue {
+  public:
+    void insert(MapNodeIndex node, Fixie::Num priority);
+    MapNodeIndex pop();
+    bool isEmpty() const;
+  private:
+    static const uint32_t max = Config::mapSizeMax;
+    struct Node {
+      MapNodeIndex mapNodeIndex;
+      Fixie::Num priority;
+    };
+    bool checkBubbleDown(uint32_t upperIndex, uint32_t lowerIndex);
+    void swap(uint32_t indexA, uint32_t indexB);
+    Node nodes[max];
+    uint32_t count = 0;
+  };
+}
+
+#endif

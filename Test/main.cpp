@@ -9,6 +9,7 @@
 #include "AckSet128Test.h"
 #include "IntegerPoolTest.h"
 #include "Fixie/TestSuite.h"
+#include "Simulation/TestSuite.h"
 #include "AckSet32Test.h"
 #include "LoopStreamTest.h"
 
@@ -25,6 +26,7 @@ int main() {
   IntegratorTest::setup();
   IntegerPoolTest::setup();
   FixieTestSuite::setup();
+  SimulationTestSuite::setup();
 
   Orwell::start();
 }
