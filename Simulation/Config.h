@@ -15,7 +15,7 @@ namespace Simulation {
     const uint16_t mapWidthMax = 128;
     const uint16_t mapHeightMax = 128;
     const uint32_t mapSizeMax = mapWidthMax*mapHeightMax;
-    const uint16_t astarCostBucketCount = 64;
+    const uint16_t aStarCostBucketCount = 128;
   }
 }
 
