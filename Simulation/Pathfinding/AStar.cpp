@@ -11,6 +11,8 @@ namespace Simulation {
   static MapFieldIndex cameFrom[mapFieldMax];
 
   static AStarCostMap costs;
+  static MapFieldIndex buildCache[Config::mapSizeMax];
+
 
   static void cleanUp() {
     frontier.clear();
@@ -21,8 +23,23 @@ namespace Simulation {
     return abs(a.x-b.x) + abs(a.y-b.y);
   }
 
-  static void buildPath(MapSearchResult &result) {
+  static void buildPath(
+    MapSearchResult &result,
+    const Map &map,
+    MapFieldIndex originIndex,
+    MapFieldIndex destinationIndex
+  ) {
+    MapFieldIndex currentIndex = destinationIndex;
+    uint32_t count = 0;
+    for(count=0; originIndex != currentIndex; ++count) {
+      buildCache[count] = currentIndex;
+      currentIndex = cameFrom[currentIndex];
+    }
 
+    result.add(map.calcFieldCoors(originIndex));
+    for(uint16_t i=0; i<count; ++i) {
+      result.add(map.calcFieldCoors(buildCache[count-1-i]));
+    }
   }
 
   void aStar(
@@ -44,7 +61,7 @@ namespace Simulation {
 
       if(currentIndex == destinationIndex) {
         result.success = true;
-        buildPath(result);
+        buildPath(result, map, originIndex, destinationIndex);
         break;
       }
 
