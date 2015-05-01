@@ -6,13 +6,9 @@
 namespace Simulation {
   static AStarPriorityQueue frontier;
   static const uint32_t mapFieldMax = Config::mapWidthMax*Config::mapHeightMax;
-
-  // todo: better name
-  static MapFieldIndex cameFrom[mapFieldMax];
-
+  static MapFieldIndex pathParents[mapFieldMax];
   static AStarCostMap costs;
   static MapFieldIndex buildCache[Config::mapSizeMax];
-
 
   static void cleanUp() {
     frontier.clear();
@@ -33,7 +29,7 @@ namespace Simulation {
     uint32_t count = 0;
     for(count=0; originIndex != currentIndex; ++count) {
       buildCache[count] = currentIndex;
-      currentIndex = cameFrom[currentIndex];
+      currentIndex = pathParents[currentIndex];
     }
 
     result.add(map.calcFieldCoors(originIndex));
@@ -52,7 +48,7 @@ namespace Simulation {
     MapFieldIndex originIndex = map.calcFieldIndex(originCoors);
     MapFieldIndex destinationIndex = map.calcFieldIndex(destinationCoors);
     frontier.insert(originIndex, 0);
-    cameFrom[originIndex] = originIndex;
+    pathParents[originIndex] = originIndex;
     costs.set(originIndex, 0);
 
     MapFieldIndex currentIndex;
@@ -77,7 +73,7 @@ namespace Simulation {
           costs.set(waypointIndex, newCost);
           MapFieldCoors waypointCoors = map.calcFieldCoors(waypointIndex);
           Fixie::Num priority = newCost + calcManhatten(waypointCoors, destinationCoors);
-          cameFrom[waypointIndex] = currentIndex;
+          pathParents[waypointIndex] = currentIndex;
           if(found) {
             frontier.update(waypointIndex, priority);
           } else {
