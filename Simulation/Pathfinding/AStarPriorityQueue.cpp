@@ -13,31 +13,45 @@ namespace Simulation {
     return index*2+2;
   }
 
-  void AStarPriorityQueue::insert(MapFieldIndex field, Fixie::Num priority) {
-    assert(count != max);
-
-    uint32_t currentIndex = count++;
+  void AStarPriorityQueue::bubbleUp(uint32_t currentIndex) {
+    const Node originalNode = nodes[currentIndex];
     while(1) {
       if(currentIndex == 0) {
         break;
       }
 
       const uint32_t parentIndex = calcParentIndex(currentIndex);
-      if(priority >= nodes[parentIndex].priority) {
+      if(originalNode.priority >= nodes[parentIndex].priority) {
         break;
       }
 
-      nodes[currentIndex] = nodes[parentIndex];
+      saveNode(currentIndex, nodes[parentIndex]);
       currentIndex = parentIndex;
     }
-    nodes[currentIndex].field = field;
-    nodes[currentIndex].priority = priority;
+    saveNode(currentIndex, originalNode);
   }
 
-  void AStarPriorityQueue::swap(uint32_t indexA, uint32_t indexB) {
-    Node temp = nodes[indexA];
-    nodes[indexA] = nodes[indexB];
-    nodes[indexB] = temp;
+  void AStarPriorityQueue::saveNode(uint32_t index, Node node) {
+    nodes[index] = node;
+    indices[node.field] = index;
+  }
+
+  void AStarPriorityQueue::insert(MapFieldIndex field, Fixie::Num priority) {
+    assert(count != max);
+    uint32_t index = count++;
+    saveNode(index, { field, priority });
+    bubbleUp(index);
+  }
+
+  void AStarPriorityQueue::update(MapFieldIndex field, Fixie::Num newPriority) {
+    uint32_t index = indices[field];
+    Fixie::Num oldPriority = nodes[index].priority;
+    saveNode(index, { field, newPriority });
+    if(oldPriority < newPriority) {
+      bubbleDown(index);
+    } else {
+      bubbleUp(index);
+    }
   }
 
   bool AStarPriorityQueue::isEmpty() const {
@@ -48,11 +62,8 @@ namespace Simulation {
     count = 0;
   }
 
-  MapFieldIndex AStarPriorityQueue::pop() {
-    MapFieldIndex result = nodes[0].field;
-    nodes[0] = nodes[--count];
-
-    uint32_t currentIndex = 0;
+  void AStarPriorityQueue::bubbleDown(uint32_t currentIndex) {
+    Node originalNode = nodes[currentIndex];
     while(1) {
       uint32_t smallest = currentIndex;
       uint32_t leftChildIndex = calcLeftChildIndex(currentIndex);
@@ -64,12 +75,20 @@ namespace Simulation {
         smallest = rightChildIndex;
       }
       if(smallest != currentIndex) {
-        swap(smallest, currentIndex);
+        saveNode(currentIndex, nodes[smallest]);
         currentIndex = smallest;
       } else {
         break;
       }
     }
+    saveNode(currentIndex, originalNode);
+  }
+
+  MapFieldIndex AStarPriorityQueue::pop() {
+    assert(count != 0);
+    MapFieldIndex result = nodes[0].field;
+    nodes[0] = nodes[--count];
+    bubbleDown(0);
     return result;
   }
 }

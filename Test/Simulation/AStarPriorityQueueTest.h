@@ -12,7 +12,7 @@ namespace SimulationAStarPriorityQueueTest {
     assertFalse(queue.isEmpty());
     assertEqual(4, queue.pop());
     assertEqual(6, queue.pop());
-    assert(queue.isEmpty());
+    assertTrue(queue.isEmpty());
   }
 
   void testEvenInserts() {
@@ -32,7 +32,7 @@ namespace SimulationAStarPriorityQueueTest {
     assertEqual(2, queue.pop());
     assertFalse(queue.isEmpty());
     assertEqual(5, queue.pop());
-    assert(queue.isEmpty());
+    assertTrue(queue.isEmpty());
   }
 
   void testOddInserts() {
@@ -52,7 +52,7 @@ namespace SimulationAStarPriorityQueueTest {
     assertEqual(1, queue.pop());
     assertEqual(2, queue.pop());
     assertEqual(5, queue.pop());
-    assert(queue.isEmpty());
+    assertTrue(queue.isEmpty());
   }
 
   void testInterleavedInsertsPops() {
@@ -80,7 +80,7 @@ namespace SimulationAStarPriorityQueueTest {
     assertEqual(6, queue.pop());
     assertEqual(9, queue.pop());
     assertEqual(1, queue.pop());
-    assert(queue.isEmpty());
+    assertTrue(queue.isEmpty());
   }
 
   void testEqualPriorities() {
@@ -96,16 +96,16 @@ namespace SimulationAStarPriorityQueueTest {
     assertEqual(5, queue.pop());
 
     result = queue.pop();
-    assert(result == 1 || result == 3);
+    assertTrue(result == 1 || result == 3);
     result = queue.pop();
-    assert(result == 1 || result == 3);
+    assertTrue(result == 1 || result == 3);
 
     result = queue.pop();
-    assert(result == 2 || result == 4);
+    assertTrue(result == 2 || result == 4);
     result = queue.pop();
-    assert(result == 2 || result == 4);
+    assertTrue(result == 2 || result == 4);
 
-    assert(queue.isEmpty());
+    assertTrue(queue.isEmpty());
   }
 
   void testClear() {
@@ -113,7 +113,33 @@ namespace SimulationAStarPriorityQueueTest {
     queue.insert(1, 2);
     queue.insert(2, 3);
     queue.clear();
-    assert(queue.isEmpty());
+    assertTrue(queue.isEmpty());
+  }
+
+  void testUpdateIncrease() {
+    AStarPriorityQueue queue;
+    queue.insert(1, 10);
+    queue.insert(2, 15);
+    queue.insert(3, 20);
+
+    queue.update(1, 30);
+
+    assertEqual(2, queue.pop());
+    assertEqual(3, queue.pop());
+    assertEqual(1, queue.pop());
+  }
+
+  void testUpdateDecrease() {
+    AStarPriorityQueue queue;
+    queue.insert(1, 10);
+    queue.insert(2, 15);
+    queue.insert(3, 20);
+
+    queue.update(2, 5);
+
+    assertEqual(2, queue.pop());
+    assertEqual(1, queue.pop());
+    assertEqual(3, queue.pop());
   }
 
   void setup() {
@@ -124,5 +150,7 @@ namespace SimulationAStarPriorityQueueTest {
     Orwell::addTest(group, testInterleavedInsertsPops, "InterleavedInsertsPops");
     Orwell::addTest(group, testEqualPriorities, "EqualPriorities");
     Orwell::addTest(group, testClear, "Clear");
+    Orwell::addTest(group, testUpdateIncrease, "UpdateIncrease");
+    Orwell::addTest(group, testUpdateDecrease, "UpdateDecrease");
   }
 }

@@ -77,9 +77,12 @@ namespace Simulation {
           costs.set(waypointIndex, newCost);
           MapFieldCoors waypointCoors = map.calcFieldCoors(waypointIndex);
           Fixie::Num priority = newCost + calcManhatten(waypointCoors, destinationCoors);
-          // todo: ensure not inserted twice
-          frontier.insert(waypointIndex, priority);
           cameFrom[waypointIndex] = currentIndex;
+          if(found) {
+            frontier.update(waypointIndex, priority);
+          } else {
+            frontier.insert(waypointIndex, priority);
+          }
         }
       }
     }
