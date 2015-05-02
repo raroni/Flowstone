@@ -27,6 +27,10 @@ void HandleList::destroy(uint16_t handle, uint16_t *sourceIndex, uint16_t *desti
   count--;
 }
 
-uint16_t HandleList::getCount() {
+uint16_t HandleList::getIndex(uint16_t handle) const {
+  return indices[handle];
+}
+
+uint16_t HandleList::getCount() const {
   return count;
 }

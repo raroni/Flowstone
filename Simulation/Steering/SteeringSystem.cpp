@@ -11,7 +11,7 @@ namespace Simulation {
     Num tolerance = Num::inverse(32);
 
     void update() {
-      for(uint16_t i=0; i<List::count; ++i) {
+      for(uint16_t i=0; i<List::getCount(); ++i) {
         ForceDriver driver = physicsEngine.getForceDriver(List::forceDriverHandles[i]);
         Body body = physicsEngine.getBody(driver.bodyHandle);
 

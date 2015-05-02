@@ -1,46 +1,39 @@
-#include "Misc/IntegerPool.h"
+#include "Misc/HandleList.h"
 #include "Simulation/Steering/SteeringList.h"
 
 namespace Simulation {
   namespace SteeringList {
     using namespace Physics;
 
-    IntegerPool handlePool;
-    Fixie::Vector3 targets[Config::steeringMax];
-    ForceDriverHandle forceDriverHandles[Config::steeringMax];
-    uint16_t indices[Config::steeringMax];
-    uint16_t handles[Config::steeringMax];
-    uint16_t count = 0;
+    static const uint16_t max = Config::steeringMax;
+    Fixie::Vector3 targets[max];
+    ForceDriverHandle forceDriverHandles[max];
+    uint16_t indices[max];
+    uint16_t handles[max];
+    HandleList handleList(max, indices, handles);
 
     SteeringHandle create(ForceDriverHandle forceDriverHandle) {
-      assert(Config::steeringMax != count);
-      forceDriverHandles[count] = forceDriverHandle;
-      SteeringHandle steeringHandle = handlePool.obtain();
-      indices[steeringHandle] = count;
-      handles[count] = steeringHandle;
-      count++;
+      uint16_t index;
+      SteeringHandle steeringHandle;
+      handleList.create(&index, &steeringHandle);
+      forceDriverHandles[index] = forceDriverHandle;
       return steeringHandle;
     }
 
     void destroy(SteeringHandle handle) {
-      uint16_t removingIndex = indices[handle];
+      uint16_t sourceIndex, destinationIndex;
+      handleList.destroy(handle, &sourceIndex, &destinationIndex);
+      forceDriverHandles[destinationIndex] = forceDriverHandles[sourceIndex];
+      targets[destinationIndex] = targets[sourceIndex];
+    }
 
-      uint16_t lastIndex = count-1;
-      SteeringHandle lastHandle = handles[lastIndex];
-
-      forceDriverHandles[removingIndex] = forceDriverHandles[lastIndex];
-      targets[removingIndex] = targets[lastIndex];
-
-      handles[removingIndex] = lastHandle;
-      indices[lastHandle] = removingIndex;
-
-      handlePool.release(handle);
-      count--;
+    uint16_t getCount() {
+      return handleList.getCount();
     }
 
     Steering get(SteeringHandle handle) {
+      uint16_t index = handleList.getIndex(handle);
       Steering steering;
-      uint16_t index = indices[handle];
       steering.target = &targets[index];
       steering.forceDriverHandle = forceDriverHandles[index];
       return steering;

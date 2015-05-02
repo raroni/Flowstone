@@ -7,6 +7,7 @@ USER_SOURCES_CPP =\
 	../../Misc/Error.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Misc/IntegerPool.cpp\
+	../../Misc/HandleList.cpp\
 	../../Misc/GameTime.cpp\
 	../../Libraries/Quanta/Source/Math/Vector2.cpp\
 	../../Libraries/Quanta/Source/Math/Vector3.cpp\

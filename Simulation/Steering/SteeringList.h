@@ -10,10 +10,10 @@ namespace Simulation {
   namespace SteeringList {
     extern Fixie::Vector3 targets[Config::steeringMax];
     extern Physics::ForceDriverHandle forceDriverHandles[Config::steeringMax];
-    extern uint16_t count;
 
     SteeringHandle create(Physics::ForceDriverHandle handle);
     Steering get(SteeringHandle handle);
+    uint16_t getCount();
     void destroy(SteeringHandle handle);
   }
 }
