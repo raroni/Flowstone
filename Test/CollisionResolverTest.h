@@ -30,7 +30,7 @@ namespace CollisionResolverTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("CollisionResolverTest");
+    unsigned group = Orwell::createGroup("CollisionResolver");
     Orwell::addTest(group, testDynamicPositionResolution, "DynamicPositionResolution");
   }
 }

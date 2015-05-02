@@ -44,7 +44,7 @@ namespace SimulationAStarTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("SimulationAStarTest");
+    unsigned group = Orwell::createGroup("SimulationAStar");
     Orwell::addTest(group, testBasics, "Basics");
   }
 }

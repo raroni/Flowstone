@@ -251,7 +251,7 @@ namespace FixieNumTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("FixieNumTest");
+    unsigned group = Orwell::createGroup("FixieNum");
     Orwell::addTest(group, testConversion, "Conversion");
     Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testSubtraction, "Subtraction");

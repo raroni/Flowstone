@@ -22,7 +22,7 @@ namespace FixieQuaternionTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("FixieQuaternionTest");
+    unsigned group = Orwell::createGroup("FixieQuaternion");
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testIdentity, "Identity");
   }

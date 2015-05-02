@@ -79,7 +79,7 @@ namespace CollisionDetectorTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("CollisionDetectionTest");
+    unsigned group = Orwell::createGroup("CollisionDetection");
     //Orwell::addTest(group, testSphereColliderDestruction, "SphereColliderDestruction");
     Orwell::addTest(group, testSphereCollision, "SphereCollision");
     Orwell::addTest(group, testSphereMiss, "SphereMiss");

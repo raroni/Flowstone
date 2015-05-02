@@ -136,7 +136,7 @@ namespace AckSet32Test {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("AckSet32Test");
+    unsigned group = Orwell::createGroup("AckSet32");
     Orwell::addTest(group, testBasic, "Basic");
     Orwell::addTest(group, testLatecomers, "Latecomers");
     Orwell::addTest(group, testDouble, "Double");

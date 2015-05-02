@@ -132,7 +132,7 @@ namespace SimulationMapTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("SimulationMapTest");
+    unsigned group = Orwell::createGroup("SimulationMap");
     Orwell::addTest(group, testDirectionsUponReset, "DirectionsUponReset");
     Orwell::addTest(group, testDirectionsUponSet, "DirectionsUponSet");
     Orwell::addTest(group, testDirectionsAtUpperLeft, "DirectionsAtUpperLeft");

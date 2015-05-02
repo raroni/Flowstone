@@ -32,7 +32,7 @@ namespace FixieUtilTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("FixieUtilTest");
+    unsigned group = Orwell::createGroup("FixieUtil");
     Orwell::addTest(group, testFloor, "floor");
     Orwell::addTest(group, testSqrt, "sqrt");
   }

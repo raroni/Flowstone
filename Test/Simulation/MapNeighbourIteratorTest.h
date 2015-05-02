@@ -30,7 +30,7 @@ namespace SimulationMapNeighbourIteratorTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("SimulationMapNeighbourIteratorTest");
+    unsigned group = Orwell::createGroup("SimulationMapNeighbourIterator");
     Orwell::addTest(group, testUpperRight, "testUpperRight");
   }
 }

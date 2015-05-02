@@ -80,7 +80,7 @@ namespace FixieTrigTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("FixieTrigTest");
+    unsigned group = Orwell::createGroup("FixieTrig");
     Orwell::addTest(group, testConstants, "Constants");
     Orwell::addTest(group, testSine, "Sine");
     Orwell::addTest(group, testCosine, "Cosine");

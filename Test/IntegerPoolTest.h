@@ -23,7 +23,7 @@ namespace IntegerPoolTest {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("IntegerPoolTest");
+    unsigned group = Orwell::createGroup("IntegerPool");
     Orwell::addTest(group, testBasics, "Basics");
   }
 }

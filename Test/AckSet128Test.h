@@ -162,7 +162,7 @@ namespace AckSet128Test {
   }
 
   void setup() {
-    unsigned group = Orwell::createGroup("AckSet128Test");
+    unsigned group = Orwell::createGroup("AckSet128");
     Orwell::addTest(group, testBasic, "Basic");
     Orwell::addTest(group, testLatecomers, "Latecomers");
     Orwell::addTest(group, testRange, "Range");
