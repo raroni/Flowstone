@@ -7,6 +7,7 @@
 #include "PiperUtilTest.h"
 #include "IntegratorTest.h"
 #include "AckSet128Test.h"
+#include "HandleListTest.h"
 #include "IntegerPoolTest.h"
 #include "Fixie/TestSuite.h"
 #include "Simulation/TestSuite.h"
@@ -25,6 +26,7 @@ int main() {
   PhysicsEngineTest::setup();
   IntegratorTest::setup();
   IntegerPoolTest::setup();
+  HandleListTest::setup();
   FixieTestSuite::setup();
   SimulationTestSuite::setup();
 

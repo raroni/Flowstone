@@ -211,6 +211,7 @@ TEST_SOURCES =\
 	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
 	../../Misc/Error.cpp\
 	../../Misc/IntegerPool.cpp\
+	../../Misc/HandleList.cpp\
 	../../Physics/Engine.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Physics/Integrator.cpp\
