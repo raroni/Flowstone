@@ -219,6 +219,13 @@ TEST_SOURCES =\
 	../../Physics/BodyList.cpp\
 	../../Physics/ForceDriverList.cpp\
 	../../Physics/VelocityDriverList.cpp\
+	../../Simulation/Pathfinding/AStarPriorityQueue.cpp\
+	../../Simulation/Pathfinding/AStarCostMap.cpp\
+	../../Simulation/Pathfinding/AStarCostBucket.cpp\
+	../../Simulation/Pathfinding/Map.cpp\
+	../../Simulation/Pathfinding/AStar.cpp\
+	../../Simulation/Pathfinding/MapDirectionList.cpp\
+	../../Simulation/Pathfinding/MapNeighbourIterator.cpp\
 	../../Misc/LoopStream.cpp\
 	../../Test/main.cpp
 
