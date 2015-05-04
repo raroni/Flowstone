@@ -4,7 +4,7 @@
 namespace Simulation {
   enum class MapFieldType : char {
     Grass,
-    Rock
+    Tree
   };
 }
 

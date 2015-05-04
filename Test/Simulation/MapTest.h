@@ -31,7 +31,7 @@ namespace SimulationMapTest {
   void testDirectionsUponReset() {
     Map map;
     MapFieldType o = MapFieldType::Grass;
-    MapFieldType x = MapFieldType::Rock;
+    MapFieldType x = MapFieldType::Tree;
     MapFieldType fields[] = {
       x, x, o,
       o, o, o,
@@ -60,7 +60,7 @@ namespace SimulationMapTest {
     map.reset(3, 3, grassFields);
 
     MapFieldType o = MapFieldType::Grass;
-    MapFieldType x = MapFieldType::Rock;
+    MapFieldType x = MapFieldType::Tree;
     MapFieldType rockyFields[] = {
       o, o, o,
       o, o, o,
@@ -88,7 +88,7 @@ namespace SimulationMapTest {
   void testDirectionsAtUpperLeft() {
     Map map;
     MapFieldType o = MapFieldType::Grass;
-    MapFieldType x = MapFieldType::Rock;
+    MapFieldType x = MapFieldType::Tree;
     MapFieldType fields[] = {
       o, o, o,
       o, x, o,
@@ -110,7 +110,7 @@ namespace SimulationMapTest {
   void testDirectionsAtLowerRight() {
     Map map;
     MapFieldType o = MapFieldType::Grass;
-    MapFieldType x = MapFieldType::Rock;
+    MapFieldType x = MapFieldType::Tree;
     MapFieldType fields[] = {
       x, x, x,
       x, o, o,

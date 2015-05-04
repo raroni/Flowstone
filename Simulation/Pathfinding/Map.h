@@ -24,6 +24,8 @@ namespace Simulation {
     MapFieldType types[Config::mapSizeMax];
     MapDirectionList directionLists[Config::mapSizeMax];
   };
+
+  extern Map map;
 }
 
 #endif

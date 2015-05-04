@@ -2,6 +2,8 @@
 #include "Simulation/Database/EntityHandle.h"
 #include "Simulation/Database/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
+#include "Simulation/Trees.h"
+#include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Steering/Steering.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/PlayMode.h"
@@ -11,18 +13,6 @@
 namespace Simulation {
   namespace PlayMode {
     EntityHandle monster1;
-
-    void createTree() {
-      EntityHandle tree = Database::createEntity();
-
-      Database::createBody(tree);
-      Physics::Body body = Database::getBody(tree);
-      (*body.position)[0] = -2;
-
-      Database::createSphereCollider(tree, Fixie::Num(0.25), Physics::ColliderType::Static);
-
-      Database::createResource(tree, ResourceType::Tree);
-    }
 
     EntityHandle createMonster(Fixie::Num x, Fixie::Num z) {
       EntityHandle monster = Database::createEntity();
@@ -41,13 +31,21 @@ namespace Simulation {
     }
 
     void enter() {
-      createTree();
-      monster1 = createMonster(0.5, -0.1);
+      const uint16_t mapWidth = 16;
+      const uint16_t mapHeight = 16;
+      MapFieldType fields[mapWidth*mapHeight] = { MapFieldType::Grass };
+      map.reset(mapWidth, mapHeight, fields);
+
+      Trees::create(0, 0);
+      Trees::create(0, 1);
+      Trees::create(1, 0);
+
+      monster1 = createMonster(2, 3);
       Database::createSteering(monster1);
       Steering steering = Database::getSteering(monster1);
       (*steering.target) = { 2, 0, 2 };
 
-      createMonster(-0.8, 0);
+      //createMonster(3, 3);
     }
 
     void tick(const CommandList &commands, EventList &events) {

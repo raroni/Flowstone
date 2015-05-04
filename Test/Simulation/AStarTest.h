@@ -16,7 +16,7 @@ namespace SimulationAStarTest {
   void testBasics() {
     Map map;
     MapFieldType o = MapFieldType::Grass;
-    MapFieldType x = MapFieldType::Rock;
+    MapFieldType x = MapFieldType::Tree;
     MapFieldType fields[] = {
       o, o, x, o,
       o, x, o, o,

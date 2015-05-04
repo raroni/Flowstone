@@ -5,6 +5,7 @@
 
 namespace Simulation {
   static Fixie::Num diagonalCost = Fixie::Util::sqrt(Fixie::Num(2));
+  Map map;
 
   MapFieldIndex Map::calcFieldIndex(MapFieldCoors coors) const {
     assert(width > coors.x);

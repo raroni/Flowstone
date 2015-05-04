@@ -70,6 +70,10 @@ USER_SOURCES_CPP =\
 	../../Client/RendererFeeder.cpp\
 	../../Simulation/Control.cpp\
 	../../Simulation/Steering/SteeringSystem.cpp\
+	../../Simulation/Trees.cpp\
+	../../Simulation/Pathfinding/Map.cpp\
+	../../Simulation/Pathfinding/MapDirectionList.cpp\
+	../../Simulation/Pathfinding/MapNeighbourIterator.cpp\
 	../../Simulation/Steering/SteeringList.cpp\
 	../../Simulation/Drag/DragSystem.cpp\
 	../../Simulation/Mode.cpp\
