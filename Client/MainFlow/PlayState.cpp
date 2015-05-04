@@ -246,7 +246,7 @@ namespace Client {
 
         if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
           Physics::Body body = SimDB::getBody(entity);
-          setupTree((*body.position)[0], (*body.position)[1], greenTreeMesh);
+          setupTree((*body.position)[0], (*body.position)[2], greenTreeMesh);
         }
         else if(SimDB::hasComponent(entity, SimComponentType::Monster)) {
           setupMonster(entity);
