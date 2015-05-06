@@ -1,8 +1,11 @@
 #include <assert.h>
+#include "Fixie/Config.h"
 #include "Fixie/Util.h"
 
 namespace Fixie {
   namespace Util {
+    static const int32_t floorMask = (~0) << Config::numPrecision;
+
     Num zero(0);
 
     Num halve(Num n) {
@@ -10,7 +13,7 @@ namespace Fixie {
     }
 
     Num floor(Num n) {
-      n.raw &= 0xfffffc00;
+      n.raw &= floorMask;
       return n;
     }
 
