@@ -3,7 +3,9 @@
 
 namespace Fixie {
   namespace Config {
-    const uint8_t fractionBits = 10;
+    // power of two
+    const uint8_t numPrecision = 14;
+    const uint8_t trigPrecision = 10;
   }
 }
 

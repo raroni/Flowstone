@@ -14,10 +14,10 @@ namespace Fixie {
     int32_t raw = 0;
     Num() { }
     Num(int32_t x) {
-      raw = x << fractionBits;
+      raw = x << numPrecision;
     }
     Num(double x) {
-      raw = round(x * (1 << fractionBits));
+      raw = round(x * (1 << numPrecision));
     }
     Num& operator+=(const Num &rhs) {
       raw += rhs.raw;
@@ -31,13 +31,13 @@ namespace Fixie {
       assert(rhs.raw != 0);
       const int32_t resultNegative = ((raw ^ rhs.raw) & 0x80000000) >> 31;
       const int32_t sign = resultNegative*-2+1;
-      int64_t temp = static_cast<int64_t>(raw) << fractionBits;
+      int64_t temp = static_cast<int64_t>(raw) << numPrecision;
       temp += rhs.raw/2*sign;
       raw = temp / rhs.raw;
       return *this;
     }
     Num& operator*=(const Num &rhs) {
-      raw = (static_cast<int64_t>(raw) * rhs.raw) >> fractionBits;
+      raw = (static_cast<int64_t>(raw) * rhs.raw) >> numPrecision;
       return *this;
     }
     Num operator+(const Num &other) const {
@@ -84,13 +84,13 @@ namespace Fixie {
       return raw >= other.raw;
     }
     operator float() const {
-      return static_cast<float>(raw) / (1 << fractionBits);
+      return static_cast<float>(raw) / (1 << numPrecision);
     }
     operator double() const {
-      return static_cast<double>(raw) / (1 << fractionBits);
+      return static_cast<double>(raw) / (1 << numPrecision);
     }
     operator int32_t() const {
-      return raw / (1 << fractionBits);
+      return raw / (1 << numPrecision);
     }
     static Num createByRaw(int32_t raw) {
       Num n;
