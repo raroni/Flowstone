@@ -12,7 +12,7 @@ namespace Fixie {
       return matrix;
     }
 
-    Quaternion rotation(Vector3 axis, float angle) {
+    Quaternion rotation(Vector3 axis, Num angle) {
       Num halfAngle = Util::halve(angle);
       Num real = Trig::cos(halfAngle);
       Vector3 imaginaries = axis*Trig::sin(halfAngle);
