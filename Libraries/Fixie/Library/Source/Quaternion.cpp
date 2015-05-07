@@ -1,3 +1,4 @@
+#include "Fixie/Util.h"
 #include "Fixie/Quaternion.h"
 
 namespace Fixie {
@@ -34,6 +35,12 @@ namespace Fixie {
     return *this;
   }
 
+  Quaternion& Quaternion::operator/=(Num scalar) {
+    real /= scalar;
+    imaginaries /= scalar;
+    return *this;
+  }
+
   Quaternion Quaternion::operator+(Quaternion other) const {
     Quaternion result = *this;
     result += other;
@@ -44,6 +51,19 @@ namespace Fixie {
     real += other.real;
     imaginaries += other.imaginaries;
     return *this;
+  }
+
+  Num Quaternion::calcLength() const {
+    return Util::sqrt(
+      real*real +
+      imaginaries[0]*imaginaries[0] +
+      imaginaries[1]*imaginaries[1] +
+      imaginaries[2]*imaginaries[2]
+    );
+  }
+
+  void Quaternion::normalize() {
+    operator/=(calcLength());
   }
 
   Quaternion Quaternion::identity() {

@@ -94,6 +94,61 @@ namespace FixieQuaternionTest {
     assertEqual(-40, result.imaginaries[2]);
   }
 
+  void testScalarDivision() {
+    Quaternion q;
+
+    q.real = 0.5;
+    q.imaginaries = { 1, 4, 9 };
+    q /= Num(2);
+    assertInDelta(0.25, 0.001, q.real);
+    assertInDelta(0.5, 0.001, q.imaginaries[0]);
+    assertEqual(2, q.imaginaries[1]);
+    assertInDelta(4.5, 0.001, q.imaginaries[2]);
+
+    q.real = 2;
+    q.imaginaries = { -4, 3, 10 };
+    q /= Num(-4);
+    assertInDelta(-0.5, 0.001, q.real);
+    assertEqual(1, q.imaginaries[0]);
+    assertInDelta(-0.75, 0.001, q.imaginaries[1]);
+    assertInDelta(-2.5, 0.001, q.imaginaries[2]);
+  }
+
+  void testCalcLength() {
+    Quaternion a;
+    Num length;
+
+    a.real = 0.5;
+    a.imaginaries = { 5, 6, -9 };
+    length = a.calcLength();
+    assertInDelta(11.9269, 0.001, length);
+
+    a.real = -2;
+    a.imaginaries = { 0, 20, -27 };
+    length = a.calcLength();
+    assertInDelta(33.6601, 0.001, length);
+  }
+
+  void testNormalization() {
+    Quaternion q;
+
+    q.real = 0.5;
+    q.imaginaries = { 1, 4, 9 };
+    q.normalize();
+    assertInDelta(0.05044, 0.001, q.real);
+    assertInDelta(0.10089, 0.001, q.imaginaries[0]);
+    assertInDelta(0.40355, 0.001, q.imaginaries[1]);
+    assertInDelta(0.90798, 0.001, q.imaginaries[2]);
+
+    q.real = -2;
+    q.imaginaries = { 0, 20, -27 };
+    q.normalize();
+    assertInDelta(-0.05942, 0.001, q.real);
+    assertEqual(0, q.imaginaries[0]);
+    assertInDelta(0.59418, 0.001, q.imaginaries[1]);
+    assertInDelta(-0.80214, 0.001, q.imaginaries[2]);
+  }
+
   void setup() {
     unsigned group = Orwell::createGroup("FixieQuaternion");
     Orwell::addTest(group, testInit, "Init");
@@ -101,5 +156,8 @@ namespace FixieQuaternionTest {
     Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testQuaternionMultiplication, "QuaternionMultiplication");
     Orwell::addTest(group, testScalarMultiplication, "ScalarMultiplication");
+    Orwell::addTest(group, testScalarDivision, "ScalarDivision");
+    Orwell::addTest(group, testCalcLength, "CalcLength");
+    Orwell::addTest(group, testNormalization, "Normalization");
   }
 }
