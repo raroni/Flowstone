@@ -195,7 +195,6 @@ namespace FixieVector3Test {
 
     Vector3 v4(-10, 1, 3);
     assertFalse(v3.isZero());
-
   }
 
   void setup() {

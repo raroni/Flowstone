@@ -10,6 +10,7 @@ namespace Simulation {
     Monster,
     Steering,
     Drag,
+    Pathfinder,
 
     Count
   };

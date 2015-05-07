@@ -1,6 +1,7 @@
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
+#include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Drag/DragSystem.h"
 #include "Simulation/Database/EntityManager.h"
 #include "Simulation/Database/ComponentManager.h"
@@ -108,6 +109,36 @@ namespace Simulation {
       caster.steeringHandle = SteeringSystem::create(getForceDriverHandle(entityHandle));
       ComponentManager::link(entityHandle, ComponentType::Steering, caster.genericHandle);
       return caster.steeringHandle;
+    }
+
+    PathfinderHandle createPathfinder(EntityHandle entityHandle, Fixie::Vector2 target) {
+      static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      assert(hasComponent(entityHandle, ComponentType::Steering));
+      SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
+      Physics::BodyHandle bodyHandle = getBodyHandle(entityHandle);
+      union {
+        PathfinderHandle pathfinderHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.pathfinderHandle = PathfindingSystem::create(bodyHandle, steeringHandle, target);
+      ComponentManager::link(entityHandle, ComponentType::Pathfinder, caster.genericHandle);
+      return caster.pathfinderHandle;
+    }
+
+    PathfinderHandle getPathfinderHandle(EntityHandle entityHandle) {
+      static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        PathfinderHandle pathfinderHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::Pathfinder);
+      return caster.pathfinderHandle;
+    }
+
+    void destroyPathfinder(EntityHandle entityHandle) {
+      PathfinderHandle pathfinderHandle = getPathfinderHandle(entityHandle);
+      PathfindingSystem::destroy(pathfinderHandle);
+      ComponentManager::unlink(entityHandle, ComponentType::Pathfinder);
     }
 
     SteeringHandle getSteeringHandle(EntityHandle entityHandle) {

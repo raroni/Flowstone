@@ -92,6 +92,10 @@ namespace Fixie {
     operator int32_t() const {
       return raw / (1 << numPrecision);
     }
+    operator uint16_t() const {
+      assert(raw >= 0);
+      return raw / (1 << numPrecision);
+    }
     static Num createByRaw(int32_t raw) {
       Num n;
       n.raw = raw;

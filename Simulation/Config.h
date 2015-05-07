@@ -11,6 +11,7 @@ namespace Simulation {
     const uint8_t componentMax = static_cast<uint8_t>(ComponentType::Count);
     const uint16_t resourceMax = 256;
     const uint16_t steeringMax = 128;
+    const uint16_t pathfinderMax = 128;
     const uint16_t dragMax = 128;
     const uint16_t mapWidthMax = 128;
     const uint16_t mapHeightMax = 128;

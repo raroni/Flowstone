@@ -4,6 +4,7 @@
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
 #include "Simulation/Pathfinding/Map.h"
+#include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Steering/Steering.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/PlayMode.h"
@@ -13,6 +14,11 @@
 namespace Simulation {
   namespace PlayMode {
     EntityHandle monster1;
+
+    struct {
+      uint16_t x = 4;
+      uint16_t z = 4;
+    } dummyTarget;
 
     EntityHandle createMonster(Fixie::Num x, Fixie::Num z) {
       EntityHandle monster = Database::createEntity();
@@ -38,25 +44,42 @@ namespace Simulation {
 
       Trees::create(0, 0);
       Trees::create(0, 1);
+      Trees::create(0, 2);
+      Trees::create(0, 3);
+      Trees::create(0, 4);
+
       Trees::create(1, 0);
+      Trees::create(1, 4);
+
+      Trees::create(2, 0);
+      Trees::create(2, 2);
+      Trees::create(2, 4);
+
+      Trees::create(3, 0);
+      Trees::create(3, 2);
+      Trees::create(3, 3);
+      Trees::create(3, 4);
+
+      Trees::create(4, 0);
 
       monster1 = createMonster(2, 3);
       Database::createSteering(monster1);
-      Steering steering = Database::getSteering(monster1);
-      (*steering.target) = { 2, 0, 2 };
+      Database::createPathfinder(monster1, { dummyTarget.x, dummyTarget.z });
 
       //createMonster(3, 3);
     }
 
     void tick(const CommandList &commands, EventList &events) {
       Physics::Body body = Database::getBody(monster1);
-      Fixie::Vector3 positionDifference = Fixie::Vector3(2, 0, 2) - (*body.position);
+      Fixie::Vector3 positionDifference = Fixie::Vector3(dummyTarget.x, 0, dummyTarget.z) - (*body.position);
       if(positionDifference.calcLength() < Fixie::Num::inverse(8)) {
         if(Database::hasComponent(monster1, ComponentType::Steering)) {
           Database::destroySteering(monster1);
+          Database::destroyPathfinder(monster1);
         }
       }
 
+      PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");

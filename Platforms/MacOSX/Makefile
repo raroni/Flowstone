@@ -22,6 +22,7 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Source/Util.cpp\
 	../../Libraries/Fixie/Library/Source/Trig.cpp\
 	../../Libraries/Fixie/Library/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Vector2.cpp\
 	../../Libraries/Fixie/Library/Source/Vector3.cpp\
 	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
 	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
@@ -71,9 +72,14 @@ USER_SOURCES_CPP =\
 	../../Simulation/Control.cpp\
 	../../Simulation/Steering/SteeringSystem.cpp\
 	../../Simulation/Trees.cpp\
+	../../Simulation/Pathfinding/PathfindingSystem.cpp\
 	../../Simulation/Pathfinding/Map.cpp\
 	../../Simulation/Pathfinding/MapDirectionList.cpp\
 	../../Simulation/Pathfinding/MapNeighbourIterator.cpp\
+	../../Simulation/Pathfinding/AStarPriorityQueue.cpp\
+	../../Simulation/Pathfinding/AStarCostMap.cpp\
+	../../Simulation/Pathfinding/AStarCostBucket.cpp\
+	../../Simulation/Pathfinding/AStar.cpp\
 	../../Simulation/Steering/SteeringList.cpp\
 	../../Simulation/Drag/DragSystem.cpp\
 	../../Simulation/Mode.cpp\
@@ -211,6 +217,7 @@ TEST_SOURCES =\
 	../../Libraries/Piper/Source/AckSet32.cpp\
 	../../Libraries/Fixie/Library/Source/Trig.cpp\
 	../../Libraries/Fixie/Library/Source/Util.cpp\
+	../../Libraries/Fixie/Library/Source/Vector2.cpp\
 	../../Libraries/Fixie/Library/Source/Vector3.cpp\
 	../../Libraries/Fixie/Library/Source/Matrix4.cpp\
 	../../Libraries/Fixie/Library/Source/Quaternion.cpp\
