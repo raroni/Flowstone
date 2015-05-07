@@ -10,6 +10,7 @@
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
+#include "Client/CameraControl.h"
 #include "Client/LocalSimulationDriver.h"
 #include "Client/MainFlow/PlayState.h"
 
@@ -230,10 +231,9 @@ namespace Client {
 
       setupGround();
 
+
       Quanta::Transform& camera = renderer.getCameraTransform();
-      camera.position[2] = -3.75;
-      camera.position[1] = 6;
-      camera.rotateX(1);
+      CameraControl::initialize(&camera);
 
       if(playMode == PlayMode::Local) {
         playerID = SimControl::createPlayer();
@@ -471,6 +471,7 @@ namespace Client {
 
       processSimulationEvents();
 
+      CameraControl::update(timeDelta, &keyboard, &renderer.getCameraTransform());
       updateAtmosphereColor();
       updateLightDirection();
       rendererFeeder.update();
