@@ -9,6 +9,10 @@ namespace Fixie {
   public:
     Quaternion();
     Quaternion(Num real, Vector3 imaginaries);
+    Quaternion operator*(const Quaternion &other) const;
+    Quaternion& operator*=(Quaternion other);
+    Quaternion operator*(Num scalar) const;
+    Quaternion& operator*=(Num scalar);
     Num real;
     Vector3 imaginaries;
     static Quaternion identity();

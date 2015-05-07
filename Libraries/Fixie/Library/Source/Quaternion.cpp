@@ -8,6 +8,32 @@ namespace Fixie {
     this->imaginaries = imaginaries;
   }
 
+  Quaternion Quaternion::operator*(const Quaternion &other) const {
+    Quaternion result = *this;
+    result *= other;
+    return result;
+  }
+
+  Quaternion& Quaternion::operator*=(Quaternion other) {
+    Num resultReal = real*other.real - Vector3::dot(imaginaries, other.imaginaries);
+    Vector3 resultImaginaries = other.imaginaries*real + imaginaries*other.real + Vector3::cross(imaginaries, other.imaginaries);
+    real = resultReal;
+    imaginaries = resultImaginaries;
+    return *this;
+  }
+
+  Quaternion Quaternion::operator*(Num scalar) const {
+    Quaternion result = *this;
+    result *= scalar;
+    return result;
+  }
+
+  Quaternion& Quaternion::operator*=(Num scalar) {
+    real *= scalar;
+    imaginaries *= scalar;
+    return *this;
+  }
+
   Quaternion Quaternion::identity() {
     return Quaternion(1, Vector3(0, 0, 0));
   }
