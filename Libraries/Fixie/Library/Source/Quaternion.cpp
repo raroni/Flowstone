@@ -69,4 +69,9 @@ namespace Fixie {
   Quaternion Quaternion::identity() {
     return Quaternion(1, Vector3(0, 0, 0));
   }
+
+  Quaternion Quaternion::createConjugate(const Quaternion *quaternion) {
+    Quaternion conjugate(quaternion->real, quaternion->imaginaries*-1);
+    return conjugate;
+  }
 }

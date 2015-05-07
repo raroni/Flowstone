@@ -1,4 +1,5 @@
 #include "Physics/Engine.h"
+#include "Fixie/Geometry.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/Steering/SteeringList.h"
 #include "Simulation/Steering/SteeringSystem.h"
@@ -11,14 +12,25 @@ namespace Simulation {
     Num tolerance = Num::inverse(32);
 
     void update() {
+      Vector3 forward(0, 0, 1);
       for(uint16_t i=0; i<List::getCount(); ++i) {
         DynamicDriver driver = physicsEngine.getDynamicDriver(List::dynamicDriverHandles[i]);
         Body body = physicsEngine.getBody(driver.bodyHandle);
 
-        Fixie::Vector3 positionDifference = List::targets[i] - (*body.position);
+        Vector3 positionDifference = List::targets[i] - (*body.position);
         if(positionDifference.calcSquaredLength() > tolerance) {
-          Fixie::Vector3 direction = Vector3::normalize(positionDifference);
+          Vector3 direction = Vector3::normalize(positionDifference);
           (*driver.force) += direction;
+        }
+
+        if(body.velocity->calcSquaredLength() > Num::inverse(16)) {
+          Vector3 orientationDirection = Geometry::createRotated(
+            &forward,
+            body.orientation
+          );
+
+          Vector3 movementDirection = Vector3::normalize(*body.velocity);
+          (*driver.torque) += Vector3::cross(orientationDirection, movementDirection);
         }
       }
     }

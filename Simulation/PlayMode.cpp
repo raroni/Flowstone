@@ -79,13 +79,6 @@ namespace Simulation {
         }
       }
 
-      static int x = 0;
-      x++;
-      if(x < 100) {
-        Physics::DynamicDriver driver = Database::getDynamicDriver(monster1);
-        (*driver.torque)[1] += 0.3;
-      }
-
       PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();

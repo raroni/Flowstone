@@ -21,6 +21,7 @@ namespace Fixie {
     Num real;
     Vector3 imaginaries;
     static Quaternion identity();
+    static Quaternion createConjugate(const Quaternion *quaternion);
   };
 }
 

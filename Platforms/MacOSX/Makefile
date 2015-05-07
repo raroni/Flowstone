@@ -21,6 +21,7 @@ USER_SOURCES_CPP =\
 	../../Libraries/Quanta/Source/Random.cpp\
 	../../Libraries/Quanta/Source/Util.cpp\
 	../../Libraries/Fixie/Library/Source/Trig.cpp\
+	../../Libraries/Fixie/Library/Source/Geometry.cpp\
 	../../Libraries/Fixie/Library/Source/Util.cpp\
 	../../Libraries/Fixie/Library/Source/Vector2.cpp\
 	../../Libraries/Fixie/Library/Source/Vector3.cpp\
