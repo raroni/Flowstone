@@ -1,4 +1,3 @@
-#include "Fixie/TransformFactory.h"
 #include "Physics/CollisionResolver.h"
 #include "Physics/Engine.h"
 
