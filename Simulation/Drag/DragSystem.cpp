@@ -48,6 +48,7 @@ namespace Simulation {
         Physics::ForceDriver driver = physicsEngine.getForceDriver(forceDriverHandle);
         Physics::Body body = physicsEngine.getBody(driver.bodyHandle);
         (*driver.force) += (*body.velocity) * Fixie::Num(-2);
+        (*driver.torque) += (*body.spin) * Fixie::Num(-4);
       }
     }
   }

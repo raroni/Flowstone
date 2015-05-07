@@ -10,6 +10,7 @@ namespace Physics {
     const Fixie::Vector3 *position;
     const Fixie::Quaternion *orientation;
     const Fixie::Vector3 *velocity;
+    const Fixie::Vector3 *spin;
   };
 }
 

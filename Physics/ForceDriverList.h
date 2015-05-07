@@ -13,6 +13,7 @@ namespace Physics {
     uint16_t getCount() const;
     BodyHandle bodyHandles[Config::forceDriverMax];
     Fixie::Vector3 forces[Config::forceDriverMax];
+    Fixie::Vector3 torques[Config::forceDriverMax];
   private:
     uint16_t count = 0;
   };

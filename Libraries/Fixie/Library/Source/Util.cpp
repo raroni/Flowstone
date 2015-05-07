@@ -20,7 +20,7 @@ namespace Fixie {
     Num sqrt(Num n) {
       assert(n >= Num(0));
       Num s = halve(n);
-      for(uint8_t i=0; i<6 && s != zero; ++i) {
+      for(uint8_t i=0; i<8 && s != zero; ++i) {
         s = halve(s + n/s);
       }
       return s;

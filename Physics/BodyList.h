@@ -19,6 +19,7 @@ namespace Physics {
     Fixie::Vector3 positions[Config::bodyMax];
     Fixie::Quaternion orientations[Config::bodyMax];
     Fixie::Vector3 velocities[Config::bodyMax];
+    Fixie::Vector3 spins[Config::bodyMax];
   private:
     uint16_t count = 0;
   };

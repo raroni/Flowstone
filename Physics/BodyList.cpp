@@ -5,6 +5,7 @@ namespace Physics {
     positions[count] = Fixie::Vector3::zero();
     orientations[count] = Fixie::Quaternion::identity();
     velocities[count] = Fixie::Vector3::zero();
+    spins[count] = Fixie::Vector3::zero();
     return count++;
   }
 
@@ -18,6 +19,7 @@ namespace Physics {
     body.position = &positions[index];
     body.orientation = &orientations[index];
     body.velocity = &velocities[index];
+    body.spin = &spins[index];
     return body;
   }
 
@@ -27,6 +29,7 @@ namespace Physics {
     body.position = &positions[index];
     body.orientation = &orientations[index];
     body.velocity = &velocities[index];
+    body.spin = &spins[index];
     return body;
   }
 
