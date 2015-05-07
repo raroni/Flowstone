@@ -21,6 +21,32 @@ namespace FixieQuaternionTest {
     assertEqual(0, q.imaginaries[2]);
   }
 
+  void testAddition() {
+    Quaternion a;
+    Quaternion b;
+    Quaternion result;
+
+    a.real = 0.5;
+    a.imaginaries = { 1, 4, 9 };
+    b.real = -1.5;
+    b.imaginaries = { 2, 3, 10 };
+    result = a+b;
+    assertEqual(-1, result.real);
+    assertEqual(3, result.imaginaries[0]);
+    assertEqual(7, result.imaginaries[1]);
+    assertEqual(19, result.imaginaries[2]);
+
+    a.real = 2;
+    a.imaginaries = { -4, 3, 10 };
+    b.real = 7;
+    b.imaginaries = { 10, 20, -30 };
+    result = a+b;
+    assertEqual(9, result.real);
+    assertEqual(6, result.imaginaries[0]);
+    assertEqual(23, result.imaginaries[1]);
+    assertEqual(-20, result.imaginaries[2]);
+  }
+
   void testQuaternionMultiplication() {
     Quaternion a;
     Quaternion b;
@@ -72,6 +98,7 @@ namespace FixieQuaternionTest {
     unsigned group = Orwell::createGroup("FixieQuaternion");
     Orwell::addTest(group, testInit, "Init");
     Orwell::addTest(group, testIdentity, "Identity");
+    Orwell::addTest(group, testAddition, "Addition");
     Orwell::addTest(group, testQuaternionMultiplication, "QuaternionMultiplication");
     Orwell::addTest(group, testScalarMultiplication, "ScalarMultiplication");
   }

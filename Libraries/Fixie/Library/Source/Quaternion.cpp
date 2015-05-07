@@ -34,6 +34,18 @@ namespace Fixie {
     return *this;
   }
 
+  Quaternion Quaternion::operator+(Quaternion other) const {
+    Quaternion result = *this;
+    result += other;
+    return result;
+  }
+
+  Quaternion& Quaternion::operator+=(Quaternion other) {
+    real += other.real;
+    imaginaries += other.imaginaries;
+    return *this;
+  }
+
   Quaternion Quaternion::identity() {
     return Quaternion(1, Vector3(0, 0, 0));
   }

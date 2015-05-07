@@ -13,6 +13,8 @@ namespace Fixie {
     Quaternion& operator*=(Quaternion other);
     Quaternion operator*(Num scalar) const;
     Quaternion& operator*=(Num scalar);
+    Quaternion& operator+=(Quaternion other);
+    Quaternion operator+(Quaternion other) const;
     Num real;
     Vector3 imaginaries;
     static Quaternion identity();
