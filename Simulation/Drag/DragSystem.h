@@ -5,7 +5,7 @@
 
 namespace Simulation {
   namespace DragSystem {
-    DragHandle create(Physics::ForceDriverHandle handle);
+    DragHandle create(Physics::DynamicDriverHandle handle);
     void update();
   }
 }

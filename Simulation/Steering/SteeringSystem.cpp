@@ -12,7 +12,7 @@ namespace Simulation {
 
     void update() {
       for(uint16_t i=0; i<List::getCount(); ++i) {
-        ForceDriver driver = physicsEngine.getForceDriver(List::forceDriverHandles[i]);
+        DynamicDriver driver = physicsEngine.getDynamicDriver(List::dynamicDriverHandles[i]);
         Body body = physicsEngine.getBody(driver.bodyHandle);
 
         Fixie::Vector3 positionDifference = List::targets[i] - (*body.position);
@@ -23,7 +23,7 @@ namespace Simulation {
       }
     }
 
-    SteeringHandle create(Physics::ForceDriverHandle handle) {
+    SteeringHandle create(Physics::DynamicDriverHandle handle) {
       return List::create(handle);
     }
 

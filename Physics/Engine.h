@@ -14,9 +14,9 @@ namespace Physics {
       BodyHandle createBody();
       BodyList& getBodies();
       Body getBody(BodyHandle handle);
-      ForceDriverHandle createForceDriver(BodyHandle body);
-      ForceDriver getForceDriver(ForceDriverHandle handle);
-      VelocityDriverHandle createVelocityDriver(BodyHandle body);
+      DynamicDriverHandle createDynamicDriver(BodyHandle body);
+      DynamicDriver getDynamicDriver(DynamicDriverHandle handle);
+      KinematicDriverHandle createKinematicDriver(BodyHandle body);
       SphereColliderHandle createSphereCollider(BodyHandle body, ColliderType type, Fixie::Num radius);
     private:
       BodyList bodies;

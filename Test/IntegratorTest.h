@@ -10,9 +10,9 @@ namespace IntegratorTest {
     Body body = bodies.get(bodyHandle);
     (*body.position) = position;
     (*body.velocity) = velocity;
-    ForceDriverHandle forceDriverHandle = integrator.createForceDriver(bodyHandle);
-    ForceDriver forceDriver = integrator.getForceDriver(forceDriverHandle);
-    (*forceDriver.force) = force;
+    DynamicDriverHandle dynamicDriverHandle = integrator.createDynamicDriver(bodyHandle);
+    DynamicDriver dynamicDriver = integrator.getDynamicDriver(dynamicDriverHandle);
+    (*dynamicDriver.force) = force;
   }
 
   void testPositionChange() {
@@ -46,11 +46,11 @@ namespace IntegratorTest {
 
     integrator.integrate(bodies);
 
-    ForceDriver forceDriver = integrator.getForceDriver(0);
+    DynamicDriver dynamicDriver = integrator.getDynamicDriver(0);
 
-    assertEqual(0, (*forceDriver.force)[0]);
-    assertEqual(0, (*forceDriver.force)[1]);
-    assertEqual(0, (*forceDriver.force)[2]);
+    assertEqual(0, (*dynamicDriver.force)[0]);
+    assertEqual(0, (*dynamicDriver.force)[1]);
+    assertEqual(0, (*dynamicDriver.force)[2]);
   }
 
   void setup() {

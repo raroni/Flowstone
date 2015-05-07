@@ -5,7 +5,7 @@ namespace Simulation {
   enum class ComponentType : uint8_t {
     Body,
     SphereCollider,
-    ForceDriver,
+    DynamicDriver,
     Resource,
     Monster,
     Steering,

@@ -24,14 +24,14 @@ namespace Simulation {
       return ComponentManager::has(entity, type);
     }
 
-    Physics::ForceDriverHandle createForceDriver(EntityHandle entity) {
+    Physics::DynamicDriverHandle createDynamicDriver(EntityHandle entity) {
       Physics::BodyHandle bodyHandle = getBodyHandle(entity);
       union {
-        Physics::ForceDriverHandle physicsHandle;
+        Physics::DynamicDriverHandle physicsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.physicsHandle = physicsEngine.createForceDriver(bodyHandle);
-      ComponentManager::link(entity, ComponentType::ForceDriver, caster.genericHandle);
+      caster.physicsHandle = physicsEngine.createDynamicDriver(bodyHandle);
+      ComponentManager::link(entity, ComponentType::DynamicDriver, caster.genericHandle);
       return caster.physicsHandle;
     }
 
@@ -87,17 +87,17 @@ namespace Simulation {
       return physicsEngine.getBody(getBodyHandle(entity));
     }
 
-    Physics::ForceDriverHandle getForceDriverHandle(EntityHandle entityHandle) {
+    Physics::DynamicDriverHandle getDynamicDriverHandle(EntityHandle entityHandle) {
       union {
-        Physics::ForceDriverHandle physicsHandle;
+        Physics::DynamicDriverHandle physicsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::ForceDriver);
+      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::DynamicDriver);
       return caster.physicsHandle;
     }
 
-    Physics::ForceDriver getForceDriver(EntityHandle entity) {
-      return physicsEngine.getForceDriver(getForceDriverHandle(entity));
+    Physics::DynamicDriver getDynamicDriver(EntityHandle entity) {
+      return physicsEngine.getDynamicDriver(getDynamicDriverHandle(entity));
     }
 
     SteeringHandle createSteering(EntityHandle entityHandle) {
@@ -106,7 +106,7 @@ namespace Simulation {
         SteeringHandle steeringHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.steeringHandle = SteeringSystem::create(getForceDriverHandle(entityHandle));
+      caster.steeringHandle = SteeringSystem::create(getDynamicDriverHandle(entityHandle));
       ComponentManager::link(entityHandle, ComponentType::Steering, caster.genericHandle);
       return caster.steeringHandle;
     }
@@ -167,7 +167,7 @@ namespace Simulation {
         DragHandle dragHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.dragHandle = DragSystem::create(getForceDriverHandle(entityHandle));
+      caster.dragHandle = DragSystem::create(getDynamicDriverHandle(entityHandle));
       ComponentManager::link(entityHandle, ComponentType::Drag, caster.genericHandle);
       return caster.dragHandle;
     }

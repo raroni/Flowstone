@@ -6,8 +6,8 @@
 namespace Physics {
   namespace Config {
     const uint16_t bodyMax = 256;
-    const uint16_t forceDriverMax = 128;
-    const uint16_t velocityDriverMax = 128;
+    const uint16_t dynamicDriverMax = 128;
+    const uint16_t kinematicDriverMax = 128;
     const uint16_t sphereColliderMax = 128;
     const uint16_t dynamicSphereColliderMax = 64;
     const uint16_t staticSphereColliderMax = 64;

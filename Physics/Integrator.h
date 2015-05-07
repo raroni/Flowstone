@@ -2,19 +2,19 @@
 #define PHYSICS_INTEGRATOR_H
 
 #include "Physics/BodyList.h"
-#include "Physics/ForceDriverList.h"
-#include "Physics/VelocityDriverList.h"
+#include "Physics/DynamicDriverList.h"
+#include "Physics/KinematicDriverList.h"
 
 namespace Physics {
   class Integrator {
   public:
     void integrate(BodyList &bodies);
-    ForceDriverHandle createForceDriver(BodyHandle body);
-    ForceDriver getForceDriver(ForceDriverHandle handle);
-    VelocityDriverHandle createVelocityDriver(BodyHandle body);
+    DynamicDriverHandle createDynamicDriver(BodyHandle body);
+    DynamicDriver getDynamicDriver(DynamicDriverHandle handle);
+    KinematicDriverHandle createKinematicDriver(BodyHandle body);
   private:
-    ForceDriverList forceDrivers;
-    VelocityDriverList velocityDrivers;
+    DynamicDriverList dynamicDrivers;
+    KinematicDriverList kinematicDrivers;
   };
 }
 

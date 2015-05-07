@@ -43,8 +43,8 @@ USER_SOURCES_CPP =\
 	../../Physics/Integrator.cpp\
 	../../Physics/BodyList.cpp\
 	../../Physics/SphereColliderList.cpp\
-	../../Physics/VelocityDriverList.cpp\
-	../../Physics/ForceDriverList.cpp\
+	../../Physics/KinematicDriverList.cpp\
+	../../Physics/DynamicDriverList.cpp\
 	../../Physics/CollisionResolver.cpp\
 	../../Server/Game.cpp\
 	../../Server/ClientSet.cpp\
@@ -231,8 +231,8 @@ TEST_SOURCES =\
 	../../Physics/CollisionDetector.cpp\
 	../../Physics/SphereColliderList.cpp\
 	../../Physics/BodyList.cpp\
-	../../Physics/ForceDriverList.cpp\
-	../../Physics/VelocityDriverList.cpp\
+	../../Physics/DynamicDriverList.cpp\
+	../../Physics/KinematicDriverList.cpp\
 	../../Simulation/Pathfinding/AStarPriorityQueue.cpp\
 	../../Simulation/Pathfinding/AStarCostMap.cpp\
 	../../Simulation/Pathfinding/AStarCostBucket.cpp\

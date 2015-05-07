@@ -1,6 +1,6 @@
 #include "Misc/IntegerPool.h"
-#include "Physics/ForceDriverHandle.h"
-#include "Physics/ForceDriver.h"
+#include "Physics/DynamicDriverHandle.h"
+#include "Physics/DynamicDriver.h"
 #include "Physics/Body.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
@@ -11,14 +11,14 @@ namespace Simulation {
     using namespace Physics;
 
     IntegerPool handlePool;
-    ForceDriverHandle forceDriverHandles[Config::dragMax];
+    DynamicDriverHandle dynamicDriverHandles[Config::dragMax];
     uint16_t indices[Config::dragMax];
     uint16_t handles[Config::dragMax];
     uint16_t count = 0;
 
-    DragHandle create(ForceDriverHandle forceDriverHandle) {
+    DragHandle create(DynamicDriverHandle dynamicDriverHandle) {
       assert(Config::dragMax != count);
-      forceDriverHandles[count] = forceDriverHandle;
+      dynamicDriverHandles[count] = dynamicDriverHandle;
       DragHandle dragHandle = handlePool.obtain();
       indices[dragHandle] = count;
       handles[count] = dragHandle;
@@ -33,7 +33,7 @@ namespace Simulation {
       uint16_t lastIndex = count-1;
       DragHandle lastHandle = handles[lastIndex];
 
-      forceDriverHandles[removingIndex] = forceDriverHandles[lastIndex];
+      dynamicDriverHandles[removingIndex] = dynamicDriverHandles[lastIndex];
 
       handles[removingIndex] = lastHandle;
       indices[lastHandle] = removingIndex;
@@ -44,8 +44,8 @@ namespace Simulation {
 
     void update() {
       for(uint16_t i=0; i<count; ++i) {
-        ForceDriverHandle forceDriverHandle = forceDriverHandles[i];
-        Physics::ForceDriver driver = physicsEngine.getForceDriver(forceDriverHandle);
+        DynamicDriverHandle dynamicDriverHandle = dynamicDriverHandles[i];
+        Physics::DynamicDriver driver = physicsEngine.getDynamicDriver(dynamicDriverHandle);
         Physics::Body body = physicsEngine.getBody(driver.bodyHandle);
         (*driver.force) += (*body.velocity) * Fixie::Num(-2);
         (*driver.torque) += (*body.spin) * Fixie::Num(-4);

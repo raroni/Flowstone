@@ -1,12 +1,12 @@
-#include "Physics/ForceDriverList.h"
+#include "Physics/DynamicDriverList.h"
 
 namespace Physics {
-  uint16_t ForceDriverList::getCount() const {
+  uint16_t DynamicDriverList::getCount() const {
     return count;
   }
 
-  ForceDriver ForceDriverList::get(ForceDriverHandle handle) {
-    ForceDriver driver;
+  DynamicDriver DynamicDriverList::get(DynamicDriverHandle handle) {
+    DynamicDriver driver;
     uint16_t index = handle;
     driver.force = &forces[index];
     driver.torque = &torques[index];
@@ -14,7 +14,7 @@ namespace Physics {
     return driver;
   }
 
-  ForceDriverHandle ForceDriverList::create(BodyHandle bodyHandle) {
+  DynamicDriverHandle DynamicDriverList::create(BodyHandle bodyHandle) {
     bodyHandles[count] = bodyHandle;
     forces[count] = Fixie::Vector3::zero();
     torques[count] = Fixie::Vector3::zero();

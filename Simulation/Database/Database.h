@@ -13,8 +13,8 @@
 #include "Simulation/Pathfinding/PathfinderHandle.h"
 #include "Physics/SphereColliderHandle.h"
 #include "Physics/BodyHandle.h"
-#include "Physics/ForceDriverHandle.h"
-#include "Physics/ForceDriver.h"
+#include "Physics/DynamicDriverHandle.h"
+#include "Physics/DynamicDriver.h"
 #include "Physics/Body.h"
 #include "Physics/ColliderType.h"
 
@@ -26,9 +26,9 @@ namespace Simulation {
     Physics::BodyHandle createBody(EntityHandle entity);
     Physics::Body getBody(EntityHandle);
     Physics::BodyHandle getBodyHandle(EntityHandle);
-    Physics::ForceDriver getForceDriver(EntityHandle);
-    Physics::ForceDriverHandle getForceDriverHandle(EntityHandle);
-    Physics::ForceDriverHandle createForceDriver(EntityHandle);
+    Physics::DynamicDriver getDynamicDriver(EntityHandle);
+    Physics::DynamicDriverHandle getDynamicDriverHandle(EntityHandle);
+    Physics::DynamicDriverHandle createDynamicDriver(EntityHandle);
     Physics::SphereColliderHandle createSphereCollider(EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
     ResourceHandle createResource(EntityHandle entity, ResourceType type);
     SteeringHandle createSteering(EntityHandle entityHandle);

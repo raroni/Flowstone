@@ -22,16 +22,16 @@ namespace Physics {
     return bodies.get(handle);
   }
 
-  ForceDriver Engine::getForceDriver(ForceDriverHandle handle) {
-    return integrator.getForceDriver(handle);
+  DynamicDriver Engine::getDynamicDriver(DynamicDriverHandle handle) {
+    return integrator.getDynamicDriver(handle);
   }
 
-  ForceDriverHandle Engine::createForceDriver(BodyHandle body) {
-    return integrator.createForceDriver(body);
+  DynamicDriverHandle Engine::createDynamicDriver(BodyHandle body) {
+    return integrator.createDynamicDriver(body);
   }
 
-  VelocityDriverHandle Engine::createVelocityDriver(BodyHandle body) {
-    return integrator.createVelocityDriver(body);
+  KinematicDriverHandle Engine::createKinematicDriver(BodyHandle body) {
+    return integrator.createKinematicDriver(body);
   }
 
   SphereColliderHandle Engine::createSphereCollider(BodyHandle body, ColliderType type, Fixie::Num radius) {

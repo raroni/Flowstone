@@ -27,7 +27,7 @@ namespace Simulation {
       Physics::Body body = Database::getBody(monster);
       (*body.position)[0] = x;
       (*body.position)[2] = z;
-      Database::createForceDriver(monster);
+      Database::createDynamicDriver(monster);
       Database::createSphereCollider(monster, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
       Database::createDrag(monster);
 
@@ -82,7 +82,7 @@ namespace Simulation {
       static int x = 0;
       x++;
       if(x < 100) {
-        Physics::ForceDriver driver = Database::getForceDriver(monster1);
+        Physics::DynamicDriver driver = Database::getDynamicDriver(monster1);
         (*driver.torque)[1] += 0.3;
       }
 

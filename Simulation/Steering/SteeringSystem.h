@@ -6,7 +6,7 @@
 
 namespace Simulation {
   namespace SteeringSystem {
-    SteeringHandle create(Physics::ForceDriverHandle handle);
+    SteeringHandle create(Physics::DynamicDriverHandle handle);
     void destroy(SteeringHandle handle);
     Steering get(SteeringHandle handle);
     void update();
