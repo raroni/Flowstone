@@ -6,7 +6,7 @@
 #include "Simulation/CommandList.h"
 #include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
-#include "Simulation/Database/EntityHandle.h"
+#include "Database/EntityHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Client/MainFlow/State.h"
@@ -14,12 +14,7 @@
 #include "Client/AtmosphereColor.h"
 #include "Client/TorchManager.h"
 #include "Client/PlayMode.h"
-#include "Client/RendererFeeder.h"
 #include "Client/Interpolation/Interpolater.h"
-
-namespace Rendering {
-  class Renderer;
-}
 
 namespace Client {
   namespace MainFlow {
@@ -27,7 +22,7 @@ namespace Client {
 
     class PlayState : public State {
     public:
-      PlayState(Rendering::Renderer &renderer, PlayMode playMode);
+      PlayState(PlayMode playMode);
       void enter();
       void exit();
       void update(double deltaTime, const Keyboard &keyboard);
@@ -35,13 +30,9 @@ namespace Client {
     private:
       Simulation::PlayerHandle playerID = -1;
       PlayMode playMode;
-      Animation::Animator animator;
-      Rendering::Renderer &renderer;
       uint8_t walkAnimationSkeleton;
-      Interpolation::Interpolater interpolater;
       double stepTimeBank = 0;
       float timeOfDay = 0.3;
-      RendererFeeder rendererFeeder;
       AtmosphereColor atmosphereColor;
       Rendering::StaticMeshIndex greenTreeMesh;
       Rendering::StaticMeshIndex redTreeMesh;
@@ -55,7 +46,7 @@ namespace Client {
       void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
-      void setupMonster(Simulation::EntityHandle monster);
+      void setupMonster(::Database::EntityHandle monster);
       void setupGround();
       void setupPointLight();
       void updateAtmosphereColor();

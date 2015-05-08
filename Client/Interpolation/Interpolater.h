@@ -28,6 +28,8 @@ namespace Client {
       Physics::BodyHandle bodyHandles[max];
       uint8_t count = 0;
     };
+
+    extern Interpolater interpolater;
   }
 }
 

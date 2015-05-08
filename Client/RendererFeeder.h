@@ -2,34 +2,14 @@
 #define CLIENT_RENDERER_FEEDER_H
 
 #include "Interpolation/Index.h"
+#include "Animation/PoseIndex.h"
 #include "Rendering/StaticMeshInstanceHandle.h"
 #include "Rendering/BoneMeshInstanceHandle.h"
 
-namespace Physics {
-  class Engine;
-}
-
-namespace Rendering {
-  class Renderer;
-}
-
-namespace Animation {
-  class Animator;
-}
-
 namespace Client {
-  namespace Interpolation {
-    class Interpolater;
-  }
-
   class RendererFeeder {
   public:
-    RendererFeeder(
-      const Interpolation::Interpolater &interpolator,
-      const Animation::Animator &animator,
-      Rendering::Renderer &renderer
-    );
-    void setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
+    uint16_t setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
     void update();
   private:
     struct BoneBinding {
@@ -41,10 +21,9 @@ namespace Client {
       BoneBinding list[128];
       uint8_t count = 0;
     } boneBindings;
-    const Interpolation::Interpolater &interpolator;
-    const Animation::Animator &animator;
-    Rendering::Renderer &renderer;
   };
+
+  extern RendererFeeder rendererFeeder;
 }
 
 #endif

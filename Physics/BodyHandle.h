@@ -1,5 +1,5 @@
-#ifndef PHYSICS_BODY_HANDLE
-#define PHYSICS_BODY_HANDLE
+#ifndef PHYSICS_BODY_HANDLE_H
+#define PHYSICS_BODY_HANDLE_H
 
 #include <stdint.h>
 

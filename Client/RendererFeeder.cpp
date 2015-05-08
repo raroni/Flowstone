@@ -8,31 +8,26 @@
 #include "RendererFeeder.h"
 
 namespace Client {
-  RendererFeeder::RendererFeeder(
-    const Interpolation::Interpolater &interpolator,
-    const Animation::Animator &animator,
-    Rendering::Renderer &renderer) :
-  interpolator(interpolator),
-  animator(animator),
-  renderer(renderer) { }
+  RendererFeeder rendererFeeder;
 
   void RendererFeeder::update() {
-    const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
-    const Animation::Pose *poses = animator.getWorldPoses();
+    const Quanta::Matrix4* interpolatedTransforms = Interpolation::interpolater.getTransforms();
+    const Animation::Pose *poses = Animation::animator.getWorldPoses();
     for(uint16_t i=0; i<boneBindings.count; ++i) {
       BoneBinding &binding = boneBindings.list[i];
-      Rendering::BoneMeshInstance instance = renderer.getBoneMeshInstance(binding.mesh);
+      Rendering::BoneMeshInstance instance = Rendering::renderer.getBoneMeshInstance(binding.mesh);
       (*instance.transform) = interpolatedTransforms[binding.interpolation];
       (*instance.pose) = poses[binding.pose];
     }
   }
 
-  void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
+  uint16_t RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
     BoneBinding binding;
     binding.interpolation = interpolation;
     binding.mesh = mesh;
     binding.pose = pose;
     boneBindings.list[boneBindings.count] = binding;
     boneBindings.count++;
+    return 0; // todo: fix
   }
 }

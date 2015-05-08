@@ -8,6 +8,8 @@
 #include "Animation/Animator.h"
 
 namespace Animation {
+  Animator animator;
+
   void Animator::updateLocalPoses(double timeDelta) {
     uint8_t transformationOffset = 0;
     for(uint8_t instanceIndex=0; instanceCount>instanceIndex; instanceIndex++) {
@@ -75,7 +77,7 @@ namespace Animation {
     return worldPoses;
   }
 
-  uint8_t Animator::createSkeleton(
+  SkeletonHandle Animator::createSkeleton(
     uint8_t *jointParentIndices,
     uint8_t jointParentIndicesLength,
     float *animationDurations,

@@ -21,13 +21,12 @@ namespace Client {
     bool terminationRequested = false;
     SysThread::Mutex terminateMutex;
     struct {
-      const uint16_t width = 600;
-      const uint16_t height = 400;
+      const uint16_t width = 800;
+      const uint16_t height = 600;
     } resolution;
     void readNet();
     void updateKeyboard();
     Keyboard keyboard;
-    Rendering::Renderer renderer;
     MainFlow::Manager flow;
 
     void updateKeyboard() {
@@ -92,9 +91,9 @@ namespace Client {
       Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);
 
-      renderer.initialize();
-      renderer.updateResolution({ resolution.width, resolution.height });
-      flow.initialize(renderer);
+      Rendering::renderer.initialize();
+      Rendering::renderer.updateResolution({ resolution.width, resolution.height });
+      flow.initialize();
 
       Net::initialize();
       Piper::Address address;
@@ -132,7 +131,7 @@ namespace Client {
       flow.update(timeDelta, keyboard);
       Carrier::update(timeDelta);
 
-      renderer.draw();
+      Rendering::renderer.draw();
 
       Net::dispatch();
 

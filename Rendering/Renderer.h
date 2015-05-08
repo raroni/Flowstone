@@ -34,6 +34,8 @@ namespace Rendering {
     WorldRenderer worldRenderer;
     void dispatch();
   };
+
+  extern Renderer renderer;
 }
 
 #endif

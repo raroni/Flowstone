@@ -10,6 +10,8 @@
 #include "Rendering/CommandType.h"
 
 namespace Rendering {
+  Renderer renderer;
+
   void Renderer::initialize() {
     Textures::initialize();
     RenderTargets::initialize();
