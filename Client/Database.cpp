@@ -86,21 +86,21 @@ namespace Client {
       return caster.instanceHandle;
     }
 
-    void createRenderFeed(EntityHandle entity) {
+    BoneMeshRenderFeedHandle createRenderFeed(EntityHandle entity) {
       assert(hasComponent(entity, ComponentType::Interpolation));
       assert(hasComponent(entity, ComponentType::Pose));
       assert(hasComponent(entity, ComponentType::BoneMeshInstance));
 
       union {
-        uint16_t renderFeedHandle; // todo: Use proper type instead of just generic uint16_t
+        BoneMeshRenderFeedHandle feedHandle;
         ComponentHandle genericHandle;
       } caster;
       InterpolationHandle interpolationHandle = getInterpolation(entity);
       Animation::PoseHandle poseHandle = getPoseHandle(entity);
       Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
-      caster.renderFeedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
+      caster.feedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
       linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
-      //return caster.renderFeedHandle;
+      return caster.feedHandle;
     }
 
     DirectionHandle createDirection(EntityHandle clientEntity, EntityHandle simEntity, DirectionGroupHandle group) {
