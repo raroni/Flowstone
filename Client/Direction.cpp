@@ -10,7 +10,7 @@ namespace Client {
     using namespace Database;
     static const uint16_t max = 128;
     EntityHandle simEntityHandles[max];
-    Animation::PoseIndex poseHandles[max];
+    Animation::PoseHandle poseHandles[max];
     DirectionGroupHandle groupHandles[max];
     uint8_t animations[max];
     uint16_t indices[max];
@@ -20,7 +20,7 @@ namespace Client {
     DirectionGroup groups[groupMax];
     uint8_t groupCount = 0;
 
-    DirectionHandle create(Animation::PoseIndex poseHandle, EntityHandle simEntityHandle, DirectionGroupHandle groupHandle) {
+    DirectionHandle create(Animation::PoseHandle poseHandle, EntityHandle simEntityHandle, DirectionGroupHandle groupHandle) {
       uint16_t index;
       DirectionHandle directionHandle;
       handleList.create(&index, &directionHandle);

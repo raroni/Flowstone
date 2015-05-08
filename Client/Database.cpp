@@ -46,9 +46,9 @@ namespace Client {
       return componentManager.has(entity, convertTypeToInt(type));
     }
 
-    Animation::PoseIndex createPose(EntityHandle entity, Animation::SkeletonHandle skeleton) {
+    Animation::PoseHandle createPose(EntityHandle entity, Animation::SkeletonHandle skeleton) {
       union {
-        Animation::PoseIndex poseHandle;
+        Animation::PoseHandle poseHandle;
         ComponentHandle genericHandle;
       } caster;
       caster.poseHandle = Animation::animator.createPose(skeleton);
@@ -96,7 +96,7 @@ namespace Client {
         ComponentHandle genericHandle;
       } caster;
       InterpolationHandle interpolationHandle = getInterpolation(entity);
-      Animation::PoseIndex poseHandle = getPoseHandle(entity);
+      Animation::PoseHandle poseHandle = getPoseHandle(entity);
       Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
       caster.renderFeedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
       linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
@@ -108,7 +108,7 @@ namespace Client {
         DirectionHandle directionHandle;
         ComponentHandle genericHandle;
       } caster;
-      Animation::PoseIndex poseHandle = getPoseHandle(clientEntity);
+      Animation::PoseHandle poseHandle = getPoseHandle(clientEntity);
       caster.directionHandle = Direction::create(poseHandle, simEntity, group);
       linkComponent(clientEntity, ComponentType::Direction, caster.genericHandle);
       return caster.directionHandle;
@@ -124,10 +124,10 @@ namespace Client {
       return caster.interpolationHandle;
     }
 
-    Animation::PoseIndex getPoseHandle(EntityHandle entity) {
-      static_assert(sizeof(Animation::PoseIndex) == sizeof(ComponentHandle), "Handle size must be the same.");
+    Animation::PoseHandle getPoseHandle(EntityHandle entity) {
+      static_assert(sizeof(Animation::PoseHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
-        Animation::PoseIndex poseHandle;
+        Animation::PoseHandle poseHandle;
         ComponentHandle genericHandle;
       } caster;
       caster.genericHandle = getComponent(entity, ComponentType::Pose);
@@ -137,7 +137,7 @@ namespace Client {
     Rendering::BoneMeshInstanceHandle getBoneMeshInstanceHandle(EntityHandle entity) {
       static_assert(sizeof(Rendering::BoneMeshInstanceHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
-        Animation::PoseIndex boneMeshInstanceHandle;
+        Animation::PoseHandle boneMeshInstanceHandle;
         ComponentHandle genericHandle;
       } caster;
       caster.genericHandle = getComponent(entity, ComponentType::BoneMeshInstance);

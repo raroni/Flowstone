@@ -97,7 +97,7 @@ namespace Animation {
     );
   }
 
-  PoseIndex Animator::createPose(uint8_t skeletonID) {
+  PoseHandle Animator::createPose(uint8_t skeletonID) {
     skeletonIDs[instanceCount] = skeletonID;
     passed[instanceCount] = 0;
     animations[instanceCount] = 0;

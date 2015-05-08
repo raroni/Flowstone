@@ -4,7 +4,7 @@
 #include "Animation/Pose.h"
 #include "Animation/SkeletonHandle.h"
 #include "Animation/Registry.h"
-#include "Animation/PoseIndex.h"
+#include "Animation/PoseHandle.h"
 
 namespace Animation {
   class Animator {
@@ -19,7 +19,7 @@ namespace Animation {
       float *keyTimes,
       JointConfig *jointConfigs
     );
-    PoseIndex createPose(uint8_t skeletonID);
+    PoseHandle createPose(uint8_t skeletonID);
     void changeAnimation(uint8_t instanceID, uint8_t animation);
     void update(double timeDelta);
   private:

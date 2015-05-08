@@ -11,7 +11,7 @@ namespace Client {
   namespace RenderFeed {
     struct BoneBinding {
       uint8_t interpolation;
-      Animation::PoseIndex pose;
+      Animation::PoseHandle pose;
       Rendering::BoneMeshInstanceHandle mesh;
     };
 
@@ -31,7 +31,7 @@ namespace Client {
       }
     }
 
-    uint16_t createBoneMeshFeed(InterpolationHandle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
+    uint16_t createBoneMeshFeed(InterpolationHandle interpolation, Animation::PoseHandle pose, Rendering::BoneMeshInstanceHandle mesh) {
       BoneBinding binding;
       binding.interpolation = interpolation;
       binding.mesh = mesh;
