@@ -91,8 +91,8 @@ namespace Client {
       Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);
 
-      Rendering::renderer.initialize();
-      Rendering::renderer.updateResolution({ resolution.width, resolution.height });
+      Rendering::Renderer::initialize();
+      Rendering::Renderer::updateResolution({ resolution.width, resolution.height });
       flow.initialize();
 
       Net::initialize();
@@ -131,7 +131,7 @@ namespace Client {
       flow.update(timeDelta, keyboard);
       Carrier::update(timeDelta);
 
-      Rendering::renderer.draw();
+      Rendering::Renderer::draw();
 
       Net::dispatch();
 

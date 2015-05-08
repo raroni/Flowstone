@@ -59,16 +59,16 @@ namespace Client {
     info.indexCount = sizeof(indices)/sizeof(uint16_t);
     info.shapeCount = 2;
 
-    meshIndex = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
+    meshIndex = Rendering::Renderer::createStaticMesh(info, vertices, indices, shapes);
   }
 
   void TorchManager::create(float x, float z) {
-    Rendering::PointLightHandle light = Rendering::renderer.createPointLight();
-    Rendering::renderer.updatePointLightPosition(light, { x, woodHeight + fireHeight*0.5f, z });
+    Rendering::PointLightHandle light = Rendering::Renderer::createPointLight();
+    Rendering::Renderer::updatePointLightPosition(light, { x, woodHeight + fireHeight*0.5f, z });
 
-    Rendering::StaticMeshInstanceHandle mesh = Rendering::renderer.createStaticMeshInstance(meshIndex);
+    Rendering::StaticMeshInstanceHandle mesh = Rendering::Renderer::createStaticMeshInstance(meshIndex);
     Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
 
-    Rendering::renderer.updateStaticMeshTransform(mesh, transform);
+    Rendering::Renderer::updateStaticMeshTransform(mesh, transform);
   }
 }

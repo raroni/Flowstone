@@ -71,7 +71,7 @@ namespace Client {
         Rendering::BoneMeshInstanceHandle instanceHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.instanceHandle = Rendering::renderer.createBoneMeshInstance(mesh);
+      caster.instanceHandle = Rendering::Renderer::createBoneMeshInstance(mesh);
       linkComponent(entity, ComponentType::BoneMeshInstance, caster.genericHandle);
       return caster.instanceHandle;
     }
@@ -81,7 +81,7 @@ namespace Client {
         Rendering::StaticMeshInstanceHandle instanceHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.instanceHandle = Rendering::renderer.createStaticMeshInstance(mesh);
+      caster.instanceHandle = Rendering::Renderer::createStaticMeshInstance(mesh);
       linkComponent(entity, ComponentType::StaticMeshInstance, caster.genericHandle);
       return caster.instanceHandle;
     }

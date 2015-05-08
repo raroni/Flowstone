@@ -198,7 +198,7 @@ namespace Client {
         35, 39, 34, 39, 38, 34,  // bottom
       };
 
-      characterMesh = Rendering::renderer.createBoneMesh(
+      characterMesh = Rendering::Renderer::createBoneMesh(
         vertices,
         sizeof(vertices)/sizeof(Rendering::BoneVertex),
         indices,
@@ -213,7 +213,7 @@ namespace Client {
       updateLightDirection();
 
       Quanta::Vector3 secondaryLightDirection = Quanta::Vector3(2, 1, 5).getNormalized()*-1;
-      Rendering::renderer.setSecondaryLightDirection(secondaryLightDirection);
+      Rendering::Renderer::setSecondaryLightDirection(secondaryLightDirection);
 
       configureAnimation();
       configureRenderer();
@@ -236,7 +236,7 @@ namespace Client {
       DirectionGroup monsterDirectionGroup = { 0, 1 };
       monsterDirectionGroupHandle = Direction::createGroup(&monsterDirectionGroup);
 
-      Quanta::Transform& camera = Rendering::renderer.getCameraTransform();
+      Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();
       CameraControl::initialize(&camera);
 
       if(playMode == PlayMode::Local) {
@@ -324,7 +324,7 @@ namespace Client {
       info.indexCount = sizeof(indices)/sizeof(uint16_t);
       info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
 
-      greenTreeMesh = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
+      greenTreeMesh = Rendering::Renderer::createStaticMesh(info, vertices, indices, shapes);
     }
 
     void PlayState::configureRedTree() {
@@ -386,14 +386,14 @@ namespace Client {
       info.indexCount = sizeof(indices)/sizeof(uint16_t);
       info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
 
-      redTreeMesh = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
+      redTreeMesh = Rendering::Renderer::createStaticMesh(info, vertices, indices, shapes);
     }
 
     void PlayState::setupTree(float x, float z, Rendering::StaticMeshIndex mesh) {
       EntityHandle tree = Database::createEntity();
       Rendering::StaticMeshInstanceHandle instance = Database::createStaticMeshInstance(tree, mesh);
       Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
-      Rendering::renderer.updateStaticMeshTransform(instance, transform);
+      Rendering::Renderer::updateStaticMeshTransform(instance, transform);
     }
 
     void PlayState::setupGround() {
@@ -426,8 +426,8 @@ namespace Client {
       info.indexCount = sizeof(indices)/sizeof(uint16_t);
       info.shapeCount = 1;
 
-      Rendering::StaticMeshIndex mesh = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
-      Rendering::renderer.createStaticMeshInstance(mesh);
+      Rendering::StaticMeshIndex mesh = Rendering::Renderer::createStaticMesh(info, vertices, indices, shapes);
+      Rendering::Renderer::createStaticMeshInstance(mesh);
     }
 
     void PlayState::setupMonster(EntityHandle simEntityHandle) {
@@ -477,7 +477,7 @@ namespace Client {
 
       processSimulationEvents();
 
-      CameraControl::update(timeDelta, &keyboard, &Rendering::renderer.getCameraTransform());
+      CameraControl::update(timeDelta, &keyboard, &Rendering::Renderer::getCameraTransform());
       updateAtmosphereColor();
       updateLightDirection();
       RenderFeed::update();
@@ -490,7 +490,7 @@ namespace Client {
     }
 
     void PlayState::updateAtmosphereColor() {
-      Rendering::renderer.setPrimaryLightColor(atmosphereColor.get(timeOfDay));
+      Rendering::Renderer::setPrimaryLightColor(atmosphereColor.get(timeOfDay));
     }
 
     void PlayState::updateLightDirection() {
@@ -503,7 +503,7 @@ namespace Client {
         Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
         Quanta::Vector3 sunrise(-1, 0, -0.5);
         Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
-        Rendering::renderer.setPrimaryLightDirection(sunPosition*-1);
+        Rendering::Renderer::setPrimaryLightDirection(sunPosition*-1);
       } else {
         float progress;
         if(timeOfDay < 0.5) {
@@ -517,7 +517,7 @@ namespace Client {
         Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
         Quanta::Vector3 sunrise(-1, 0, -0.5);
         Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
-        Rendering::renderer.setPrimaryLightDirection(sunPosition*-1);
+        Rendering::Renderer::setPrimaryLightDirection(sunPosition*-1);
       }
     }
   }

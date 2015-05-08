@@ -25,7 +25,7 @@ namespace Client {
       const Animation::Pose *poses = Animation::Animator::getWorldPoses();
       for(uint16_t i=0; i<boneBindings.count; ++i) {
         BoneBinding &binding = boneBindings.list[i];
-        Rendering::BoneMeshInstance instance = Rendering::renderer.getBoneMeshInstance(binding.mesh);
+        Rendering::BoneMeshInstance instance = Rendering::Renderer::getBoneMeshInstance(binding.mesh);
         (*instance.transform) = interpolatedTransforms[binding.interpolation];
         (*instance.pose) = poses[binding.pose];
       }
