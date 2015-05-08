@@ -75,6 +75,16 @@ namespace Client {
       return caster.instanceHandle;
     }
 
+    Rendering::StaticMeshInstanceHandle createStaticMeshInstance(::Database::EntityHandle entity, Rendering::StaticMeshIndex mesh) {
+      union {
+        Rendering::StaticMeshInstanceHandle instanceHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.instanceHandle = Rendering::renderer.createStaticMeshInstance(mesh);
+      linkComponent(entity, ComponentType::StaticMeshInstance, caster.genericHandle);
+      return caster.instanceHandle;
+    }
+
     void createRenderFeed(EntityHandle entity) {
       assert(hasComponent(entity, ComponentType::Interpolation));
       assert(hasComponent(entity, ComponentType::Pose));

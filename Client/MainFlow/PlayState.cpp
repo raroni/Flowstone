@@ -384,7 +384,8 @@ namespace Client {
     }
 
     void PlayState::setupTree(float x, float z, Rendering::StaticMeshIndex mesh) {
-      Rendering::StaticMeshInstanceHandle instance = Rendering::renderer.createStaticMeshInstance(mesh);
+      EntityHandle tree = Database::createEntity();
+      Rendering::StaticMeshInstanceHandle instance = Database::createStaticMeshInstance(tree, mesh);
       Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
       Rendering::renderer.updateStaticMeshTransform(instance, transform);
     }

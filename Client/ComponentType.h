@@ -5,6 +5,7 @@ namespace Client {
   enum class ComponentType : uint8_t {
     Interpolation,
     BoneMeshInstance,
+    StaticMeshInstance,
     Pose,
     RenderFeed,
 
