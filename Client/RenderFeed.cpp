@@ -5,10 +5,10 @@
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Client/MathConversion.h"
-#include "RenderFeeder.h"
+#include "RenderFeed.h"
 
 namespace Client {
-  namespace RenderFeeder {
+  namespace RenderFeed {
     struct BoneBinding {
       uint8_t interpolation;
       Animation::PoseIndex pose;

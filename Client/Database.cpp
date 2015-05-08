@@ -4,7 +4,7 @@
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
 #include "Client/Direction.h"
-#include "Client/RenderFeeder.h"
+#include "Client/RenderFeed.h"
 #include "Client/ComponentType.h"
 #include "Client/Database.h"
 
@@ -98,7 +98,7 @@ namespace Client {
       Interpolation::Handle interpolationHandle = getInterpolation(entity);
       Animation::PoseIndex poseHandle = getPoseHandle(entity);
       Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
-      caster.renderFeedHandle = RenderFeeder::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
+      caster.renderFeedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
       linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
       //return caster.renderFeedHandle;
     }

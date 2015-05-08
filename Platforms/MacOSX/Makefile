@@ -74,7 +74,7 @@ USER_SOURCES_CPP =\
 	../../Client/PingPong.cpp\
 	../../Client/Carrier.cpp\
 	../../Client/Keyboard.cpp\
-	../../Client/RenderFeeder.cpp\
+	../../Client/RenderFeed.cpp\
 	../../Simulation/Control.cpp\
 	../../Simulation/Steering/SteeringSystem.cpp\
 	../../Simulation/Trees.cpp\
