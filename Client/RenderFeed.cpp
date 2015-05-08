@@ -1,9 +1,9 @@
 #include "Physics/Engine.h"
 #include "Simulation/PhysicsHack.h"
-#include "Interpolation/Interpolater.h"
 #include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
+#include "Client/Interpolater.h"
 #include "Client/MathConversion.h"
 #include "RenderFeed.h"
 
@@ -21,7 +21,7 @@ namespace Client {
     } boneBindings;
 
     void update() {
-      const Quanta::Matrix4* interpolatedTransforms = Interpolation::interpolater.getTransforms();
+      const Quanta::Matrix4* interpolatedTransforms = interpolater.getTransforms();
       const Animation::Pose *poses = Animation::animator.getWorldPoses();
       for(uint16_t i=0; i<boneBindings.count; ++i) {
         BoneBinding &binding = boneBindings.list[i];
@@ -31,7 +31,7 @@ namespace Client {
       }
     }
 
-    uint16_t createBoneMeshFeed(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
+    uint16_t createBoneMeshFeed(InterpolationHandle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
       BoneBinding binding;
       binding.interpolation = interpolation;
       binding.mesh = mesh;

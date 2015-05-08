@@ -4,9 +4,7 @@
 #include <stdint.h>
 
 namespace Client {
-  namespace Interpolation {
-    typedef uint16_t Handle;
-  }
+  typedef uint16_t InterpolationHandle;
 }
 
 #endif

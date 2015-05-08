@@ -14,7 +14,7 @@
 #include "Client/AtmosphereColor.h"
 #include "Client/TorchManager.h"
 #include "Client/PlayMode.h"
-#include "Client/Interpolation/Interpolater.h"
+#include "Client/Interpolater.h"
 
 namespace Client {
   namespace MainFlow {

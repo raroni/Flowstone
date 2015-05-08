@@ -70,7 +70,7 @@ USER_SOURCES_CPP =\
 	../../Client/TorchManager.cpp\
 	../../Client/MainFlow/PlayState.cpp\
 	../../Client/AtmosphereColor.cpp\
-	../../Client/Interpolation/Interpolater.cpp\
+	../../Client/Interpolater.cpp\
 	../../Client/PingPong.cpp\
 	../../Client/Carrier.cpp\
 	../../Client/Keyboard.cpp\

@@ -1,8 +1,8 @@
 #include "Database/EntityManager.h"
 #include "Rendering/Renderer.h"
-#include "Interpolation/Interpolater.h"
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
+#include "Client/Interpolater.h"
 #include "Client/Direction.h"
 #include "Client/RenderFeed.h"
 #include "Client/ComponentType.h"
@@ -56,12 +56,12 @@ namespace Client {
       return caster.poseHandle;
     }
 
-    Interpolation::Handle createInterpolation(::Database::EntityHandle entity, Physics::BodyHandle physicsBody) {
+    InterpolationHandle createInterpolation(::Database::EntityHandle entity, Physics::BodyHandle physicsBody) {
       union {
-        Interpolation::Handle interpolationHandle;
+        InterpolationHandle interpolationHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.interpolationHandle = Interpolation::interpolater.createInterpolation(physicsBody);
+      caster.interpolationHandle = interpolater.createInterpolation(physicsBody);
       linkComponent(entity, ComponentType::Interpolation, caster.genericHandle);
       return caster.interpolationHandle;
     }
@@ -95,7 +95,7 @@ namespace Client {
         uint16_t renderFeedHandle; // todo: Use proper type instead of just generic uint16_t
         ComponentHandle genericHandle;
       } caster;
-      Interpolation::Handle interpolationHandle = getInterpolation(entity);
+      InterpolationHandle interpolationHandle = getInterpolation(entity);
       Animation::PoseIndex poseHandle = getPoseHandle(entity);
       Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
       caster.renderFeedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
@@ -114,10 +114,10 @@ namespace Client {
       return caster.directionHandle;
     }
 
-    Interpolation::Handle getInterpolation(EntityHandle entity) {
-      static_assert(sizeof(Interpolation::Handle) == sizeof(ComponentHandle), "Handle size must be the same.");
+    InterpolationHandle getInterpolation(EntityHandle entity) {
+      static_assert(sizeof(InterpolationHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
-        Interpolation::Handle interpolationHandle;
+        InterpolationHandle interpolationHandle;
         ComponentHandle genericHandle;
       } caster;
       caster.genericHandle = getComponent(entity, ComponentType::Interpolation);
