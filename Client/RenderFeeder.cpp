@@ -5,12 +5,12 @@
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
 #include "Client/MathConversion.h"
-#include "RendererFeeder.h"
+#include "RenderFeeder.h"
 
 namespace Client {
-  RendererFeeder rendererFeeder;
+  RenderFeeder renderFeeder;
 
-  void RendererFeeder::update() {
+  void RenderFeeder::update() {
     const Quanta::Matrix4* interpolatedTransforms = Interpolation::interpolater.getTransforms();
     const Animation::Pose *poses = Animation::animator.getWorldPoses();
     for(uint16_t i=0; i<boneBindings.count; ++i) {
@@ -21,7 +21,7 @@ namespace Client {
     }
   }
 
-  uint16_t RendererFeeder::setupBoneMesh(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
+  uint16_t RenderFeeder::setupBoneMesh(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
     BoneBinding binding;
     binding.interpolation = interpolation;
     binding.mesh = mesh;

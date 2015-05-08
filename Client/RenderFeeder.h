@@ -7,7 +7,7 @@
 #include "Rendering/BoneMeshInstanceHandle.h"
 
 namespace Client {
-  class RendererFeeder {
+  class RenderFeeder {
   public:
     uint16_t setupBoneMesh(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
     void update();
@@ -23,7 +23,7 @@ namespace Client {
     } boneBindings;
   };
 
-  extern RendererFeeder rendererFeeder;
+  extern RenderFeeder renderFeeder;
 }
 
 #endif

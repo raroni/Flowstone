@@ -11,7 +11,7 @@
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
 #include "Client/Direction.h"
-#include "Client/RendererFeeder.h"
+#include "Client/RenderFeeder.h"
 #include "Client/CameraControl.h"
 #include "Client/LocalSimulationDriver.h"
 #include "Client/Database.h"
@@ -480,7 +480,7 @@ namespace Client {
       CameraControl::update(timeDelta, &keyboard, &Rendering::renderer.getCameraTransform());
       updateAtmosphereColor();
       updateLightDirection();
-      rendererFeeder.update();
+      renderFeeder.update();
       Direction::update();
       Animation::animator.update(timeDelta);
     }
