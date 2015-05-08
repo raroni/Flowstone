@@ -98,7 +98,7 @@ namespace Client {
       Interpolation::Handle interpolationHandle = getInterpolation(entity);
       Animation::PoseIndex poseHandle = getPoseHandle(entity);
       Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
-      caster.renderFeedHandle = renderFeeder.setupBoneMesh(interpolationHandle, poseHandle, boneMeshInstanceHandle);
+      caster.renderFeedHandle = RenderFeeder::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
       linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
       //return caster.renderFeedHandle;
     }

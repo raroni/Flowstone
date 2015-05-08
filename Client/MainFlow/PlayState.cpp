@@ -480,7 +480,7 @@ namespace Client {
       CameraControl::update(timeDelta, &keyboard, &Rendering::renderer.getCameraTransform());
       updateAtmosphereColor();
       updateLightDirection();
-      renderFeeder.update();
+      RenderFeeder::update();
       Direction::update();
       Animation::animator.update(timeDelta);
     }

@@ -7,23 +7,10 @@
 #include "Rendering/BoneMeshInstanceHandle.h"
 
 namespace Client {
-  class RenderFeeder {
-  public:
-    uint16_t setupBoneMesh(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
+  namespace RenderFeeder {
+    uint16_t createBoneMeshFeed(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
     void update();
-  private:
-    struct BoneBinding {
-      uint8_t interpolation;
-      Animation::PoseIndex pose;
-      Rendering::BoneMeshInstanceHandle mesh;
-    };
-    struct {
-      BoneBinding list[128];
-      uint8_t count = 0;
-    } boneBindings;
-  };
-
-  extern RenderFeeder renderFeeder;
+  }
 }
 
 #endif
