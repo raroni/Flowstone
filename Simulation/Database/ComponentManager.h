@@ -8,8 +8,6 @@
 
 namespace Simulation {
   namespace ComponentManager {
-    extern const uint8_t max;
-
     void link(EntityHandle entity, ComponentType type, ComponentHandle componentHandle);
     void unlink(EntityHandle entity, ComponentType type);
     ComponentHandle get(EntityHandle entity, ComponentType type);
