@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 namespace Rendering {
-  typedef uint16_t BoneMeshInstanceHandle;
+  typedef uint16_t BoneMeshDrawHandle;
 }
 
 #endif

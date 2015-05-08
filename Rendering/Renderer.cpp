@@ -41,8 +41,8 @@ namespace Rendering {
       worldRenderer.setPrimaryLightColor(color);
     }
 
-    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceHandle handle) {
-      return worldRenderer.getBoneMeshInstance(handle);
+    BoneMeshDraw getBoneMeshDraw(BoneMeshDrawHandle handle) {
+      return worldRenderer.getBoneMeshDraw(handle);
     }
 
     PointLightHandle createPointLight() {
@@ -53,7 +53,7 @@ namespace Rendering {
       worldRenderer.updatePointLightPosition(handle, position);
     }
 
-    void updateStaticMeshTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform) {
+    void updateStaticMeshTransform(StaticMeshDrawHandle handle, const Quanta::Matrix4 &transform) {
       worldRenderer.updateStaticMeshTransform(handle, transform);
     }
 
@@ -65,8 +65,8 @@ namespace Rendering {
       return worldRenderer.createStaticMesh(info, vertices, indices, shapes);
     }
 
-    StaticMeshInstanceHandle createStaticMeshInstance(StaticMeshIndex mesh) {
-      return worldRenderer.createStaticMeshInstance(mesh);
+    StaticMeshDrawHandle createStaticMeshDraw(StaticMeshIndex mesh) {
+      return worldRenderer.createStaticMeshDraw(mesh);
     }
 
     Quanta::Transform& getCameraTransform() {
@@ -79,8 +79,8 @@ namespace Rendering {
       RenderTargets::handleResolutionChange();
     }
 
-    BoneMeshInstanceHandle createBoneMeshInstance(BoneMeshIndex meshIndex) {
-      return worldRenderer.createBoneMeshInstance(meshIndex);
+    BoneMeshDrawHandle createBoneMeshDraw(BoneMeshIndex meshIndex) {
+      return worldRenderer.createBoneMeshDraw(meshIndex);
     }
 
     void dispatch() {

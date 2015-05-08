@@ -101,7 +101,7 @@ USER_SOURCES_CPP =\
 	../../Rendering/WorldRenderer.cpp\
 	../../Rendering/BoneMeshRegistry.cpp\
 	../../Rendering/Programs.cpp\
-	../../Rendering/BoneMeshInstances.cpp\
+	../../Rendering/BoneMeshDraws.cpp\
 	../../Rendering/CommandStream.cpp\
 	../../Rendering/DrawQueue.cpp\
 	../../Rendering/Uniforms.cpp\
@@ -111,7 +111,7 @@ USER_SOURCES_CPP =\
 	../../Rendering/FullscreenQuad.cpp\
 	../../Rendering/Textures.cpp\
 	../../Rendering/StaticMeshes.cpp\
-	../../Rendering/StaticMeshInstances.cpp\
+	../../Rendering/StaticMeshDraws.cpp\
 	../../Rendering/MeshHelper.cpp\
 	../../Rendering/Culler.cpp\
 	../../Rendering/LightTransforms.cpp\

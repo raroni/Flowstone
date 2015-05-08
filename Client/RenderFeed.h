@@ -3,13 +3,13 @@
 
 #include "InterpolationHandle.h"
 #include "Animation/PoseHandle.h"
-#include "Rendering/StaticMeshInstanceHandle.h"
-#include "Rendering/BoneMeshInstanceHandle.h"
+#include "Rendering/StaticMeshDrawHandle.h"
+#include "Rendering/BoneMeshDrawHandle.h"
 #include "Client/BoneMeshRenderFeedHandle.h"
 
 namespace Client {
   namespace RenderFeed {
-    BoneMeshRenderFeedHandle createBoneMeshFeed(InterpolationHandle interpolation, Animation::PoseHandle pose, Rendering::BoneMeshInstanceHandle mesh);
+    BoneMeshRenderFeedHandle createBoneMeshFeed(InterpolationHandle interpolation, Animation::PoseHandle pose, Rendering::BoneMeshDrawHandle mesh);
     void update();
   }
 }

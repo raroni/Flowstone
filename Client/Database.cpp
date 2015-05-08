@@ -66,30 +66,30 @@ namespace Client {
       return caster.interpolationHandle;
     }
 
-    Rendering::BoneMeshInstanceHandle createBoneMeshInstance(EntityHandle entity, Rendering::BoneMeshIndex mesh) {
+    Rendering::BoneMeshDrawHandle createBoneMeshDraw(EntityHandle entity, Rendering::BoneMeshIndex mesh) {
       union {
-        Rendering::BoneMeshInstanceHandle instanceHandle;
+        Rendering::BoneMeshDrawHandle drawHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.instanceHandle = Rendering::Renderer::createBoneMeshInstance(mesh);
-      linkComponent(entity, ComponentType::BoneMeshInstance, caster.genericHandle);
-      return caster.instanceHandle;
+      caster.drawHandle = Rendering::Renderer::createBoneMeshDraw(mesh);
+      linkComponent(entity, ComponentType::BoneMeshDraw, caster.genericHandle);
+      return caster.drawHandle;
     }
 
-    Rendering::StaticMeshInstanceHandle createStaticMeshInstance(::Database::EntityHandle entity, Rendering::StaticMeshIndex mesh) {
+    Rendering::StaticMeshDrawHandle createStaticMeshDraw(::Database::EntityHandle entity, Rendering::StaticMeshIndex mesh) {
       union {
-        Rendering::StaticMeshInstanceHandle instanceHandle;
+        Rendering::StaticMeshDrawHandle drawHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.instanceHandle = Rendering::Renderer::createStaticMeshInstance(mesh);
-      linkComponent(entity, ComponentType::StaticMeshInstance, caster.genericHandle);
-      return caster.instanceHandle;
+      caster.drawHandle = Rendering::Renderer::createStaticMeshDraw(mesh);
+      linkComponent(entity, ComponentType::StaticMeshDraw, caster.genericHandle);
+      return caster.drawHandle;
     }
 
     BoneMeshRenderFeedHandle createRenderFeed(EntityHandle entity) {
       assert(hasComponent(entity, ComponentType::Interpolation));
       assert(hasComponent(entity, ComponentType::Pose));
-      assert(hasComponent(entity, ComponentType::BoneMeshInstance));
+      assert(hasComponent(entity, ComponentType::BoneMeshDraw));
 
       union {
         BoneMeshRenderFeedHandle feedHandle;
@@ -97,8 +97,8 @@ namespace Client {
       } caster;
       InterpolationHandle interpolationHandle = getInterpolation(entity);
       Animation::PoseHandle poseHandle = getPoseHandle(entity);
-      Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
-      caster.feedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshInstanceHandle);
+      Rendering::BoneMeshDrawHandle boneMeshDrawHandle = getBoneMeshDrawHandle(entity);
+      caster.feedHandle = RenderFeed::createBoneMeshFeed(interpolationHandle, poseHandle, boneMeshDrawHandle);
       linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
       return caster.feedHandle;
     }
@@ -134,14 +134,14 @@ namespace Client {
       return caster.poseHandle;
     }
 
-    Rendering::BoneMeshInstanceHandle getBoneMeshInstanceHandle(EntityHandle entity) {
-      static_assert(sizeof(Rendering::BoneMeshInstanceHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+    Rendering::BoneMeshDrawHandle getBoneMeshDrawHandle(EntityHandle entity) {
+      static_assert(sizeof(Rendering::BoneMeshDrawHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
-        Animation::PoseHandle boneMeshInstanceHandle;
+        Animation::PoseHandle boneMeshDrawHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.genericHandle = getComponent(entity, ComponentType::BoneMeshInstance);
-      return caster.boneMeshInstanceHandle;
+      caster.genericHandle = getComponent(entity, ComponentType::BoneMeshDraw);
+      return caster.boneMeshDrawHandle;
     }
   }
 }

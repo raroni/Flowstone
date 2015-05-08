@@ -6,7 +6,7 @@
 #include "Rendering/BoneMeshIndex.h"
 
 namespace Rendering {
-  struct BoneMeshInstance {
+  struct BoneMeshDraw {
     BoneMeshIndex *mesh;
     Quanta::Matrix4 *transform;
     Animation::Pose *pose;

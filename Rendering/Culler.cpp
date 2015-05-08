@@ -1,8 +1,8 @@
 #include "Rendering/CullGroupIndex.h"
 #include "Quanta/Math/Matrix4.h"
 #include "Rendering/DrawSet.h"
-#include "Rendering/BoneMeshInstances.h"
-#include "Rendering/StaticMeshInstances.h"
+#include "Rendering/BoneMeshDraws.h"
+#include "Rendering/StaticMeshDraws.h"
 #include "Rendering/PointLights.h"
 #include "Rendering/Culler.h"
 
@@ -59,17 +59,17 @@ namespace Rendering {
   void Culler::fillCullResult(const Quanta::Frustum &frustum) {
     cullGroupByTransform(
       frustum,
-      BoneMeshInstances::transforms,
-      BoneMeshInstances::boundingRadii,
-      BoneMeshInstances::getCount(),
+      BoneMeshDraws::transforms,
+      BoneMeshDraws::boundingRadii,
+      BoneMeshDraws::getCount(),
       CullGroupNames::Bone
     );
 
     cullGroupByTransform(
       frustum,
-      StaticMeshInstances::transforms,
-      StaticMeshInstances::boundingRadii,
-      StaticMeshInstances::getCount(),
+      StaticMeshDraws::transforms,
+      StaticMeshDraws::boundingRadii,
+      StaticMeshDraws::getCount(),
       CullGroupNames::Static
     );
 
@@ -87,9 +87,9 @@ namespace Rendering {
     for(uint16_t i=range.start; range.end>i; i++) {
       uint16_t index = result.indices[i];
       drawSet.boneSet.add(
-        BoneMeshInstances::transforms[index],
-        BoneMeshInstances::meshes[index],
-        BoneMeshInstances::poses[index]
+        BoneMeshDraws::transforms[index],
+        BoneMeshDraws::meshes[index],
+        BoneMeshDraws::poses[index]
       );
     }
 
@@ -97,8 +97,8 @@ namespace Rendering {
     for(uint16_t i=range.start; range.end>i; i++) {
       uint16_t index = result.indices[i];
       drawSet.staticSet.add(
-        StaticMeshInstances::transforms[index],
-        StaticMeshInstances::meshes[index]
+        StaticMeshDraws::transforms[index],
+        StaticMeshDraws::meshes[index]
       );
     }
 

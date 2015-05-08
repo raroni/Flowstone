@@ -7,12 +7,10 @@
 namespace Rendering {
   namespace Config {
     const uint8_t maxBoneMeshes = 64;
-    const uint16_t maxBoneMeshInstances = 512;
+    const uint16_t maxBoneMeshDraws = 512;
     const uint8_t maxStaticMeshes = 64;
-    const uint16_t maxStaticMeshInstances = 512;
+    const uint16_t maxStaticMeshDraws = 512;
     const uint16_t shadowMapSize = 512;
-    const uint8_t maxCulledBoneInstances = 128;
-    const uint8_t maxCulledStaticInstances = 64;
     const uint8_t cullGroupsCount = 3;
     const uint8_t maxPointLights = 32;
 

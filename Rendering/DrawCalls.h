@@ -2,7 +2,7 @@
 #define RENDERING_DRAW_CALLS_H
 
 #include "Animation/Pose.h"
-#include "Rendering/BoneMeshInstanceHandle.h"
+#include "Rendering/BoneMeshDrawHandle.h"
 #include "SysGFX/ObjectHandle.h"
 
 namespace Rendering {

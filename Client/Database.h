@@ -3,7 +3,7 @@
 
 #include "Physics/BodyHandle.h"
 #include "Database/EntityHandle.h"
-#include "Rendering/BoneMeshInstanceHandle.h"
+#include "Rendering/BoneMeshDrawHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Animation/PoseHandle.h"
 #include "Client/BoneMeshRenderFeedHandle.h"
@@ -17,13 +17,13 @@ namespace Client {
     ::Database::EntityHandle createEntity();
     Animation::PoseHandle createPose(::Database::EntityHandle entity, Animation::SkeletonHandle skeletonHandle);
     InterpolationHandle createInterpolation(::Database::EntityHandle entity, Physics::BodyHandle physicsBody);
-    Rendering::BoneMeshInstanceHandle createBoneMeshInstance(::Database::EntityHandle entity, Rendering::BoneMeshIndex mesh);
-    Rendering::StaticMeshInstanceHandle createStaticMeshInstance(::Database::EntityHandle entity, Rendering::StaticMeshIndex mesh);
+    Rendering::BoneMeshDrawHandle createBoneMeshDraw(::Database::EntityHandle entity, Rendering::BoneMeshIndex mesh);
+    Rendering::StaticMeshDrawHandle createStaticMeshDraw(::Database::EntityHandle entity, Rendering::StaticMeshIndex mesh);
     DirectionHandle createDirection(::Database::EntityHandle clientEntity, ::Database::EntityHandle simEntity, DirectionGroupHandle group);
     BoneMeshRenderFeedHandle createRenderFeed(::Database::EntityHandle entity);
     InterpolationHandle getInterpolation(::Database::EntityHandle entity);
     Animation::PoseHandle getPoseHandle(::Database::EntityHandle entity);
-    Rendering::BoneMeshInstanceHandle getBoneMeshInstanceHandle(::Database::EntityHandle entity);
+    Rendering::BoneMeshDrawHandle getBoneMeshDrawHandle(::Database::EntityHandle entity);
   }
 }
 

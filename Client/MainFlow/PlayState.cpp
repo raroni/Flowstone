@@ -391,9 +391,9 @@ namespace Client {
 
     void PlayState::setupTree(float x, float z, Rendering::StaticMeshIndex mesh) {
       EntityHandle tree = Database::createEntity();
-      Rendering::StaticMeshInstanceHandle instance = Database::createStaticMeshInstance(tree, mesh);
+      Rendering::StaticMeshDrawHandle draw = Database::createStaticMeshDraw(tree, mesh);
       Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
-      Rendering::Renderer::updateStaticMeshTransform(instance, transform);
+      Rendering::Renderer::updateStaticMeshTransform(draw, transform);
     }
 
     void PlayState::setupGround() {
@@ -427,7 +427,7 @@ namespace Client {
       info.shapeCount = 1;
 
       Rendering::StaticMeshIndex mesh = Rendering::Renderer::createStaticMesh(info, vertices, indices, shapes);
-      Rendering::Renderer::createStaticMeshInstance(mesh);
+      Rendering::Renderer::createStaticMeshDraw(mesh);
     }
 
     void PlayState::setupMonster(EntityHandle simEntityHandle) {
@@ -436,7 +436,7 @@ namespace Client {
 
       Database::createPose(clientEntityHandle, walkAnimationSkeleton);
       Database::createInterpolation(clientEntityHandle, body);
-      Database::createBoneMeshInstance(clientEntityHandle, characterMesh);
+      Database::createBoneMeshDraw(clientEntityHandle, characterMesh);
       Database::createRenderFeed(clientEntityHandle);
       Database::createDirection(clientEntityHandle, simEntityHandle, monsterDirectionGroupHandle);
     }

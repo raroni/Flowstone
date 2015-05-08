@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 namespace Rendering {
-  typedef uint16_t StaticMeshInstanceHandle;
+  typedef uint16_t StaticMeshDrawHandle;
 }
 
 #endif

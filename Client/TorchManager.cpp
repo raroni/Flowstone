@@ -66,7 +66,7 @@ namespace Client {
     Rendering::PointLightHandle light = Rendering::Renderer::createPointLight();
     Rendering::Renderer::updatePointLightPosition(light, { x, woodHeight + fireHeight*0.5f, z });
 
-    Rendering::StaticMeshInstanceHandle mesh = Rendering::Renderer::createStaticMeshInstance(meshIndex);
+    Rendering::StaticMeshDrawHandle mesh = Rendering::Renderer::createStaticMeshDraw(meshIndex);
     Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
 
     Rendering::Renderer::updateStaticMeshTransform(mesh, transform);

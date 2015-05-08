@@ -15,9 +15,9 @@
 #include "Rendering/Buffers.h"
 #include "Rendering/BufferName.h"
 #include "SysGFX/ClearBit.h"
-#include "Rendering/StaticMeshInstances.h"
+#include "Rendering/StaticMeshDraws.h"
 #include "Rendering/StaticMeshes.h"
-#include "Rendering/BoneMeshInstances.h"
+#include "Rendering/BoneMeshDraws.h"
 #include "Rendering/Frustum.h"
 #include "Rendering/WorldRenderer.h"
 
@@ -37,9 +37,9 @@ namespace Rendering {
     MergePass::primaryLightColor = color;
   }
 
-  BoneMeshInstanceHandle WorldRenderer::createBoneMeshInstance(BoneMeshIndex meshIndex) {
+  BoneMeshDrawHandle WorldRenderer::createBoneMeshDraw(BoneMeshIndex meshIndex) {
     BoneMesh mesh = boneMeshRegistry.get(meshIndex);
-    return BoneMeshInstances::create(meshIndex, mesh.boundingRadius);
+    return BoneMeshDraws::create(meshIndex, mesh.boundingRadius);
   }
 
   PointLightHandle WorldRenderer::createPointLight() {
@@ -50,21 +50,21 @@ namespace Rendering {
     PointLights::updatePosition(handle, position);
   }
 
-  BoneMeshInstance WorldRenderer::getBoneMeshInstance(BoneMeshInstanceHandle handle) {
-    return BoneMeshInstances::get(handle);
+  BoneMeshDraw WorldRenderer::getBoneMeshDraw(BoneMeshDrawHandle handle) {
+    return BoneMeshDraws::get(handle);
   }
 
   StaticMeshIndex WorldRenderer::createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes) {
     return StaticMeshes::create(info, vertices, indices, shapes);
   }
 
-  void WorldRenderer::updateStaticMeshTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform) {
-    StaticMeshInstances::updateTransform(handle, transform);
+  void WorldRenderer::updateStaticMeshTransform(StaticMeshDrawHandle handle, const Quanta::Matrix4 &transform) {
+    StaticMeshDraws::updateTransform(handle, transform);
   }
 
-  StaticMeshInstanceHandle WorldRenderer::createStaticMeshInstance(StaticMeshIndex index) {
+  StaticMeshDrawHandle WorldRenderer::createStaticMeshDraw(StaticMeshIndex index) {
     const StaticMesh& mesh = StaticMeshes::get(index);
-    return StaticMeshInstances::create(index, mesh.boundingRadius);
+    return StaticMeshDraws::create(index, mesh.boundingRadius);
   }
 
   void WorldRenderer::updateResolution(Resolution resolution) {

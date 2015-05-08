@@ -3,10 +3,10 @@
 
 #include "Quanta/Geometry/Transform.h"
 #include "Rendering/BoneMeshIndex.h"
-#include "Rendering/BoneMeshInstance.h"
-#include "Rendering/BoneMeshInstanceHandle.h"
+#include "Rendering/BoneMeshDraw.h"
+#include "Rendering/BoneMeshDrawHandle.h"
 #include "Rendering/StaticVertex.h"
-#include "Rendering/StaticMeshInstanceHandle.h"
+#include "Rendering/StaticMeshDrawHandle.h"
 #include "Rendering/PointLightHandle.h"
 #include "Rendering/Resolution.h"
 #include "Rendering/StaticMeshIndex.h"
@@ -18,14 +18,14 @@ namespace Rendering {
   namespace Renderer {
     void initialize();
     BoneMeshIndex createBoneMesh(const BoneVertex *vertices, const uint16_t vertexCount, const uint16_t *indices, const uint16_t indexCount);
-    BoneMeshInstanceHandle createBoneMeshInstance(BoneMeshIndex meshIndex);
+    BoneMeshDrawHandle createBoneMeshDraw(BoneMeshIndex meshIndex);
     StaticMeshIndex createStaticMesh(MeshInfo info, const StaticVertex *vertices, const uint16_t *indices, const Shape *shapes);
-    StaticMeshInstanceHandle createStaticMeshInstance(StaticMeshIndex mesh);
+    StaticMeshDrawHandle createStaticMeshDraw(StaticMeshIndex mesh);
     PointLightHandle createPointLight();
     void updatePointLightPosition(PointLightHandle handle, const Quanta::Vector3 &position);
-    BoneMeshInstance getBoneMeshInstance(BoneMeshInstanceHandle handle);
+    BoneMeshDraw getBoneMeshDraw(BoneMeshDrawHandle handle);
     void setPrimaryLightColor(Quanta::Vector3 color);
-    void updateStaticMeshTransform(StaticMeshInstanceHandle handle, const Quanta::Matrix4 &transform);
+    void updateStaticMeshTransform(StaticMeshDrawHandle handle, const Quanta::Matrix4 &transform);
     void draw();
     Quanta::Transform& getCameraTransform();
     void updateResolution(Resolution resolution);

@@ -1,8 +1,8 @@
 #ifndef RENDERING_CULL_RESULT_H
 #define RENDERING_CULL_RESULT_H
 
-#include "Rendering/BoneMeshInstanceHandle.h"
-#include "Rendering/StaticMeshInstanceHandle.h"
+#include "Rendering/BoneMeshDrawHandle.h"
+#include "Rendering/StaticMeshDrawHandle.h"
 #include "Rendering/CullResultRange.h"
 #include "Rendering/CullGroupIndex.h"
 #include "Rendering/Config.h"
