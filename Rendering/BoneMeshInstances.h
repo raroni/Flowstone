@@ -8,7 +8,7 @@
 
 namespace Rendering {
   namespace BoneMeshInstances {
-    extern Client::Pose poses[Config::maxBoneMeshInstances];
+    extern Animation::Pose poses[Config::maxBoneMeshInstances];
     extern BoneMeshIndex meshes[Config::maxBoneMeshInstances];
     extern float boundingRadii[Config::maxBoneMeshInstances];
     extern Quanta::Matrix4 transforms[Config::maxBoneMeshInstances];

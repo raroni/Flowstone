@@ -4,7 +4,6 @@
 #include "Quanta/Math/Matrix4.h"
 #include "Quanta/Math/Quaternion.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Client/Pose.h"
 #include "Animation/Registry.h"
 #include "Animation/Animator.h"
 
@@ -18,7 +17,7 @@ namespace Animation {
       float rest = passed[instanceIndex]-durations[instanceIndex];
       float progress = passed[instanceIndex]/durations[instanceIndex];
       progress = Quanta::min(progress, 1.0f);
-      Client::Pose *pose = &localPoses[instanceIndex];
+      Pose *pose = &localPoses[instanceIndex];
       for(uint8_t boneIndex=0; bonesCount>boneIndex; boneIndex++) {
         JointTransform &origin = originTransforms[transformationOffset+boneIndex];
         JointTransform &current = currentTransforms[transformationOffset+boneIndex];
@@ -60,8 +59,8 @@ namespace Animation {
   void Animator::updateGlobalPoses() {
     for(uint8_t instanceIndex=0; instanceCount>instanceIndex; instanceIndex++) {
       uint8_t skeletonID = skeletonIDs[instanceIndex];
-      Client::Pose *worldPose = &worldPoses[instanceIndex];
-      Client::Pose *localPose = &localPoses[instanceIndex];
+      Pose *worldPose = &worldPoses[instanceIndex];
+      Pose *localPose = &localPoses[instanceIndex];
       worldPose->joints[0] = localPoses->joints[0];
       const uint8_t *parents = registry.getJointParentIndices(skeletonID);
       uint8_t bonesCount = registry.getBonesCount(skeletonID);
@@ -72,7 +71,7 @@ namespace Animation {
     }
   }
 
-  const Client::Pose* Animator::getWorldPoses() const {
+  const Pose* Animator::getWorldPoses() const {
     return worldPoses;
   }
 

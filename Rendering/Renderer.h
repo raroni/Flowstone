@@ -2,7 +2,6 @@
 #define RENDERING_RENDERER_H
 
 #include "Quanta/Geometry/Transform.h"
-#include "Client/Pose.h"
 #include "Rendering/WorldRenderer.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/Resolution.h"

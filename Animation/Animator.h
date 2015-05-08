@@ -1,14 +1,14 @@
 #ifndef ANIMATION_ANIMATOR_H
 #define ANIMATION_ANIMATOR_H
 
-#include "Client/Pose.h"
+#include "Animation/Pose.h"
 #include "Animation/Registry.h"
 #include "Animation/PoseIndex.h"
 
 namespace Animation {
   class Animator {
   public:
-    const Client::Pose* getWorldPoses() const;
+    const Pose* getWorldPoses() const;
     uint8_t createSkeleton(
       uint8_t *jointParentIndices,
       uint8_t jointParentIndicesLength,
@@ -33,8 +33,8 @@ namespace Animation {
     JointTransform originTransforms[32*8];
     JointTransform currentTransforms[32*8];
     JointTransform targetTransforms[32*8];
-    Client::Pose localPoses[32];
-    Client::Pose worldPoses[32];
+    Pose localPoses[32];
+    Pose worldPoses[32];
     void updateLocalPoses(double timeDelta);
     void updateGlobalPoses();
   };

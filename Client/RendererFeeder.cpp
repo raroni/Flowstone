@@ -18,7 +18,7 @@ namespace Client {
 
   void RendererFeeder::update() {
     const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
-    const Pose *poses = animator.getWorldPoses();
+    const Animation::Pose *poses = animator.getWorldPoses();
     for(uint16_t i=0; i<boneBindings.count; ++i) {
       BoneBinding &binding = boneBindings.list[i];
       Rendering::BoneMeshInstance instance = renderer.getBoneMeshInstance(binding.mesh);

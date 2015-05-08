@@ -21,8 +21,8 @@ namespace Client {
     bool terminationRequested = false;
     SysThread::Mutex terminateMutex;
     struct {
-      const uint16_t width = 800;
-      const uint16_t height = 600;
+      const uint16_t width = 600;
+      const uint16_t height = 400;
     } resolution;
     void readNet();
     void updateKeyboard();
