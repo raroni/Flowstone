@@ -8,6 +8,8 @@
 #include "RendererFeeder.h"
 
 namespace Client {
+  RendererFeeder rendererFeeder;
+
   void RendererFeeder::update() {
     const Quanta::Matrix4* interpolatedTransforms = Interpolation::interpolater.getTransforms();
     const Animation::Pose *poses = Animation::animator.getWorldPoses();
@@ -19,12 +21,13 @@ namespace Client {
     }
   }
 
-  void RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
+  uint16_t RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
     BoneBinding binding;
     binding.interpolation = interpolation;
     binding.mesh = mesh;
     binding.pose = pose;
     boneBindings.list[boneBindings.count] = binding;
     boneBindings.count++;
+    return 0; // todo: fix
   }
 }

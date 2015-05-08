@@ -6,6 +6,7 @@ namespace Client {
     Interpolation,
     BoneMeshInstance,
     Pose,
+    RenderFeed,
 
     Count
   };

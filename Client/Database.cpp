@@ -3,6 +3,7 @@
 #include "Interpolation/Interpolater.h"
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
+#include "Client/RendererFeeder.h"
 #include "Client/ComponentType.h"
 #include "Client/Database.h"
 
@@ -72,6 +73,53 @@ namespace Client {
       caster.instanceHandle = Rendering::renderer.createBoneMeshInstance(mesh);
       linkComponent(entity, ComponentType::BoneMeshInstance, caster.genericHandle);
       return caster.instanceHandle;
+    }
+
+    void createRenderFeed(EntityHandle entity) {
+      assert(hasComponent(entity, ComponentType::Interpolation));
+      assert(hasComponent(entity, ComponentType::Pose));
+      assert(hasComponent(entity, ComponentType::BoneMeshInstance));
+
+      union {
+        uint16_t renderFeedHandle; // todo: Use proper type instead of just generic uint16_t
+        ComponentHandle genericHandle;
+      } caster;
+      Interpolation::Handle interpolationHandle = getInterpolation(entity);
+      Animation::PoseIndex poseHandle = getPoseHandle(entity);
+      Rendering::BoneMeshInstanceHandle boneMeshInstanceHandle = getBoneMeshInstanceHandle(entity);
+      caster.renderFeedHandle = rendererFeeder.setupBoneMesh(interpolationHandle, poseHandle, boneMeshInstanceHandle);
+      linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
+      //return caster.renderFeedHandle;
+    }
+
+    Interpolation::Handle getInterpolation(EntityHandle entity) {
+      static_assert(sizeof(Interpolation::Handle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        Interpolation::Handle interpolationHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entity, ComponentType::Interpolation);
+      return caster.interpolationHandle;
+    }
+
+    Animation::PoseIndex getPoseHandle(EntityHandle entity) {
+      static_assert(sizeof(Animation::PoseIndex) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        Animation::PoseIndex poseHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entity, ComponentType::Pose);
+      return caster.poseHandle;
+    }
+
+    Rendering::BoneMeshInstanceHandle getBoneMeshInstanceHandle(EntityHandle entity) {
+      static_assert(sizeof(Rendering::BoneMeshInstanceHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        Animation::PoseIndex boneMeshInstanceHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entity, ComponentType::BoneMeshInstance);
+      return caster.boneMeshInstanceHandle;
     }
   }
 }

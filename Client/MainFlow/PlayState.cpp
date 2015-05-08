@@ -10,6 +10,7 @@
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
+#include "Client/RendererFeeder.h"
 #include "Client/CameraControl.h"
 #include "Client/LocalSimulationDriver.h"
 #include "Client/Database.h"
@@ -423,15 +424,13 @@ namespace Client {
     }
 
     void PlayState::setupMonster(EntityHandle simEntityHandle) {
+      Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
       EntityHandle clientEntityHandle = Database::createEntity();
 
-      Animation::PoseIndex pose = Database::createPose(clientEntityHandle, walkAnimationSkeleton);
-      Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
-      Interpolation::Handle interpolationHandle  = Database::createInterpolation(clientEntityHandle, body);
-
-      Rendering::BoneMeshInstanceHandle meshInstance = Database::createBoneMeshInstance(clientEntityHandle, characterMesh);
-
-      rendererFeeder.setupBoneMesh(interpolationHandle, pose, meshInstance);
+      Database::createPose(clientEntityHandle, walkAnimationSkeleton);
+      Database::createInterpolation(clientEntityHandle, body);
+      Database::createBoneMeshInstance(clientEntityHandle, characterMesh);
+      Database::createRenderFeed(clientEntityHandle);
     }
 
     void PlayState::updateSimulation(double timeDelta) {

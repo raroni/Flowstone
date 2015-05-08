@@ -14,12 +14,7 @@
 #include "Client/AtmosphereColor.h"
 #include "Client/TorchManager.h"
 #include "Client/PlayMode.h"
-#include "Client/RendererFeeder.h"
 #include "Client/Interpolation/Interpolater.h"
-
-namespace Rendering {
-  class Renderer;
-}
 
 namespace Client {
   namespace MainFlow {
@@ -38,7 +33,6 @@ namespace Client {
       uint8_t walkAnimationSkeleton;
       double stepTimeBank = 0;
       float timeOfDay = 0.3;
-      RendererFeeder rendererFeeder;
       AtmosphereColor atmosphereColor;
       Rendering::StaticMeshIndex greenTreeMesh;
       Rendering::StaticMeshIndex redTreeMesh;
