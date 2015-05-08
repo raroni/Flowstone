@@ -1,12 +1,12 @@
 #ifndef SIMULATION_ENTITY_LIST_H
 #define SIMULATION_ENTITY_LIST_H
 
-#include "Simulation/Database/EntityHandle.h"
+#include "Database/EntityHandle.h"
 
 namespace Simulation {
   struct EntityList {
-    const EntityHandle *values;
-    uint16_t count;
+    Database::EntityHandle *values;
+    uint16_t count = 0;
   };
 }
 

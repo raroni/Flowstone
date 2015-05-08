@@ -1,5 +1,5 @@
-#include "Simulation/Database/EntityHandle.h"
-#include "Simulation/Database/Database.h"
+#include "Database/EntityHandle.h"
+#include "Simulation/Database.h"
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/MapFieldIndex.h"
 #include "Simulation/Pathfinding/MapFieldType.h"
@@ -8,7 +8,7 @@
 namespace Simulation {
   namespace Trees {
     void create(uint16_t x, uint16_t z) {
-      EntityHandle tree = Database::createEntity();
+      ::Database::EntityHandle tree = Database::createEntity();
 
       Database::createBody(tree);
       Physics::Body body = Database::getBody(tree);

@@ -47,6 +47,8 @@ USER_SOURCES_CPP =\
 	../../Physics/KinematicDriverList.cpp\
 	../../Physics/DynamicDriverList.cpp\
 	../../Physics/CollisionResolver.cpp\
+	../../Database/ComponentManager.cpp\
+	../../Database/EntityManager.cpp\
 	../../Server/Game.cpp\
 	../../Server/ClientSet.cpp\
 	../../Server/ClientIDPool.cpp\
@@ -90,9 +92,7 @@ USER_SOURCES_CPP =\
 	../../Simulation/ResourceSystem.cpp\
 	../../Simulation/CommandList.cpp\
 	../../Simulation/EventList.cpp\
-	../../Simulation/Database/Database.cpp\
-	../../Simulation/Database/ComponentManager.cpp\
-	../../Simulation/Database/EntityManager.cpp\
+	../../Simulation/Database.cpp\
 	../../Animation/Animator.cpp\
 	../../Animation/Registry.cpp\
 	../../Rendering/Renderer.cpp\

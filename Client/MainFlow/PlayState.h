@@ -6,7 +6,7 @@
 #include "Simulation/CommandList.h"
 #include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
-#include "Simulation/Database/EntityHandle.h"
+#include "Database/EntityHandle.h"
 #include "Rendering/BoneMeshIndex.h"
 #include "Rendering/StaticMeshIndex.h"
 #include "Client/MainFlow/State.h"
@@ -55,7 +55,7 @@ namespace Client {
       void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
-      void setupMonster(Simulation::EntityHandle monster);
+      void setupMonster(Database::EntityHandle monster);
       void setupGround();
       void setupPointLight();
       void updateAtmosphereColor();

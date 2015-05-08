@@ -1,6 +1,6 @@
 #include "Simulation/Config.h"
-#include "Simulation/Database/EntityHandle.h"
-#include "Simulation/Database/Database.h"
+#include "Database/EntityHandle.h"
+#include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
 #include "Simulation/Pathfinding/Map.h"
@@ -13,6 +13,7 @@
 
 namespace Simulation {
   namespace PlayMode {
+    using namespace ::Database;
     EntityHandle monster1;
 
     struct {

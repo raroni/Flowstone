@@ -2,7 +2,7 @@
 #define SIMULATION_CONFIG_H
 
 #include "SysTime/SysTime.h"
-#include "Simulation/Database/ComponentType.h"
+#include "Simulation/ComponentType.h"
 
 namespace Simulation {
   namespace Config {

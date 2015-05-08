@@ -1,27 +1,54 @@
+#include "Database/EntityHandle.h"
+#include "Database/EntityManager.h"
+#include "Database/ComponentHandle.h"
+#include "Database/ComponentManager.h"
+#include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Drag/DragSystem.h"
-#include "Simulation/Database/EntityManager.h"
-#include "Simulation/Database/ComponentManager.h"
-#include "Simulation/Database/Database.h"
+#include "Simulation/Database.h"
 
 namespace Simulation {
   namespace Database {
+    using namespace ::Database;
+    EntityHandle entityHandles[Config::entityMax];
+    EntityManager entityManager(entityHandles, Config::entityMax);
+
+    ComponentHandle componentHandles[Config::entityMax*Config::componentMax];
+    BitSet32 componentExistances[Config::entityMax];
+    ComponentManager componentManager(componentHandles, componentExistances, Config::componentMax);
+
     EntityList getEntityList() {
       EntityList list;
-      list.values = EntityManager::handles;
-      list.count = EntityManager::getCount();
+      list.values = entityManager.handles;
+      list.count = entityManager.getCount();
       return list;
     }
 
     EntityHandle createEntity() {
-      return EntityManager::create();
+      return entityManager.create();
+    }
+
+    uint8_t convertTypeToInt(ComponentType type) {
+      return static_cast<uint8_t>(type);
+    }
+
+    void linkComponent(EntityHandle entity, ComponentType type, ComponentHandle component) {
+      componentManager.link(entity, convertTypeToInt(type), component);
+    }
+
+    void unlinkComponent(EntityHandle entity, ComponentType type) {
+      componentManager.unlink(entity, convertTypeToInt(type));
+    }
+
+    ComponentHandle getComponent(EntityHandle entity, ComponentType type) {
+      return componentManager.get(entity, convertTypeToInt(type));
     }
 
     bool hasComponent(EntityHandle entity, ComponentType type) {
-      return ComponentManager::has(entity, type);
+      return componentManager.has(entity, convertTypeToInt(type));
     }
 
     Physics::DynamicDriverHandle createDynamicDriver(EntityHandle entity) {
@@ -31,7 +58,7 @@ namespace Simulation {
         ComponentHandle genericHandle;
       } caster;
       caster.physicsHandle = physicsEngine.createDynamicDriver(bodyHandle);
-      ComponentManager::link(entity, ComponentType::DynamicDriver, caster.genericHandle);
+      linkComponent(entity, ComponentType::DynamicDriver, caster.genericHandle);
       return caster.physicsHandle;
     }
 
@@ -41,7 +68,7 @@ namespace Simulation {
         ComponentHandle genericHandle;
       } caster;
 
-      ComponentManager::link(entity, ComponentType::Body, caster.genericHandle);
+      linkComponent(entity, ComponentType::Body, caster.genericHandle);
       return caster.physicsHandle;
     }
 
@@ -54,7 +81,7 @@ namespace Simulation {
       } caster;
 
       caster.physicsHandle = physicsEngine.createSphereCollider(body, type, radius);
-      ComponentManager::link(entity, ComponentType::SphereCollider, caster.genericHandle);
+      linkComponent(entity, ComponentType::SphereCollider, caster.genericHandle);
       return caster.physicsHandle;
     }
 
@@ -64,7 +91,7 @@ namespace Simulation {
         ComponentHandle genericHandle;
       } caster;
 
-      caster.genericHandle = ComponentManager::get(entity, ComponentType::Body);
+      caster.genericHandle = getComponent(entity, ComponentType::Body);
       return caster.physicsHandle;
     }
 
@@ -75,12 +102,12 @@ namespace Simulation {
       } caster;
 
       caster.resourceHandle = ResourceSystem::create(type);
-      ComponentManager::link(entity, ComponentType::Resource, caster.componentHandle);
+      linkComponent(entity, ComponentType::Resource, caster.componentHandle);
       return caster.resourceHandle;
     }
 
     void createMonster(EntityHandle entity) {
-      ComponentManager::link(entity, ComponentType::Monster, ComponentHandle());
+      linkComponent(entity, ComponentType::Monster, ComponentHandle());
     }
 
     Physics::Body getBody(EntityHandle entity) {
@@ -92,7 +119,7 @@ namespace Simulation {
         Physics::DynamicDriverHandle physicsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::DynamicDriver);
+      caster.genericHandle = getComponent(entityHandle, ComponentType::DynamicDriver);
       return caster.physicsHandle;
     }
 
@@ -107,7 +134,7 @@ namespace Simulation {
         ComponentHandle genericHandle;
       } caster;
       caster.steeringHandle = SteeringSystem::create(getDynamicDriverHandle(entityHandle));
-      ComponentManager::link(entityHandle, ComponentType::Steering, caster.genericHandle);
+      linkComponent(entityHandle, ComponentType::Steering, caster.genericHandle);
       return caster.steeringHandle;
     }
 
@@ -121,7 +148,7 @@ namespace Simulation {
         ComponentHandle genericHandle;
       } caster;
       caster.pathfinderHandle = PathfindingSystem::create(bodyHandle, steeringHandle, target);
-      ComponentManager::link(entityHandle, ComponentType::Pathfinder, caster.genericHandle);
+      linkComponent(entityHandle, ComponentType::Pathfinder, caster.genericHandle);
       return caster.pathfinderHandle;
     }
 
@@ -131,14 +158,14 @@ namespace Simulation {
         PathfinderHandle pathfinderHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::Pathfinder);
+      caster.genericHandle = getComponent(entityHandle, ComponentType::Pathfinder);
       return caster.pathfinderHandle;
     }
 
     void destroyPathfinder(EntityHandle entityHandle) {
       PathfinderHandle pathfinderHandle = getPathfinderHandle(entityHandle);
       PathfindingSystem::destroy(pathfinderHandle);
-      ComponentManager::unlink(entityHandle, ComponentType::Pathfinder);
+      unlinkComponent(entityHandle, ComponentType::Pathfinder);
     }
 
     SteeringHandle getSteeringHandle(EntityHandle entityHandle) {
@@ -147,7 +174,7 @@ namespace Simulation {
         SteeringHandle steeringHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.genericHandle = ComponentManager::get(entityHandle, ComponentType::Steering);
+      caster.genericHandle = getComponent(entityHandle, ComponentType::Steering);
       return caster.steeringHandle;
     }
 
@@ -158,7 +185,7 @@ namespace Simulation {
     void destroySteering(EntityHandle entityHandle) {
       SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
       SteeringSystem::destroy(steeringHandle);
-      ComponentManager::unlink(entityHandle, ComponentType::Steering);
+      unlinkComponent(entityHandle, ComponentType::Steering);
     }
 
     DragHandle createDrag(EntityHandle entityHandle) {
@@ -168,7 +195,7 @@ namespace Simulation {
         ComponentHandle genericHandle;
       } caster;
       caster.dragHandle = DragSystem::create(getDynamicDriverHandle(entityHandle));
-      ComponentManager::link(entityHandle, ComponentType::Drag, caster.genericHandle);
+      linkComponent(entityHandle, ComponentType::Drag, caster.genericHandle);
       return caster.dragHandle;
     }
   }

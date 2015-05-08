@@ -1,9 +1,9 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
 #include "Simulation/Control.h"
-#include "Simulation/Database/EntityList.h"
-#include "Simulation/Database/Database.h"
-#include "Simulation/Database/ComponentType.h"
+#include "Simulation/EntityList.h"
+#include "Simulation/Database.h"
+#include "Simulation/ComponentType.h"
 #include "Simulation/PhysicsHack.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/PointLightHandle.h"
@@ -19,7 +19,6 @@ namespace Client {
     namespace SimDB = Simulation::Database;
     namespace SimControl = Simulation::Control;
     typedef Simulation::ComponentType SimComponentType;
-    typedef Simulation::EntityHandle SimEntityHandle;
 
     PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
     playMode(playMode),
@@ -242,7 +241,7 @@ namespace Client {
 
       Simulation::EntityList entities = SimDB::getEntityList();
       for(uint16_t i=0; i<entities.count; ++i) {
-        Simulation::EntityHandle entity = entities.values[i];
+        Database::EntityHandle entity = entities.values[i];
 
         if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
           Physics::Body body = SimDB::getBody(entity);
@@ -424,7 +423,7 @@ namespace Client {
       renderer.createStaticMeshInstance(mesh);
     }
 
-    void PlayState::setupMonster(SimEntityHandle monster) {
+    void PlayState::setupMonster(Database::EntityHandle monster) {
       Animation::PoseIndex pose = animator.createPose(walkAnimationSkeleton);
 
       Physics::BodyHandle body = SimDB::getBodyHandle(monster);
