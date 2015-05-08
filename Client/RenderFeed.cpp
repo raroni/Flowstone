@@ -3,7 +3,7 @@
 #include "Animation/Animator.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/BoneMeshInstance.h"
-#include "Client/Interpolater.h"
+#include "Client/Interpolation.h"
 #include "Client/MathConversion.h"
 #include "RenderFeed.h"
 
@@ -21,7 +21,7 @@ namespace Client {
     } boneBindings;
 
     void update() {
-      const Quanta::Matrix4* interpolatedTransforms = interpolater.getTransforms();
+      const Quanta::Matrix4* interpolatedTransforms = Interpolation::getTransforms();
       const Animation::Pose *poses = Animation::animator.getWorldPoses();
       for(uint16_t i=0; i<boneBindings.count; ++i) {
         BoneBinding &binding = boneBindings.list[i];

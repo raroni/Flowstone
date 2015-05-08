@@ -2,7 +2,7 @@
 #include "Rendering/Renderer.h"
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
-#include "Client/Interpolater.h"
+#include "Client/Interpolation.h"
 #include "Client/Direction.h"
 #include "Client/RenderFeed.h"
 #include "Client/ComponentType.h"
@@ -61,7 +61,7 @@ namespace Client {
         InterpolationHandle interpolationHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.interpolationHandle = interpolater.createInterpolation(physicsBody);
+      caster.interpolationHandle = Interpolation::createInterpolation(physicsBody);
       linkComponent(entity, ComponentType::Interpolation, caster.genericHandle);
       return caster.interpolationHandle;
     }

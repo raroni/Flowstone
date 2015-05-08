@@ -10,25 +10,13 @@
 #include "Client/InterpolationHandle.h"
 
 namespace Client {
-  class Interpolater {
-  public:
+  namespace Interpolation {
     void prepare(const Physics::BodyList &bodies);
     InterpolationHandle createInterpolation(Physics::BodyHandle body);
     void reload(const Physics::BodyList &bodies);
     void interpolate(double progress);
-    const Quanta::Matrix4* getTransforms() const;
-  private:
-    static const uint16_t max = 128;
-    Quanta::Vector3 oldPositions[max];
-    Quanta::Vector3 newPositions[max];
-    Quanta::Quaternion oldOrientations[max];
-    Quanta::Quaternion newOrientations[max];
-    Quanta::Matrix4 transforms[max];
-    Physics::BodyHandle bodyHandles[max];
-    uint8_t count = 0;
+    const Quanta::Matrix4* getTransforms();
   };
-
-  extern Interpolater interpolater;
 }
 
 #endif

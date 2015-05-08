@@ -258,7 +258,7 @@ namespace Client {
       }
 
       Direction::prepare();
-      interpolater.prepare(Simulation::physicsEngine.getBodies());
+      Interpolation::prepare(Simulation::physicsEngine.getBodies());
     }
 
     void PlayState::exit() {
@@ -472,8 +472,8 @@ namespace Client {
       }
       updateSimulation(timeDelta);
       clientCommands.clear();
-      interpolater.reload(Simulation::physicsEngine.getBodies());
-      interpolater.interpolate(0.5); // todo: fix this
+      Interpolation::reload(Simulation::physicsEngine.getBodies());
+      Interpolation::interpolate(0.5); // todo: fix this
 
       processSimulationEvents();
 
