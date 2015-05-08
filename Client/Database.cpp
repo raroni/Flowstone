@@ -3,6 +3,7 @@
 #include "Interpolation/Interpolater.h"
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
+#include "Client/Direction.h"
 #include "Client/RendererFeeder.h"
 #include "Client/ComponentType.h"
 #include "Client/Database.h"
@@ -100,6 +101,17 @@ namespace Client {
       caster.renderFeedHandle = rendererFeeder.setupBoneMesh(interpolationHandle, poseHandle, boneMeshInstanceHandle);
       linkComponent(entity, ComponentType::RenderFeed, caster.genericHandle);
       //return caster.renderFeedHandle;
+    }
+
+    DirectionHandle createDirection(EntityHandle clientEntity, EntityHandle simEntity, DirectionGroupHandle group) {
+      union {
+        DirectionHandle directionHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      Animation::PoseIndex poseHandle = getPoseHandle(clientEntity);
+      caster.directionHandle = Direction::create(poseHandle, simEntity, group);
+      linkComponent(clientEntity, ComponentType::Direction, caster.genericHandle);
+      return caster.directionHandle;
     }
 
     Interpolation::Handle getInterpolation(EntityHandle entity) {

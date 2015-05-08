@@ -8,6 +8,7 @@ namespace Client {
     StaticMeshInstance,
     Pose,
     RenderFeed,
+    Direction,
 
     Count
   };

@@ -10,6 +10,7 @@
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
+#include "Client/Direction.h"
 #include "Client/RendererFeeder.h"
 #include "Client/CameraControl.h"
 #include "Client/LocalSimulationDriver.h"
@@ -22,6 +23,8 @@ namespace Client {
     namespace SimDB = Simulation::Database;
     namespace SimControl = Simulation::Control;
     typedef Simulation::ComponentType SimComponentType;
+
+    DirectionGroupHandle monsterDirectionGroupHandle;
 
     PlayState::PlayState(PlayMode playMode) :
     playMode(playMode) { }
@@ -230,6 +233,8 @@ namespace Client {
 
       setupGround();
 
+      DirectionGroup monsterDirectionGroup = { 0, 1 };
+      monsterDirectionGroupHandle = Direction::createGroup(&monsterDirectionGroup);
 
       Quanta::Transform& camera = Rendering::renderer.getCameraTransform();
       CameraControl::initialize(&camera);
@@ -252,6 +257,7 @@ namespace Client {
         }
       }
 
+      Direction::prepare();
       Interpolation::interpolater.prepare(Simulation::physicsEngine.getBodies());
     }
 
@@ -432,6 +438,7 @@ namespace Client {
       Database::createInterpolation(clientEntityHandle, body);
       Database::createBoneMeshInstance(clientEntityHandle, characterMesh);
       Database::createRenderFeed(clientEntityHandle);
+      Database::createDirection(clientEntityHandle, simEntityHandle, monsterDirectionGroupHandle);
     }
 
     void PlayState::updateSimulation(double timeDelta) {
@@ -474,6 +481,7 @@ namespace Client {
       updateAtmosphereColor();
       updateLightDirection();
       rendererFeeder.update();
+      Direction::update();
       Animation::animator.update(timeDelta);
     }
 
