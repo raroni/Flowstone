@@ -4,6 +4,7 @@
 #include <assert.h>
 #include "Misc/Error.h"
 #include "Animation/JointConfig.h"
+#include "Animation/SkeletonHandle.h"
 #include "Animation/JointTransform.h"
 
 namespace Animation {
@@ -18,15 +19,15 @@ namespace Animation {
     float keyTimes[128];
     uint8_t jointTransformOffsets[128];
     JointTransform jointTransforms[128];
-    uint8_t getAccumulatedKeyCount(uint8_t skeletonID, uint8_t animation) const;
+    uint8_t getAccumulatedKeyCount(SkeletonHandle skeleton, uint8_t animation) const;
   public:
-    const uint8_t* getJointParentIndices(uint8_t skeletonID) const;
-    float getKeyTime(uint8_t skeletonID, uint8_t animation, uint8_t key) const;
-    uint8_t getKeyCount(uint8_t skeletonID, uint8_t animation) const;
-    float getDuration(uint8_t skeletonID, uint8_t animation);
-    uint8_t getBonesCount(uint8_t skeletonID) const;
-    const JointTransform* getJointTransforms(uint8_t skeletonID, uint8_t animation, uint8_t key) const;
-    uint8_t createSkeleton(
+    const uint8_t* getJointParentIndices(SkeletonHandle skeleton) const;
+    float getKeyTime(SkeletonHandle skeleton, uint8_t animation, uint8_t key) const;
+    uint8_t getKeyCount(SkeletonHandle skeleton, uint8_t animation) const;
+    float getDuration(SkeletonHandle skeleton, uint8_t animation);
+    uint8_t getBonesCount(SkeletonHandle skeleton) const;
+    const JointTransform* getJointTransforms(SkeletonHandle skeleton, uint8_t animation, uint8_t key) const;
+    SkeletonHandle createSkeleton(
       uint8_t *jointParentIndices,
       uint8_t jointParentIndicesLength,
       float *animationDurations,

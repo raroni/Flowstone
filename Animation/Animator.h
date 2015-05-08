@@ -2,6 +2,7 @@
 #define ANIMATION_ANIMATOR_H
 
 #include "Animation/Pose.h"
+#include "Animation/SkeletonHandle.h"
 #include "Animation/Registry.h"
 #include "Animation/PoseIndex.h"
 
@@ -9,7 +10,7 @@ namespace Animation {
   class Animator {
   public:
     const Pose* getWorldPoses() const;
-    uint8_t createSkeleton(
+    SkeletonHandle createSkeleton(
       uint8_t *jointParentIndices,
       uint8_t jointParentIndicesLength,
       float *animationDurations,
@@ -38,6 +39,8 @@ namespace Animation {
     void updateLocalPoses(double timeDelta);
     void updateGlobalPoses();
   };
+
+  extern Animator animator;
 }
 
 #endif

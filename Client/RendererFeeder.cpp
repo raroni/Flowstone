@@ -8,17 +8,12 @@
 #include "RendererFeeder.h"
 
 namespace Client {
-  RendererFeeder::RendererFeeder(
-    const Interpolation::Interpolater &interpolator,
-    const Animation::Animator &animator,
-    Rendering::Renderer &renderer) :
-  interpolator(interpolator),
-  animator(animator),
+  RendererFeeder::RendererFeeder(Rendering::Renderer &renderer) :
   renderer(renderer) { }
 
   void RendererFeeder::update() {
-    const Quanta::Matrix4* interpolatedTransforms = interpolator.getTransforms();
-    const Animation::Pose *poses = animator.getWorldPoses();
+    const Quanta::Matrix4* interpolatedTransforms = Interpolation::interpolater.getTransforms();
+    const Animation::Pose *poses = Animation::animator.getWorldPoses();
     for(uint16_t i=0; i<boneBindings.count; ++i) {
       BoneBinding &binding = boneBindings.list[i];
       Rendering::BoneMeshInstance instance = renderer.getBoneMeshInstance(binding.mesh);

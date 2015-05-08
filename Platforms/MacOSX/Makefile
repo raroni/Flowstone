@@ -57,6 +57,7 @@ USER_SOURCES_CPP =\
 	../../Server/PingPong.cpp\
 	../../Server/Carrier.cpp\
 	../../Client/Game.cpp\
+	../../Client/Database.cpp\
 	../../Client/CameraControl.cpp\
 	../../Client/CommandList.cpp\
 	../../Client/LocalSimulationDriver.cpp\

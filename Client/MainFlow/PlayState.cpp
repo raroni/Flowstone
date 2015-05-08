@@ -12,10 +12,12 @@
 #include "Animation/JointConfig.h"
 #include "Client/CameraControl.h"
 #include "Client/LocalSimulationDriver.h"
+#include "Client/Database.h"
 #include "Client/MainFlow/PlayState.h"
 
 namespace Client {
   namespace MainFlow {
+    using namespace ::Database;
     namespace SimDB = Simulation::Database;
     namespace SimControl = Simulation::Control;
     typedef Simulation::ComponentType SimComponentType;
@@ -23,7 +25,7 @@ namespace Client {
     PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
     playMode(playMode),
     renderer(renderer),
-    rendererFeeder(interpolater, animator, renderer),
+    rendererFeeder(renderer),
     torches(renderer) { }
 
     void PlayState::configureAnimation() {
@@ -84,7 +86,7 @@ namespace Client {
         { 0, 0, -0.2, 1, 0, 0, 0 }
       };
 
-      walkAnimationSkeleton = animator.createSkeleton(
+      walkAnimationSkeleton = Animation::animator.createSkeleton(
         jointParentIndices,
         sizeof(jointParentIndices)/sizeof(uint8_t),
         animationDurations,
@@ -241,7 +243,7 @@ namespace Client {
 
       Simulation::EntityList entities = SimDB::getEntityList();
       for(uint16_t i=0; i<entities.count; ++i) {
-        Database::EntityHandle entity = entities.values[i];
+        EntityHandle entity = entities.values[i];
 
         if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
           Physics::Body body = SimDB::getBody(entity);
@@ -252,7 +254,7 @@ namespace Client {
         }
       }
 
-      interpolater.prepare(Simulation::physicsEngine.getBodies());
+      Interpolation::interpolater.prepare(Simulation::physicsEngine.getBodies());
     }
 
     void PlayState::exit() {
@@ -423,15 +425,16 @@ namespace Client {
       renderer.createStaticMeshInstance(mesh);
     }
 
-    void PlayState::setupMonster(Database::EntityHandle monster) {
-      Animation::PoseIndex pose = animator.createPose(walkAnimationSkeleton);
+    void PlayState::setupMonster(EntityHandle simEntityHandle) {
+      EntityHandle clientEntityHandle = Database::createEntity();
 
-      Physics::BodyHandle body = SimDB::getBodyHandle(monster);
-      uint8_t interpolationTransformID = interpolater.createInterpolation(body);
+      Animation::PoseIndex pose = Database::createPose(clientEntityHandle, walkAnimationSkeleton);
+      Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
+      Interpolation::Handle interpolationHandle  = Database::createInterpolation(clientEntityHandle, body);
 
       Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(characterMesh);
 
-      rendererFeeder.setupBoneMesh(interpolationTransformID, pose, meshInstance);
+      rendererFeeder.setupBoneMesh(interpolationHandle, pose, meshInstance);
     }
 
     void PlayState::updateSimulation(double timeDelta) {
@@ -465,8 +468,8 @@ namespace Client {
       }
       updateSimulation(timeDelta);
       clientCommands.clear();
-      interpolater.reload(Simulation::physicsEngine.getBodies());
-      interpolater.interpolate(0.5); // fix
+      Interpolation::interpolater.reload(Simulation::physicsEngine.getBodies());
+      Interpolation::interpolater.interpolate(0.5); // todo: fix this
 
       processSimulationEvents();
 
@@ -474,7 +477,7 @@ namespace Client {
       updateAtmosphereColor();
       updateLightDirection();
       rendererFeeder.update();
-      animator.update(timeDelta);
+      Animation::animator.update(timeDelta);
     }
 
     State* PlayState::checkTransition() {

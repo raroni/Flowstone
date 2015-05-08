@@ -1,8 +1,8 @@
 #include "Animation/Registry.h"
 
 namespace Animation {
-  uint8_t Registry::getAccumulatedKeyCount(uint8_t skeletonID, uint8_t animation) const {
-    uint8_t animationOffset = animationOffsets[skeletonID];
+  uint8_t Registry::getAccumulatedKeyCount(SkeletonHandle skeleton, uint8_t animation) const {
+    uint8_t animationOffset = animationOffsets[skeleton];
     uint8_t count = 0;
     for(uint8_t i=0; 100>i; i++) {
       assert(i != 100);
@@ -15,39 +15,39 @@ namespace Animation {
     exit(1);
   }
 
-  const uint8_t* Registry::getJointParentIndices(uint8_t skeletonID) const {
-    uint8_t offset = jointParentIndicesOffsets[skeletonID];
+  const uint8_t* Registry::getJointParentIndices(SkeletonHandle skeleton) const {
+    uint8_t offset = jointParentIndicesOffsets[skeleton];
     return &jointParentIndices[offset];
   }
 
-  float Registry::getKeyTime(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
-    uint8_t offset = keyOffsets[skeletonID];
-    uint8_t keyCount = getAccumulatedKeyCount(skeletonID, animation);
+  float Registry::getKeyTime(SkeletonHandle skeleton, uint8_t animation, uint8_t key) const {
+    uint8_t offset = keyOffsets[skeleton];
+    uint8_t keyCount = getAccumulatedKeyCount(skeleton, animation);
     return keyTimes[offset+keyCount+key];
   }
 
-  uint8_t Registry::getKeyCount(uint8_t skeletonID, uint8_t animation) const {
-    uint8_t offset = animationOffsets[skeletonID];
+  uint8_t Registry::getKeyCount(SkeletonHandle skeleton, uint8_t animation) const {
+    uint8_t offset = animationOffsets[skeleton];
     return animationKeyCounts[offset+animation];
   }
 
-  float Registry::getDuration(uint8_t skeletonID, uint8_t animation) {
-    uint8_t offset = animationOffsets[skeletonID];
+  float Registry::getDuration(SkeletonHandle skeleton, uint8_t animation) {
+    uint8_t offset = animationOffsets[skeleton];
     return animationDurations[offset+animation];
   }
 
-  uint8_t Registry::getBonesCount(uint8_t skeletonID) const {
-    return jointParentIndicesOffsets[skeletonID+1]-jointParentIndicesOffsets[skeletonID]+1;
+  uint8_t Registry::getBonesCount(SkeletonHandle skeleton) const {
+    return jointParentIndicesOffsets[skeleton+1]-jointParentIndicesOffsets[skeleton]+1;
   }
 
-  const JointTransform* Registry::getJointTransforms(uint8_t skeletonID, uint8_t animation, uint8_t key) const {
-    uint8_t offset = jointTransformOffsets[skeletonID];
-    uint8_t bonesCount = getBonesCount(skeletonID);
-    uint8_t keyCount = getAccumulatedKeyCount(skeletonID, animation);
+  const JointTransform* Registry::getJointTransforms(SkeletonHandle skeleton, uint8_t animation, uint8_t key) const {
+    uint8_t offset = jointTransformOffsets[skeleton];
+    uint8_t bonesCount = getBonesCount(skeleton);
+    uint8_t keyCount = getAccumulatedKeyCount(skeleton, animation);
     return &jointTransforms[offset+(keyCount+key)*bonesCount];
   }
 
-  uint8_t Registry::createSkeleton(
+  SkeletonHandle Registry::createSkeleton(
     uint8_t *jointParentIndices,
     uint8_t jointParentIndicesLength,
     float *animationDurations,

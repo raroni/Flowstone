@@ -24,11 +24,7 @@ namespace Client {
 
   class RendererFeeder {
   public:
-    RendererFeeder(
-      const Interpolation::Interpolater &interpolator,
-      const Animation::Animator &animator,
-      Rendering::Renderer &renderer
-    );
+    RendererFeeder(Rendering::Renderer &renderer);
     void setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
     void update();
   private:
@@ -41,8 +37,6 @@ namespace Client {
       BoneBinding list[128];
       uint8_t count = 0;
     } boneBindings;
-    const Interpolation::Interpolater &interpolator;
-    const Animation::Animator &animator;
     Rendering::Renderer &renderer;
   };
 }

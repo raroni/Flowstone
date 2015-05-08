@@ -35,10 +35,8 @@ namespace Client {
     private:
       Simulation::PlayerHandle playerID = -1;
       PlayMode playMode;
-      Animation::Animator animator;
       Rendering::Renderer &renderer;
       uint8_t walkAnimationSkeleton;
-      Interpolation::Interpolater interpolater;
       double stepTimeBank = 0;
       float timeOfDay = 0.3;
       RendererFeeder rendererFeeder;
@@ -55,7 +53,7 @@ namespace Client {
       void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
-      void setupMonster(Database::EntityHandle monster);
+      void setupMonster(::Database::EntityHandle monster);
       void setupGround();
       void setupPointLight();
       void updateAtmosphereColor();

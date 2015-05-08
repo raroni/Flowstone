@@ -6,6 +6,8 @@ namespace Client {
   namespace Interpolation {
     using namespace MathConversion;
 
+    Interpolater interpolater;
+
     void Interpolater::prepare(const Physics::BodyList &bodies) {
       for(uint8_t i=0; count>i; i++) {
         Physics::BodyHandle handle = bodyHandles[i];
