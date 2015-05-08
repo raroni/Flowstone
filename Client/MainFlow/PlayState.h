@@ -27,7 +27,7 @@ namespace Client {
 
     class PlayState : public State {
     public:
-      PlayState(Rendering::Renderer &renderer, PlayMode playMode);
+      PlayState(PlayMode playMode);
       void enter();
       void exit();
       void update(double deltaTime, const Keyboard &keyboard);
@@ -35,7 +35,6 @@ namespace Client {
     private:
       Simulation::PlayerHandle playerID = -1;
       PlayMode playMode;
-      Rendering::Renderer &renderer;
       uint8_t walkAnimationSkeleton;
       double stepTimeBank = 0;
       float timeOfDay = 0.3;

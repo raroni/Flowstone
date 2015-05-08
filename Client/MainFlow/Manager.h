@@ -9,8 +9,8 @@ namespace Client {
     class Manager {
       State *state = nullptr;
     public:
-      void initialize(Rendering::Renderer &renderer) {
-        State *state = new PlayState(renderer, PlayMode::Local);
+      void initialize() {
+        State *state = new PlayState(PlayMode::Local);
         changeState(state);
       }
       void update(double timeDelta, const Keyboard &keyboard) {

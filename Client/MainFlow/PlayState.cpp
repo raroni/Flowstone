@@ -22,11 +22,8 @@ namespace Client {
     namespace SimControl = Simulation::Control;
     typedef Simulation::ComponentType SimComponentType;
 
-    PlayState::PlayState(Rendering::Renderer &renderer, PlayMode playMode) :
-    playMode(playMode),
-    renderer(renderer),
-    rendererFeeder(renderer),
-    torches(renderer) { }
+    PlayState::PlayState(PlayMode playMode) :
+    playMode(playMode) { }
 
     void PlayState::configureAnimation() {
       uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
@@ -197,7 +194,7 @@ namespace Client {
         35, 39, 34, 39, 38, 34,  // bottom
       };
 
-      characterMesh = renderer.createBoneMesh(
+      characterMesh = Rendering::renderer.createBoneMesh(
         vertices,
         sizeof(vertices)/sizeof(Rendering::BoneVertex),
         indices,
@@ -212,7 +209,7 @@ namespace Client {
       updateLightDirection();
 
       Quanta::Vector3 secondaryLightDirection = Quanta::Vector3(2, 1, 5).getNormalized()*-1;
-      renderer.setSecondaryLightDirection(secondaryLightDirection);
+      Rendering::renderer.setSecondaryLightDirection(secondaryLightDirection);
 
       configureAnimation();
       configureRenderer();
@@ -233,7 +230,7 @@ namespace Client {
       setupGround();
 
 
-      Quanta::Transform& camera = renderer.getCameraTransform();
+      Quanta::Transform& camera = Rendering::renderer.getCameraTransform();
       CameraControl::initialize(&camera);
 
       if(playMode == PlayMode::Local) {
@@ -320,7 +317,7 @@ namespace Client {
       info.indexCount = sizeof(indices)/sizeof(uint16_t);
       info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
 
-      greenTreeMesh = renderer.createStaticMesh(info, vertices, indices, shapes);
+      greenTreeMesh = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
     }
 
     void PlayState::configureRedTree() {
@@ -382,13 +379,13 @@ namespace Client {
       info.indexCount = sizeof(indices)/sizeof(uint16_t);
       info.shapeCount = sizeof(shapes)/sizeof(Rendering::Shape);
 
-      redTreeMesh = renderer.createStaticMesh(info, vertices, indices, shapes);
+      redTreeMesh = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
     }
 
     void PlayState::setupTree(float x, float z, Rendering::StaticMeshIndex mesh) {
-      Rendering::StaticMeshInstanceHandle instance = renderer.createStaticMeshInstance(mesh);
+      Rendering::StaticMeshInstanceHandle instance = Rendering::renderer.createStaticMeshInstance(mesh);
       Quanta::Matrix4 transform = Quanta::TransformFactory3D::translation({ x, 0, z });
-      renderer.updateStaticMeshTransform(instance, transform);
+      Rendering::renderer.updateStaticMeshTransform(instance, transform);
     }
 
     void PlayState::setupGround() {
@@ -421,8 +418,8 @@ namespace Client {
       info.indexCount = sizeof(indices)/sizeof(uint16_t);
       info.shapeCount = 1;
 
-      Rendering::StaticMeshIndex mesh = renderer.createStaticMesh(info, vertices, indices, shapes);
-      renderer.createStaticMeshInstance(mesh);
+      Rendering::StaticMeshIndex mesh = Rendering::renderer.createStaticMesh(info, vertices, indices, shapes);
+      Rendering::renderer.createStaticMeshInstance(mesh);
     }
 
     void PlayState::setupMonster(EntityHandle simEntityHandle) {
@@ -432,7 +429,7 @@ namespace Client {
       Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
       Interpolation::Handle interpolationHandle  = Database::createInterpolation(clientEntityHandle, body);
 
-      Rendering::BoneMeshInstanceHandle meshInstance = renderer.createBoneMeshInstance(characterMesh);
+      Rendering::BoneMeshInstanceHandle meshInstance = Database::createBoneMeshInstance(clientEntityHandle, characterMesh);
 
       rendererFeeder.setupBoneMesh(interpolationHandle, pose, meshInstance);
     }
@@ -473,7 +470,7 @@ namespace Client {
 
       processSimulationEvents();
 
-      CameraControl::update(timeDelta, &keyboard, &renderer.getCameraTransform());
+      CameraControl::update(timeDelta, &keyboard, &Rendering::renderer.getCameraTransform());
       updateAtmosphereColor();
       updateLightDirection();
       rendererFeeder.update();
@@ -485,7 +482,7 @@ namespace Client {
     }
 
     void PlayState::updateAtmosphereColor() {
-      renderer.setPrimaryLightColor(atmosphereColor.get(timeOfDay));
+      Rendering::renderer.setPrimaryLightColor(atmosphereColor.get(timeOfDay));
     }
 
     void PlayState::updateLightDirection() {
@@ -498,7 +495,7 @@ namespace Client {
         Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
         Quanta::Vector3 sunrise(-1, 0, -0.5);
         Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
-        renderer.setPrimaryLightDirection(sunPosition*-1);
+        Rendering::renderer.setPrimaryLightDirection(sunPosition*-1);
       } else {
         float progress;
         if(timeOfDay < 0.5) {
@@ -512,7 +509,7 @@ namespace Client {
         Quanta::Quaternion rotation = Quanta::TransformFactory3D::rotation(axis, angle);
         Quanta::Vector3 sunrise(-1, 0, -0.5);
         Quanta::Vector3 sunPosition = Quanta::Transformer::createRotatedVector3(sunrise, rotation);
-        renderer.setPrimaryLightDirection(sunPosition*-1);
+        Rendering::renderer.setPrimaryLightDirection(sunPosition*-1);
       }
     }
   }

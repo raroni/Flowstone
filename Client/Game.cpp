@@ -27,7 +27,6 @@ namespace Client {
     void readNet();
     void updateKeyboard();
     Keyboard keyboard;
-    Rendering::Renderer renderer;
     MainFlow::Manager flow;
 
     void updateKeyboard() {
@@ -92,9 +91,9 @@ namespace Client {
       Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);
 
-      renderer.initialize();
-      renderer.updateResolution({ resolution.width, resolution.height });
-      flow.initialize(renderer);
+      Rendering::renderer.initialize();
+      Rendering::renderer.updateResolution({ resolution.width, resolution.height });
+      flow.initialize();
 
       Net::initialize();
       Piper::Address address;
@@ -132,7 +131,7 @@ namespace Client {
       flow.update(timeDelta, keyboard);
       Carrier::update(timeDelta);
 
-      renderer.draw();
+      Rendering::renderer.draw();
 
       Net::dispatch();
 

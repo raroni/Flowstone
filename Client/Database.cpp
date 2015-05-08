@@ -1,4 +1,5 @@
 #include "Database/EntityManager.h"
+#include "Rendering/Renderer.h"
 #include "Interpolation/Interpolater.h"
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
@@ -61,6 +62,16 @@ namespace Client {
       caster.interpolationHandle = Interpolation::interpolater.createInterpolation(physicsBody);
       linkComponent(entity, ComponentType::Interpolation, caster.genericHandle);
       return caster.interpolationHandle;
+    }
+
+    Rendering::BoneMeshInstanceHandle createBoneMeshInstance(EntityHandle entity, Rendering::BoneMeshIndex mesh) {
+      union {
+        Rendering::BoneMeshInstanceHandle instanceHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.instanceHandle = Rendering::renderer.createBoneMeshInstance(mesh);
+      linkComponent(entity, ComponentType::BoneMeshInstance, caster.genericHandle);
+      return caster.instanceHandle;
     }
   }
 }
