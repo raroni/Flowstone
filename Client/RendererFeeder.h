@@ -1,7 +1,7 @@
 #ifndef CLIENT_RENDERER_FEEDER_H
 #define CLIENT_RENDERER_FEEDER_H
 
-#include "Interpolation/Index.h"
+#include "Interpolation/Handle.h"
 #include "Animation/PoseIndex.h"
 #include "Rendering/StaticMeshInstanceHandle.h"
 #include "Rendering/BoneMeshInstanceHandle.h"
@@ -9,7 +9,7 @@
 namespace Client {
   class RendererFeeder {
   public:
-    uint16_t setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
+    uint16_t setupBoneMesh(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh);
     void update();
   private:
     struct BoneBinding {

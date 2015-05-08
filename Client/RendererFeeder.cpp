@@ -21,7 +21,7 @@ namespace Client {
     }
   }
 
-  uint16_t RendererFeeder::setupBoneMesh(Interpolation::Index interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
+  uint16_t RendererFeeder::setupBoneMesh(Interpolation::Handle interpolation, Animation::PoseIndex pose, Rendering::BoneMeshInstanceHandle mesh) {
     BoneBinding binding;
     binding.interpolation = interpolation;
     binding.mesh = mesh;

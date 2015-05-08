@@ -7,14 +7,14 @@
 #include "Physics/BodyList.h"
 #include "Quanta/Math/Vector3.h"
 #include "Quanta/Math/Quaternion.h"
-#include "Client/Interpolation/Index.h"
+#include "Client/Interpolation/Handle.h"
 
 namespace Client {
   namespace Interpolation {
     class Interpolater {
     public:
       void prepare(const Physics::BodyList &bodies);
-      Index createInterpolation(Physics::BodyHandle body);
+      Handle createInterpolation(Physics::BodyHandle body);
       void reload(const Physics::BodyList &bodies);
       void interpolate(double progress);
       const Quanta::Matrix4* getTransforms() const;

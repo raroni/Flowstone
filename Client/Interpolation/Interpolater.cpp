@@ -30,7 +30,7 @@ namespace Client {
       }
     }
 
-    Index Interpolater::createInterpolation(Physics::BodyHandle body) {
+    Handle Interpolater::createInterpolation(Physics::BodyHandle body) {
       assert(max != count);
       bodyHandles[count] = body;
       return count++;
