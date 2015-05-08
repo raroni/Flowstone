@@ -51,7 +51,7 @@ namespace Client {
         Animation::PoseHandle poseHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.poseHandle = Animation::animator.createPose(skeleton);
+      caster.poseHandle = Animation::Animator::createPose(skeleton);
       linkComponent(entity, ComponentType::Pose, caster.genericHandle);
       return caster.poseHandle;
     }

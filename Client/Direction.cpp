@@ -51,7 +51,7 @@ namespace Client {
 
         if(animation != animations[i]) {
           animations[i] = animation;
-          Animation::animator.changeAnimation(poseHandles[i], animation);
+          Animation::Animator::changeAnimation(poseHandles[i], animation);
         }
       }
     }

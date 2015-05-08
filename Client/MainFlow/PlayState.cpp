@@ -87,7 +87,7 @@ namespace Client {
         { 0, 0, -0.2, 1, 0, 0, 0 }
       };
 
-      walkAnimationSkeleton = Animation::animator.createSkeleton(
+      walkAnimationSkeleton = Animation::Animator::createSkeleton(
         jointParentIndices,
         sizeof(jointParentIndices)/sizeof(uint8_t),
         animationDurations,
@@ -482,7 +482,7 @@ namespace Client {
       updateLightDirection();
       RenderFeed::update();
       Direction::update();
-      Animation::animator.update(timeDelta);
+      Animation::Animator::update(timeDelta);
     }
 
     State* PlayState::checkTransition() {
