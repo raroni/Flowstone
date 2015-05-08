@@ -1,5 +1,5 @@
-#ifndef CLIENT_INTERPOLATER_H
-#define CLIENT_INTERPOLATER_H
+#ifndef CLIENT_INTERPOLATION_H
+#define CLIENT_INTERPOLATION_H
 
 #include <stdint.h>
 #include "Quanta/Math/Matrix4.h"

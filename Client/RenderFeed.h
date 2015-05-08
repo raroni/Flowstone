@@ -1,5 +1,5 @@
-#ifndef CLIENT_RENDERER_FEEDER_H
-#define CLIENT_RENDERER_FEEDER_H
+#ifndef CLIENT_RENDER_FEED_H
+#define CLIENT_RENDER_FEED_H
 
 #include "InterpolationHandle.h"
 #include "Animation/PoseHandle.h"
