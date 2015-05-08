@@ -9,7 +9,8 @@
 
 namespace Rendering {
   struct CullResult {
-    uint16_t indices[256];
+    static const uint16_t max = 256;
+    uint16_t indices[max];
     uint16_t count;
     CullResultRange ranges[Config::cullGroupsCount];
     void clear();

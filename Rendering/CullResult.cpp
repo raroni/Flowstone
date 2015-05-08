@@ -7,6 +7,7 @@ namespace Rendering {
   }
 
   void CullResult::addIndex(uint16_t index) {
+    assert(max != count);
     indices[count++] = index;
   }
 
