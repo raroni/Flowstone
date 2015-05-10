@@ -9,6 +9,7 @@ CPP_FLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 PLATFORM_DIR = Platforms/MacOSX
 
 include Client.mk
+include Test.mk
 
 clean:
 	rm -rf $(RELATIVE_BUILD_DIR)

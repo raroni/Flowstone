@@ -1,0 +1,25 @@
+TEST_BUILD_DIR = $(BUILD_DIR)/Test
+TEST_RELATIVE_BUILD_DIR = $(RELATIVE_ROOT_DIR)/$(TEST_BUILD_DIR)
+TEST_BINARY = $(TEST_BUILD_DIR)/TestBin
+TEST_RELATIVE_BINARY = $(RELATIVE_ROOT_DIR)/$(TEST_BINARY)
+TEST_OBJS = $(patsubst %.cpp, $(TEST_BUILD_DIR)/%.o, $(TEST_SOURCES))
+TEST_RELATIVE_OBJS = $(addprefix $(RELATIVE_ROOT_DIR)/, $(TEST_OBJS))
+TEST_RELATIVE_DEPS = $(sort $(patsubst %, %.deps, $(TEST_RELATIVE_OBJS)))
+TEST_HEADER_DIR_INCLUDES = $(addprefix -I$(RELATIVE_ROOT_DIR)/, $(TEST_HEADER_DIRS))
+
+include TestSources.mk
+include TestHeaderDirs.mk
+-include $(TEST_RELATIVE_DEPS)
+
+$(TEST_RELATIVE_BUILD_DIR)/%.o: $(RELATIVE_ROOT_DIR)/%.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(CPP_FLAGS) $(TEST_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
+
+$(TEST_RELATIVE_BINARY): $(TEST_RELATIVE_OBJS)
+	mkdir -p $(dir $@)
+	$(CC) $^ -o $@
+
+test: $(TEST_RELATIVE_BINARY)
+	./$(TEST_RELATIVE_BINARY)
+
+.PHONY: test
