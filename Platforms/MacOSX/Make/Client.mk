@@ -8,23 +8,19 @@ CLIENT_RELATIVE_SHADER_DIR = $(CLIENT_RELATIVE_RESOURCE_DIR)/Shaders
 CLIENT_RELATIVE_RESOURCE_DIR = $(RELATIVE_ROOT_DIR)/$(CLIENT_RESOURCE_DIR)
 CLIENT_FRAMEWORKS = CoreFoundation QuartzCore AppKit OpenGL
 CLIENT_FRAMEWORKS_FLAGS = $(addprefix -framework , $(CLIENT_FRAMEWORKS))
-
-include ClientSources.mk
-include ClientHeaderDirs.mk
-include ClientShaders.mk
-
 CLIENT_HEADER_DIR_INCLUDES = $(addprefix -I$(RELATIVE_ROOT_DIR)/, $(CLIENT_HEADER_DIRS))
-
 CLIENT_CPP_OBJS = $(patsubst %.cpp, $(CLIENT_BUILD_DIR)/%.cpp.o, $(CLIENT_CPP_SOURCES))
 CLIENT_OBJ_CPP_OBJS = $(patsubst %.mm, $(CLIENT_BUILD_DIR)/%.mm.o, $(CLIENT_OBJ_CPP_SOURCES))
 CLIENT_OBJ_C_OBJS = $(patsubst %.m, $(CLIENT_BUILD_DIR)/%.m.o, $(CLIENT_OBJ_C_SOURCES))
 CLIENT_OBJS = $(CLIENT_CPP_OBJS) $(CLIENT_OBJ_CPP_OBJS) $(CLIENT_OBJ_C_OBJS)
 CLIENT_RELATIVE_OBJS = $(addprefix $(RELATIVE_ROOT_DIR)/, $(CLIENT_OBJS))
-
 CLIENT_RELATIVE_DEPS = $(sort $(patsubst %, %.deps, $(CLIENT_RELATIVE_OBJS)))
--include $(CLIENT_RELATIVE_DEPS)
-
 CLIENT_RELATIVE_SHADERS = $(addprefix $(CLIENT_RELATIVE_SHADER_DIR)/, $(CLIENT_SHADERS))
+
+include ClientSources.mk
+include ClientHeaderDirs.mk
+include ClientShaders.mk
+-include $(CLIENT_RELATIVE_DEPS)
 
 $(CLIENT_RELATIVE_SHADER_DIR)/%: $(RELATIVE_ROOT_DIR)/Shaders/GLSL/%
 	mkdir -p $(dir $@)
