@@ -32,7 +32,6 @@ namespace Simulation {
       currentIndex = pathParents[currentIndex];
     }
 
-    result.add(map.calcFieldCoors(originIndex));
     for(uint16_t i=0; i<count; ++i) {
       result.add(map.calcFieldCoors(buildCache[count-1-i]));
     }
