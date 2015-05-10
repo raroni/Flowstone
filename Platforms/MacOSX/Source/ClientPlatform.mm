@@ -133,6 +133,10 @@ namespace Client {
       createContext();
       [context makeCurrentContext];
       [context setView:window.contentView];
+
+#ifdef DEV
+      [NSApp activateIgnoringOtherApps:YES];
+#endif
     }
 
     void handlePreFrame() {

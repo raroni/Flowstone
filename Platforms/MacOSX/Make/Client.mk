@@ -32,15 +32,15 @@ $(CLIENT_RELATIVE_SHADER_DIR)/%: $(RELATIVE_ROOT_DIR)/Shaders/GLSL/%
 
 $(CLIENT_RELATIVE_BUILD_DIR)/%.cpp.o: $(RELATIVE_ROOT_DIR)/%.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(CPP_FLAGS) $(CLIENT_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
+	$(CC) $(CC_FLAGS) $(CPP_FLAGS) $(CLIENT_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
 
 $(CLIENT_RELATIVE_BUILD_DIR)/%.mm.o: $(RELATIVE_ROOT_DIR)/%.mm
 	mkdir -p $(dir $@)
-	$(CC) $(CPP_FLAGS) $(CLIENT_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
+	$(CC) $(CC_FLAGS) $(CPP_FLAGS) $(CLIENT_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
 
 $(CLIENT_RELATIVE_BUILD_DIR)/%.m.o: $(RELATIVE_ROOT_DIR)/%.m
 	mkdir -p $(dir $@)
-	$(CC) $(CLIENT_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
+	$(CC) $(CC_FLAGS) $(CLIENT_HEADER_DIR_INCLUDES) -c $< -o $@ -MMD -MF $@.deps
 
 $(CLIENT_RELATIVE_BINARY): $(CLIENT_RELATIVE_OBJS)
 	mkdir -p $(dir $@)

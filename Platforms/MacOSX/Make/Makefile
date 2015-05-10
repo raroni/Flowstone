@@ -8,6 +8,11 @@ CC = clang++
 CPP_FLAGS = -Wall -std=gnu++11 -stdlib=libc++ -ferror-limit=1
 PLATFORM_DIR = Platforms/MacOSX
 
+RELEASE ?= 0
+ifeq ($(RELEASE), 0)
+	CC_FLAGS += -DDEV
+endif
+
 include Client.mk
 include Test.mk
 
