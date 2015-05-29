@@ -31,7 +31,6 @@ namespace SimulationAStarTest {
 
     assertTrue(result.success);
     MapFieldCoors waypoints[] = {
-      { 3, 0 },
       { 3, 1 },
       { 2, 2 },
       { 1, 2 },
