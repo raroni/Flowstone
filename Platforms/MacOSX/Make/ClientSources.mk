@@ -53,6 +53,7 @@ CLIENT_CPP_SOURCES =\
   Physics/KinematicDriverList.cpp\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
+  AI/System.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
   Server/Game.cpp\

@@ -1,4 +1,6 @@
 #include "Simulation/Config.h"
+#include "AI/Type.h"
+#include "AI/System.h"
 #include "Database/EntityHandle.h"
 #include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
@@ -31,6 +33,7 @@ namespace Simulation {
       Database::createDynamicDriver(monster);
       Database::createSphereCollider(monster, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
       Database::createDrag(monster);
+      Database::createAI(monster, AI::Type::Monster);
 
       Database::createMonster(monster);
 
@@ -79,7 +82,7 @@ namespace Simulation {
           Database::destroyPathfinder(monster1);
         }
       }
-
+      AI::System::update();
       PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();

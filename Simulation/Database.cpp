@@ -2,6 +2,7 @@
 #include "Database/EntityManager.h"
 #include "Database/ComponentHandle.h"
 #include "Database/ComponentManager.h"
+#include "AI/System.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
@@ -150,6 +151,17 @@ namespace Simulation {
       caster.pathfinderHandle = PathfindingSystem::create(bodyHandle, steeringHandle, target);
       linkComponent(entityHandle, ComponentType::Pathfinder, caster.genericHandle);
       return caster.pathfinderHandle;
+    }
+
+
+    AI::Handle createAI(::Database::EntityHandle entity, AI::Type type) {
+      union {
+        AI::Handle aiHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.aiHandle = AI::System::create(type);
+      linkComponent(entity, ComponentType::AI, caster.genericHandle);
+      return caster.aiHandle;
     }
 
     PathfinderHandle getPathfinderHandle(EntityHandle entityHandle) {

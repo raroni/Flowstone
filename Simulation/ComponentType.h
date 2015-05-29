@@ -11,6 +11,7 @@ namespace Simulation {
     Steering,
     Drag,
     Pathfinder,
+    AI,
 
     Count
   };
