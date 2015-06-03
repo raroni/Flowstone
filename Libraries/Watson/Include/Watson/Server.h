@@ -1,0 +1,13 @@
+#ifndef WATSON_SERVER_H
+#define WATSON_SERVER_H
+
+#include <stdint.h>
+#include "Watson/ServerFunction.h"
+
+namespace Watson {
+  namespace Server {
+    void configure(uint8_t boardKey, ServerFunction function);
+  }
+}
+
+#endif

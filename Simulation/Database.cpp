@@ -154,12 +154,12 @@ namespace Simulation {
     }
 
 
-    AI::Handle createAI(::Database::EntityHandle entity, AI::Type type) {
+    AI::Handle createAI(::Database::EntityHandle entity, AI::BehaviorType behaviorType) {
       union {
         AI::Handle aiHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.aiHandle = AI::System::create(type);
+      caster.aiHandle = AI::System::create(behaviorType);
       linkComponent(entity, ComponentType::AI, caster.genericHandle);
       return caster.aiHandle;
     }

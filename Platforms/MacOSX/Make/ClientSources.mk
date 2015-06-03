@@ -45,6 +45,24 @@ CLIENT_CPP_SOURCES =\
   Libraries/Piper/Source/ServerInBuffer.cpp\
   Libraries/Piper/Source/ServerOutBuffer.cpp\
   Libraries/Piper/Source/Transmission.cpp\
+  Libraries/Watson/Source/System.cpp\
+  Libraries/Watson/Source/Board.cpp\
+  Libraries/Watson/Source/BoardCollection.cpp\
+  Libraries/Watson/Source/ActionStream.cpp\
+  Libraries/Watson/Source/ActionStreamCollection.cpp\
+  Libraries/Watson/Source/Node.cpp\
+  Libraries/Watson/Source/Update.cpp\
+  Libraries/Watson/Source/Server.cpp\
+  Libraries/Watson/Source/PriorityNode.cpp\
+  Libraries/Watson/Source/ConcurrentNode.cpp\
+  Libraries/Watson/Source/TraversalFlow.cpp\
+  Libraries/Watson/Source/NodeStack.cpp\
+  Libraries/Watson/Source/ResetFlow.cpp\
+  Libraries/Watson/Source/StateCollection.cpp\
+  Libraries/Watson/Source/TypeDefinition.cpp\
+  Libraries/Watson/Source/TypeList.cpp\
+  Libraries/Watson/Source/InstanceOrderingCollection.cpp\
+  Libraries/Watson/Source/InstanceList.cpp\
   Physics/Engine.cpp\
   Physics/CollisionDetector.cpp\
   Physics/Integrator.cpp\
@@ -54,6 +72,11 @@ CLIENT_CPP_SOURCES =\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
   AI/System.cpp\
+  AI/Server.cpp\
+  AI/NodeTypes.cpp\
+  AI/TreeTypes.cpp\
+  AI/TypeDefinitionHelper.cpp\
+  AI/ThreatCheckNode.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
   Server/Game.cpp\
