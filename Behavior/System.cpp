@@ -2,12 +2,12 @@
 #include "Misc/HandleList.h"
 #include "Watson/InstanceHandle.h"
 #include "Watson/System.h"
-#include "AI/NodeTypes.h"
-#include "AI/TreeTypes.h"
-#include "AI/Server.h"
-#include "AI/System.h"
+#include "Behavior/NodeTypes.h"
+#include "Behavior/TreeTypes.h"
+#include "Behavior/Server.h"
+#include "Behavior/System.h"
 
-namespace AI {
+namespace Behavior {
   namespace System {
     const static uint16_t max = 256;
     uint16_t indices[max];

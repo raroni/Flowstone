@@ -1,9 +1,9 @@
 #include "TypeDefinitionHelper.h"
 #include "Watson/TypeDefinition.h"
 #include "Watson/System.h"
-#include "AI/TreeTypes.h"
+#include "Behavior/TreeTypes.h"
 
-namespace AI {
+namespace Behavior {
   namespace TreeTypes {
     typedef Watson::NodeIndex NI;
     typedef Watson::TypeIndex TypeIndex;

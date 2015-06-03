@@ -1,10 +1,10 @@
-#ifndef AI_THREAT_CHECK_NODE_H
-#define AI_THREAT_CHECK_NODE_H
+#ifndef BEHAVIOR_THREAT_CHECK_NODE_H
+#define BEHAVIOR_THREAT_CHECK_NODE_H
 
 #include "Watson/TraversalFlow.h"
 #include "Watson/ResetFlow.h"
 
-namespace AI {
+namespace Behavior {
   namespace ThreatCheckNode {
     extern const uint8_t structureLength;
     extern const uint8_t stateLength;

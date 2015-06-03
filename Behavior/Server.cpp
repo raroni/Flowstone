@@ -1,9 +1,9 @@
 #include "Watson/ServerFunction.h"
 #include "Watson/Server.h"
-#include "AI/BoardKey.h"
-#include "AI/Server.h"
+#include "Behavior/BoardKey.h"
+#include "Behavior/Server.h"
 
-namespace AI {
+namespace Behavior {
   namespace Server {
     typedef Watson::Board Board;
     typedef Watson::Request Request;

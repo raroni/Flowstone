@@ -1,8 +1,8 @@
 #include "Watson/NodeResult.h"
-#include "AI/NodeType.h"
-#include "AI/ThreatCheckNode.h"
+#include "Behavior/NodeType.h"
+#include "Behavior/ThreatCheckNode.h"
 
-namespace AI {
+namespace Behavior {
   namespace ThreatCheckNode {
     typedef Watson::NodeResult NodeResult;
     const uint8_t structureLength = sizeof(NodeType);

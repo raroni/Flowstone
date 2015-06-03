@@ -11,8 +11,8 @@
 #include "Simulation/Drag/DragHandle.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/Pathfinding/PathfinderHandle.h"
-#include "AI/Handle.h"
-#include "AI/BehaviorType.h"
+#include "Behavior/Handle.h"
+#include "Behavior/BehaviorType.h"
 #include "Physics/SphereColliderHandle.h"
 #include "Physics/BodyHandle.h"
 #include "Physics/DynamicDriverHandle.h"
@@ -35,7 +35,7 @@ namespace Simulation {
     ResourceHandle createResource(::Database::EntityHandle entity, ResourceType type);
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
-    AI::Handle createAI(::Database::EntityHandle entity, AI::BehaviorType behaviorType);
+    Behavior::Handle createAI(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);
     Steering getSteering(::Database::EntityHandle entityHandle);

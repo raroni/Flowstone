@@ -71,12 +71,12 @@ CLIENT_CPP_SOURCES =\
   Physics/KinematicDriverList.cpp\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
-  AI/System.cpp\
-  AI/Server.cpp\
-  AI/NodeTypes.cpp\
-  AI/TreeTypes.cpp\
-  AI/TypeDefinitionHelper.cpp\
-  AI/ThreatCheckNode.cpp\
+  Behavior/System.cpp\
+  Behavior/Server.cpp\
+  Behavior/NodeTypes.cpp\
+  Behavior/TreeTypes.cpp\
+  Behavior/TypeDefinitionHelper.cpp\
+  Behavior/ThreatCheckNode.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
   Server/Game.cpp\

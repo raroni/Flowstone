@@ -2,7 +2,7 @@
 #include "Database/EntityManager.h"
 #include "Database/ComponentHandle.h"
 #include "Database/ComponentManager.h"
-#include "AI/System.h"
+#include "Behavior/System.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
@@ -154,12 +154,12 @@ namespace Simulation {
     }
 
 
-    AI::Handle createAI(::Database::EntityHandle entity, AI::BehaviorType behaviorType) {
+    Behavior::Handle createAI(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType) {
       union {
-        AI::Handle aiHandle;
+        Behavior::Handle aiHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.aiHandle = AI::System::create(behaviorType);
+      caster.aiHandle = Behavior::System::create(behaviorType);
       linkComponent(entity, ComponentType::AI, caster.genericHandle);
       return caster.aiHandle;
     }

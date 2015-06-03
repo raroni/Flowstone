@@ -1,12 +1,12 @@
-#ifndef AI_TREE_DEFINITION_HELPER_H
-#define AI_TREE_DEFINITION_HELPER_H
+#ifndef BEHAVIOR_TREE_DEFINITION_HELPER_H
+#define BEHAVIOR_TREE_DEFINITION_HELPER_H
 
 #include "Watson/TypeDefinition.h"
 #include "Watson/NodeIndex.h"
 #include "Watson/NodeType.h"
 #include "NodeType.h"
 
-namespace AI {
+namespace Behavior {
   class TypeDefinitionHelper {
   public:
     TypeDefinitionHelper(Watson::TypeDefinition *definition);

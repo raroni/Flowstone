@@ -1,9 +1,9 @@
 #include "Watson/PriorityNode.h"
 #include "Watson/ConcurrentNode.h"
-#include "AI/ThreatCheckNode.h"
-#include "AI/TypeDefinitionHelper.h"
+#include "Behavior/ThreatCheckNode.h"
+#include "Behavior/TypeDefinitionHelper.h"
 
-namespace AI {
+namespace Behavior {
   typedef TypeDefinitionHelper TDH;
   typedef Watson::NodeIndex NodeIndex;
   namespace PriorityNode = Watson::PriorityNode;
