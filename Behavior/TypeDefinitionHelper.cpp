@@ -1,5 +1,7 @@
 #include "Watson/PriorityNode.h"
 #include "Watson/ConcurrentNode.h"
+#include "Watson/SequenceNode.h"
+#include "Watson/LoopNode.h"
 #include "Watson/FailDummyNode.h"
 #include "Watson/RunDummyNode.h"
 #include "Behavior/ThreatCheckNode.h"
@@ -10,6 +12,8 @@ namespace Behavior {
   typedef Watson::NodeIndex NodeIndex;
   namespace PriorityNode = Watson::PriorityNode;
   namespace ConcurrentNode = Watson::ConcurrentNode;
+  namespace SequenceNode = Watson::SequenceNode;
+  namespace LoopNode = Watson::LoopNode;
   namespace FailDummyNode = Watson::FailDummyNode;
   namespace RunDummyNode = Watson::RunDummyNode;
 
@@ -53,6 +57,16 @@ namespace Behavior {
     return creation.index;
   }
 
+  NodeIndex TDH::writeSequence(uint8_t childCount) {
+    Creation creation = createWatson(
+      Watson::NodeType::Sequence,
+      SequenceNode::calcStructureLength(childCount),
+      SequenceNode::calcStateLength(childCount)
+    );
+    SequenceNode::writeStructure(creation.structureNode, childCount);
+    return creation.index;
+  }
+
   NodeIndex TDH::writeFailDummy() {
     Creation creation = createWatson(
       Watson::NodeType::FailDummy,
@@ -90,6 +104,15 @@ namespace Behavior {
     return creation.index;
   }
 
+  NodeIndex TDH::writeLoop() {
+    Creation creation = createWatson(
+      Watson::NodeType::Loop,
+      LoopNode::structureLength,
+      LoopNode::stateLength
+    );
+    return creation.index;
+  }
+
   void TDH::setInstanceMax(uint16_t max) {
     definition->instanceMax = max;
   }
@@ -99,8 +122,18 @@ namespace Behavior {
     PriorityNode::setChild(node, childSlot, childIndex);
   }
 
+  void TDH::setSequenceChild(NodeIndex sequenceIndex, uint8_t childSlot, NodeIndex childIndex) {
+    void *node = getStructureNode(sequenceIndex);
+    SequenceNode::setChild(node, childSlot, childIndex);
+  }
+
   void TDH::setConcurrentChild(NodeIndex concurrentIndex, uint8_t childSlot, NodeIndex childIndex) {
     void *node = getStructureNode(concurrentIndex);
     ConcurrentNode::setChild(node, childSlot, childIndex);
+  }
+
+  void TDH::setLoopChild(Watson::NodeIndex loopIndex, NodeIndex childIndex) {
+    void *node = getStructureNode(loopIndex);
+    LoopNode::setChild(node, childIndex);
   }
 }

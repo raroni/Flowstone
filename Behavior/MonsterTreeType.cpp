@@ -4,6 +4,10 @@ namespace Behavior {
   namespace MonsterTreeType {
     typedef Watson::NodeIndex NI;
 
+    NI buildEnsureWood(TypeDefinitionHelper *h) {
+      return h->writeFailDummy();
+    }
+
     NI buildDefense(TypeDefinitionHelper *h) {
       // todo: add actual attack/defend/whatevs
       NI defense = h->writeConcurrent(1);
@@ -13,7 +17,13 @@ namespace Behavior {
     }
 
     NI buildHarvest(TypeDefinitionHelper *h) {
-      return h->writeFailDummy();
+      NI harvest = h->writeLoop();
+      NI sequence = h->writeSequence(2);
+      NI ensureWood = buildEnsureWood(h);
+      h->setSequenceChild(sequence, 0, ensureWood);
+      // h->setSequenceChild(sequence, 1, deliverWood);
+      h->setLoopChild(harvest, sequence);
+      return harvest;
     }
 
     NI buildIdle(TypeDefinitionHelper *h) {

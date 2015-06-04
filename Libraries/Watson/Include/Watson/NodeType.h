@@ -8,6 +8,7 @@ namespace Watson {
     Priority,
     Concurrent,
     Loop,
+    Sequence,
     FailDummy,
     RunDummy,
 

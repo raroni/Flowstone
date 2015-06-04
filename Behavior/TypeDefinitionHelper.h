@@ -12,11 +12,15 @@ namespace Behavior {
     TypeDefinitionHelper(Watson::TypeDefinition *definition);
     Watson::NodeIndex writePriority(uint8_t childCount);
     Watson::NodeIndex writeConcurrent(uint8_t childCount);
-    Watson::NodeIndex writeThreatCheck();
+    Watson::NodeIndex writeSequence(uint8_t childCount);
+    Watson::NodeIndex writeLoop();
     Watson::NodeIndex writeFailDummy();
     Watson::NodeIndex writeRunDummy();
+    Watson::NodeIndex writeThreatCheck();
     void setPriorityChild(Watson::NodeIndex priorityIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
     void setConcurrentChild(Watson::NodeIndex concurrentIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
+    void setSequenceChild(Watson::NodeIndex concurrentIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
+    void setLoopChild(Watson::NodeIndex loopIndex, Watson::NodeIndex childIndex);
     void setInstanceMax(uint16_t max);
   private:
     struct Creation {

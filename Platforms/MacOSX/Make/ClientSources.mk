@@ -56,6 +56,7 @@ CLIENT_CPP_SOURCES =\
   Libraries/Watson/Source/Update.cpp\
   Libraries/Watson/Source/Server.cpp\
   Libraries/Watson/Source/PriorityNode.cpp\
+  Libraries/Watson/Source/SequenceNode.cpp\
   Libraries/Watson/Source/LoopNode.cpp\
   Libraries/Watson/Source/ConcurrentNode.cpp\
   Libraries/Watson/Source/FailDummyNode.cpp\
