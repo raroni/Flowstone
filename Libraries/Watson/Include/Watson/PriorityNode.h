@@ -13,7 +13,6 @@ namespace Watson {
     void initializeState(const void *structure, void *state);
     void writeStructure(void *structure, uint8_t childCount);
     void setChild(void *structure, uint8_t childSlot, NodeIndex childIndex);
-    uint16_t getStateLength();
     uint8_t calcStructureLength(uint8_t childCount);
     uint8_t calcStateLength(uint8_t childCount);
   }
