@@ -14,13 +14,19 @@ namespace Behavior {
       Watson::Server::configure(keyInt, function);
     }
 
-    void isThreatened(const void *request, ResponseBuffer *response) {
+    void checkThreat(const void *request, ResponseBuffer *response) {
+      bool value = false;
+      response->set(&value, sizeof(bool));
+    }
+
+    void checkWood(const void *request, ResponseBuffer *response) {
       bool value = false;
       response->set(&value, sizeof(bool));
     }
 
     void setup() {
-      setupType(BoardKey::IsThreatened, isThreatened);
+      setupType(BoardKey::IsThreatened, checkThreat);
+      setupType(BoardKey::HasWood, checkWood);
     }
   }
 }

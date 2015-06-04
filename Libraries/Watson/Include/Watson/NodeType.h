@@ -11,6 +11,7 @@ namespace Watson {
     Sequence,
     FailDummy,
     RunDummy,
+    Inverter,
 
     Count
   };

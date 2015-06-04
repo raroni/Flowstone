@@ -5,7 +5,7 @@
 namespace Watson {
   void Stream::write(const void *data, uint16_t length) {
     offsets[count] = this->length;
-    memcpy(buffer+length, data, length);
+    memcpy(buffer+this->length, data, length);
     this->length += length;
     count++;
   }

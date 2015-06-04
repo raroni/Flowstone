@@ -58,6 +58,7 @@ CLIENT_CPP_SOURCES =\
   Libraries/Watson/Source/PriorityNode.cpp\
   Libraries/Watson/Source/SequenceNode.cpp\
   Libraries/Watson/Source/LoopNode.cpp\
+  Libraries/Watson/Source/InverterNode.cpp\
   Libraries/Watson/Source/ConcurrentNode.cpp\
   Libraries/Watson/Source/FailDummyNode.cpp\
   Libraries/Watson/Source/RunDummyNode.cpp\
@@ -83,6 +84,7 @@ CLIENT_CPP_SOURCES =\
   Behavior/TreeTypes.cpp\
   Behavior/TypeDefinitionHelper.cpp\
   Behavior/ThreatCheckNode.cpp\
+  Behavior/WoodCheckNode.cpp\
   Behavior/MonsterTreeType.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\

@@ -1,8 +1,10 @@
+#include <assert.h>
 #include "Watson/NodeType.h"
-#include "Watson/LoopNode.h"
+#include "Watson/NodeResult.h"
+#include "Watson/InverterNode.h"
 
 namespace Watson {
-  namespace LoopNode {
+  namespace InverterNode {
     struct Structure {
       NodeType type;
       NodeIndex child;
@@ -11,31 +13,26 @@ namespace Watson {
     uint8_t structureLength = sizeof(Structure);
     uint8_t stateLength = 0;
 
-    void requestChildEntry(TraversalFlow *flow) {
+    void enter(TraversalFlow *flow) {
       const Structure *structure = reinterpret_cast<const Structure*>(flow->structure);
       flow->requestEntry(structure->child);
     }
 
-    void enter(TraversalFlow *flow) {
-      requestChildEntry(flow);
-    }
-
     void react(TraversalFlow *flow) {
-      NodeResult result = flow->lastResult;
-      if(result == NodeResult::Failed || result == NodeResult::Running) {
-        flow->requestReaction(result);
+      assert(flow->lastResult == NodeResult::Succeeded || flow->lastResult == NodeResult::Failed);
+      if(flow->lastResult == NodeResult::Succeeded) {
+        flow->requestReaction(NodeResult::Failed);
       } else {
-        requestChildEntry(flow);
+        flow->requestReaction(NodeResult::Succeeded);
       }
     }
-
-    void reset(ResetFlow *flow) { }
-
-    void initializeState(const void *structure, void *state) { }
 
     void setChild(void *structureRaw, NodeIndex childIndex) {
       Structure *structure = reinterpret_cast<Structure*>(structureRaw);
       structure->child = childIndex;
     }
+
+    void reset(ResetFlow *flow) { }
+    void initializeState(const void *structure, void *state) { }
   }
 }

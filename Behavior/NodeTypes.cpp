@@ -3,6 +3,7 @@
 #include "Watson/TraversalFunction.h"
 #include "Watson/NodeInterface.h"
 #include "Behavior/ThreatCheckNode.h"
+#include "Behavior/WoodCheckNode.h"
 #include "Behavior/NodeType.h"
 #include "Behavior/NodeTypes.h"
 
@@ -12,7 +13,7 @@ namespace Behavior {
       Watson::Node::setupInterface(static_cast<uint8_t>(type), interface);
     }
 
-    void setupIsThreatened() {
+    void setupThreatCheck() {
       Watson::NodeInterface interface = {
         .enter = ThreatCheckNode::enter,
         .reset = ThreatCheckNode::reset,
@@ -22,8 +23,19 @@ namespace Behavior {
       setupInterface(NodeType::ThreatCheck, interface);
     }
 
+    void setupWoodCheck() {
+      Watson::NodeInterface interface = {
+        .enter = WoodCheckNode::enter,
+        .reset = WoodCheckNode::reset,
+        .initializeState = WoodCheckNode::initializeState
+      };
+      interface.callbacks[WoodCheckNode::ResponseCallbackIndex] = WoodCheckNode::handleResponse;
+      setupInterface(NodeType::WoodCheck, interface);
+    }
+
     void setup() {
-      setupIsThreatened();
+      setupThreatCheck();
+      setupWoodCheck();
     }
   }
 }

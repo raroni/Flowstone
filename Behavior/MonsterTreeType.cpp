@@ -4,8 +4,20 @@ namespace Behavior {
   namespace MonsterTreeType {
     typedef Watson::NodeIndex NI;
 
+    NI buildInverseWoodCheck(TypeDefinitionHelper *h) {
+      NI inverseWoodCheck = h->writeInverter();
+      NI woodCheck = h->writeWoodCheck();
+      h->setInverterChild(inverseWoodCheck, woodCheck);
+      return inverseWoodCheck;
+    }
+
     NI buildWoodEnsurance(TypeDefinitionHelper *h) {
-      return h->writeFailDummy();
+      NI woodEnsurance = h->writeSequence(2);
+      NI inverseWoodCheck = buildInverseWoodCheck(h);
+      NI woodAcquisition = h->writeFailDummy();
+      h->setSequenceChild(woodEnsurance, 0, inverseWoodCheck);
+      h->setSequenceChild(woodEnsurance, 1, woodAcquisition);
+      return woodEnsurance;
     }
 
     NI buildWoodDelivery(TypeDefinitionHelper *h) {
@@ -45,10 +57,10 @@ namespace Behavior {
 
       NI root = h->writePriority(3);
       NI defense = buildDefense(h);
-      NI harvest = buildHarvestLoop(h);
+      NI harvestLoop = buildHarvestLoop(h);
       NI idle = buildIdle(h);
       h->setPriorityChild(root, 0, defense);
-      h->setPriorityChild(root, 1, harvest);
+      h->setPriorityChild(root, 1, harvestLoop);
       h->setPriorityChild(root, 2, idle);
     }
   }

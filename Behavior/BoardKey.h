@@ -3,7 +3,8 @@
 
 namespace Behavior {
   enum class BoardKey {
-    IsThreatened
+    IsThreatened,
+    HasWood
   };
 }
 

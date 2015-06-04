@@ -4,7 +4,9 @@
 #include "Watson/LoopNode.h"
 #include "Watson/FailDummyNode.h"
 #include "Watson/RunDummyNode.h"
+#include "Watson/InverterNode.h"
 #include "Behavior/ThreatCheckNode.h"
+#include "Behavior/WoodCheckNode.h"
 #include "Behavior/TypeDefinitionHelper.h"
 
 namespace Behavior {
@@ -16,6 +18,7 @@ namespace Behavior {
   namespace LoopNode = Watson::LoopNode;
   namespace FailDummyNode = Watson::FailDummyNode;
   namespace RunDummyNode = Watson::RunDummyNode;
+  namespace InverterNode = Watson::InverterNode;
 
   TDH::TypeDefinitionHelper(Watson::TypeDefinition *definition) :
   definition(definition) { }
@@ -85,11 +88,11 @@ namespace Behavior {
     return creation.index;
   }
 
-  NodeIndex TDH::writeThreatCheck() {
-    Creation creation = createCustom(
-      NodeType::ThreatCheck,
-      ThreatCheckNode::structureLength,
-      ThreatCheckNode::stateLength
+  NodeIndex TDH::writeInverter() {
+    Creation creation = createWatson(
+      Watson::NodeType::Inverter,
+      InverterNode::structureLength,
+      InverterNode::stateLength
     );
     return creation.index;
   }
@@ -135,5 +138,28 @@ namespace Behavior {
   void TDH::setLoopChild(Watson::NodeIndex loopIndex, NodeIndex childIndex) {
     void *node = getStructureNode(loopIndex);
     LoopNode::setChild(node, childIndex);
+  }
+
+  void TDH::setInverterChild(Watson::NodeIndex inverterIndex, Watson::NodeIndex childIndex) {
+    void *node = getStructureNode(inverterIndex);
+    InverterNode::setChild(node, childIndex);
+  }
+
+  NodeIndex TDH::writeThreatCheck() {
+    Creation creation = createCustom(
+      NodeType::ThreatCheck,
+      ThreatCheckNode::structureLength,
+      ThreatCheckNode::stateLength
+    );
+    return creation.index;
+  }
+
+  NodeIndex TDH::writeWoodCheck() {
+    Creation creation = createCustom(
+      NodeType::WoodCheck,
+      WoodCheckNode::structureLength,
+      WoodCheckNode::stateLength
+    );
+    return creation.index;
   }
 }

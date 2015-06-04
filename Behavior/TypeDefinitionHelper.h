@@ -16,11 +16,14 @@ namespace Behavior {
     Watson::NodeIndex writeLoop();
     Watson::NodeIndex writeFailDummy();
     Watson::NodeIndex writeRunDummy();
-    Watson::NodeIndex writeThreatCheck();
+    Watson::NodeIndex writeInverter();
     void setPriorityChild(Watson::NodeIndex priorityIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
     void setConcurrentChild(Watson::NodeIndex concurrentIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
     void setSequenceChild(Watson::NodeIndex concurrentIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
     void setLoopChild(Watson::NodeIndex loopIndex, Watson::NodeIndex childIndex);
+    void setInverterChild(Watson::NodeIndex inverterIndex, Watson::NodeIndex childIndex);
+    Watson::NodeIndex writeThreatCheck();
+    Watson::NodeIndex writeWoodCheck();
     void setInstanceMax(uint16_t max);
   private:
     struct Creation {
