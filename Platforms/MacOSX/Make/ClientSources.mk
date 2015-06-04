@@ -47,6 +47,7 @@ CLIENT_CPP_SOURCES =\
   Libraries/Piper/Source/Transmission.cpp\
   Libraries/Watson/Source/System.cpp\
   Libraries/Watson/Source/Board.cpp\
+  Libraries/Watson/Source/NodeTypes.cpp\
   Libraries/Watson/Source/ResponseBuffer.cpp\
   Libraries/Watson/Source/BoardCollection.cpp\
   Libraries/Watson/Source/Stream.cpp\
@@ -55,7 +56,10 @@ CLIENT_CPP_SOURCES =\
   Libraries/Watson/Source/Update.cpp\
   Libraries/Watson/Source/Server.cpp\
   Libraries/Watson/Source/PriorityNode.cpp\
+  Libraries/Watson/Source/LoopNode.cpp\
   Libraries/Watson/Source/ConcurrentNode.cpp\
+  Libraries/Watson/Source/FailDummyNode.cpp\
+  Libraries/Watson/Source/RunDummyNode.cpp\
   Libraries/Watson/Source/TraversalFlow.cpp\
   Libraries/Watson/Source/NodeStack.cpp\
   Libraries/Watson/Source/ResetFlow.cpp\
@@ -78,6 +82,7 @@ CLIENT_CPP_SOURCES =\
   Behavior/TreeTypes.cpp\
   Behavior/TypeDefinitionHelper.cpp\
   Behavior/ThreatCheckNode.cpp\
+  Behavior/MonsterTreeType.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
   Server/Game.cpp\

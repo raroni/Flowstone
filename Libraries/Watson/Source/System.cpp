@@ -1,8 +1,5 @@
 #include "Watson/Node.h"
-#include "Watson/NodeInterface.h"
-#include "Watson/NodeType.h"
-#include "Watson/PriorityNode.h"
-#include "Watson/ConcurrentNode.h"
+#include "Watson/NodeTypes.h"
 #include "Watson/TypeIndex.h"
 #include "Watson/TypeDefinition.h"
 #include "Watson/TypeList.h"
@@ -16,26 +13,8 @@
 
 namespace Watson {
   namespace System {
-    void setupNodeInterface(NodeType type, NodeInterface interface) {
-      Node::setupInterface(static_cast<uint8_t>(type), interface);
-    }
-
     void initialize() {
-      NodeInterface priorityInterface = {
-        .enter = PriorityNode::enter,
-        .react = PriorityNode::react,
-        .reset = PriorityNode::reset,
-        .initializeState = PriorityNode::initializeState
-      };
-      setupNodeInterface(NodeType::Priority, priorityInterface);
-
-      NodeInterface concurrentInterface = {
-        .enter = ConcurrentNode::enter,
-        .react = ConcurrentNode::react,
-        .reset = PriorityNode::reset,
-        .initializeState = ConcurrentNode::initializeState
-      };
-      setupNodeInterface(NodeType::Concurrent, concurrentInterface);
+      NodeTypes::initialize();
     }
 
     TypeIndex createType(const TypeDefinition *definition) {

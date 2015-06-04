@@ -13,6 +13,8 @@ namespace Behavior {
     Watson::NodeIndex writePriority(uint8_t childCount);
     Watson::NodeIndex writeConcurrent(uint8_t childCount);
     Watson::NodeIndex writeThreatCheck();
+    Watson::NodeIndex writeFailDummy();
+    Watson::NodeIndex writeRunDummy();
     void setPriorityChild(Watson::NodeIndex priorityIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
     void setConcurrentChild(Watson::NodeIndex concurrentIndex, uint8_t childSlot, Watson::NodeIndex childIndex);
     void setInstanceMax(uint16_t max);

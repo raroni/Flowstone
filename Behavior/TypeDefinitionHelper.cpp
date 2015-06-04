@@ -1,5 +1,7 @@
 #include "Watson/PriorityNode.h"
 #include "Watson/ConcurrentNode.h"
+#include "Watson/FailDummyNode.h"
+#include "Watson/RunDummyNode.h"
 #include "Behavior/ThreatCheckNode.h"
 #include "Behavior/TypeDefinitionHelper.h"
 
@@ -8,6 +10,8 @@ namespace Behavior {
   typedef Watson::NodeIndex NodeIndex;
   namespace PriorityNode = Watson::PriorityNode;
   namespace ConcurrentNode = Watson::ConcurrentNode;
+  namespace FailDummyNode = Watson::FailDummyNode;
+  namespace RunDummyNode = Watson::RunDummyNode;
 
   TDH::TypeDefinitionHelper(Watson::TypeDefinition *definition) :
   definition(definition) { }
@@ -46,6 +50,24 @@ namespace Behavior {
       PriorityNode::calcStateLength(childCount)
     );
     PriorityNode::writeStructure(creation.structureNode, childCount);
+    return creation.index;
+  }
+
+  NodeIndex TDH::writeFailDummy() {
+    Creation creation = createWatson(
+      Watson::NodeType::FailDummy,
+      FailDummyNode::structureLength,
+      FailDummyNode::stateLength
+    );
+    return creation.index;
+  }
+
+  NodeIndex TDH::writeRunDummy() {
+    Creation creation = createWatson(
+      Watson::NodeType::RunDummy,
+      RunDummyNode::structureLength,
+      RunDummyNode::stateLength
+    );
     return creation.index;
   }
 
