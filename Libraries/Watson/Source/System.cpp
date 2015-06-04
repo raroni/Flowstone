@@ -74,6 +74,13 @@ namespace Watson {
           Update::run(i, n);
         }
       }
+
+      for(TypeIndex i=0; i<TypeList::getCount(); ++i) {
+        uint16_t instanceCount = InstanceOrderingCollection::getCount(i);
+        for(uint16_t n=0; n<instanceCount; ++n) {
+          BoardCollection::get(i, n)->clear();
+        }
+      }
     }
   }
 }
