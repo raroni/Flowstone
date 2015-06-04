@@ -21,14 +21,19 @@ namespace Behavior {
     }
 
     NI buildHarvest(TypeDefinitionHelper *h) {
-      NI harvest = h->writeLoop();
-      NI sequence = h->writeSequence(2);
+      NI harvest = h->writeSequence(2);
       NI woodEnsurance = buildWoodEnsurance(h);
       NI woodDelivery = buildWoodDelivery(h);
-      h->setSequenceChild(sequence, 0, woodEnsurance);
-      h->setSequenceChild(sequence, 1, woodDelivery);
-      h->setLoopChild(harvest, sequence);
+      h->setSequenceChild(harvest, 0, woodEnsurance);
+      h->setSequenceChild(harvest, 1, woodDelivery);
       return harvest;
+    }
+
+    NI buildHarvestLoop(TypeDefinitionHelper *h) {
+      NI harvestLoop = h->writeLoop();
+      NI harvest = buildHarvest(h);
+      h->setLoopChild(harvestLoop, harvest);
+      return harvestLoop;
     }
 
     NI buildIdle(TypeDefinitionHelper *h) {
@@ -40,7 +45,7 @@ namespace Behavior {
 
       NI root = h->writePriority(3);
       NI defense = buildDefense(h);
-      NI harvest = buildHarvest(h);
+      NI harvest = buildHarvestLoop(h);
       NI idle = buildIdle(h);
       h->setPriorityChild(root, 0, defense);
       h->setPriorityChild(root, 1, harvest);
