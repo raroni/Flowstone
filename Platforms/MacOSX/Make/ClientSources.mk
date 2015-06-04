@@ -47,8 +47,9 @@ CLIENT_CPP_SOURCES =\
   Libraries/Piper/Source/Transmission.cpp\
   Libraries/Watson/Source/System.cpp\
   Libraries/Watson/Source/Board.cpp\
+  Libraries/Watson/Source/ResponseBuffer.cpp\
   Libraries/Watson/Source/BoardCollection.cpp\
-  Libraries/Watson/Source/ActionStream.cpp\
+  Libraries/Watson/Source/Stream.cpp\
   Libraries/Watson/Source/ActionStreamCollection.cpp\
   Libraries/Watson/Source/Node.cpp\
   Libraries/Watson/Source/Update.cpp\

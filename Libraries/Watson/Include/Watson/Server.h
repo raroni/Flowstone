@@ -7,6 +7,7 @@
 namespace Watson {
   namespace Server {
     void configure(uint8_t boardKey, ServerFunction function);
+    void request(uint8_t boardKey, const void *requestData, ResponseBuffer *responseBuffer);
   }
 }
 

@@ -9,7 +9,12 @@ namespace Behavior {
     extern const uint8_t structureLength;
     extern const uint8_t stateLength;
 
+    enum CallbackIndex {
+      ResponseCallbackIndex
+    };
+
     void enter(Watson::TraversalFlow *flow);
+    void handleResponse(Watson::TraversalFlow *flow);
     void reset(Watson::ResetFlow *flow);
     void initializeState(const void *structure, void *state);
   }

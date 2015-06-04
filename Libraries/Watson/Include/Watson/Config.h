@@ -12,6 +12,8 @@ namespace Watson {
     const uint16_t inputMapCapacity = 512;
     const uint8_t inputMapValueMax = 32;
     const uint8_t boardKeyMax = 32;
+    const uint8_t callbacksPerNodeType = 4;
+    const uint8_t responseBufferCapacity = 64;
   }
 }
 

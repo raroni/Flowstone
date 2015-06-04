@@ -3,11 +3,11 @@
 
 namespace Watson {
   namespace Node {
-    const static uint8_t interfaceMax = 32;
-    NodeInterface interfaces[interfaceMax] = { { 0 } };
+    const static uint8_t typeMax = 32;
+    NodeInterface interfaces[typeMax] = { { 0 } };
 
     void setupInterface(uint8_t type, NodeInterface interface) {
-      assert(type < interfaceMax);
+      assert(type < typeMax);
       interfaces[type] = interface;
     }
 
@@ -29,6 +29,11 @@ namespace Watson {
     void reset(ResetFlow *flow) {
       const NodeInterface *interface = getInterface(flow->structure);
       interface->reset(flow);
+    }
+
+    void callback(TraversalFlow *flow, uint8_t index) {
+      const NodeInterface *interface = getInterface(flow->structure);
+      interface->callbacks[index](flow);
     }
 
     void initializeState(const void *structure, void *state) {

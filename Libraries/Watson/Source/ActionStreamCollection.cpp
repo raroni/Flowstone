@@ -6,7 +6,7 @@
 namespace Watson {
   namespace ActionStreamCollection {
     const uint16_t bufferCapacity = 256;
-    ActionStream buffer[bufferCapacity];
+    Stream buffer[bufferCapacity];
     uint16_t bufferLength = 0;
     uint16_t offsets[Config::typeMax];
 
@@ -17,7 +17,7 @@ namespace Watson {
       bufferLength += instanceMax;
     }
 
-    ActionStream* get(TypeIndex typeIndex, uint16_t instanceIndex) {
+    Stream* get(TypeIndex typeIndex, uint16_t instanceIndex) {
       uint16_t offset = offsets[typeIndex]+instanceIndex;
       return buffer+offset;
     }

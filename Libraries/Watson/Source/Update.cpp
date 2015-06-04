@@ -5,16 +5,21 @@
 #include "Watson/TraversalFlow.h"
 #include "Watson/ResetFlow.h"
 #include "Watson/Board.h"
+#include "Watson/Server.h"
 #include "Watson/BoardCollection.h"
 #include "Watson/ActionStreamCollection.h"
 #include "Watson/StateCollection.h"
 #include "Watson/Node.h"
 #include "Watson/Update.h"
 
+#include <stdio.h>
+
 namespace Watson {
   namespace Update {
     NodeStack stack;
-    TraversalFlow traversalFlow;
+    Stream requestStream;
+    ResponseBuffer responseBuffer;
+    TraversalFlow traversalFlow(&requestStream);
     ResetFlow resetFlow(&stack);
     TypeIndex typeIndex;
     uint16_t instanceIndex;
@@ -45,7 +50,9 @@ namespace Watson {
           break;
         }
         case TraversalCommandType::Callback: {
-          assert(false); // not impl
+          NodeIndex nodeIndex = stack.top();
+          configureTraversalFlow(nodeIndex);
+          Node::callback(&traversalFlow, command->options.callbackIndex);
           break;
         }
         default: {
@@ -67,12 +74,12 @@ namespace Watson {
         if(traversalFlow.getCommand().type == TraversalCommandType::Undefined) {
           break;
         }
-        /*
-        todo: enable requests
-        if(!traversalFlow.requests->isEmpty()) {
-          Server::request(traversalFlow.getRequests(), traversalFlow.input);
+        for(uint8_t i=0; i<requestStream.getCount(); ++i) {
+          const uint8_t *request = static_cast<const uint8_t*>(requestStream.get(i));
+          Server::request(*request, request+1, &responseBuffer);
+          traversalFlow.board->set(*request, responseBuffer.storage, responseBuffer.length);
         }
-        */
+        requestStream.clear();
       }
 
       assert(stack.isEmpty());

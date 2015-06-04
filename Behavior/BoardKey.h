@@ -3,7 +3,7 @@
 
 namespace Behavior {
   enum class BoardKey {
-    PLACEHOLDER
+    IsThreatened
   };
 }
 

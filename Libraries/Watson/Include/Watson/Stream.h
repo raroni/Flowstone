@@ -1,15 +1,15 @@
-#ifndef WATSON_ACTION_STREAM_H
-#define WATSON_ACTION_STREAM_H
+#ifndef WATSON_STREAM_H
+#define WATSON_STREAM_H
 
 #include <stdint.h>
 
 namespace Watson {
-  class ActionStream {
+  class Stream {
   public:
-    void write(void *data, uint16_t length);
+    void write(const void *data, uint16_t length);
     void* get(uint8_t index);
     uint8_t getCount() const;
-    void reset();
+    void clear();
   private:
     static const uint8_t valueMax = 128;
     uint16_t offsets[valueMax];

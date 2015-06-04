@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "Watson/Node.h"
+#include "Watson/TraversalFunction.h"
 #include "Watson/NodeInterface.h"
 #include "Behavior/ThreatCheckNode.h"
 #include "Behavior/NodeType.h"
@@ -11,13 +12,18 @@ namespace Behavior {
       Watson::Node::setupInterface(static_cast<uint8_t>(type), interface);
     }
 
-    void setup() {
-      Watson::NodeInterface attackInterface = {
+    void setupIsThreatened() {
+      Watson::NodeInterface interface = {
         .enter = ThreatCheckNode::enter,
         .reset = ThreatCheckNode::reset,
         .initializeState = ThreatCheckNode::initializeState
       };
-      setupInterface(NodeType::ThreatCheck, attackInterface);
+      interface.callbacks[ThreatCheckNode::ResponseCallbackIndex] = ThreatCheckNode::handleResponse;
+      setupInterface(NodeType::ThreatCheck, interface);
+    }
+
+    void setup() {
+      setupIsThreatened();
     }
   }
 }

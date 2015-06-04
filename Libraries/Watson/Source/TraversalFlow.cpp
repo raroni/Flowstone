@@ -2,6 +2,8 @@
 #include "Watson/TraversalFlow.h"
 
 namespace Watson {
+  TraversalFlow::TraversalFlow(Stream *requestStream) : requestStream(requestStream) { }
+
   void TraversalFlow::requestReaction(NodeResult result) {
     assert(command.type == TraversalCommandType::Undefined);
     command.type = TraversalCommandType::Reaction;
@@ -18,6 +20,10 @@ namespace Watson {
     assert(resetNodeIndex == 0);
     assert(node != 0);
     resetNodeIndex = node;
+  }
+
+  void TraversalFlow::requestBoardData(const void *request, uint8_t length) {
+    requestStream->write(request, length);
   }
 
   void TraversalFlow::requestCallback(uint8_t callbackIndex) {

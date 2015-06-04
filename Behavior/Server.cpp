@@ -6,19 +6,21 @@
 namespace Behavior {
   namespace Server {
     typedef Watson::Board Board;
-    typedef Watson::Request Request;
+    typedef Watson::ResponseBuffer ResponseBuffer;
+    typedef Watson::ServerFunction ServerFunction;
 
-    void setupType(BoardKey key, Watson::ServerFunction function) {
+    void setupType(BoardKey key, ServerFunction function) {
       uint8_t keyInt = static_cast<uint8_t>(key);
       Watson::Server::configure(keyInt, function);
     }
 
-    void testLoader(const Request *request, Board *board) {
-
+    void isThreatened(const void *request, ResponseBuffer *response) {
+      bool value = false;
+      response->set(&value, sizeof(bool));
     }
 
     void setup() {
-      setupType(BoardKey::PLACEHOLDER, testLoader);
+      setupType(BoardKey::IsThreatened, isThreatened);
     }
   }
 }
