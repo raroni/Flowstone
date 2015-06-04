@@ -12,8 +12,6 @@
 #include "Watson/Node.h"
 #include "Watson/Update.h"
 
-#include <stdio.h>
-
 namespace Watson {
   namespace Update {
     NodeStack stack;
