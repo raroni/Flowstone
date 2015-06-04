@@ -6,7 +6,6 @@ namespace Watson {
     Running,
     Succeeded,
     Failed,
-    Ready,
     Undetermined
   };
 }
