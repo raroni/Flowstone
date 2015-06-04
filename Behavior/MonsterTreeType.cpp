@@ -8,6 +8,10 @@ namespace Behavior {
       return h->writeFailDummy();
     }
 
+    NI buildWoodDelivery(TypeDefinitionHelper *h) {
+      return h->writeFailDummy();
+    }
+
     NI buildDefense(TypeDefinitionHelper *h) {
       // todo: add actual attack/defend/whatevs
       NI defense = h->writeConcurrent(1);
@@ -20,8 +24,9 @@ namespace Behavior {
       NI harvest = h->writeLoop();
       NI sequence = h->writeSequence(2);
       NI woodEnsurance = buildWoodEnsurance(h);
+      NI woodDelivery = buildWoodDelivery(h);
       h->setSequenceChild(sequence, 0, woodEnsurance);
-      // h->setSequenceChild(sequence, 1, deliverWood);
+      h->setSequenceChild(sequence, 1, woodDelivery);
       h->setLoopChild(harvest, sequence);
       return harvest;
     }
