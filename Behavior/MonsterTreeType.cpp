@@ -4,7 +4,7 @@ namespace Behavior {
   namespace MonsterTreeType {
     typedef Watson::NodeIndex NI;
 
-    NI buildEnsureWood(TypeDefinitionHelper *h) {
+    NI buildWoodEnsurance(TypeDefinitionHelper *h) {
       return h->writeFailDummy();
     }
 
@@ -19,8 +19,8 @@ namespace Behavior {
     NI buildHarvest(TypeDefinitionHelper *h) {
       NI harvest = h->writeLoop();
       NI sequence = h->writeSequence(2);
-      NI ensureWood = buildEnsureWood(h);
-      h->setSequenceChild(sequence, 0, ensureWood);
+      NI woodEnsurance = buildWoodEnsurance(h);
+      h->setSequenceChild(sequence, 0, woodEnsurance);
       // h->setSequenceChild(sequence, 1, deliverWood);
       h->setLoopChild(harvest, sequence);
       return harvest;
