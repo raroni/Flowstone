@@ -78,6 +78,10 @@ CLIENT_CPP_SOURCES =\
   Physics/KinematicDriverList.cpp\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
+  Actions/System.cpp\
+  Actions/Request.cpp\
+  Actions/RequestMap.cpp\
+  Actions/RequestParamSet.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\

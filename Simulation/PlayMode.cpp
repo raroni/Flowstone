@@ -1,6 +1,7 @@
 #include "Simulation/Config.h"
 #include "Behavior/BehaviorType.h"
 #include "Behavior/System.h"
+#include "Actions/System.h"
 #include "Database/EntityHandle.h"
 #include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
@@ -85,6 +86,7 @@ namespace Simulation {
         }
       }
       Behavior::System::update();
+      Actions::System::update();
       PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();
