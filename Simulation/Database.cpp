@@ -165,7 +165,7 @@ namespace Simulation {
       return caster.actionsHandle;
     }
 
-    Behavior::Handle createAI(EntityHandle entity, Behavior::BehaviorType behaviorType) {
+    Behavior::Handle createBehavior(EntityHandle entity, Behavior::BehaviorType behaviorType) {
       union {
         Behavior::Handle aiHandle;
         ComponentHandle genericHandle;

@@ -35,7 +35,7 @@ namespace Simulation {
       Database::createSphereCollider(monster, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
       Database::createDrag(monster);
       Database::createActions(monster);
-      Database::createAI(monster, Behavior::BehaviorType::Monster);
+      Database::createBehavior(monster, Behavior::BehaviorType::Monster);
 
       Database::createMonster(monster);
 
