@@ -5,7 +5,8 @@
 
 namespace Actions {
   enum class Type : uint8_t {
-    Empty
+    Empty,
+    WoodAcquisition
   };
 }
 

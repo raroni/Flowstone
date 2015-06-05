@@ -4,6 +4,7 @@
 #include "Watson/NodeInterface.h"
 #include "Behavior/ThreatCheckNode.h"
 #include "Behavior/WoodCheckNode.h"
+#include "Behavior/WoodAcquisitionNode.h"
 #include "Behavior/NodeType.h"
 #include "Behavior/NodeTypes.h"
 
@@ -33,8 +34,19 @@ namespace Behavior {
       setupInterface(NodeType::WoodCheck, interface);
     }
 
+    void setupWoodAcquisition() {
+      Watson::NodeInterface interface = {
+        .enter = WoodAcquisitionNode::enter,
+        .reset = WoodAcquisitionNode::reset,
+        .initializeState = WoodAcquisitionNode::initializeState
+      };
+      interface.callbacks[WoodAcquisitionNode::ResponseCallbackIndex] = WoodAcquisitionNode::handleResponse;
+      setupInterface(NodeType::WoodAcquisition, interface);
+    }
+
     void setup() {
       setupThreatCheck();
+      setupWoodAcquisition();
       setupWoodCheck();
     }
   }

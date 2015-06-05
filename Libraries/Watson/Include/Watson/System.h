@@ -15,6 +15,7 @@ namespace Watson {
     void destroyTree(InstanceHandle treeHandle);
     Board* getBoard(InstanceHandle treeHandle);
     void update();
+    void clearActionStreams();
   }
 }
 

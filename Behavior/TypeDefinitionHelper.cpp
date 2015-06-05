@@ -7,6 +7,7 @@
 #include "Watson/InverterNode.h"
 #include "Behavior/ThreatCheckNode.h"
 #include "Behavior/WoodCheckNode.h"
+#include "Behavior/WoodAcquisitionNode.h"
 #include "Behavior/TypeDefinitionHelper.h"
 
 namespace Behavior {
@@ -159,6 +160,15 @@ namespace Behavior {
       NodeType::WoodCheck,
       WoodCheckNode::structureLength,
       WoodCheckNode::stateLength
+    );
+    return creation.index;
+  }
+
+  NodeIndex TDH::writeWoodAcquisition() {
+    Creation creation = createCustom(
+      NodeType::WoodAcquisition,
+      WoodAcquisitionNode::structureLength,
+      WoodAcquisitionNode::stateLength
     );
     return creation.index;
   }

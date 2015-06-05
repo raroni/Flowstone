@@ -5,6 +5,7 @@
 #include "Watson/TypeList.h"
 #include "Watson/InstanceOrderingCollection.h"
 #include "Watson/StateCollection.h"
+#include "Watson/ActionStreamCollection.h"
 #include "Watson/BoardCollection.h"
 #include "Watson/InstanceHandle.h"
 #include "Watson/TypeList.h"
@@ -22,6 +23,7 @@ namespace Watson {
       InstanceOrderingCollection::createList(index, definition->instanceMax);
       StateCollection::createList(index);
       BoardCollection::createList(index);
+      ActionStreamCollection::createList(index);
       return index;
     }
 
@@ -79,6 +81,15 @@ namespace Watson {
         uint16_t instanceCount = InstanceOrderingCollection::getCount(i);
         for(uint16_t n=0; n<instanceCount; ++n) {
           BoardCollection::get(i, n)->clear();
+        }
+      }
+    }
+
+    void clearActionStreams() {
+      for(TypeIndex i=0; i<TypeList::getCount(); ++i) {
+        uint16_t instanceCount = InstanceOrderingCollection::getCount(i);
+        for(uint16_t n=0; n<instanceCount; ++n) {
+          ActionStreamCollection::get(i, n)->clear();
         }
       }
     }

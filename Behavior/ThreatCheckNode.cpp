@@ -17,7 +17,7 @@ namespace Behavior {
 
     void handleResponse(Watson::TraversalFlow *flow) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::IsThreatened);
-      bool isThreatened = *reinterpret_cast<bool*>(flow->board->get(keyInt));
+      bool isThreatened = *reinterpret_cast<const bool*>(flow->board->get(keyInt));
       if(isThreatened) {
         flow->requestReaction(NodeResult::Succeeded);
       } else {

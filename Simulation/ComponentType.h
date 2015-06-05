@@ -12,6 +12,7 @@ namespace Simulation {
     Drag,
     Pathfinder,
     AI,
+    Actions,
 
     Count
   };

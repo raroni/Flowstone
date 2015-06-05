@@ -14,7 +14,7 @@ namespace Behavior {
     NI buildWoodEnsurance(TypeDefinitionHelper *h) {
       NI woodEnsurance = h->writeSequence(2);
       NI inverseWoodCheck = buildInverseWoodCheck(h);
-      NI woodAcquisition = h->writeFailDummy();
+      NI woodAcquisition = h->writeWoodAcquisition();
       h->setSequenceChild(woodEnsurance, 0, inverseWoodCheck);
       h->setSequenceChild(woodEnsurance, 1, woodAcquisition);
       return woodEnsurance;

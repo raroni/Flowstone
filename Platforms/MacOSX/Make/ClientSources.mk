@@ -89,6 +89,7 @@ CLIENT_CPP_SOURCES =\
   Behavior/TypeDefinitionHelper.cpp\
   Behavior/ThreatCheckNode.cpp\
   Behavior/WoodCheckNode.cpp\
+  Behavior/WoodAcquisitionNode.cpp\
   Behavior/MonsterTreeType.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\

@@ -3,10 +3,13 @@
 
 #include "Actions/Handle.h"
 #include "Actions/Request.h"
+#include "Actions/Status.h"
 
 namespace Actions {
   namespace System {
     Handle create();
+    Request getRequest(Handle handle);
+    Status getStatus(Handle handle);
     void update();
     void request(Handle handle, const Request *request);
   }

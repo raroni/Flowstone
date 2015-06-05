@@ -24,6 +24,7 @@ namespace Behavior {
     void setInverterChild(Watson::NodeIndex inverterIndex, Watson::NodeIndex childIndex);
     Watson::NodeIndex writeThreatCheck();
     Watson::NodeIndex writeWoodCheck();
+    Watson::NodeIndex writeWoodAcquisition();
     void setInstanceMax(uint16_t max);
   private:
     struct Creation {

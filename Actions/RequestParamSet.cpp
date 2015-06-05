@@ -8,4 +8,12 @@ namespace Actions {
     memcpy(this->data, data, length);
     this->length = length;
   }
+
+  uint8_t RequestParamSet::getLength() const {
+    return length;
+  }
+
+  const void* RequestParamSet::getData() const {
+    return data;
+  }
 }

@@ -9,10 +9,10 @@ namespace Watson {
       functions[boardKey] = function;
     }
 
-    void request(uint8_t boardKey, const void *requestData, ResponseBuffer *responseBuffer) {
+    void request(uint8_t boardKey, const void *requestData, const Board *board, ResponseBuffer *responseBuffer) {
       ServerFunction func = functions[boardKey];
       assert(func != NULL);
-      func(requestData, responseBuffer);
+      func(requestData, board, responseBuffer);
     }
   }
 }

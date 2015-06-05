@@ -3,6 +3,7 @@
 #include "Database/ComponentHandle.h"
 #include "Database/ComponentManager.h"
 #include "Behavior/System.h"
+#include "Actions/System.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/ResourceSystem.h"
@@ -153,15 +154,35 @@ namespace Simulation {
       return caster.pathfinderHandle;
     }
 
+    Actions::Handle getActionsHandle(EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::Actions));
+      static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        Actions::Handle actionsHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::Actions);
+      return caster.actionsHandle;
+    }
 
-    Behavior::Handle createAI(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType) {
+    Behavior::Handle createAI(EntityHandle entity, Behavior::BehaviorType behaviorType) {
       union {
         Behavior::Handle aiHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.aiHandle = Behavior::System::create(behaviorType);
+      caster.aiHandle = Behavior::System::create(getActionsHandle(entity), behaviorType);
       linkComponent(entity, ComponentType::AI, caster.genericHandle);
       return caster.aiHandle;
+    }
+
+    Actions::Handle createActions(EntityHandle entity) {
+      union {
+        Behavior::Handle actionsHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.actionsHandle = Actions::System::create();
+      linkComponent(entity, ComponentType::Actions, caster.genericHandle);
+      return caster.actionsHandle;
     }
 
     PathfinderHandle getPathfinderHandle(EntityHandle entityHandle) {

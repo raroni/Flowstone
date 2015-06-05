@@ -6,6 +6,7 @@
 
 namespace Actions {
   class Request {
+  public:
     Type type;
     void setParams(const void *data, uint8_t length);
     const RequestParamSet* getParams() const;

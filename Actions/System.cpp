@@ -10,8 +10,9 @@ namespace Actions {
     uint16_t indices[max];
     Handle handles[max];
     HandleList handleList(max, indices, handles);
+    Status statuses[max];
     Type types[max];
-    RequestParamSet activeRequestParams[max];
+    RequestParamSet requestParams[max];
     RequestMap pendingRequests;
 
     Handle create() {
@@ -21,6 +22,23 @@ namespace Actions {
       handleList.create(&index, &handle);
       types[index] = Type::Empty;
       return handle;
+    }
+
+    Request getRequest(Handle handle) {
+      uint16_t index = handleList.getIndex(handle);
+      Request request;
+      request.type = types[index];
+      RequestParamSet *set = &requestParams[index];
+      request.setParams(
+        set->getData(),
+        set->getLength()
+      );
+      return request;
+    }
+
+    Status getStatus(Handle handle) {
+      uint16_t index = handleList.getIndex(handle);
+      return statuses[index];
     }
 
     void updateActions() {

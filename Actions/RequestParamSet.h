@@ -7,6 +7,8 @@ namespace Actions {
   class RequestParamSet {
   public:
     void update(const void *data, uint8_t length);
+    const void* getData() const;
+    uint8_t getLength() const;
   private:
     char data[Config::requestParamSetCapacity];
     uint8_t length = 0;

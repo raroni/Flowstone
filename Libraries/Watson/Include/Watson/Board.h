@@ -6,7 +6,7 @@
 namespace Watson {
   class Board {
   public:
-    void* get(uint8_t key);
+    const void* get(uint8_t key) const;
     void set(uint8_t key, void *value, uint16_t length);
     void clear();
   private:
