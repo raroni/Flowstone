@@ -27,6 +27,14 @@ namespace Watson {
       return index;
     }
 
+    uint8_t getTypeCount() {
+      return TypeList::getCount();
+    }
+
+    uint16_t getInstanceCount(TypeIndex typeIndex) {
+      return InstanceOrderingCollection::getCount(typeIndex);
+    }
+
     InstanceHandle createInstance(TypeIndex typeIndex) {
       InstanceOrderingHandle instanceOrderingHandle;
       uint16_t instanceIndex;
@@ -43,11 +51,19 @@ namespace Watson {
       return treeHandle;
     }
 
-    Board* getBoard(InstanceHandle treeHandle) {
+    Board* getBoardByIndices(TypeIndex typeIndex, uint16_t instanceIndex) {
+      return BoardCollection::get(typeIndex, instanceIndex);
+    }
+
+    Board* getBoardByHandle(InstanceHandle treeHandle) {
       TypeIndex typeIndex = InstanceList::getTypeIndex(treeHandle);
       InstanceOrderingHandle instanceOrderingHandle = InstanceList::getInstanceOrderingHandle(treeHandle);
       uint16_t instanceIndex = InstanceOrderingCollection::getIndex(typeIndex, instanceOrderingHandle);
-      return BoardCollection::get(typeIndex, instanceIndex);
+      return getBoardByIndices(typeIndex, instanceIndex);
+    }
+
+    Stream* getActionStream(TypeIndex typeIndex, uint16_t instanceIndex) {
+      return ActionStreamCollection::get(typeIndex, instanceIndex);
     }
 
     void destroyTree(InstanceHandle handle) {

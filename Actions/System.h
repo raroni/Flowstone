@@ -7,6 +7,7 @@
 
 namespace Actions {
   namespace System {
+    void setup();
     Handle create();
     Request getRequest(Handle handle);
     Status getStatus(Handle handle);

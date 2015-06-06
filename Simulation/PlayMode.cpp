@@ -43,6 +43,7 @@ namespace Simulation {
     }
 
     void enter() {
+      Actions::System::setup();
       Behavior::System::setup();
 
       const uint16_t mapWidth = 16;

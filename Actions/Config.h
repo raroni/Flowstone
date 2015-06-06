@@ -5,7 +5,7 @@
 
 namespace Actions {
   namespace Config {
-    const uint8_t handleMax = 8;
+    const uint8_t actionMax = 8;
     const uint8_t requestParamSetCapacity = 8;
   }
 }
