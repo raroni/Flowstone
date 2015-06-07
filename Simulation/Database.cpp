@@ -154,11 +154,11 @@ namespace Simulation {
       return caster.pathfinderHandle;
     }
 
-    Actions::Handle getActionsHandle(EntityHandle entityHandle) {
+    Actions::ComponentHandle getActionsHandle(EntityHandle entityHandle) {
       assert(hasComponent(entityHandle, ComponentType::Actions));
       static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
-        Actions::Handle actionsHandle;
+        Actions::ComponentHandle actionsHandle;
         ComponentHandle genericHandle;
       } caster;
       caster.genericHandle = getComponent(entityHandle, ComponentType::Actions);
@@ -175,12 +175,12 @@ namespace Simulation {
       return caster.aiHandle;
     }
 
-    Actions::Handle createActions(EntityHandle entity) {
+    Actions::ComponentHandle createActions(EntityHandle entity) {
       union {
         Behavior::Handle actionsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.actionsHandle = Actions::System::create();
+      caster.actionsHandle = Actions::System::createComponent();
       linkComponent(entity, ComponentType::Actions, caster.genericHandle);
       return caster.actionsHandle;
     }

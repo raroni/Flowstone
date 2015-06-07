@@ -29,14 +29,14 @@ namespace Behavior {
 
     void getActionRequest(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
-      Actions::Handle actionsHandle = *static_cast<const Actions::Handle*>(board->get(keyInt));
-      Actions::Request actionRequest = Actions::System::getRequest(actionsHandle);
-      response->set(&actionRequest, sizeof(actionRequest));
+      Actions::ComponentHandle actionsHandle = *static_cast<const Actions::ComponentHandle*>(board->get(keyInt));
+      const Actions::Request *actionRequest = Actions::System::getActiveRequest(actionsHandle);
+      response->set(actionRequest, sizeof(Actions::Request));
     }
 
     void getActionStatus(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
-      Actions::Handle actionsHandle = *static_cast<const Actions::Handle*>(board->get(keyInt));
+      Actions::ComponentHandle actionsHandle = *static_cast<const Actions::ComponentHandle*>(board->get(keyInt));
       Actions::Status actionStatus = Actions::System::getStatus(actionsHandle);
       response->set(&actionStatus, sizeof(actionStatus));
     }

@@ -5,7 +5,8 @@
 
 namespace Actions {
   namespace Config {
-    const uint8_t actionMax = 8;
+    const uint8_t actionTypeMax = 32;
+    const uint8_t componentMax = 32;
     const uint8_t requestParamSetCapacity = 8;
   }
 }

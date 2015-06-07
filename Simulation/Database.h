@@ -13,7 +13,7 @@
 #include "Simulation/Pathfinding/PathfinderHandle.h"
 #include "Behavior/Handle.h"
 #include "Behavior/BehaviorType.h"
-#include "Actions/Handle.h"
+#include "Actions/ComponentHandle.h"
 #include "Physics/SphereColliderHandle.h"
 #include "Physics/BodyHandle.h"
 #include "Physics/DynamicDriverHandle.h"
@@ -37,7 +37,7 @@ namespace Simulation {
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
     Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
-    Actions::Handle createActions(::Database::EntityHandle entity);
+    Actions::ComponentHandle createActions(::Database::EntityHandle entity);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);
     Steering getSteering(::Database::EntityHandle entityHandle);

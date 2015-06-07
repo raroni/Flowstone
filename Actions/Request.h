@@ -2,12 +2,12 @@
 #define ACTIONS_REQUEST_H
 
 #include "Actions/RequestParamSet.h"
-#include "Actions/Type.h"
+#include "Actions/ActionTypeIndex.h"
 
 namespace Actions {
   class Request {
   public:
-    Type type;
+    ActionTypeIndex type;
     void setParams(const void *data);
     const RequestParamSet* getParams() const;
   private:

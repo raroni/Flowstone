@@ -79,12 +79,17 @@ CLIENT_CPP_SOURCES =\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
   Actions/System.cpp\
+  Actions/RequestList.cpp\
+  Actions/ActionTypes.cpp\
   Actions/Request.cpp\
+  Actions/ActionList.cpp\
   Actions/RequestMap.cpp\
-  Actions/Action.cpp\
+  Actions/StateCollection.cpp\
+  Actions/ComponentList.cpp\
   Actions/RequestParamSet.cpp\
   Actions/Setup.cpp\
   Actions/WoodAcquisitionAction.cpp\
+  Actions/EmptyAction.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\

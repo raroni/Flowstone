@@ -2,66 +2,81 @@
 #include "Misc/HandleList.h"
 #include "Actions/Setup.h"
 #include "Actions/Config.h"
+#include "Actions/StateCollection.h"
+#include "Actions/ActionList.h"
+#include "Actions/ComponentList.h"
 #include "Actions/RequestMap.h"
+#include "Actions/RequestList.h"
+#include "Actions/ActionStateHandle.h"
 #include "Actions/System.h"
 
 namespace Actions {
   namespace System {
-    const uint16_t max = Config::actionMax;
-    uint16_t indices[max];
-    Handle handles[max];
-    HandleList handleList(max, indices, handles);
-    Status statuses[max];
-    Type types[max];
-    RequestParamSet requestParams[max];
+    RequestList newRequests;
     RequestMap pendingRequests;
 
     void setup() {
       Setup::run();
     }
 
-    Handle create() {
-      assert(handleList.getCount() != max);
-      uint16_t index;
-      Handle handle;
-      handleList.create(&index, &handle);
-      types[index] = Type::Empty;
-      return handle;
+    ComponentHandle createComponent() {
+      return ComponentList::create();
     }
 
-    Request getRequest(Handle handle) {
-      uint16_t index = handleList.getIndex(handle);
-      Request request;
-      request.type = types[index];
-      RequestParamSet *set = &requestParams[index];
-      request.setParams(set->getData());
-      return request;
+    const Request* getActiveRequest(ComponentHandle handle) {
+      uint16_t index = ComponentList::getIndex(handle);
+      return ComponentList::getActiveRequest(index);
     }
 
-    Status getStatus(Handle handle) {
-      uint16_t index = handleList.getIndex(handle);
-      return statuses[index];
+    Status getStatus(ComponentHandle handle) {
+      uint16_t index = ComponentList::getIndex(handle);
+      return ComponentList::getStatus(index);
     }
 
-    void updateActions() {
-      for(uint16_t i=0; i<handleList.getCount(); ++i) {
-        // update action
+    void startAction(ComponentHandle handle, const Request *request) {
+      ActionStateHandle stateHandle = StateCollection::createInstance(request->type);
+      uint16_t componentIndex = ComponentList::getIndex(handle);
+      ComponentList::updateActiveRequest(componentIndex, request);
+      ComponentList::updateStateHandle(componentIndex, stateHandle);
+      ComponentList::updateStatus(componentIndex, Status::Running);
+      ActionStateIndex stateIndex = StateCollection::getIndex(request->type, stateHandle);
+      void *state = StateCollection::get(request->type, stateIndex);
+      ActionList::getStart(request->type)(state);
+    }
+
+    void processNewRequests() {
+      for(uint16_t i=0; i<newRequests.getCount(); ++i) {
+        ComponentHandle componentHandle = newRequests.getHandle(i);
+        Status status = ComponentList::getStatus(componentHandle);
+        if(status == Status::Running) {
+          // cannot yet handle
+          // pendingRequests.doSomething();
+          assert(false);
+        }
+        else {
+          const Request *request = newRequests.getRequest(i);
+          startAction(componentHandle, request);
+        }
       }
+      newRequests.clear();
     }
 
-    void checkPending() {
-      for(uint16_t i=0; i<pendingRequests.getCount(); ++i) {
-        // is action is completed, start new
-      }
+    void processStoppingActions() {
+
+    }
+
+    void processActiveActions() {
+
     }
 
     void update() {
-      updateActions();
-      checkPending();
+      processNewRequests();
+      processStoppingActions();
+      processActiveActions();
     }
 
-    void request(Handle handle, const Request *request) {
-      pendingRequests.set(handle, request);
+    void request(ComponentHandle handle, const Request *request) {
+      newRequests.add(handle, request);
     }
   }
 }

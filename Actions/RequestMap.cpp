@@ -5,7 +5,7 @@ namespace Actions {
     return count;
   }
 
-  void RequestMap::set(Handle handle, const Request *request) {
+  void RequestMap::set(ComponentHandle handle, const Request *request) {
 
   }
 }

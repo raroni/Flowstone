@@ -1,18 +1,18 @@
 #ifndef ACTIONS_SYSTEM_H
 #define ACTIONS_SYSTEM_H
 
-#include "Actions/Handle.h"
+#include "Actions/ComponentHandle.h"
 #include "Actions/Request.h"
 #include "Actions/Status.h"
 
 namespace Actions {
   namespace System {
     void setup();
-    Handle create();
-    Request getRequest(Handle handle);
-    Status getStatus(Handle handle);
+    ComponentHandle createComponent();
+    const Request* getActiveRequest(ComponentHandle handle);
+    Status getStatus(ComponentHandle handle);
     void update();
-    void request(Handle handle, const Request *request);
+    void request(ComponentHandle handle, const Request *request);
   }
 }
 

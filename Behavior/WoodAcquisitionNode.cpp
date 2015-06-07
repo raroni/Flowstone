@@ -1,6 +1,7 @@
 #include "Actions/Status.h"
 #include "Actions/Request.h"
-#include "Actions/Type.h"
+#include "Actions/ActionTypes.h"
+#include "Actions/ActionTypeIndex.h"
 #include "Watson/NodeResult.h"
 #include "Behavior/BoardKey.h"
 #include "Behavior/NodeType.h"
@@ -33,15 +34,15 @@ namespace Behavior {
       keyInt = static_cast<uint8_t>(BoardKey::ActionStatus);
       Actions::Status actionStatus = *reinterpret_cast<const Actions::Status*>(flow->board->get(keyInt));
 
-      if(actionRequest->type == Actions::Type::WoodAcquisition) {
+      if(actionRequest->type == Actions::ActionTypes::woodAcquisition) {
         if(actionStatus == Actions::Status::Completed) {
           flow->requestReaction(NodeResult::Succeeded);
         } else {
           flow->requestReaction(NodeResult::Running);
         }
       } else {
-        Actions::Type request = Actions::Type::WoodAcquisition;
-        flow->actionStream->write(&request, sizeof(request));
+        Actions::ActionTypeIndex type = Actions::ActionTypes::woodAcquisition;
+        flow->actionStream->write(&type, sizeof(type));
         flow->requestReaction(NodeResult::Running);
       }
     }
