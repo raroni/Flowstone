@@ -9,9 +9,10 @@ namespace Actions {
   namespace Setup {
     void setupEmpty() {
       ActionTypeIndex index = ActionList::create(
-        EmptyAction::paramLength,
         EmptyAction::instanceMax,
+        EmptyAction::configLength,
         EmptyAction::stateLength,
+        EmptyAction::paramLength,
         EmptyAction::start
       );
       StateCollection::createList(index);
@@ -20,9 +21,10 @@ namespace Actions {
 
     void setupWoodAcquisition() {
       ActionTypeIndex index = ActionList::create(
-        WoodAcquisitionAction::paramLength,
         WoodAcquisitionAction::instanceMax,
+        WoodAcquisitionAction::configLength,
         WoodAcquisitionAction::stateLength,
+        WoodAcquisitionAction::paramLength,
         WoodAcquisitionAction::start
       );
       StateCollection::createList(index);
