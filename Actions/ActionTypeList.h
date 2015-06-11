@@ -2,7 +2,6 @@
 #define ACTIONS_ACTION_TYPE_LIST_H
 
 #include "Actions/ActionTypeIndex.h"
-#include "Actions/ActionStartFunction.h"
 
 namespace Actions {
   namespace ActionTypeList {
@@ -10,11 +9,9 @@ namespace Actions {
       uint8_t instanceMax,
       uint8_t paramLength,
       uint8_t configLength,
-      uint8_t stateLength,
-      ActionStartFunction startFunc
+      uint8_t stateLength
     );
 
-    ActionStartFunction getStart(ActionTypeIndex index);
     uint8_t getParamLength(ActionTypeIndex index);
     uint8_t getStateLength(ActionTypeIndex index);
     uint8_t getInstanceMax(ActionTypeIndex index);

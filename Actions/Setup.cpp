@@ -12,8 +12,7 @@ namespace Actions {
         EmptyAction::instanceMax,
         EmptyAction::configLength,
         EmptyAction::stateLength,
-        EmptyAction::paramLength,
-        EmptyAction::start
+        EmptyAction::paramLength
       );
       ActionStateCollection::createList(index);
       ActionTypes::empty = index;
@@ -24,8 +23,7 @@ namespace Actions {
         WoodAcquisitionAction::instanceMax,
         WoodAcquisitionAction::configLength,
         WoodAcquisitionAction::stateLength,
-        WoodAcquisitionAction::paramLength,
-        WoodAcquisitionAction::start
+        WoodAcquisitionAction::paramLength
       );
       ActionStateCollection::createList(index);
       ActionTypes::woodAcquisition = index;

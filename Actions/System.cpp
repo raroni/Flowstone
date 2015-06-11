@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "Misc/HandleList.h"
 #include "Actions/Setup.h"
+#include "Actions/NodeTypes.h"
 #include "Actions/Config.h"
 #include "Actions/ActionStateCollection.h"
 #include "Actions/ActionTypeList.h"
@@ -16,6 +17,9 @@ namespace Actions {
     RequestMap pendingRequests;
 
     void setup() {
+      NodeTypes::setup();
+
+      // todo: replace this with ActionTypes::setup()
       Setup::run();
     }
 
@@ -41,7 +45,8 @@ namespace Actions {
       ComponentList::updateStatus(componentIndex, Status::Running);
       ActionStateIndex stateIndex = ActionStateCollection::getIndex(request->type, stateHandle);
       void *state = ActionStateCollection::get(request->type, stateIndex);
-      ActionTypeList::getStart(request->type)(state);
+      // todo: fix this
+      // ActionTypeList::getStart(request->type)(state);
     }
 
     void processNewRequests() {

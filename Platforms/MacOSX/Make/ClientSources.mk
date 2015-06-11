@@ -84,12 +84,15 @@ CLIENT_CPP_SOURCES =\
   Actions/Request.cpp\
   Actions/ActionTypeList.cpp\
   Actions/RequestMap.cpp\
+  Actions/Node.cpp\
+  Actions/NodeTypes.cpp\
   Actions/ActionStateCollection.cpp\
   Actions/ComponentList.cpp\
   Actions/RequestParamSet.cpp\
   Actions/Setup.cpp\
   Actions/WoodAcquisitionAction.cpp\
   Actions/EmptyAction.cpp\
+  Actions/SequenceNode.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\
