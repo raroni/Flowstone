@@ -7,6 +7,8 @@ namespace Actions {
   namespace ActionTypes {
     extern ActionTypeIndex empty;
     extern ActionTypeIndex woodAcquisition;
+
+    void setup();
   }
 }
 

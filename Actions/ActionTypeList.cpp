@@ -13,18 +13,13 @@ namespace Actions {
     uint16_t configBufferLength = 0;
     char configBuffer[configBufferCapacity];
 
-    ActionTypeIndex create(
-      uint8_t instanceMax,
-      uint8_t paramLength,
-      uint8_t configLength,
-      uint8_t stateLength
-    ) {
+    ActionTypeIndex create(const ActionTypeDefinition *definition) {
       assert(count != Config::actionTypeMax);
-      instanceMaxes[count] = instanceMax;
-      stateLengths[count] = stateLength;
-      paramLengths[count] = paramLength;
+      instanceMaxes[count] = definition->instanceMax;
+      stateLengths[count] = definition->stateLength;
+      paramLengths[count] = definition->paramLength;
       configBufferOffsets[count] = configBufferLength;
-      configBufferLength += configLength;
+      configBufferLength += definition->configLength;
       return count++;
     }
 

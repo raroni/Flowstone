@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "Misc/HandleList.h"
-#include "Actions/Setup.h"
 #include "Actions/NodeTypes.h"
+#include "Actions/ActionTypes.h"
 #include "Actions/Config.h"
 #include "Actions/ActionStateCollection.h"
 #include "Actions/ActionTypeList.h"
@@ -18,9 +18,7 @@ namespace Actions {
 
     void setup() {
       NodeTypes::setup();
-
-      // todo: replace this with ActionTypes::setup()
-      Setup::run();
+      ActionTypes::setup();
     }
 
     ComponentHandle createComponent() {
