@@ -3,6 +3,7 @@
 
 #include "Actions/ComponentHandle.h"
 #include "Actions/Request.h"
+#include "Actions/ActionTypeDefinition.h"
 #include "Actions/Status.h"
 
 namespace Actions {
@@ -10,6 +11,7 @@ namespace Actions {
     void setup();
     ComponentHandle createComponent();
     const Request* getActiveRequest(ComponentHandle handle);
+    ActionTypeIndex createActionType(const ActionTypeDefinition *definition);
     Status getStatus(ComponentHandle handle);
     void update();
     void request(ComponentHandle handle, const Request *request);

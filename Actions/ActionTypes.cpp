@@ -1,6 +1,7 @@
 #include "Actions/EmptyAction.h"
-#include "Actions/ActionTypeList.h"
+#include "Actions/WoodAcquisitionAction.h"
 #include "Actions/ActionTypeDefinition.h"
+#include "Actions/System.h"
 #include "Actions/ActionTypeDefinitionHelper.h"
 #include "Actions/ActionTypes.h"
 
@@ -14,16 +15,14 @@ namespace Actions {
     void build(ActionTypeDefinition *definition, ActionTypeIndex *index, BuildFunc buildFunc) {
       ActionTypeDefinitionHelper helper(definition);
       buildFunc(&helper);
-      *index = ActionTypeList::create(definition);
+      *index = System::createActionType(definition);
       definition->reset();
     }
 
     void setup() {
       ActionTypeDefinition definition;
       build(&definition, &empty, EmptyAction::build);
-
-      // todo:
-      // WoodAcquistionNode::build
+      build(&definition, &woodAcquisition, WoodAcquisitionAction::build);
     }
   }
 }

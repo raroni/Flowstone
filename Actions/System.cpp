@@ -30,6 +30,12 @@ namespace Actions {
       return ComponentList::getActiveRequest(index);
     }
 
+    ActionTypeIndex createActionType(const ActionTypeDefinition *definition) {
+      ActionTypeIndex index = ActionTypeList::create(definition);
+      ActionStateCollection::createList(index);
+      return index;
+    }
+
     Status getStatus(ComponentHandle handle) {
       uint16_t index = ComponentList::getIndex(handle);
       return ComponentList::getStatus(index);
