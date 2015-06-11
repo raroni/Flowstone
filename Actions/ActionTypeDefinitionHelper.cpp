@@ -1,4 +1,5 @@
 #include "Actions/NodeStructureHeader.h"
+#include "Actions/TreeLocalizationNode.h"
 #include "Actions/SequenceNode.h"
 #include "Actions/ActionTypeDefinitionHelper.h"
 
@@ -31,6 +32,15 @@ namespace Actions {
       SequenceNode::stateLength
     );
     SequenceNode::writeConfig(creation.config, childCount);
+    return creation.index;
+  }
+
+  NodeIndex ATDH::writeTreeLocalization() {
+    Creation creation = create(
+      NodeTypeIndex::TreeLocalization,
+      TreeLocalizationNode::configLength,
+      TreeLocalizationNode::stateLength
+    );
     return creation.index;
   }
 }

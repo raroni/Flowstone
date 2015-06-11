@@ -11,6 +11,7 @@ namespace Actions {
     ActionTypeDefinitionHelper(ActionTypeDefinition *definition);
     void setInstanceMax(uint8_t max);
     NodeIndex writeSequence(uint8_t count);
+    NodeIndex writeTreeLocalization();
   private:
     struct Creation {
       NodeIndex index;

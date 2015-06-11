@@ -13,8 +13,16 @@ namespace Actions {
       Node::setup(NodeTypeIndex::Sequence, &interface);
     }
 
+    void setupTreeLocalization() {
+      NodeInterface interface = {
+        .start = SequenceNode::start
+      };
+      Node::setup(NodeTypeIndex::Sequence, &interface);
+    }
+
     void setup() {
       setupSequence();
+      setupTreeLocalization();
     }
   }
 }
