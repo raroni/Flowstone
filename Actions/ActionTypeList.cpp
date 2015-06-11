@@ -1,9 +1,9 @@
 #include <assert.h>
 #include "Actions/Config.h"
-#include "Actions/ActionList.h"
+#include "Actions/ActionTypeList.h"
 
 namespace Actions {
-  namespace ActionList {
+  namespace ActionTypeList {
     uint8_t count = 0;
     uint8_t paramLengths[Config::actionTypeMax];
     uint8_t stateLengths[Config::actionTypeMax];
@@ -12,27 +12,16 @@ namespace Actions {
     const uint16_t configBufferCapacity = 1024*50;
     uint16_t configBufferLength = 0;
     char configBuffer[configBufferCapacity];
-    ActionStartFunction startFuncs[Config::actionTypeMax];
 
-    ActionTypeIndex create(
-      uint8_t instanceMax,
-      uint8_t paramLength,
-      uint8_t configLength,
-      uint8_t stateLength,
-      ActionStartFunction startFunc
-    ) {
+    ActionTypeIndex create(const ActionTypeDefinition *definition) {
       assert(count != Config::actionTypeMax);
-      instanceMaxes[count] = instanceMax;
-      stateLengths[count] = stateLength;
-      paramLengths[count] = paramLength;
-      startFuncs[count] = startFunc;
+      assert(definition->instanceMax != 0);
+      instanceMaxes[count] = definition->instanceMax;
+      stateLengths[count] = definition->stateLength;
+      paramLengths[count] = definition->paramLength;
       configBufferOffsets[count] = configBufferLength;
-      configBufferLength += configLength;
+      configBufferLength += definition->configLength;
       return count++;
-    }
-
-    ActionStartFunction getStart(ActionTypeIndex index) {
-      return startFuncs[index];
     }
 
     uint8_t getStateLength(ActionTypeIndex index) {

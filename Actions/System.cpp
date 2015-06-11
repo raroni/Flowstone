@@ -1,9 +1,10 @@
 #include <assert.h>
 #include "Misc/HandleList.h"
-#include "Actions/Setup.h"
+#include "Actions/NodeTypes.h"
+#include "Actions/ActionTypes.h"
 #include "Actions/Config.h"
-#include "Actions/StateCollection.h"
-#include "Actions/ActionList.h"
+#include "Actions/ActionStateCollection.h"
+#include "Actions/ActionTypeList.h"
 #include "Actions/ComponentList.h"
 #include "Actions/RequestMap.h"
 #include "Actions/RequestList.h"
@@ -16,7 +17,8 @@ namespace Actions {
     RequestMap pendingRequests;
 
     void setup() {
-      Setup::run();
+      NodeTypes::setup();
+      ActionTypes::setup();
     }
 
     ComponentHandle createComponent() {
@@ -28,20 +30,27 @@ namespace Actions {
       return ComponentList::getActiveRequest(index);
     }
 
+    ActionTypeIndex createActionType(const ActionTypeDefinition *definition) {
+      ActionTypeIndex index = ActionTypeList::create(definition);
+      ActionStateCollection::createList(index);
+      return index;
+    }
+
     Status getStatus(ComponentHandle handle) {
       uint16_t index = ComponentList::getIndex(handle);
       return ComponentList::getStatus(index);
     }
 
     void startAction(ComponentHandle handle, const Request *request) {
-      ActionStateHandle stateHandle = StateCollection::createInstance(request->type);
+      ActionStateHandle stateHandle = ActionStateCollection::createInstance(request->type);
       uint16_t componentIndex = ComponentList::getIndex(handle);
       ComponentList::updateActiveRequest(componentIndex, request);
       ComponentList::updateStateHandle(componentIndex, stateHandle);
       ComponentList::updateStatus(componentIndex, Status::Running);
-      ActionStateIndex stateIndex = StateCollection::getIndex(request->type, stateHandle);
-      void *state = StateCollection::get(request->type, stateIndex);
-      ActionList::getStart(request->type)(state);
+      ActionStateIndex stateIndex = ActionStateCollection::getIndex(request->type, stateHandle);
+      void *state = ActionStateCollection::get(request->type, stateIndex);
+      // todo: fix this
+      // ActionTypeList::getStart(request->type)(state);
     }
 
     void processNewRequests() {
