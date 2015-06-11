@@ -3,7 +3,7 @@
 #include "Actions/Setup.h"
 #include "Actions/Config.h"
 #include "Actions/StateCollection.h"
-#include "Actions/ActionList.h"
+#include "Actions/ActionTypeList.h"
 #include "Actions/ComponentList.h"
 #include "Actions/RequestMap.h"
 #include "Actions/RequestList.h"
@@ -41,7 +41,7 @@ namespace Actions {
       ComponentList::updateStatus(componentIndex, Status::Running);
       ActionStateIndex stateIndex = StateCollection::getIndex(request->type, stateHandle);
       void *state = StateCollection::get(request->type, stateIndex);
-      ActionList::getStart(request->type)(state);
+      ActionTypeList::getStart(request->type)(state);
     }
 
     void processNewRequests() {

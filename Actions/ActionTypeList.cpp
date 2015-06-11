@@ -1,9 +1,9 @@
 #include <assert.h>
 #include "Actions/Config.h"
-#include "Actions/ActionList.h"
+#include "Actions/ActionTypeList.h"
 
 namespace Actions {
-  namespace ActionList {
+  namespace ActionTypeList {
     uint8_t count = 0;
     uint8_t paramLengths[Config::actionTypeMax];
     uint8_t stateLengths[Config::actionTypeMax];

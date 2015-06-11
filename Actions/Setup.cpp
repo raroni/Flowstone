@@ -1,4 +1,4 @@
-#include "Actions/ActionList.h"
+#include "Actions/ActionTypeList.h"
 #include "Actions/StateCollection.h"
 #include "Actions/EmptyAction.h"
 #include "Actions/WoodAcquisitionAction.h"
@@ -8,7 +8,7 @@
 namespace Actions {
   namespace Setup {
     void setupEmpty() {
-      ActionTypeIndex index = ActionList::create(
+      ActionTypeIndex index = ActionTypeList::create(
         EmptyAction::instanceMax,
         EmptyAction::configLength,
         EmptyAction::stateLength,
@@ -20,7 +20,7 @@ namespace Actions {
     }
 
     void setupWoodAcquisition() {
-      ActionTypeIndex index = ActionList::create(
+      ActionTypeIndex index = ActionTypeList::create(
         WoodAcquisitionAction::instanceMax,
         WoodAcquisitionAction::configLength,
         WoodAcquisitionAction::stateLength,

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "Misc/HandleList.h"
-#include "Actions/ActionList.h"
+#include "Actions/ActionTypeList.h"
 #include "Actions/StateCollection.h"
 
 namespace Actions {
@@ -19,8 +19,8 @@ namespace Actions {
     uint16_t stateBufferOffsets[Config::actionTypeMax];
 
     void createList(ActionTypeIndex index) {
-      uint8_t stateLength = ActionList::getStateLength(index);
-      uint8_t instanceMax = ActionList::getInstanceMax(index);
+      uint8_t stateLength = ActionTypeList::getStateLength(index);
+      uint8_t instanceMax = ActionTypeList::getInstanceMax(index);
       uint16_t stateBufferIncrement = stateLength*instanceMax;
 
       assert(pairCapacity >= pairLength+instanceMax);
@@ -39,7 +39,7 @@ namespace Actions {
 
     void* get(ActionTypeIndex typeIndex, ActionStateIndex stateIndex) {
       uint16_t offset = stateBufferOffsets[typeIndex];
-      uint8_t stateLength = ActionList::getStateLength(typeIndex);
+      uint8_t stateLength = ActionTypeList::getStateLength(typeIndex);
       return stateBuffer + offset + stateIndex * stateLength;
     }
 
