@@ -1,10 +1,10 @@
 #include <assert.h>
 #include "Misc/HandleList.h"
 #include "Actions/ActionTypeList.h"
-#include "Actions/StateCollection.h"
+#include "Actions/ActionStateCollection.h"
 
 namespace Actions {
-  namespace StateCollection {
+  namespace ActionStateCollection {
     HandleList handleLists[Config::actionTypeMax];
 
     const uint16_t pairCapacity = 1024;

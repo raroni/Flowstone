@@ -2,7 +2,7 @@
 #include "Misc/HandleList.h"
 #include "Actions/Setup.h"
 #include "Actions/Config.h"
-#include "Actions/StateCollection.h"
+#include "Actions/ActionStateCollection.h"
 #include "Actions/ActionTypeList.h"
 #include "Actions/ComponentList.h"
 #include "Actions/RequestMap.h"
@@ -34,13 +34,13 @@ namespace Actions {
     }
 
     void startAction(ComponentHandle handle, const Request *request) {
-      ActionStateHandle stateHandle = StateCollection::createInstance(request->type);
+      ActionStateHandle stateHandle = ActionStateCollection::createInstance(request->type);
       uint16_t componentIndex = ComponentList::getIndex(handle);
       ComponentList::updateActiveRequest(componentIndex, request);
       ComponentList::updateStateHandle(componentIndex, stateHandle);
       ComponentList::updateStatus(componentIndex, Status::Running);
-      ActionStateIndex stateIndex = StateCollection::getIndex(request->type, stateHandle);
-      void *state = StateCollection::get(request->type, stateIndex);
+      ActionStateIndex stateIndex = ActionStateCollection::getIndex(request->type, stateHandle);
+      void *state = ActionStateCollection::get(request->type, stateIndex);
       ActionTypeList::getStart(request->type)(state);
     }
 

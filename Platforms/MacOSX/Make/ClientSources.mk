@@ -84,7 +84,7 @@ CLIENT_CPP_SOURCES =\
   Actions/Request.cpp\
   Actions/ActionTypeList.cpp\
   Actions/RequestMap.cpp\
-  Actions/StateCollection.cpp\
+  Actions/ActionStateCollection.cpp\
   Actions/ComponentList.cpp\
   Actions/RequestParamSet.cpp\
   Actions/Setup.cpp\

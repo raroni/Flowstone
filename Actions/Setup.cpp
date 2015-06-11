@@ -1,5 +1,5 @@
 #include "Actions/ActionTypeList.h"
-#include "Actions/StateCollection.h"
+#include "Actions/ActionStateCollection.h"
 #include "Actions/EmptyAction.h"
 #include "Actions/WoodAcquisitionAction.h"
 #include "Actions/ActionTypes.h"
@@ -15,7 +15,7 @@ namespace Actions {
         EmptyAction::paramLength,
         EmptyAction::start
       );
-      StateCollection::createList(index);
+      ActionStateCollection::createList(index);
       ActionTypes::empty = index;
     }
 
@@ -27,7 +27,7 @@ namespace Actions {
         WoodAcquisitionAction::paramLength,
         WoodAcquisitionAction::start
       );
-      StateCollection::createList(index);
+      ActionStateCollection::createList(index);
       ActionTypes::woodAcquisition = index;
     }
 
