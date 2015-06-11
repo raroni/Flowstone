@@ -7,11 +7,9 @@
 namespace Actions {
   namespace ActionTypeList {
     ActionTypeIndex create(const ActionTypeDefinition *definition);
-
     uint8_t getParamLength(ActionTypeIndex index);
     uint8_t getStateLength(ActionTypeIndex index);
     uint8_t getInstanceMax(ActionTypeIndex index);
-    void* getConfig(ActionTypeIndex index);
   }
 }
 

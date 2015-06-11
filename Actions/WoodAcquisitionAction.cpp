@@ -4,6 +4,7 @@ namespace Actions {
   namespace WoodAcquisitionAction {
     void build(ActionTypeDefinitionHelper *h) {
       h->setInstanceMax(32);
+      h->writeSequence(2);
     }
   }
 }

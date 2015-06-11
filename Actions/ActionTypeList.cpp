@@ -1,3 +1,4 @@
+#include <string.h>
 #include <assert.h>
 #include "Actions/Config.h"
 #include "Actions/ActionTypeList.h"
@@ -5,22 +6,54 @@
 namespace Actions {
   namespace ActionTypeList {
     uint8_t count = 0;
+    uint16_t nodeCount = 0;
     uint8_t paramLengths[Config::actionTypeMax];
     uint8_t stateLengths[Config::actionTypeMax];
     uint8_t instanceMaxes[Config::actionTypeMax];
-    uint8_t configBufferOffsets[Config::actionTypeMax];
-    const uint16_t configBufferCapacity = 1024*50;
-    uint16_t configBufferLength = 0;
-    char configBuffer[configBufferCapacity];
+    uint16_t nodeOffsets[Config::actionTypeMax];
+    uint8_t nodeCounts[Config::actionTypeMax];
+
+    const uint16_t structureBufferCapacity = 1024*10;
+    char structureBuffer[structureBufferCapacity];
+    uint16_t structureBufferLength = 0;
+
+    const uint16_t structureOffsetCapacity = 1024;
+    uint16_t structureOffsetBuffer[structureOffsetCapacity];
+
+    const uint16_t stateOffsetCapacity = 1024;
+    uint16_t stateOffsetBuffer[stateOffsetCapacity];
 
     ActionTypeIndex create(const ActionTypeDefinition *definition) {
       assert(count != Config::actionTypeMax);
       assert(definition->instanceMax != 0);
-      instanceMaxes[count] = definition->instanceMax;
-      stateLengths[count] = definition->stateLength;
+      assert(structureBufferCapacity >= structureBufferLength + definition->getStructureLength());
+      assert(structureOffsetCapacity >= nodeCount + definition->getNodeCount());
+      assert(stateOffsetCapacity >= nodeCount + definition->getNodeCount());
+
       paramLengths[count] = definition->paramLength;
-      configBufferOffsets[count] = configBufferLength;
-      configBufferLength += definition->configLength;
+      stateLengths[count] = definition->getStateLength();
+      instanceMaxes[count] = definition->instanceMax;
+      nodeOffsets[count] = nodeCount;
+      nodeCounts[count] = definition->getNodeCount();
+
+      memcpy(
+        structureBuffer+structureBufferLength,
+        definition->getStructure(),
+        definition->getStructureLength()
+      );
+      memcpy(
+        structureOffsetBuffer+nodeCount,
+        definition->getStructureOffsets(),
+        definition->getNodeCount()*sizeof(uint16_t)
+      );
+      memcpy(
+        stateOffsetBuffer+nodeCount,
+        definition->getStateOffsets(),
+        definition->getNodeCount()*sizeof(uint16_t)
+      );
+
+      nodeCount += definition->getNodeCount();
+      structureBufferLength += definition->getStructureLength();
       return count++;
     }
 
@@ -34,11 +67,6 @@ namespace Actions {
 
     uint8_t getInstanceMax(ActionTypeIndex index) {
       return instanceMaxes[index];
-    }
-
-    void* getConfig(ActionTypeIndex index) {
-      uint16_t offset = configBufferOffsets[index];
-      return &configBuffer[offset];
     }
   }
 }
