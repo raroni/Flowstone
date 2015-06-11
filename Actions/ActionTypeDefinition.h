@@ -6,6 +6,7 @@
 namespace Actions {
   class ActionTypeDefinition {
   public:
+    ActionTypeDefinition();
     void reset();
     uint8_t instanceMax;
     uint8_t paramLength;

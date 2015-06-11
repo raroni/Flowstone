@@ -4,7 +4,7 @@
 namespace Actions {
   namespace EmptyAction {
     void build(ActionTypeDefinitionHelper *h) {
-
+      h->setInstanceMax(Config::componentMax);
     }
   }
 }

@@ -1,7 +1,14 @@
 #include "Actions/ActionTypeDefinition.h"
 
 namespace Actions {
-  void ActionTypeDefinition::reset() {
+  ActionTypeDefinition::ActionTypeDefinition() {
+    reset();
+  }
 
+  void ActionTypeDefinition::reset() {
+    instanceMax = 0;
+    paramLength = 0;
+    configLength = 0;
+    stateLength = 0;
   }
 }

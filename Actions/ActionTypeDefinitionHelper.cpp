@@ -1,8 +1,14 @@
 #include "Actions/ActionTypeDefinitionHelper.h"
 
 namespace Actions {
-  ActionTypeDefinitionHelper::ActionTypeDefinitionHelper(ActionTypeDefinition *definition) :
+  typedef ActionTypeDefinitionHelper ATDH;
+
+  ATDH::ActionTypeDefinitionHelper(ActionTypeDefinition *definition) :
   definition(definition) {
 
+  }
+
+  void ATDH::setInstanceMax(uint8_t max) {
+    definition->instanceMax = max;
   }
 }

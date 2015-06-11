@@ -15,6 +15,7 @@ namespace Actions {
 
     ActionTypeIndex create(const ActionTypeDefinition *definition) {
       assert(count != Config::actionTypeMax);
+      assert(definition->instanceMax != 0);
       instanceMaxes[count] = definition->instanceMax;
       stateLengths[count] = definition->stateLength;
       paramLengths[count] = definition->paramLength;
