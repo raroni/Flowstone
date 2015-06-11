@@ -5,8 +5,6 @@
 
 namespace Actions {
   namespace NodeTypes {
-    extern NodeTypeIndex sequence;
-
     void setup();
   }
 }
