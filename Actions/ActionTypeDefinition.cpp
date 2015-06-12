@@ -11,11 +11,11 @@ namespace Actions {
 
   NodeIndex ATD::createNode(NodeTypeIndex type, uint8_t nodeConfigLength, uint8_t nodeStateLength) {
     assert(nodeCount != nodeMax);
-    NodeStructureHeader *header = reinterpret_cast<NodeStructureHeader*>(structure+this->structureLength);
     uint8_t nodeStructureLength = sizeof(NodeStructureHeader) + nodeConfigLength;
 
     assert(structureCapacity >= structureLength+nodeStructureLength);
 
+    NodeStructureHeader *header = reinterpret_cast<NodeStructureHeader*>(structure+this->structureLength);
     header->type = type;
     structureOffsets[nodeCount] = this->structureLength;
     this->structureLength += nodeStructureLength;
