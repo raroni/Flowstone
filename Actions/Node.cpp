@@ -23,6 +23,10 @@ namespace Actions {
       return getInterface(index)->calcStateLength(args);
     }
 
+    void start(NodeTypeIndex index, NodeFlow *flow) {
+      getInterface(index)->start(flow);
+    }
+
     void configure(NodeTypeIndex index, const void *args, void *config) {
       getInterface(index)->configure(args, config);
     }

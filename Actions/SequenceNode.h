@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "Actions/NodeIndex.h"
+#include "Actions/NodeFlow.h"
 
 namespace Actions {
   namespace SequenceNode {
@@ -18,7 +19,7 @@ namespace Actions {
     uint8_t calcConfigLength(const void *args);
     uint8_t calcStateLength(const void *args);
     void configure(const void *args, void *config);
-    void start(const void *config, void *state);
+    void start(NodeFlow *flow);
   }
 }
 

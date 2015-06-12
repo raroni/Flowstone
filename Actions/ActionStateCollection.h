@@ -9,7 +9,7 @@ namespace Actions {
   namespace ActionStateCollection {
     ActionStateHandle createInstance(ActionTypeIndex index);
     void createList(ActionTypeIndex index);
-    void* get(ActionTypeIndex typeIndex, ActionStateIndex stateIndex);
+    void* getNodeState(ActionTypeIndex typeIndex, ActionStateIndex stateIndex, NodeIndex nodeIndex);
     ActionStateIndex getIndex(ActionTypeIndex typeIndex, ActionStateHandle stateHandle);
   }
 }

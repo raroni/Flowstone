@@ -20,9 +20,15 @@ namespace Actions {
       return sizeof(State);
     }
 
-    NodeIndex* getChildren(void *rawConfig) {
-      char *byteConfig = static_cast<char*>(rawConfig);
-      return reinterpret_cast<NodeIndex*>(byteConfig+sizeof(ConfigHeader));
+    const NodeIndex* getChildren(const void *rawConfig) {
+      const char *byteConfig = static_cast<const char*>(rawConfig);
+      return reinterpret_cast<const NodeIndex*>(byteConfig+sizeof(ConfigHeader));
+    }
+
+    NodeIndex* getChildren(void *mutableConfig) {
+      const void* constConfig = static_cast<const void*>(mutableConfig);
+      const NodeIndex *children = getChildren(constConfig);
+      return const_cast<NodeIndex*>(children);
     }
 
     void configure(const void *rawArgs, void *rawConfig) {
@@ -35,8 +41,9 @@ namespace Actions {
       }
     }
 
-    void start(const void *config, void *state) {
-
+    void start(NodeFlow *flow) {
+      const NodeIndex *children = getChildren(flow->getConfig());
+      flow->start(children[0]);
     }
   }
 }

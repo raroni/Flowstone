@@ -10,6 +10,8 @@ namespace Actions {
     uint8_t getParamLength(ActionTypeIndex index);
     uint8_t getStateLength(ActionTypeIndex index);
     uint8_t getInstanceMax(ActionTypeIndex index);
+    uint16_t getNodeStateOffset(ActionTypeIndex typeIndex, NodeIndex nodeIndex);
+    void* getNodeStructure(ActionTypeIndex typeIndex, NodeIndex nodeIndex);
   }
 }
 

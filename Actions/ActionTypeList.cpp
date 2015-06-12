@@ -12,16 +12,17 @@ namespace Actions {
     uint8_t instanceMaxes[Config::actionTypeMax];
     uint16_t nodeOffsets[Config::actionTypeMax];
     uint8_t nodeCounts[Config::actionTypeMax];
+    uint16_t structureBufferOffsets[Config::actionTypeMax];
 
     const uint16_t structureBufferCapacity = 1024*10;
     char structureBuffer[structureBufferCapacity];
     uint16_t structureBufferLength = 0;
 
     const uint16_t structureOffsetCapacity = 1024;
-    uint16_t structureOffsetBuffer[structureOffsetCapacity];
+    uint8_t structureOffsetBuffer[structureOffsetCapacity];
 
     const uint16_t stateOffsetCapacity = 1024;
-    uint16_t stateOffsetBuffer[stateOffsetCapacity];
+    uint8_t stateOffsetBuffer[stateOffsetCapacity];
 
     ActionTypeIndex create(const ActionTypeDefinition *definition) {
       assert(count != Config::actionTypeMax);
@@ -35,6 +36,7 @@ namespace Actions {
       instanceMaxes[count] = definition->instanceMax;
       nodeOffsets[count] = nodeCount;
       nodeCounts[count] = definition->getNodeCount();
+      structureBufferOffsets[count] = structureBufferLength;
 
       memcpy(
         structureBuffer+structureBufferLength,
@@ -44,17 +46,31 @@ namespace Actions {
       memcpy(
         structureOffsetBuffer+nodeCount,
         definition->getStructureOffsets(),
-        definition->getNodeCount()*sizeof(uint16_t)
+        definition->getNodeCount()*sizeof(uint8_t)
       );
       memcpy(
         stateOffsetBuffer+nodeCount,
         definition->getStateOffsets(),
-        definition->getNodeCount()*sizeof(uint16_t)
+        definition->getNodeCount()*sizeof(uint8_t)
       );
 
       nodeCount += definition->getNodeCount();
       structureBufferLength += definition->getStructureLength();
       return count++;
+    }
+
+    void* getNodeStructure(ActionTypeIndex typeIndex, NodeIndex nodeIndex) {
+      uint16_t nodeOffset = nodeOffsets[typeIndex];
+
+      uint16_t structureTypeOffset = structureBufferOffsets[typeIndex];
+      uint16_t structureNodeOffset = structureOffsetBuffer[nodeOffset+nodeIndex];
+      uint16_t structureOffset = structureTypeOffset + structureNodeOffset;
+      return structureBuffer+structureOffset;
+    }
+
+    uint16_t getNodeStateOffset(ActionTypeIndex typeIndex, NodeIndex nodeIndex) {
+      uint16_t typeOffset = nodeOffsets[typeIndex];
+      return stateOffsetBuffer[typeOffset+nodeIndex];
     }
 
     uint8_t getStateLength(ActionTypeIndex index) {

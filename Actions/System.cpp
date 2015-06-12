@@ -2,6 +2,7 @@
 #include "Misc/HandleList.h"
 #include "Actions/NodeTypes.h"
 #include "Actions/ActionTypes.h"
+#include "Actions/NodeFlow.h"
 #include "Actions/Config.h"
 #include "Actions/ActionStateCollection.h"
 #include "Actions/ActionTypeList.h"
@@ -47,10 +48,10 @@ namespace Actions {
       ComponentList::updateActiveRequest(componentIndex, request);
       ComponentList::updateStateHandle(componentIndex, stateHandle);
       ComponentList::updateStatus(componentIndex, Status::Running);
+
       ActionStateIndex stateIndex = ActionStateCollection::getIndex(request->type, stateHandle);
-      void *state = ActionStateCollection::get(request->type, stateIndex);
-      // todo: fix this
-      // ActionTypeList::getStart(request->type)(state);
+      NodeFlow flow(request->type, stateIndex);
+      flow.start(0);
     }
 
     void processNewRequests() {

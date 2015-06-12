@@ -37,10 +37,15 @@ namespace Actions {
       stateBufferLength += stateBufferIncrement;
     }
 
-    void* get(ActionTypeIndex typeIndex, ActionStateIndex stateIndex) {
-      uint16_t offset = stateBufferOffsets[typeIndex];
+    void* getNodeState(ActionTypeIndex typeIndex, ActionStateIndex stateIndex, NodeIndex nodeIndex) {
       uint8_t stateLength = ActionTypeList::getStateLength(typeIndex);
-      return stateBuffer + offset + stateIndex * stateLength;
+
+      uint16_t typeOffset = stateBufferOffsets[typeIndex];
+      uint16_t stateOffset = stateIndex*stateLength;
+      uint16_t nodeOffset = ActionTypeList::getNodeStateOffset(typeIndex, nodeIndex);
+
+      uint16_t offset = typeOffset+stateOffset+nodeOffset;
+      return stateBuffer+offset;
     }
 
     ActionStateHandle createInstance(ActionTypeIndex typeIndex) {
