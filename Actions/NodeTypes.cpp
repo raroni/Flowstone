@@ -11,7 +11,8 @@ namespace Actions {
       NodeInterface interface = {
         .start = SequenceNode::start,
         .calcConfigLength = SequenceNode::calcConfigLength,
-        .calcStateLength = SequenceNode::calcStateLength
+        .calcStateLength = SequenceNode::calcStateLength,
+        .configure = SequenceNode::configure
       };
       Node::setup(NodeTypeIndex::Sequence, &interface);
     }
@@ -20,7 +21,8 @@ namespace Actions {
       NodeInterface interface = {
         .start = TreeLocalizationNode::start,
         .calcConfigLength = TreeLocalizationNode::calcConfigLength,
-        .calcStateLength = TreeLocalizationNode::calcStateLength
+        .calcStateLength = TreeLocalizationNode::calcStateLength,
+        .configure = TreeLocalizationNode::configure
       };
       Node::setup(NodeTypeIndex::TreeLocalization, &interface);
     }

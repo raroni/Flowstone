@@ -12,6 +12,7 @@ namespace Actions {
     void setInstanceMax(uint8_t max);
     NodeIndex writeSequence(uint8_t childCount);
     NodeIndex writeTreeLocalization();
+    void configureSequence(NodeIndex sequenceNode, uint8_t childCount, NodeIndex *children);
   private:
     ActionTypeDefinition *definition = nullptr;
   };

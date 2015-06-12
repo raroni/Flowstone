@@ -9,6 +9,7 @@ namespace Actions {
     void setup(NodeTypeIndex index, const NodeInterface *interface);
     uint8_t calcConfigLength(NodeTypeIndex index, const void *args);
     uint8_t calcStateLength(NodeTypeIndex index, const void *args);
+    void configure(NodeTypeIndex index, const void *args, void *config);
   }
 }
 

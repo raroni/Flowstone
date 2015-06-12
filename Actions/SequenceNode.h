@@ -2,6 +2,7 @@
 #define ACTIONS_SEQUENCE_NODE_H
 
 #include <stdint.h>
+#include "Actions/NodeIndex.h"
 
 namespace Actions {
   namespace SequenceNode {
@@ -9,9 +10,14 @@ namespace Actions {
       uint8_t childCount;
     };
 
+    struct ConfigArgSet {
+      uint8_t childCount;
+      NodeIndex *children;
+    };
+
     uint8_t calcConfigLength(const void *args);
     uint8_t calcStateLength(const void *args);
-    void writeConfig(void *config, uint8_t childCount);
+    void configure(const void *args, void *config);
     void start(const void *config, void *state);
   }
 }

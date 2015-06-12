@@ -19,6 +19,7 @@ namespace Actions {
     const void* getStructure() const;
     const uint8_t* getStructureOffsets() const;
     const uint8_t* getStateOffsets() const;
+    void configureNode(NodeIndex index, const void *args);
   private:
     uint8_t structureLength;
     uint8_t stateLength;

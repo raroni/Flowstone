@@ -20,9 +20,19 @@ namespace Actions {
       return sizeof(State);
     }
 
-    void writeConfig(void *rawConfig, uint8_t childCount) {
+    NodeIndex* getChildren(void *rawConfig) {
+      char *byteConfig = static_cast<char*>(rawConfig);
+      return reinterpret_cast<NodeIndex*>(byteConfig+sizeof(ConfigHeader));
+    }
+
+    void configure(const void *rawArgs, void *rawConfig) {
+      const ConfigArgSet *args = reinterpret_cast<const ConfigArgSet*>(rawArgs);
       ConfigHeader *header = reinterpret_cast<ConfigHeader*>(rawConfig);
-      header->childCount = childCount;
+      header->childCount = args->childCount;
+      NodeIndex *children = getChildren(rawConfig);
+      for(uint8_t i=0; i<args->childCount; ++i) {
+        children[i] = args->children[i];
+      }
     }
 
     void start(const void *config, void *state) {

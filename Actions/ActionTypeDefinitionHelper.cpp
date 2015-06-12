@@ -19,6 +19,14 @@ namespace Actions {
     return definition->createNode(NodeTypeIndex::Sequence, &args);
   }
 
+  void ATDH::configureSequence(NodeIndex sequenceNode, uint8_t childCount, NodeIndex *children) {
+    SequenceNode::ConfigArgSet args = {
+      .childCount = childCount,
+      .children = children
+    };
+    definition->configureNode(sequenceNode, &args);
+  }
+
   NodeIndex ATDH::writeTreeLocalization() {
     return definition->createNode(NodeTypeIndex::TreeLocalization, nullptr);
   }

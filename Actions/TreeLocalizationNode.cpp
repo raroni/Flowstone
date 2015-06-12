@@ -10,6 +10,10 @@ namespace Actions {
       return 0;
     }
 
+    void configure(const void *args, void *config) {
+
+    }
+
     void start(const void *config, void *state) {
 
     }

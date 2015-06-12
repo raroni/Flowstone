@@ -22,5 +22,9 @@ namespace Actions {
     uint8_t calcStateLength(NodeTypeIndex index, const void *args) {
       return getInterface(index)->calcStateLength(args);
     }
+
+    void configure(NodeTypeIndex index, const void *args, void *config) {
+      getInterface(index)->configure(args, config);
+    }
   }
 }

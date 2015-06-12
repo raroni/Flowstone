@@ -28,6 +28,14 @@ namespace Actions {
     return nodeCount++;
   }
 
+  void ATD::configureNode(NodeIndex index, const void *args) {
+    uint16_t offset = structureOffsets[index];
+    char *structureNode = &structure[offset];
+    NodeTypeIndex type = *reinterpret_cast<NodeTypeIndex*>(structureNode);
+    void* config = reinterpret_cast<void*>(structureNode+sizeof(NodeStructureHeader));
+    Node::configure(type, args, config);
+  }
+
   const uint8_t* ATD::getStructureOffsets() const {
     return structureOffsets;
   }
