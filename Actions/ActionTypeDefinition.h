@@ -9,7 +9,7 @@ namespace Actions {
   class ActionTypeDefinition {
   public:
     ActionTypeDefinition();
-    NodeIndex createNode(NodeTypeIndex type, uint8_t configLength, uint8_t stateLength);
+    NodeIndex createNode(NodeTypeIndex type, const void *args);
     void reset();
     uint8_t getNodeCount() const;
     uint8_t getStructureLength() const;
@@ -19,7 +19,6 @@ namespace Actions {
     const void* getStructure() const;
     const uint8_t* getStructureOffsets() const;
     const uint8_t* getStateOffsets() const;
-    void* getNodeStructure(NodeIndex index);
   private:
     uint8_t structureLength;
     uint8_t stateLength;

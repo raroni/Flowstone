@@ -10,15 +10,9 @@ namespace Actions {
   public:
     ActionTypeDefinitionHelper(ActionTypeDefinition *definition);
     void setInstanceMax(uint8_t max);
-    NodeIndex writeSequence(uint8_t count);
+    NodeIndex writeSequence(uint8_t childCount);
     NodeIndex writeTreeLocalization();
   private:
-    struct Creation {
-      NodeIndex index;
-      void *config;
-    };
-    Creation create(NodeTypeIndex type, uint8_t configLength, uint8_t stateLength);
-    void* getConfig(NodeIndex index);
     ActionTypeDefinition *definition = nullptr;
   };
 }

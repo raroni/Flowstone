@@ -5,8 +5,12 @@
 
 namespace Actions {
   namespace SequenceNode {
-    uint8_t calcConfigLength(uint8_t childCount);
-    extern uint8_t stateLength;
+    struct CreationArgSet {
+      uint8_t childCount;
+    };
+
+    uint8_t calcConfigLength(const void *args);
+    uint8_t calcStateLength(const void *args);
     void writeConfig(void *config, uint8_t childCount);
     void start(const void *config, void *state);
   }

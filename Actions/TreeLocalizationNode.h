@@ -5,9 +5,8 @@
 
 namespace Actions {
   namespace TreeLocalizationNode {
-    extern uint8_t configLength;
-    extern uint8_t stateLength;
-
+    uint8_t calcConfigLength(const void *args);
+    uint8_t calcStateLength(const void *args);
     void start(const void *config, void *state);
   }
 }

@@ -1,4 +1,5 @@
 #include <assert.h>
+#include "Actions/Node.h"
 #include "Actions/NodeStructureHeader.h"
 #include "Actions/ActionTypeDefinition.h"
 
@@ -9,7 +10,10 @@ namespace Actions {
     reset();
   }
 
-  NodeIndex ATD::createNode(NodeTypeIndex type, uint8_t nodeConfigLength, uint8_t nodeStateLength) {
+  NodeIndex ATD::createNode(NodeTypeIndex type, const void *args) {
+    uint8_t nodeConfigLength = Node::calcConfigLength(type, args);
+    uint8_t nodeStateLength = Node::calcStateLength(type, args);
+
     assert(nodeCount != nodeMax);
     uint8_t nodeStructureLength = sizeof(NodeStructureHeader) + nodeConfigLength;
 
@@ -30,10 +34,6 @@ namespace Actions {
 
   const uint8_t* ATD::getStateOffsets() const {
     return stateOffsets;
-  }
-
-  void* ATD::getNodeStructure(NodeIndex index) {
-    return structure + structureOffsets[index];
   }
 
   const void* ATD::getStructure() const {

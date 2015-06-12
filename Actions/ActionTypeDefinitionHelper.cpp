@@ -13,34 +13,13 @@ namespace Actions {
     definition->instanceMax = max;
   }
 
-  ATDH::Creation ATDH::create(NodeTypeIndex type, uint8_t configLength, uint8_t stateLength) {
-    Creation creation;
-    creation.index = definition->createNode(type, configLength, stateLength);
-    creation.config = getConfig(creation.index);
-    return creation;
-  }
-
-  void* ATDH::getConfig(NodeIndex index) {
-    char *nodeStructure = static_cast<char*>(definition->getNodeStructure(index));
-    return nodeStructure+sizeof(NodeStructureHeader);
-  }
-
   NodeIndex ATDH::writeSequence(uint8_t childCount) {
-    Creation creation = create(
-      NodeTypeIndex::Sequence,
-      SequenceNode::calcConfigLength(childCount),
-      SequenceNode::stateLength
-    );
-    SequenceNode::writeConfig(creation.config, childCount);
-    return creation.index;
+    SequenceNode::CreationArgSet args;
+    args.childCount = childCount;
+    return definition->createNode(NodeTypeIndex::Sequence, &args);
   }
 
   NodeIndex ATDH::writeTreeLocalization() {
-    Creation creation = create(
-      NodeTypeIndex::TreeLocalization,
-      TreeLocalizationNode::configLength,
-      TreeLocalizationNode::stateLength
-    );
-    return creation.index;
+    return definition->createNode(NodeTypeIndex::TreeLocalization, nullptr);
   }
 }

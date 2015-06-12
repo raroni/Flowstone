@@ -1,11 +1,14 @@
 #ifndef ACTIONS_NODE_INTERFACE_H
 #define ACTIONS_NODE_INTERFACE_H
 
-#include "Actions/StartFunction.h"
-
 namespace Actions {
   struct NodeInterface {
+    typedef void (*StartFunction)(const void *config, void *state);
+    typedef uint8_t (*CalcLengthFunction)(const void *args);
+
     StartFunction start;
+    CalcLengthFunction calcConfigLength;
+    CalcLengthFunction calcStateLength;
   };
 }
 
