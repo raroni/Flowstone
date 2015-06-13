@@ -5,6 +5,7 @@
 
 namespace Actions {
   enum class Status : uint8_t {
+    Initialized,
     Running,
     Failed,
     Cancelled,

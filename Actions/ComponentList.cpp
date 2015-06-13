@@ -18,7 +18,7 @@ namespace Actions {
       uint16_t index;
       ComponentHandle handle;
       handleList.create(&index, &handle);
-      statuses[index] = Status::Completed;
+      statuses[index] = Status::Initialized;
       activeRequests[index].type = ActionTypes::empty;
       actionStateHandles[index] = 0;
       return handle;
