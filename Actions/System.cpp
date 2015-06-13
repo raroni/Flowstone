@@ -8,13 +8,12 @@
 #include "Actions/ActionTypeList.h"
 #include "Actions/ComponentList.h"
 #include "Actions/RequestMap.h"
-#include "Actions/RequestList.h"
 #include "Actions/ActionStateHandle.h"
 #include "Actions/System.h"
 
 namespace Actions {
   namespace System {
-    RequestList newRequests;
+    RequestMap newRequests;
     RequestMap pendingRequests;
 
     void setup() {
@@ -63,15 +62,20 @@ namespace Actions {
           // pendingRequests.doSomething();
           assert(false);
         }
-        else {
+        else if(
+          status == Status::Initialized ||
+          status == Status::Completed ||
+          status == Status::Cancelled
+        ) {
           const Request *request = newRequests.getRequest(i);
           startAction(componentHandle, request);
+          pendingRequests.unset(componentHandle);
         }
       }
       newRequests.clear();
     }
 
-    void processStoppingActions() {
+    void processCancellingActions() {
 
     }
 
@@ -79,14 +83,19 @@ namespace Actions {
 
     }
 
+    void processPendingRequests() {
+
+    }
+
     void update() {
-      processNewRequests();
-      processStoppingActions();
+      processCancellingActions();
       processActiveActions();
+      processNewRequests();
+      processPendingRequests();
     }
 
     void request(ComponentHandle handle, const Request *request) {
-      newRequests.add(handle, request);
+      newRequests.set(handle, request);
     }
   }
 }

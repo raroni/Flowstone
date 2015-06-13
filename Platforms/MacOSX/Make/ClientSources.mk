@@ -79,7 +79,6 @@ CLIENT_CPP_SOURCES =\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
   Actions/System.cpp\
-  Actions/RequestList.cpp\
   Actions/ActionTypes.cpp\
   Actions/Request.cpp\
   Actions/ActionTypeList.cpp\

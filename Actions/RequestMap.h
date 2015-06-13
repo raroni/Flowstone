@@ -9,8 +9,17 @@ namespace Actions {
   public:
     uint16_t getCount() const;
     void set(ComponentHandle handle, const Request *request);
+    void unset(ComponentHandle handle);
+    void clear();
+    ComponentHandle getHandle(uint8_t index) const;
+    const Request* getRequest(uint8_t index) const;
   private:
-    uint16_t count = 0;
+    // BREADCRUMB: UNSET() og SET() kan begge bruge denne:
+    bool findIndex(ComponentHandle handle, uint8_t *index) const;
+    static const uint8_t max = 128;
+    ComponentHandle handles[max];
+    Request requests[max];
+    uint8_t count = 0;
   };
 }
 
