@@ -22,9 +22,23 @@ namespace Actions {
       return const_cast<NodeIndex*>(children);
     }
 
+    const ConfigHeader* getConfigHeader(const void *config) {
+      return reinterpret_cast<const ConfigHeader*>(config);
+    }
+
+    ConfigHeader* getConfigHeader(void *mutableConfig) {
+      const void* constConfig = static_cast<const void*>(mutableConfig);
+      const ConfigHeader *header = getConfigHeader(constConfig);
+      return const_cast<ConfigHeader*>(header);
+    }
+
+    uint8_t getChildCount(const void *config) {
+      return getConfigHeader(config)->childCount;
+    }
+
     void configure(const void *rawArgs, void *rawConfig) {
       const ConfigArgSet *args = reinterpret_cast<const ConfigArgSet*>(rawArgs);
-      ConfigHeader *header = reinterpret_cast<ConfigHeader*>(rawConfig);
+      ConfigHeader *header = getConfigHeader(rawConfig);
       header->childCount = args->childCount;
       NodeIndex *children = getChildren(rawConfig);
       for(uint8_t i=0; i<args->childCount; ++i) {

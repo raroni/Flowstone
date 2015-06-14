@@ -7,10 +7,6 @@ namespace Actions {
       uint8_t currentChildSlot;
     };
 
-    struct ConfigHeader {
-      uint8_t childCount;
-    };
-
     uint8_t calcConfigLength(const void *rawArgs) {
       return ParentNode::calcConfigLength(rawArgs);
     }

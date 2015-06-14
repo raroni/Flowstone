@@ -6,7 +6,10 @@
 namespace Actions {
   enum class NodeTypeIndex : uint8_t {
     Sequence,
+    Concurrent,
     TreeLocalization,
+    TargetReach,
+    TreeChop,
 
     Count
   };

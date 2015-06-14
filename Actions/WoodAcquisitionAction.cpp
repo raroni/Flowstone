@@ -2,15 +2,26 @@
 
 namespace Actions {
   namespace WoodAcquisitionAction {
+    NodeIndex buildReachChop(ActionTypeDefinitionHelper *h) {
+      const uint8_t childCount = 2;
+      NodeIndex reachChop = h->writeConcurrent(childCount);
+      NodeIndex children[] = {
+        h->writeTargetReach(),
+        h->writeTreeChop()
+      };
+      h->configureConcurrent(reachChop, childCount, children);
+      return reachChop;
+    }
+
     void build(ActionTypeDefinitionHelper *h) {
       const uint8_t childCount = 2;
       h->setInstanceMax(32);
-      NodeIndex sequence = h->writeSequence(childCount);
+      NodeIndex root = h->writeSequence(childCount);
       NodeIndex children[] = {
         h->writeTreeLocalization(),
-        99 // todo: fix me
+        buildReachChop(h)
       };
-      h->configureSequence(sequence, childCount, children);
+      h->configureSequence(root, childCount, children);
     }
   }
 }

@@ -15,10 +15,11 @@ namespace Actions {
       NodeIndex *children;
     };
 
-    uint8_t calcConfigLength(const void *rawArgs);
-    const NodeIndex* getChildren(const void *rawConfig);
+    uint8_t calcConfigLength(const void *args);
+    const NodeIndex* getChildren(const void *config);
     NodeIndex* getChildren(void *mutableConfig);
-    void configure(const void *rawArgs, void *rawConfig);
+    void configure(const void *args, void *config);
+    uint8_t getChildCount(const void *config);
   }
 }
 
