@@ -8,24 +8,22 @@
 namespace Actions {
   namespace NodeTypes {
     void setupSequence() {
-      NodeInterface interface = {
-        .start = SequenceNode::start,
-        .calcConfigLength = SequenceNode::calcConfigLength,
-        .calcStateLength = SequenceNode::calcStateLength,
-        .configure = SequenceNode::configure,
-        .isCompleted = SequenceNode::isCompleted
-      };
+      NodeInterface interface;
+      interface.start = SequenceNode::start;
+      interface.calcConfigLength = SequenceNode::calcConfigLength;
+      interface.calcStateLength = SequenceNode::calcStateLength;
+      interface.configure = SequenceNode::configure;
+      interface.isCompleted = SequenceNode::isCompleted;
       Node::setup(NodeTypeIndex::Sequence, &interface);
     }
 
     void setupTreeLocalization() {
-      NodeInterface interface = {
-        .start = TreeLocalizationNode::start,
-        .calcConfigLength = TreeLocalizationNode::calcConfigLength,
-        .calcStateLength = TreeLocalizationNode::calcStateLength,
-        .configure = TreeLocalizationNode::configure,
-        .isCompleted = TreeLocalizationNode::isCompleted
-      };
+      NodeInterface interface;
+      interface.start = TreeLocalizationNode::start;
+      interface.calcConfigLength = TreeLocalizationNode::calcConfigLength;
+      interface.calcStateLength = TreeLocalizationNode::calcStateLength;
+      interface.configure = TreeLocalizationNode::configure;
+      interface.isCompleted = TreeLocalizationNode::isCompleted;
       Node::setup(NodeTypeIndex::TreeLocalization, &interface);
     }
 

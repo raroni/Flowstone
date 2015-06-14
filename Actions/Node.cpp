@@ -24,11 +24,15 @@ namespace Actions {
     }
 
     void start(NodeTypeIndex index, NodeFlow *flow) {
-      getInterface(index)->start(flow);
+      const NodeInterface *interface = getInterface(index);
+      assert(interface->start != nullptr);
+      interface->start(flow);
     }
 
     bool isCompleted(NodeTypeIndex index, NodeFlow *flow) {
-      return getInterface(index)->isCompleted(flow);
+      const NodeInterface *interface = getInterface(index);
+      assert(interface->isCompleted != nullptr);
+      return interface->isCompleted(flow);
     }
 
     void configure(NodeTypeIndex index, const void *args, void *config) {

@@ -10,11 +10,11 @@ namespace Actions {
     typedef uint8_t (*CalcLengthFunction)(const void *args);
     typedef void (*ConfigureFunction)(const void *args, void *config);
 
-    StartFunction start;
-    IsCompletedFunction isCompleted;
-    CalcLengthFunction calcConfigLength;
-    CalcLengthFunction calcStateLength;
-    ConfigureFunction configure;
+    StartFunction start = nullptr;
+    IsCompletedFunction isCompleted = nullptr;
+    CalcLengthFunction calcConfigLength = nullptr;
+    CalcLengthFunction calcStateLength = nullptr;
+    ConfigureFunction configure = nullptr;
   };
 }
 
