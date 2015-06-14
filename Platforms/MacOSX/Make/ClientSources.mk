@@ -94,6 +94,7 @@ CLIENT_CPP_SOURCES =\
   Actions/RequestParamSet.cpp\
   Actions/WoodAcquisitionAction.cpp\
   Actions/EmptyAction.cpp\
+  Actions/ParentNode.cpp\
   Actions/SequenceNode.cpp\
   Actions/TreeLocalizationNode.cpp\
   Behavior/System.cpp\
