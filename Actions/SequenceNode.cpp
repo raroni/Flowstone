@@ -41,6 +41,10 @@ namespace Actions {
       }
     }
 
+    bool isCompleted(NodeFlow *flow) {
+      return false;
+    }
+
     void start(NodeFlow *flow) {
       const NodeIndex *children = getChildren(flow->getConfig());
       flow->start(children[0]);

@@ -12,7 +12,8 @@ namespace Actions {
         .start = SequenceNode::start,
         .calcConfigLength = SequenceNode::calcConfigLength,
         .calcStateLength = SequenceNode::calcStateLength,
-        .configure = SequenceNode::configure
+        .configure = SequenceNode::configure,
+        .isCompleted = SequenceNode::isCompleted
       };
       Node::setup(NodeTypeIndex::Sequence, &interface);
     }
@@ -22,7 +23,8 @@ namespace Actions {
         .start = TreeLocalizationNode::start,
         .calcConfigLength = TreeLocalizationNode::calcConfigLength,
         .calcStateLength = TreeLocalizationNode::calcStateLength,
-        .configure = TreeLocalizationNode::configure
+        .configure = TreeLocalizationNode::configure,
+        .isCompleted = TreeLocalizationNode::isCompleted
       };
       Node::setup(NodeTypeIndex::TreeLocalization, &interface);
     }

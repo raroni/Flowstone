@@ -80,6 +80,7 @@ CLIENT_CPP_SOURCES =\
   Physics/CollisionResolver.cpp\
   Actions/System.cpp\
   Actions/ActionTypes.cpp\
+  Actions/ActionList.cpp\
   Actions/Request.cpp\
   Actions/ActionTypeList.cpp\
   Actions/RequestMap.cpp\

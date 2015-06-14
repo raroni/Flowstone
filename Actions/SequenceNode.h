@@ -20,6 +20,7 @@ namespace Actions {
     uint8_t calcStateLength(const void *args);
     void configure(const void *args, void *config);
     void start(NodeFlow *flow);
+    bool isCompleted(NodeFlow *flow);
   }
 }
 

@@ -30,7 +30,7 @@ namespace Behavior {
     void getActionRequest(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
       Actions::ComponentHandle actionsHandle = *static_cast<const Actions::ComponentHandle*>(board->get(keyInt));
-      const Actions::Request *actionRequest = Actions::System::getActiveRequest(actionsHandle);
+      const Actions::Request *actionRequest = Actions::System::getRequest(actionsHandle);
       response->set(actionRequest, sizeof(Actions::Request));
     }
 

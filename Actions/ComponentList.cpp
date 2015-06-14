@@ -10,8 +10,7 @@ namespace Actions {
     ComponentHandle handles[max];
     HandleList handleList(max, indices, handles);
     Status statuses[max];
-    Request activeRequests[max];
-    ActionStateHandle actionStateHandles[max];
+    Request requests[max];
 
     ComponentHandle create() {
       assert(handleList.getCount() != max);
@@ -19,8 +18,7 @@ namespace Actions {
       ComponentHandle handle;
       handleList.create(&index, &handle);
       statuses[index] = Status::Initialized;
-      activeRequests[index].type = ActionTypes::empty;
-      actionStateHandles[index] = 0;
+      requests[index].type = ActionTypes::empty;
       return handle;
     }
 
@@ -28,8 +26,8 @@ namespace Actions {
       return handleList.getIndex(handle);
     }
 
-    const Request* getActiveRequest(uint16_t index) {
-      return &activeRequests[index];
+    const Request* getRequest(uint16_t index) {
+      return &requests[index];
     }
 
     void updateStatus(uint16_t index, Status status) {
@@ -40,12 +38,8 @@ namespace Actions {
       return statuses[index];
     }
 
-    void updateStateHandle(uint16_t componentIndex, ActionStateHandle stateHandle) {
-      handles[componentIndex] = stateHandle;
-    }
-
-    void updateActiveRequest(uint16_t index, const Request *request) {
-      activeRequests[index] = *request;
+    void updateRequest(uint16_t index, const Request *request) {
+      requests[index] = *request;
     }
   }
 }

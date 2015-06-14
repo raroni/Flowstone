@@ -10,7 +10,7 @@ namespace Actions {
   namespace System {
     void setup();
     ComponentHandle createComponent();
-    const Request* getActiveRequest(ComponentHandle handle);
+    const Request* getRequest(ComponentHandle handle);
     ActionTypeIndex createActionType(const ActionTypeDefinition *definition);
     Status getStatus(ComponentHandle handle);
     void update();

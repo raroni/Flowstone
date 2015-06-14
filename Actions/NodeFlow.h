@@ -1,6 +1,7 @@
 #ifndef ACTIONS_NODE_FLOW_H
 #define ACTIONS_NODE_FLOW_H
 
+#include "Actions/NodeTypeIndex.h"
 #include "Actions/ActionTypeIndex.h"
 #include "Actions/ActionStateIndex.h"
 #include "Actions/NodeIndex.h"
@@ -8,12 +9,17 @@
 namespace Actions {
   class NodeFlow {
   public:
+    NodeFlow();
     NodeFlow(ActionTypeIndex typeIndex, ActionStateIndex stateIndex);
+    void configure(ActionTypeIndex typeIndex, ActionStateIndex stateIndex);
     void start(NodeIndex nodeIndex);
+    bool isCompleted(NodeIndex nodeIndex);
     const void* getConfig() const;
     void* getState();
   private:
-    const void *config;
+    void prepare(NodeIndex nodeIndex);
+    NodeTypeIndex getNodeTypeIndex() const;
+    const void *structure;
     void *state;
     ActionTypeIndex actionTypeIndex;
     ActionStateIndex actionStateIndex;

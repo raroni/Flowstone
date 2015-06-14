@@ -5,20 +5,37 @@
 #include "Actions/NodeFlow.h"
 
 namespace Actions {
-  NodeFlow::NodeFlow(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex) :
-  actionTypeIndex(actionTypeIndex),
-  actionStateIndex(actionStateIndex) { }
+  NodeFlow::NodeFlow() { }
+  NodeFlow::NodeFlow(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex) {
+    configure(actionTypeIndex, actionStateIndex);
+  }
+
+  void NodeFlow::configure(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex) {
+    this->actionTypeIndex = actionTypeIndex;
+    this->actionStateIndex = actionStateIndex;
+  }
+
+  void NodeFlow::prepare(NodeIndex nodeIndex) {
+    structure = static_cast<const char*>(ActionTypeList::getNodeStructure(actionTypeIndex, nodeIndex));
+    state = ActionStateCollection::getNodeState(actionTypeIndex, actionStateIndex, nodeIndex);
+  }
+
+  NodeTypeIndex NodeFlow::getNodeTypeIndex() const {
+    return *reinterpret_cast<const NodeTypeIndex*>(structure);
+  }
 
   void NodeFlow::start(NodeIndex nodeIndex) {
-    const char *structure = static_cast<const char*>(ActionTypeList::getNodeStructure(actionTypeIndex, nodeIndex));
-    NodeTypeIndex nodeTypeIndex = *reinterpret_cast<const NodeTypeIndex*>(structure);
-    config = structure+sizeof(NodeStructureHeader);
-    state = ActionStateCollection::getNodeState(actionTypeIndex, actionStateIndex, nodeIndex);
-    Node::start(nodeTypeIndex, this);
+    prepare(nodeIndex);
+    Node::start(getNodeTypeIndex(), this);
+  }
+
+  bool NodeFlow::isCompleted(NodeIndex nodeIndex) {
+    prepare(nodeIndex);
+    return Node::isCompleted(getNodeTypeIndex(), this);
   }
 
   const void* NodeFlow::getConfig() const {
-    return config;
+    return static_cast<const char*>(structure)+sizeof(NodeStructureHeader);
   }
 
   void* NodeFlow::getState() {

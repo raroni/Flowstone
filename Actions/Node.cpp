@@ -27,6 +27,10 @@ namespace Actions {
       getInterface(index)->start(flow);
     }
 
+    bool isCompleted(NodeTypeIndex index, NodeFlow *flow) {
+      return getInterface(index)->isCompleted(flow);
+    }
+
     void configure(NodeTypeIndex index, const void *args, void *config) {
       getInterface(index)->configure(args, config);
     }

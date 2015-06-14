@@ -2,6 +2,7 @@
 #include "Misc/HandleList.h"
 #include "Actions/NodeTypes.h"
 #include "Actions/ActionTypes.h"
+#include "Actions/ActionList.h"
 #include "Actions/NodeFlow.h"
 #include "Actions/Config.h"
 #include "Actions/ActionStateCollection.h"
@@ -15,6 +16,8 @@ namespace Actions {
   namespace System {
     RequestMap newRequests;
     RequestMap pendingRequests;
+    ActionList activeActions;
+    ActionList cancellingActions;
 
     void setup() {
       NodeTypes::setup();
@@ -25,9 +28,9 @@ namespace Actions {
       return ComponentList::create();
     }
 
-    const Request* getActiveRequest(ComponentHandle handle) {
+    const Request* getRequest(ComponentHandle handle) {
       uint16_t index = ComponentList::getIndex(handle);
-      return ComponentList::getActiveRequest(index);
+      return ComponentList::getRequest(index);
     }
 
     ActionTypeIndex createActionType(const ActionTypeDefinition *definition) {
@@ -44,9 +47,8 @@ namespace Actions {
     void startAction(ComponentHandle handle, const Request *request) {
       ActionStateHandle stateHandle = ActionStateCollection::createInstance(request->type);
       uint16_t componentIndex = ComponentList::getIndex(handle);
-      ComponentList::updateActiveRequest(componentIndex, request);
-      ComponentList::updateStateHandle(componentIndex, stateHandle);
       ComponentList::updateStatus(componentIndex, Status::Running);
+      activeActions.add(request->type, stateHandle);
 
       ActionStateIndex stateIndex = ActionStateCollection::getIndex(request->type, stateHandle);
       NodeFlow flow(request->type, stateIndex);
@@ -56,6 +58,9 @@ namespace Actions {
     void processNewRequests() {
       for(uint16_t i=0; i<newRequests.getCount(); ++i) {
         ComponentHandle componentHandle = newRequests.getHandle(i);
+        uint16_t componentIndex = ComponentList::getIndex(componentHandle);
+        const Request *request = newRequests.getRequest(i);
+        ComponentList::updateRequest(componentIndex, request);
         Status status = ComponentList::getStatus(componentHandle);
         if(status == Status::Running) {
           // cannot yet handle
@@ -67,7 +72,6 @@ namespace Actions {
           status == Status::Completed ||
           status == Status::Cancelled
         ) {
-          const Request *request = newRequests.getRequest(i);
           startAction(componentHandle, request);
           pendingRequests.unset(componentHandle);
         }
@@ -80,7 +84,17 @@ namespace Actions {
     }
 
     void processActiveActions() {
-
+      NodeFlow flow;
+      for(uint16_t i=0; i<activeActions.getCount(); ++i) {
+        ActionTypeIndex type = activeActions.getType(i);
+        ActionStateHandle actionStateHandle = activeActions.getState(i);
+        ActionStateIndex actionStateIndex = ActionStateCollection::getIndex(type, actionStateHandle);
+        flow.configure(type, actionStateIndex);
+        if(flow.isCompleted(0)) {
+          activeActions.remove(i);
+          i--;
+        }
+      }
     }
 
     void processPendingRequests() {
