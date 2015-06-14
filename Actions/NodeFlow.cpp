@@ -20,18 +20,18 @@ namespace Actions {
     state = ActionStateCollection::getNodeState(actionTypeIndex, actionStateIndex, nodeIndex);
   }
 
-  NodeTypeIndex NodeFlow::getNodeTypeIndex() const {
+  NodeTypeIndex NodeFlow::getNodeType() const {
     return *reinterpret_cast<const NodeTypeIndex*>(structure);
   }
 
   void NodeFlow::start(NodeIndex nodeIndex) {
     prepare(nodeIndex);
-    Node::start(getNodeTypeIndex(), this);
+    Node::start(this);
   }
 
   bool NodeFlow::isCompleted(NodeIndex nodeIndex) {
     prepare(nodeIndex);
-    return Node::isCompleted(getNodeTypeIndex(), this);
+    return Node::isCompleted(this);
   }
 
   const void* NodeFlow::getConfig() const {

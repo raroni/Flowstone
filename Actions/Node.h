@@ -11,8 +11,8 @@ namespace Actions {
     uint8_t calcConfigLength(NodeTypeIndex index, const void *args);
     uint8_t calcStateLength(NodeTypeIndex index, const void *args);
     void configure(NodeTypeIndex index, const void *args, void *config);
-    void start(NodeTypeIndex index, NodeFlow *flow);
-    bool isCompleted(NodeTypeIndex index, NodeFlow *flow);
+    void start(NodeFlow *flow);
+    bool isCompleted(NodeFlow *flow);
   }
 }
 

@@ -16,9 +16,9 @@ namespace Actions {
     bool isCompleted(NodeIndex nodeIndex);
     const void* getConfig() const;
     void* getState();
+    NodeTypeIndex getNodeType() const;
   private:
     void prepare(NodeIndex nodeIndex);
-    NodeTypeIndex getNodeTypeIndex() const;
     const void *structure;
     void *state;
     ActionTypeIndex actionTypeIndex;
