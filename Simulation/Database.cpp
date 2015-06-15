@@ -193,7 +193,7 @@ namespace Simulation {
         Behavior::Handle actionsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.actionsHandle = Actions::System::createComponent();
+      caster.actionsHandle = Actions::System::createComponent(entity);
       linkComponent(entity, ComponentType::Actions, caster.genericHandle);
       return caster.actionsHandle;
     }

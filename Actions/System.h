@@ -1,6 +1,7 @@
 #ifndef ACTIONS_SYSTEM_H
 #define ACTIONS_SYSTEM_H
 
+#include "Database/EntityHandle.h"
 #include "Actions/ComponentHandle.h"
 #include "Actions/Request.h"
 #include "Actions/ActionTypeDefinition.h"
@@ -9,7 +10,7 @@
 namespace Actions {
   namespace System {
     void setup();
-    ComponentHandle createComponent();
+    ComponentHandle createComponent(Database::EntityHandle entityHandle);
     const Request* getRequest(ComponentHandle handle);
     ActionTypeIndex createActionType(const ActionTypeDefinition *definition);
     Status getStatus(ComponentHandle handle);

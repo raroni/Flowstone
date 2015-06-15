@@ -24,8 +24,8 @@ namespace Actions {
       ActionTypes::setup();
     }
 
-    ComponentHandle createComponent() {
-      return ComponentList::create();
+    ComponentHandle createComponent(Database::EntityHandle entityHandle) {
+      return ComponentList::create(entityHandle);
     }
 
     const Request* getRequest(ComponentHandle handle) {
@@ -48,10 +48,11 @@ namespace Actions {
       ActionStateHandle stateHandle = ActionStateCollection::createInstance(request->type);
       uint16_t componentIndex = ComponentList::getIndex(handle);
       ComponentList::updateStatus(componentIndex, Status::Running);
-      activeActions.add(request->type, stateHandle);
+      Database::EntityHandle entityHandle = ComponentList::getEntityHandle(componentIndex);
+      activeActions.add(request->type, stateHandle, entityHandle);
 
       ActionStateIndex stateIndex = ActionStateCollection::getIndex(request->type, stateHandle);
-      NodeFlow flow(request->type, stateIndex);
+      NodeFlow flow(request->type, stateIndex, entityHandle);
       flow.start(0);
     }
 
@@ -89,7 +90,8 @@ namespace Actions {
         ActionTypeIndex type = activeActions.getType(i);
         ActionStateHandle actionStateHandle = activeActions.getState(i);
         ActionStateIndex actionStateIndex = ActionStateCollection::getIndex(type, actionStateHandle);
-        flow.configure(type, actionStateIndex);
+        Database::EntityHandle entityHandle = activeActions.getEntityHandle(i);
+        flow.configure(type, actionStateIndex, entityHandle);
         if(flow.isCompleted(0)) {
           activeActions.remove(i);
           i--;

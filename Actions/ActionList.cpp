@@ -2,10 +2,11 @@
 #include "Actions/ActionList.h"
 
 namespace Actions {
-  void ActionList::add(ActionTypeIndex type, ActionStateHandle state) {
+  void ActionList::add(ActionTypeIndex type, ActionStateHandle state, Database::EntityHandle entityHandle) {
     assert(max != count);
     types[count] = type;
     states[count] = state;
+    entityHandles[count] = entityHandle;
     count++;
   }
 
@@ -13,6 +14,7 @@ namespace Actions {
     count--;
     types[index] = types[count];
     states[index] = states[count];
+    entityHandles[index] = entityHandles[count];
   }
 
   uint16_t ActionList::getCount() const {
@@ -25,5 +27,9 @@ namespace Actions {
 
   ActionStateHandle ActionList::getState(uint16_t index) const {
     return states[index];
+  }
+
+  Database::EntityHandle ActionList::getEntityHandle(uint16_t index) const {
+    return entityHandles[index];
   }
 }

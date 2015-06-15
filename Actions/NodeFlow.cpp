@@ -6,13 +6,14 @@
 
 namespace Actions {
   NodeFlow::NodeFlow() { }
-  NodeFlow::NodeFlow(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex) {
-    configure(actionTypeIndex, actionStateIndex);
+  NodeFlow::NodeFlow(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex, Database::EntityHandle entityHandle) {
+    configure(actionTypeIndex, actionStateIndex, entityHandle);
   }
 
-  void NodeFlow::configure(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex) {
+  void NodeFlow::configure(ActionTypeIndex actionTypeIndex, ActionStateIndex actionStateIndex, Database::EntityHandle entityHandle) {
     this->actionTypeIndex = actionTypeIndex;
     this->actionStateIndex = actionStateIndex;
+    this->entityHandle = entityHandle;
   }
 
   void NodeFlow::prepare(NodeIndex nodeIndex) {
@@ -40,5 +41,9 @@ namespace Actions {
 
   void* NodeFlow::getState() {
     return state;
+  }
+
+  Database::EntityHandle NodeFlow::getEntityHandle() const {
+    return entityHandle;
   }
 }

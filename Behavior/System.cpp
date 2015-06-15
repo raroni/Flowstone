@@ -67,18 +67,19 @@ namespace Behavior {
       }
     }
 
-    void update() {
+    void populateActionsHandles() {
+      uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
       for(uint16_t i=0; i<handleList.getCount(); ++i) {
         Watson::InstanceHandle instanceHandle = instanceHandles[i];
         Watson::Board *board = Watson::System::getBoardByHandle(instanceHandle);
-        uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
         board->set(keyInt, &actionsHandles[i], sizeof(actionsHandles[i]));
       }
+    }
 
+    void update() {
+      populateActionsHandles();
       Watson::System::update();
-
       requestActions();
-
       Watson::System::clearActionStreams();
     }
   }

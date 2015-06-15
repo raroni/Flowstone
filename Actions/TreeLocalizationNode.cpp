@@ -2,8 +2,7 @@
 
 namespace Actions {
   namespace TreeLocalizationNode {
-    void start(NodeFlow *flow) {
-    }
+    void start(NodeFlow *flow) { }
 
     bool isCompleted(NodeFlow *flow) {
       return false;
