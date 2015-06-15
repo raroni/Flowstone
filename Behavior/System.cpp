@@ -50,12 +50,12 @@ namespace Behavior {
     }
 
     void requestActions() {
-      uint8_t actionHandleboardKey = static_cast<uint8_t>(BoardKey::ActionsHandle);
+      uint8_t actionHandleBoardKey = static_cast<uint8_t>(BoardKey::ActionsHandle);
       for(Watson::TypeIndex t=0; t<Watson::System::getTypeCount(); ++t) {
         for(uint16_t i=0; i<Watson::System::getInstanceCount(t); ++i) {
           Watson::Stream *actionStream = Watson::System::getActionStream(t, i);
           Watson::Board *board = Watson::System::getBoardByIndices(t, i);
-          Actions::ComponentHandle handle = *reinterpret_cast<const Actions::ComponentHandle*>(board->get(actionHandleboardKey));
+          Actions::ComponentHandle handle = *reinterpret_cast<const Actions::ComponentHandle*>(board->get(actionHandleBoardKey));
           for(uint8_t a=0; a<actionStream->getCount(); ++a) {
             uint8_t *streamData = static_cast<uint8_t*>(actionStream->get(a));
             Actions::Request request;
