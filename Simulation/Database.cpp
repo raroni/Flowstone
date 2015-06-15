@@ -6,6 +6,7 @@
 #include "Actions/System.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
+#include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/ResourceSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
@@ -173,6 +174,18 @@ namespace Simulation {
       caster.aiHandle = Behavior::System::create(getActionsHandle(entity), behaviorType);
       linkComponent(entity, ComponentType::AI, caster.genericHandle);
       return caster.aiHandle;
+    }
+
+    TicketSubscriptionHandle createTicketSubscription(EntityHandle entity) {
+      // todo: assert has physics body
+      union {
+        Behavior::Handle ticketHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      Physics::BodyHandle physicsBody = getBodyHandle(entity);
+      caster.ticketHandle = TicketSystem::createSubscription(physicsBody);
+      linkComponent(entity, ComponentType::TicketSubscription, caster.genericHandle);
+      return caster.ticketHandle;
     }
 
     Actions::ComponentHandle createActions(EntityHandle entity) {

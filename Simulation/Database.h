@@ -3,14 +3,6 @@
 
 #include "Fixie/Vector2.h"
 #include "Database/EntityHandle.h"
-#include "Simulation/EntityList.h"
-#include "Simulation/ComponentType.h"
-#include "Simulation/ResourceHandle.h"
-#include "Simulation/Steering/SteeringHandle.h"
-#include "Simulation/Steering/Steering.h"
-#include "Simulation/Drag/DragHandle.h"
-#include "Simulation/ResourceType.h"
-#include "Simulation/Pathfinding/PathfinderHandle.h"
 #include "Behavior/Handle.h"
 #include "Behavior/BehaviorType.h"
 #include "Actions/ComponentHandle.h"
@@ -20,6 +12,15 @@
 #include "Physics/DynamicDriver.h"
 #include "Physics/Body.h"
 #include "Physics/ColliderType.h"
+#include "Simulation/EntityList.h"
+#include "Simulation/ComponentType.h"
+#include "Simulation/ResourceHandle.h"
+#include "Simulation/Steering/SteeringHandle.h"
+#include "Simulation/Steering/Steering.h"
+#include "Simulation/Drag/DragHandle.h"
+#include "Simulation/ResourceType.h"
+#include "Simulation/Pathfinding/PathfinderHandle.h"
+#include "Simulation/Ticket/TicketSubscriptionHandle.h"
 
 namespace Simulation {
   namespace Database {
@@ -37,6 +38,7 @@ namespace Simulation {
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
     Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
+    TicketSubscriptionHandle createTicketSubscription(::Database::EntityHandle entity);
     Actions::ComponentHandle createActions(::Database::EntityHandle entity);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);

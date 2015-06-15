@@ -6,6 +6,7 @@
 #include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
+#include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Steering/Steering.h"
@@ -89,6 +90,7 @@ namespace Simulation {
       }
       Behavior::System::update();
       Actions::System::update();
+      TicketSystem::update();
       PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();
