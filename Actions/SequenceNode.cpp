@@ -20,6 +20,19 @@ namespace Actions {
     }
 
     bool isCompleted(NodeFlow *flow) {
+      const NodeIndex *children = ParentNode::getChildren(flow->getConfig());
+      State *state = reinterpret_cast<State*>(flow->getState());
+      NodeIndex currentChildIndex = children[state->currentChildSlot];
+      if(flow->isCompleted(currentChildIndex)) {
+        uint8_t childCount = ParentNode::getChildCount(flow->getConfig());
+        if(childCount-1 == state->currentChildSlot) {
+          return true;
+        } else {
+          state->currentChildSlot++;
+          NodeIndex newChildIndex = children[state->currentChildSlot];
+          flow->start(newChildIndex);
+        }
+      }
       return false;
     }
 
