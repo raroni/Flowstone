@@ -1,8 +1,14 @@
+#include "Simulation/Database.h"
 #include "Actions/TicketAcquisitionNode.h"
 
 namespace Actions {
   namespace TicketAcquisitionNode {
-    void start(NodeFlow *flow) { }
+    namespace SimDB = Simulation::Database;
+    using namespace Simulation;
+
+    void start(NodeFlow *flow) {
+      SimDB::createTicketRequest(flow->getEntityHandle());
+    }
 
     bool isCompleted(NodeFlow *flow) {
       return false;

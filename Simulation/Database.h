@@ -20,7 +20,7 @@
 #include "Simulation/Drag/DragHandle.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/Pathfinding/PathfinderHandle.h"
-#include "Simulation/Ticket/TicketSubscriptionHandle.h"
+#include "Simulation/Ticket/TicketRequestHandle.h"
 
 namespace Simulation {
   namespace Database {
@@ -38,12 +38,13 @@ namespace Simulation {
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
     Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
-    TicketSubscriptionHandle createTicketSubscription(::Database::EntityHandle entity);
+    TicketRequestHandle createTicketRequest(::Database::EntityHandle entity);
     Actions::ComponentHandle createActions(::Database::EntityHandle entity);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);
     Steering getSteering(::Database::EntityHandle entityHandle);
     SteeringHandle getSteeringHandle(::Database::EntityHandle entityHandle);
+    TicketRequestHandle getTicketRequestHandle(::Database::EntityHandle entityHandle);
     DragHandle createDrag(::Database::EntityHandle entityHandle);
     void createMonster(::Database::EntityHandle entity);
   }

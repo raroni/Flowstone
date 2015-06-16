@@ -13,7 +13,7 @@ namespace Simulation {
     Pathfinder,
     AI,
     Actions,
-    TicketSubscription,
+    TicketRequest,
 
     Count
   };

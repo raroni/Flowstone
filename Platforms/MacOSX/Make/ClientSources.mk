@@ -149,7 +149,7 @@ CLIENT_CPP_SOURCES =\
   Simulation/Pathfinding/AStarCostBucket.cpp\
   Simulation/Pathfinding/AStar.cpp\
   Simulation/Ticket/TicketSystem.cpp\
-  Simulation/Ticket/TicketSubscriptionList.cpp\
+  Simulation/Ticket/TicketRequestList.cpp\
   Simulation/Steering/SteeringList.cpp\
   Simulation/Drag/DragSystem.cpp\
   Simulation/Mode.cpp\

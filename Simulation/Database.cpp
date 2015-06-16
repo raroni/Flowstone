@@ -176,7 +176,7 @@ namespace Simulation {
       return caster.aiHandle;
     }
 
-    TicketSubscriptionHandle createTicketSubscription(EntityHandle entity) {
+    TicketRequestHandle createTicketRequest(EntityHandle entity) {
       // todo: assert has physics body
       union {
         Behavior::Handle ticketHandle;
@@ -184,7 +184,7 @@ namespace Simulation {
       } caster;
       Physics::BodyHandle physicsBody = getBodyHandle(entity);
       caster.ticketHandle = TicketSystem::createSubscription(physicsBody);
-      linkComponent(entity, ComponentType::TicketSubscription, caster.genericHandle);
+      linkComponent(entity, ComponentType::TicketRequest, caster.genericHandle);
       return caster.ticketHandle;
     }
 
@@ -222,6 +222,17 @@ namespace Simulation {
       } caster;
       caster.genericHandle = getComponent(entityHandle, ComponentType::Steering);
       return caster.steeringHandle;
+    }
+
+    TicketRequestHandle getTicketRequestHandle(::Database::EntityHandle entityHandle) {
+      static_assert(sizeof(SteeringHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      // todo has(ComponentType::TicketRequest)
+      union {
+        TicketRequestHandle requestHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::TicketRequest);
+      return caster.requestHandle;
     }
 
     Steering getSteering(EntityHandle entityHandle) {
