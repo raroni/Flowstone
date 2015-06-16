@@ -1,5 +1,5 @@
 #include "Actions/NodeStructureHeader.h"
-#include "Actions/TreeLocalizationNode.h"
+#include "Actions/TicketAcquisitionNode.h"
 #include "Actions/SequenceNode.h"
 #include "Actions/ConcurrentNode.h"
 #include "Actions/ActionTypeDefinitionHelper.h"
@@ -42,8 +42,8 @@ namespace Actions {
     definition->configureNode(concurrentNode, &args);
   }
 
-  NodeIndex ATDH::writeTreeLocalization() {
-    return definition->createNode(NodeTypeIndex::TreeLocalization, nullptr);
+  NodeIndex ATDH::writeTicketAcquisition() {
+    return definition->createNode(NodeTypeIndex::TicketAcquisition, nullptr);
   }
 
   NodeIndex ATDH::writeTreeChop() {

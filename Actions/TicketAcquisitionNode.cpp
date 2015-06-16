@@ -1,7 +1,7 @@
-#include "Actions/TreeLocalizationNode.h"
+#include "Actions/TicketAcquisitionNode.h"
 
 namespace Actions {
-  namespace TreeLocalizationNode {
+  namespace TicketAcquisitionNode {
     void start(NodeFlow *flow) { }
 
     bool isCompleted(NodeFlow *flow) {

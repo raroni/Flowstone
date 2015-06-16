@@ -5,7 +5,7 @@
 #include "Actions/NodeFlow.h"
 
 namespace Actions {
-  namespace TreeLocalizationNode {
+  namespace TicketAcquisitionNode {
     uint8_t calcConfigLength(const void *args);
     uint8_t calcStateLength(const void *args);
     void configure(const void *args, void *config);

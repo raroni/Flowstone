@@ -97,7 +97,7 @@ CLIENT_CPP_SOURCES =\
   Actions/ParentNode.cpp\
   Actions/SequenceNode.cpp\
   Actions/ConcurrentNode.cpp\
-  Actions/TreeLocalizationNode.cpp\
+  Actions/TicketAcquisitionNode.cpp\
   Actions/TreeChopNode.cpp\
   Actions/TargetReachNode.cpp\
   Behavior/System.cpp\

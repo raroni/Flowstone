@@ -12,7 +12,7 @@ namespace Actions {
     void setInstanceMax(uint8_t max);
     NodeIndex writeSequence(uint8_t childCount);
     NodeIndex writeConcurrent(uint8_t childCount);
-    NodeIndex writeTreeLocalization();
+    NodeIndex writeTicketAcquisition();
     NodeIndex writeTreeChop();
     NodeIndex writeTargetReach();
     void configureSequence(NodeIndex sequenceNode, uint8_t childCount, NodeIndex *children);

@@ -18,7 +18,7 @@ namespace Actions {
       h->setInstanceMax(32);
       NodeIndex root = h->writeSequence(childCount);
       NodeIndex children[] = {
-        h->writeTreeLocalization(),
+        h->writeTicketAcquisition(),
         buildReachChop(h)
       };
       h->configureSequence(root, childCount, children);

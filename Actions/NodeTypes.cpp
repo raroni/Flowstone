@@ -1,6 +1,6 @@
 #include "Actions/SequenceNode.h"
 #include "Actions/ConcurrentNode.h"
-#include "Actions/TreeLocalizationNode.h"
+#include "Actions/TicketAcquisitionNode.h"
 #include "Actions/TreeChopNode.h"
 #include "Actions/TargetReachNode.h"
 #include "Actions/NodeTypeIndex.h"
@@ -30,14 +30,14 @@ namespace Actions {
       Node::setup(NodeTypeIndex::Concurrent, &interface);
     }
 
-    void setupTreeLocalization() {
+    void setupTicketAcquisition() {
       NodeInterface interface;
-      interface.start = TreeLocalizationNode::start;
-      interface.calcConfigLength = TreeLocalizationNode::calcConfigLength;
-      interface.calcStateLength = TreeLocalizationNode::calcStateLength;
-      interface.configure = TreeLocalizationNode::configure;
-      interface.isCompleted = TreeLocalizationNode::isCompleted;
-      Node::setup(NodeTypeIndex::TreeLocalization, &interface);
+      interface.start = TicketAcquisitionNode::start;
+      interface.calcConfigLength = TicketAcquisitionNode::calcConfigLength;
+      interface.calcStateLength = TicketAcquisitionNode::calcStateLength;
+      interface.configure = TicketAcquisitionNode::configure;
+      interface.isCompleted = TicketAcquisitionNode::isCompleted;
+      Node::setup(NodeTypeIndex::TicketAcquisition, &interface);
     }
 
     void setupTreeChop() {
@@ -63,7 +63,7 @@ namespace Actions {
     void setup() {
       setupSequence();
       setupConcurrent();
-      setupTreeLocalization();
+      setupTicketAcquisition();
       setupTreeChop();
       setupTargetReach();
     }
