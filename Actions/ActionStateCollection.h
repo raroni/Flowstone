@@ -1,6 +1,7 @@
 #ifndef ACTIONS_ACTION_STATE_COLLECTION_H
 #define ACTIONS_ACTION_STATE_COLLECTION_H
 
+#include "Actions/NodeIndex.h"
 #include "Actions/ActionStateHandle.h"
 #include "Actions/ActionTypeIndex.h"
 #include "Actions/ActionStateIndex.h"

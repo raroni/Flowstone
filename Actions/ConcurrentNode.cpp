@@ -15,16 +15,16 @@ namespace Actions {
       ParentNode::configure(args, config);
     }
 
-    bool isCompleted(NodeFlow *flow) {
+    bool isCompleted(NodeCall *call) {
       return false;
     }
 
-    void start(NodeFlow *flow) {
-      const void *config = flow->getConfig();
+    void start(NodeCall *call) {
+      const void *config = call->getConfig();
       uint8_t childCount = ParentNode::getChildCount(config);
       const NodeIndex *children = ParentNode::getChildren(config);
       for(uint8_t i=0; i<childCount; ++i) {
-        flow->start(children[i]);
+        call->getFlow()->start(children[i]);
       }
     }
   }

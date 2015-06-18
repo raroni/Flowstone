@@ -7,12 +7,12 @@ namespace Actions {
     namespace SimDB = Simulation::Database;
     using namespace Simulation;
 
-    void start(NodeFlow *flow) {
-      SimDB::createTicketRequest(flow->getEntityHandle());
+    void start(NodeCall *call) {
+      SimDB::createTicketRequest(call->getFlow()->getEntityHandle());
     }
 
-    bool isCompleted(NodeFlow *flow) {
-      TicketRequestHandle handle = SimDB::getTicketRequestHandle(flow->getEntityHandle());
+    bool isCompleted(NodeCall *call) {
+      TicketRequestHandle handle = SimDB::getTicketRequestHandle(call->getFlow()->getEntityHandle());
       uint16_t index = TicketRequestList::getIndex(handle);
       TicketRequestStatus status = TicketRequestList::getStatus(index);
       if(status == TicketRequestStatus::Completed) {

@@ -23,18 +23,18 @@ namespace Actions {
       return getInterface(index)->calcStateLength(args);
     }
 
-    void start(NodeFlow *flow) {
-      NodeTypeIndex type = flow->getNodeType();
+    void start(NodeCall *call) {
+      NodeTypeIndex type = call->getNodeType();
       const NodeInterface *interface = getInterface(type);
       assert(interface->start != nullptr);
-      interface->start(flow);
+      interface->start(call);
     }
 
-    bool isCompleted(NodeFlow *flow) {
-      NodeTypeIndex type = flow->getNodeType();
+    bool isCompleted(NodeCall *call) {
+      NodeTypeIndex type = call->getNodeType();
       const NodeInterface *interface = getInterface(type);
       assert(interface->isCompleted != nullptr);
-      return interface->isCompleted(flow);
+      return interface->isCompleted(call);
     }
 
     void configure(NodeTypeIndex index, const void *args, void *config) {

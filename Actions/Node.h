@@ -1,7 +1,7 @@
 #ifndef ACTIONS_NODE_H
 #define ACTIONS_NODE_H
 
-#include "Actions/NodeFlow.h"
+#include "Actions/NodeCall.h"
 #include "Actions/NodeInterface.h"
 #include "Actions/NodeTypeIndex.h"
 
@@ -11,8 +11,8 @@ namespace Actions {
     uint8_t calcConfigLength(NodeTypeIndex index, const void *args);
     uint8_t calcStateLength(NodeTypeIndex index, const void *args);
     void configure(NodeTypeIndex index, const void *args, void *config);
-    void start(NodeFlow *flow);
-    bool isCompleted(NodeFlow *flow);
+    void start(NodeCall *call);
+    bool isCompleted(NodeCall *call);
   }
 }
 

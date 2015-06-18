@@ -15,14 +15,10 @@ namespace Actions {
     void configure(ActionTypeIndex typeIndex, ActionStateIndex stateIndex, Database::EntityHandle entityHandle);
     void start(NodeIndex nodeIndex);
     bool isCompleted(NodeIndex nodeIndex);
-    const void* getConfig() const;
-    void* getState();
-    NodeTypeIndex getNodeType() const;
+    ActionStateIndex getActionStateIndex() const;
+    ActionTypeIndex getActionTypeIndex() const;
     Database::EntityHandle getEntityHandle() const;
   private:
-    void prepare(NodeIndex nodeIndex);
-    const void *structure;
-    void *state;
     ActionTypeIndex actionTypeIndex;
     ActionStateIndex actionStateIndex;
     Database::EntityHandle entityHandle;

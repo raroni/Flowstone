@@ -19,26 +19,26 @@ namespace Actions {
       ParentNode::configure(args, config);
     }
 
-    bool isCompleted(NodeFlow *flow) {
-      const NodeIndex *children = ParentNode::getChildren(flow->getConfig());
-      State *state = reinterpret_cast<State*>(flow->getState());
+    bool isCompleted(NodeCall *call) {
+      const NodeIndex *children = ParentNode::getChildren(call->getConfig());
+      State *state = reinterpret_cast<State*>(call->getState());
       NodeIndex currentChildIndex = children[state->currentChildSlot];
-      if(flow->isCompleted(currentChildIndex)) {
-        uint8_t childCount = ParentNode::getChildCount(flow->getConfig());
+      if(call->getFlow()->isCompleted(currentChildIndex)) {
+        uint8_t childCount = ParentNode::getChildCount(call->getConfig());
         if(childCount-1 == state->currentChildSlot) {
           return true;
         } else {
           state->currentChildSlot++;
           NodeIndex newChildIndex = children[state->currentChildSlot];
-          flow->start(newChildIndex);
+          call->getFlow()->start(newChildIndex);
         }
       }
       return false;
     }
 
-    void start(NodeFlow *flow) {
-      const NodeIndex *children = ParentNode::getChildren(flow->getConfig());
-      flow->start(children[0]);
+    void start(NodeCall *call) {
+      const NodeIndex *children = ParentNode::getChildren(call->getConfig());
+      call->getFlow()->start(children[0]);
     }
   }
 }

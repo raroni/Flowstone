@@ -2,10 +2,10 @@
 
 namespace Actions {
   namespace TreeChopNode {
-    void start(NodeFlow *flow) {
+    void start(NodeCall *call) {
     }
 
-    bool isCompleted(NodeFlow *flow) {
+    bool isCompleted(NodeCall *call) {
       return false;
     }
 

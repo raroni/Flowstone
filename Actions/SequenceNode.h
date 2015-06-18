@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include "Actions/NodeIndex.h"
-#include "Actions/NodeFlow.h"
+#include "Actions/NodeCall.h"
 #include "Actions/ParentNode.h"
 
 namespace Actions {
@@ -14,8 +14,8 @@ namespace Actions {
     uint8_t calcConfigLength(const void *args);
     uint8_t calcStateLength(const void *args);
     void configure(const void *args, void *config);
-    void start(NodeFlow *flow);
-    bool isCompleted(NodeFlow *flow);
+    void start(NodeCall *call);
+    bool isCompleted(NodeCall *call);
   }
 }
 

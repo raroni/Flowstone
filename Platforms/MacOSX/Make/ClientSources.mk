@@ -88,6 +88,7 @@ CLIENT_CPP_SOURCES =\
   Actions/ActionTypeDefinitionHelper.cpp\
   Actions/Node.cpp\
   Actions/NodeFlow.cpp\
+  Actions/NodeCall.cpp\
   Actions/NodeTypes.cpp\
   Actions/ActionStateCollection.cpp\
   Actions/ComponentList.cpp\
