@@ -14,6 +14,7 @@ namespace Simulation {
     AI,
     Actions,
     TicketRequest,
+    Targeting,
 
     Count
   };

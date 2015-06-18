@@ -140,6 +140,9 @@ CLIENT_CPP_SOURCES =\
   Client/RenderFeed.cpp\
   Simulation/Control.cpp\
   Simulation/Steering/SteeringSystem.cpp\
+  Simulation/Steering/SteeringList.cpp\
+  Simulation/Targeting/TargetingList.cpp\
+  Simulation/Targeting/TargetingSystem.cpp\
   Simulation/Trees.cpp\
   Simulation/Pathfinding/PathfindingSystem.cpp\
   Simulation/Pathfinding/Map.cpp\
@@ -151,7 +154,6 @@ CLIENT_CPP_SOURCES =\
   Simulation/Pathfinding/AStar.cpp\
   Simulation/Ticket/TicketSystem.cpp\
   Simulation/Ticket/TicketRequestList.cpp\
-  Simulation/Steering/SteeringList.cpp\
   Simulation/Drag/DragSystem.cpp\
   Simulation/Mode.cpp\
   Simulation/PhysicsHack.cpp\

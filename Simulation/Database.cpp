@@ -8,6 +8,7 @@
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/ResourceSystem.h"
+#include "Simulation/Targeting/TargetingSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Drag/DragSystem.h"
@@ -243,6 +244,18 @@ namespace Simulation {
       SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
       SteeringSystem::destroy(steeringHandle);
       unlinkComponent(entityHandle, ComponentType::Steering);
+    }
+
+    TargetingHandle createTargeting(EntityHandle ownerHandle, EntityHandle targetHandle) {
+      // todo !has(Targeting)
+      static_assert(sizeof(TargetingHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        TargetingHandle targetingHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.targetingHandle = TargetingSystem::create(targetHandle);
+      linkComponent(ownerHandle, ComponentType::Targeting, caster.genericHandle);
+      return caster.targetingHandle;
     }
 
     DragHandle createDrag(EntityHandle entityHandle) {

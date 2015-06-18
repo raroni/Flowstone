@@ -16,10 +16,15 @@ namespace Actions {
       uint16_t index = TicketRequestList::getIndex(handle);
       TicketRequestStatus status = TicketRequestList::getStatus(index);
       if(status == TicketRequestStatus::Completed) {
-        // set up target component
+        SimDB::createTargeting(
+          call->getFlow()->getEntityHandle(),
+          TicketRequestList::getTarget(index)
+        );
         return true;
       }
     }
+
+    // todo: cleanup/reset
 
     uint8_t calcConfigLength(const void *args) { return 0; }
     uint8_t calcStateLength(const void *args) { return 0; }

@@ -7,6 +7,7 @@ namespace Simulation {
     uint16_t indices[max];
     uint16_t handles[max];
     TicketRequestStatus statuses[max];
+    Database::EntityHandle targets[max];
     HandleList handleList(max, indices, handles);
 
     TicketRequestHandle create(Physics::BodyHandle physicsBodyHandle) {
@@ -25,8 +26,16 @@ namespace Simulation {
       return statuses[index];
     }
 
+    Database::EntityHandle getTarget(uint16_t index) {
+      return targets[index];
+    }
+
     void updateStatus(uint16_t index, TicketRequestStatus status) {
       statuses[index] = status;
+    }
+
+    void updateTarget(uint16_t index, Database::EntityHandle handle) {
+      targets[index] = handle;
     }
 
     uint16_t getCount() {

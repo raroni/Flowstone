@@ -14,10 +14,12 @@ namespace Simulation {
       uint16_t count = RequestList::getCount();
       for(uint16_t i=0; i<count; ++i) {
         TicketRequestStatus status = RequestList::getStatus(i);
+        /*
         if(status == TicketRequestStatus::Waiting) {
           // set target
           RequestList::updateStatus(i, TicketRequestStatus::Completed);
         }
+        */
       }
     }
   }

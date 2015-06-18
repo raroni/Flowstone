@@ -17,6 +17,7 @@
 #include "Simulation/ResourceHandle.h"
 #include "Simulation/Steering/SteeringHandle.h"
 #include "Simulation/Steering/Steering.h"
+#include "Simulation/Targeting/TargetingHandle.h"
 #include "Simulation/Drag/DragHandle.h"
 #include "Simulation/ResourceType.h"
 #include "Simulation/Pathfinding/PathfinderHandle.h"
@@ -36,6 +37,7 @@ namespace Simulation {
     Physics::SphereColliderHandle createSphereCollider(::Database::EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
     ResourceHandle createResource(::Database::EntityHandle entity, ResourceType type);
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
+    TargetingHandle createTargeting(::Database::EntityHandle ownerHandle, ::Database::EntityHandle targetHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
     Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
     TicketRequestHandle createTicketRequest(::Database::EntityHandle entity);
