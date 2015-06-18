@@ -6,6 +6,7 @@
 #include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
+#include "Simulation/Targeting/TargetingSystem.h"
 #include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
@@ -52,8 +53,8 @@ namespace Simulation {
       MapFieldType fields[mapWidth*mapHeight] = { MapFieldType::Grass };
       map.reset(mapWidth, mapHeight, fields);
 
-      Trees::create(0, 0);
       Trees::create(0, 1);
+      Trees::create(0, 0);
       Trees::create(0, 2);
       Trees::create(0, 3);
       Trees::create(0, 4);
@@ -91,6 +92,7 @@ namespace Simulation {
       Behavior::System::update();
       Actions::System::update();
       TicketSystem::update();
+      TargetingSystem::update();
       PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();

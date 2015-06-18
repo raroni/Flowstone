@@ -7,14 +7,27 @@ namespace Simulation {
     uint16_t indices[max];
     uint16_t handles[max];
     HandleList handleList(max, indices, handles);
-    Database::EntityHandle targetEntities[max];
+    Database::EntityHandle entities[max];
+    Fixie::Vector3 positions[max];
 
-    TargetingHandle create(Database::EntityHandle targetEntity) {
+    TargetingHandle create(Database::EntityHandle entity) {
       uint16_t index;
       TargetingHandle handle;
       handleList.create(&index, &handle);
-      targetEntities[index] = targetEntity;
+      entities[index] = entity;
       return handle;
+    }
+
+    uint16_t getIndex(TargetingHandle handle) {
+      return handleList.getIndex(handle);
+    }
+
+    Database::EntityHandle getEntity(uint16_t index) {
+      return entities[index];
+    }
+
+    void updatePosition(uint16_t index, const Fixie::Vector3 *position) {
+      positions[index] = *position;
     }
   }
 }

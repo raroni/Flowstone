@@ -6,7 +6,8 @@
 
 namespace Simulation {
   namespace TargetingSystem {
-    TargetingHandle create(Database::EntityHandle targetEntity);
+    TargetingHandle create(::Database::EntityHandle targetEntity);
+    void update();
   }
 }
 
