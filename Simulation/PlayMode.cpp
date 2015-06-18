@@ -74,8 +74,9 @@ namespace Simulation {
       Trees::create(4, 0);
 
       monster1 = createMonster(2, 3);
-      Database::createSteering(monster1);
-      Database::createPathfinder(monster1, { dummyTarget.x, dummyTarget.z });
+
+      //Database::createSteering(monster1);
+      //Database::createPathfinder(monster1, { dummyTarget.x, dummyTarget.z });
 
       //createMonster(3, 3);
     }
