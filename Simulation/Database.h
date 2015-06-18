@@ -22,6 +22,7 @@
 #include "Simulation/ResourceType.h"
 #include "Simulation/Pathfinding/PathfinderHandle.h"
 #include "Simulation/Ticket/TicketRequestHandle.h"
+#include "Simulation/Ticket/TicketTargetHandle.h"
 
 namespace Simulation {
   namespace Database {
@@ -41,6 +42,7 @@ namespace Simulation {
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
     Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
     TicketRequestHandle createTicketRequest(::Database::EntityHandle entity);
+    TicketTargetHandle createTicketTarget(::Database::EntityHandle entity);
     Actions::ComponentHandle createActions(::Database::EntityHandle entity);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);

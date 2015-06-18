@@ -154,6 +154,7 @@ CLIENT_CPP_SOURCES =\
   Simulation/Pathfinding/AStar.cpp\
   Simulation/Ticket/TicketSystem.cpp\
   Simulation/Ticket/TicketRequestList.cpp\
+  Simulation/Ticket/TicketTargetList.cpp\
   Simulation/Drag/DragSystem.cpp\
   Simulation/Mode.cpp\
   Simulation/PhysicsHack.cpp\

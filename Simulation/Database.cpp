@@ -180,12 +180,23 @@ namespace Simulation {
     TicketRequestHandle createTicketRequest(EntityHandle entity) {
       // todo: assert has physics body
       union {
-        Behavior::Handle ticketHandle;
+        TicketRequestHandle ticketHandle;
         ComponentHandle genericHandle;
       } caster;
       Physics::BodyHandle physicsBody = getBodyHandle(entity);
-      caster.ticketHandle = TicketSystem::createSubscription(physicsBody);
+      caster.ticketHandle = TicketSystem::createRequest(physicsBody);
       linkComponent(entity, ComponentType::TicketRequest, caster.genericHandle);
+      return caster.ticketHandle;
+    }
+
+    TicketTargetHandle createTicketTarget(EntityHandle entity) {
+      // todo: assert has physics body
+      union {
+        TicketTargetHandle ticketHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.ticketHandle = TicketSystem::createTarget(entity);
+      linkComponent(entity, ComponentType::TicketTarget, caster.genericHandle);
       return caster.ticketHandle;
     }
 
