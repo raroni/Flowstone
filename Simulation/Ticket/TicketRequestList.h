@@ -12,9 +12,9 @@ namespace Simulation {
     uint16_t getIndex(TicketRequestHandle handle);
     TicketRequestHandle create(Physics::BodyHandle handle);
     TicketRequestStatus getStatus(uint16_t index);
-    Database::EntityHandle getTarget(uint16_t index);
+    ::Database::EntityHandle getTarget(uint16_t index);
     void updateStatus(uint16_t index, TicketRequestStatus status);
-    void updateTarget(uint16_t index, Database::EntityHandle handle);
+    void updateTarget(uint16_t index, ::Database::EntityHandle handle);
   }
 }
 

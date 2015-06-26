@@ -1,10 +1,17 @@
+#include "Misc/Error.h"
 #include "Simulation/Database.h"
 #include "Database/EntityHandle.h"
+#include "Simulation/Ticket/TicketRequestList.h"
+#include "Simulation/Ticket/TicketRequestHandle.h"
+#include "Simulation/Ticket/TicketRequestStatus.h"
 #include "Actions3/WoodAcquisitionAction.h"
 
 namespace Actions3 {
   namespace WoodAcquisitionAction {
     namespace SimDB = Simulation::Database;
+    namespace TicketRequestList = Simulation::TicketRequestList;
+    typedef Simulation::TicketRequestStatus TicketRequestStatus;
+    typedef Simulation::TicketRequestHandle TicketRequestHandle;
 
     enum class State : uint8_t {
       Ticketing,
@@ -22,6 +29,24 @@ namespace Actions3 {
       return sizeof(State);
     }
 
+    void startMoving(Database::EntityHandle entity, State *state) {
+      *state = State::Moving;
+
+    }
+
+    void updateExecutionTicketing(Database::EntityHandle entity, State *state) {
+      TicketRequestHandle handle = SimDB::getTicketRequestHandle(entity);
+      uint16_t index = TicketRequestList::getIndex(handle);
+      TicketRequestStatus status = TicketRequestList::getStatus(index);
+      if(status == TicketRequestStatus::Completed) {
+        startMoving(entity, state);
+      }
+    }
+
+    void updateExecutionMoving(Database::EntityHandle entity, State *state) {
+
+    }
+
     void startExecution(Database::EntityHandle entity, void *rawState) {
       State *state = reinterpret_cast<State*>(rawState);
       *state = State::Ticketing;
@@ -30,6 +55,16 @@ namespace Actions3 {
 
     void updateExecution(Database::EntityHandle entity, void *rawState) {
       State *state = reinterpret_cast<State*>(rawState);
+      switch(*state) {
+        case State::Ticketing:
+          updateExecutionTicketing(entity, state);
+          break;
+        case State::Moving:
+          updateExecutionMoving(entity, state);
+          break;
+        default:
+          fatalError("Unknown state.");
+      }
     }
   }
 }
