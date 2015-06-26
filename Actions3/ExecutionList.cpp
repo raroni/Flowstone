@@ -19,6 +19,14 @@ namespace Actions3 {
       return count++;
     }
 
+    uint16_t getCount() {
+      return count;
+    }
+
+    InstanceHandle getInstanceHandle(uint16_t index) {
+      return instanceHandles[index];
+    }
+
     void* getActionState(uint16_t index) {
       return &actionStateChunks[index];
     }

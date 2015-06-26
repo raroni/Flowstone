@@ -27,6 +27,12 @@ namespace Actions3 {
       interface->startExecution(entity, state);
     }
 
+    void updateExecution(ActionType type, Database::EntityHandle entity, void *state) {
+      ActionInterface *interface = getInterface(type);
+      assert(interface->updateExecution != nullptr);
+      interface->updateExecution(entity, state);
+    }
+
     uint8_t getStateLength(ActionType type) {
       ActionInterface *interface = getInterface(type);
       assert(interface->getStateLength != nullptr);

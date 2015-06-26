@@ -19,7 +19,13 @@ namespace Actions3 {
     }
 
     void process() {
-
+      for(uint16_t i=0; i<List::getCount(); ++i) {
+        InstanceHandle instanceHandle = List::getInstanceHandle(i);
+        ActionType actionType = Instance::getRequestActionType(instanceHandle);
+        Database::EntityHandle entity = Instance::getEntityHandle(instanceHandle);
+        void *actionState = List::getActionState(i);
+        Action::updateExecution(actionType, entity, actionState);
+      }
     }
   }
 }

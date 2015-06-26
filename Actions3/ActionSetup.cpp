@@ -9,6 +9,7 @@ namespace Actions3 {
       ActionInterface interface;
       interface.getStateLength = WoodAcquisitionAction::getStateLength;
       interface.startExecution = WoodAcquisitionAction::startExecution;
+      interface.updateExecution = WoodAcquisitionAction::updateExecution;
       Action::setup(ActionType::WoodAcquisition, &interface);
     }
 

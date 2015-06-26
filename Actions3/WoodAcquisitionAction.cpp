@@ -27,5 +27,9 @@ namespace Actions3 {
       *state = State::Ticketing;
       SimDB::createTicketRequest(entity);
     }
+
+    void updateExecution(Database::EntityHandle entity, void *rawState) {
+      State *state = reinterpret_cast<State*>(rawState);
+    }
   }
 }

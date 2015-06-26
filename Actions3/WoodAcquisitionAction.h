@@ -7,6 +7,7 @@ namespace Actions3 {
   namespace WoodAcquisitionAction {
     uint8_t getStateLength();
     void startExecution(Database::EntityHandle, void *state);
+    void updateExecution(Database::EntityHandle, void *state);
   }
 }
 
