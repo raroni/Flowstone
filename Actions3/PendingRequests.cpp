@@ -13,13 +13,13 @@ namespace Actions3 {
     void process() {
       for(uint16_t i=0; i<map.getCount(); ++i) {
         InstanceHandle handle = map.getHandle(i);
+        InstanceStatus status = Instance::getStatus(handle);
         if(
-          Instance::getStatus(handle) == InstanceStatus::Cancelled ||
-          Instance::getStatus(handle) == InstanceStatus::Initialized ||
-          Instance::getStatus(handle) == InstanceStatus::Completed
+          status == InstanceStatus::Cancelled ||
+          status == InstanceStatus::Initialized ||
+          status == InstanceStatus::Completed
         ) {
-          ActionType type = map.getActionType(i);
-          Instance::startExecution(type);
+          Instance::startExecution(handle);
           map.remove(i);
           i--;
         }

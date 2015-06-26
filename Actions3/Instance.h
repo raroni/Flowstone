@@ -11,7 +11,8 @@ namespace Actions3 {
     InstanceHandle create(Database::EntityHandle entity);
     ActionType getRequestActionType(InstanceHandle handle);
     InstanceStatus getStatus(InstanceHandle handle);
-    void startExecution(ActionType actionType);
+    Database::EntityHandle getEntityHandle(InstanceHandle handle);
+    void startExecution(InstanceHandle handle);
     void scheduleRequest(InstanceHandle handle, ActionType actionType);
     void request(InstanceHandle handle, ActionType actionType);
     InstanceStatus getInstanceStatus(InstanceHandle handle);

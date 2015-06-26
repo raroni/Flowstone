@@ -1,13 +1,14 @@
 #include "Actions3/Executions.h"
 #include "Actions3/PendingRequests.h"
 #include "Actions3/NewRequests.h"
+#include "Actions3/ActionSetup.h"
 #include "Actions3/Instance.h"
 #include "Actions3/System.h"
 
 namespace Actions3 {
   namespace System {
     void setup() {
-      // todo: configure actions
+      ActionSetup::execute();
     }
 
     InstanceHandle createInstance(Database::EntityHandle entity) {

@@ -1,5 +1,6 @@
 #include "Actions3/NewRequests.h"
 #include "Actions3/PendingRequests.h"
+#include "Actions3/Executions.h"
 #include "Actions3/InstanceList.h"
 #include "Actions3/Instance.h"
 
@@ -13,8 +14,15 @@ namespace Actions3 {
       return List::create(entity);
     }
 
-    void startExecution(ActionType actionType) {
+    Database::EntityHandle getEntityHandle(InstanceHandle handle) {
+      uint16_t index = List::getIndex(handle);
+      return List::getEntityHandle(index);
+    }
 
+    void startExecution(InstanceHandle handle) {
+      Executions::start(handle);
+      uint16_t index = List::getIndex(handle);
+      List::updateActiveActionType(index, getRequestActionType(handle));
     }
 
     ActionType getRequestActionType(InstanceHandle handle) {

@@ -5,7 +5,7 @@
 
 namespace Actions3 {
   namespace Executions {
-    void create(InstanceHandle handle);
+    void start(InstanceHandle handle);
     void process();
   }
 }

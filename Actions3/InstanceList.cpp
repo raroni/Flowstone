@@ -24,6 +24,10 @@ namespace Actions3 {
       return handle;
     }
 
+    Database::EntityHandle getEntityHandle(uint16_t index) {
+      return entityHandles[index];
+    }
+
     uint16_t getIndex(InstanceHandle handle) {
       return handleList.getIndex(handle);
     }
@@ -34,6 +38,10 @@ namespace Actions3 {
 
     void updateRequestActionType(uint16_t index, ActionType type) {
       requestActionTypes[index] = type;
+    }
+
+    void updateActiveActionType(uint16_t index, ActionType type) {
+      activeActionTypes[index] = type;
     }
 
     InstanceStatus getStatus(uint16_t index) {

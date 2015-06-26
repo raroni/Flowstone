@@ -6,7 +6,9 @@
 namespace Actions3 {
   enum class ActionType : uint8_t {
     None,
-    WoodAcquisition
+    WoodAcquisition,
+
+    Count
   };
 }
 

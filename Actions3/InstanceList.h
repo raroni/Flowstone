@@ -13,6 +13,8 @@ namespace Actions3 {
     uint16_t getIndex(InstanceHandle handle);
     ActionType getRequestActionType(uint16_t index);
     void updateRequestActionType(uint16_t index, ActionType type);
+    void updateActiveActionType(uint16_t index, ActionType type);
+    Database::EntityHandle getEntityHandle(uint16_t index);
     InstanceStatus getStatus(uint16_t index);
   }
 }
