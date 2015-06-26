@@ -13,6 +13,10 @@ namespace Actions3 {
       return List::create(entity);
     }
 
+    void startExecution(ActionType actionType) {
+
+    }
+
     ActionType getRequestActionType(InstanceHandle handle) {
       uint16_t index = List::getIndex(handle);
       return List::getRequestActionType(index);

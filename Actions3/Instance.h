@@ -2,6 +2,8 @@
 #define ACTIONS3_INSTANCE_H
 
 #include "Database/EntityHandle.h"
+#include "Actions3/InstanceHandle.h"
+#include "Actions3/ActionType.h"
 #include "Actions3/InstanceStatus.h"
 
 namespace Actions3 {
@@ -9,6 +11,7 @@ namespace Actions3 {
     InstanceHandle create(Database::EntityHandle entity);
     ActionType getRequestActionType(InstanceHandle handle);
     InstanceStatus getStatus(InstanceHandle handle);
+    void startExecution(ActionType actionType);
     void scheduleRequest(InstanceHandle handle, ActionType actionType);
     void request(InstanceHandle handle, ActionType actionType);
     InstanceStatus getInstanceStatus(InstanceHandle handle);

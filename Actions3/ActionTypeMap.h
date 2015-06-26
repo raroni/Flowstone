@@ -13,6 +13,7 @@ namespace Actions3 {
     void clear();
     InstanceHandle getHandle(uint8_t index) const;
     ActionType getActionType(uint8_t index) const;
+    void remove(uint8_t index);
   private:
     bool findIndex(InstanceHandle handle, uint8_t *index) const;
     static const uint8_t max = 128;

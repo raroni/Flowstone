@@ -19,6 +19,12 @@ namespace Actions3 {
     count = 0;
   }
 
+  void ActionTypeMap::remove(uint8_t index) {
+    count--;
+    handles[index] = handles[count];
+    actionTypes[index] = actionTypes[count];
+  }
+
   void ActionTypeMap::unset(InstanceHandle handle) {
     uint8_t index;
     bool result = findIndex(handle, &index);
