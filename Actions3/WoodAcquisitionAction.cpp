@@ -32,6 +32,18 @@ namespace Actions3 {
     void startMoving(Database::EntityHandle entity, State *state) {
       *state = State::Moving;
 
+      TicketRequestHandle handle = SimDB::getTicketRequestHandle(entity);
+      uint16_t index = TicketRequestList::getIndex(handle);
+      Database::EntityHandle targetEntity = TicketRequestList::getTarget(index);
+
+      Physics::Body targetBody = SimDB::getBody(targetEntity);
+
+      Fixie::Vector2 targetPosition;
+      targetPosition[0] = (*targetBody.position)[0];
+      targetPosition[1] = (*targetBody.position)[2];
+
+      SimDB::createSteering(entity);
+      SimDB::createPathfinder(entity, targetPosition);
     }
 
     void updateExecutionTicketing(Database::EntityHandle entity, State *state) {
