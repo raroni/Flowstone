@@ -101,6 +101,14 @@ CLIENT_CPP_SOURCES =\
   Actions/TicketAcquisitionNode.cpp\
   Actions/TreeChopNode.cpp\
   Actions/TargetReachNode.cpp\
+  Actions3/System.cpp\
+  Actions3/NewRequests.cpp\
+  Actions3/PendingRequests.cpp\
+  Actions3/Executions.cpp\
+  Actions3/ExecutionList.cpp\
+  Actions3/ActionTypeMap.cpp\
+  Actions3/Instance.cpp\
+  Actions3/InstanceList.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\

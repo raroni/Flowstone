@@ -5,7 +5,7 @@
 #include "Database/EntityHandle.h"
 #include "Behavior/Handle.h"
 #include "Behavior/BehaviorType.h"
-#include "Actions/ComponentHandle.h"
+#include "Actions3/InstanceHandle.h"
 #include "Physics/SphereColliderHandle.h"
 #include "Physics/BodyHandle.h"
 #include "Physics/DynamicDriverHandle.h"
@@ -43,7 +43,7 @@ namespace Simulation {
     Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
     TicketRequestHandle createTicketRequest(::Database::EntityHandle entity);
     TicketTargetHandle createTicketTarget(::Database::EntityHandle entity);
-    Actions::ComponentHandle createActions(::Database::EntityHandle entity);
+    Actions3::InstanceHandle createActions(::Database::EntityHandle entity);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);
     Steering getSteering(::Database::EntityHandle entityHandle);
