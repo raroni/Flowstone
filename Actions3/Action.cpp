@@ -21,9 +21,16 @@ namespace Actions3 {
       *currentInterface = *newInterface;
     }
 
-    void startExecution(ActionType type, Database::EntityHandle entity) {
+    void startExecution(ActionType type, Database::EntityHandle entity, void *state) {
       ActionInterface *interface = getInterface(type);
-      interface->startExecution(entity);
+      assert(interface->startExecution != nullptr);
+      interface->startExecution(entity, state);
+    }
+
+    uint8_t getStateLength(ActionType type) {
+      ActionInterface *interface = getInterface(type);
+      assert(interface->getStateLength != nullptr);
+      return interface->getStateLength();
     }
   }
 }

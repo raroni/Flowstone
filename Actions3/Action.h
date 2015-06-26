@@ -8,7 +8,8 @@
 namespace Actions3 {
   namespace Action {
     void setup(ActionType type, const ActionInterface *interface);
-    void startExecution(ActionType type, Database::EntityHandle entity);
+    void startExecution(ActionType type, Database::EntityHandle entity, void *state);
+    uint8_t getStateLength(ActionType type);
   }
 }
 

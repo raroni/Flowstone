@@ -8,11 +8,14 @@ namespace Actions3 {
   namespace Executions {
     namespace List = ExecutionList;
 
-    void start(InstanceHandle handle) {
-      ActionType actionType = Instance::getRequestActionType(handle);
-      Database::EntityHandle entity = Instance::getEntityHandle(handle);
-      Action::startExecution(actionType, entity);
-      List::create(handle);
+    void start(InstanceHandle instanceHandle) {
+      ActionType actionType = Instance::getRequestActionType(instanceHandle);
+      Database::EntityHandle entity = Instance::getEntityHandle(instanceHandle);
+
+      uint8_t actionStateLength = Action::getStateLength(actionType);
+      uint16_t executionIndex = List::create(instanceHandle, actionStateLength);
+      void *actionState = List::getActionState(executionIndex);
+      Action::startExecution(actionType, entity, actionState);
     }
 
     void process() {
