@@ -15,7 +15,7 @@ namespace Actions3 {
     uint16_t create(InstanceHandle handle, uint8_t actionStateLength) {
       assert(count != max);
       assert(actionStateLengthMax >= actionStateLength);
-      instanceHandles[count];
+      instanceHandles[count] = handle;
       return count++;
     }
 
