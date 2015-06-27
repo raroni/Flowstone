@@ -4,6 +4,7 @@
 #include "Simulation/Ticket/TicketRequestList.h"
 #include "Simulation/Ticket/TicketRequestHandle.h"
 #include "Simulation/Ticket/TicketRequestStatus.h"
+#include "Actions3/ReachTargetAction.h"
 #include "Actions3/WoodAcquisitionAction.h"
 
 namespace Actions3 {
@@ -46,8 +47,9 @@ namespace Actions3 {
       targetPosition[0] = (*targetBody.position)[0];
       targetPosition[1] = (*targetBody.position)[2];
 
-      SimDB::createSteering(entity);
-      SimDB::createPathfinder(entity, targetPosition);
+      ReachTargetAction::Options options = { .target = targetPosition };
+
+      ReachTargetAction::startExecution(entity, nullptr, &options);
     }
 
     void updateExecutionTicketing(Database::EntityHandle entity, State *state) {

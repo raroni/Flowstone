@@ -114,6 +114,7 @@ CLIENT_CPP_SOURCES =\
   Actions3/ActionSetup.cpp\
   Actions3/Action.cpp\
   Actions3/WoodAcquisitionAction.cpp\
+  Actions3/ReachTargetAction.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\
