@@ -1,13 +1,13 @@
 #include "Actions3/Instance.h"
-#include "Actions3/ActionTypeMap.h"
+#include "Actions3/RequestMap.h"
 #include "Actions3/PendingRequests.h"
 
 namespace Actions3 {
   namespace PendingRequests {
-    ActionTypeMap map;
+    RequestMap map;
 
-    void set(InstanceHandle handle, ActionType actionType) {
-      map.set(handle, actionType);
+    void set(InstanceHandle handle, const Request *request) {
+      map.set(handle, request);
     }
 
     void process() {

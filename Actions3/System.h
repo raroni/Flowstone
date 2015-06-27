@@ -3,7 +3,7 @@
 
 #include "Database/EntityHandle.h"
 #include "Actions3/InstanceHandle.h"
-#include "Actions3/ActionType.h"
+#include "Actions3/Request.h"
 #include "Actions3/InstanceStatus.h"
 
 namespace Actions3 {
@@ -11,9 +11,9 @@ namespace Actions3 {
     void setup();
     InstanceHandle createInstance(Database::EntityHandle entity);
     void update();
-    ActionType getRequestActionType(InstanceHandle handle);
+    const Request* getPendingRequest(InstanceHandle handle);
     InstanceStatus getStatus(InstanceHandle handle);
-    void request(InstanceHandle handle, ActionType actionType);
+    void request(InstanceHandle handle, const Request *request);
   }
 }
 

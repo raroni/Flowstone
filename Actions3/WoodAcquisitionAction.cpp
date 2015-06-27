@@ -29,6 +29,10 @@ namespace Actions3 {
       return sizeof(State);
     }
 
+    uint8_t getOptionsLength() {
+      return 0;
+    }
+
     void startMoving(Database::EntityHandle entity, State *state) {
       *state = State::Moving;
 
@@ -59,13 +63,13 @@ namespace Actions3 {
 
     }
 
-    void startExecution(Database::EntityHandle entity, void *rawState) {
+    void startExecution(Database::EntityHandle entity, void *rawState, const void *options) {
       State *state = reinterpret_cast<State*>(rawState);
       *state = State::Ticketing;
       SimDB::createTicketRequest(entity);
     }
 
-    void updateExecution(Database::EntityHandle entity, void *rawState) {
+    void updateExecution(Database::EntityHandle entity, void *rawState, const void *options) {
       State *state = reinterpret_cast<State*>(rawState);
       switch(*state) {
         case State::Ticketing:

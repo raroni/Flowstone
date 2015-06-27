@@ -6,8 +6,9 @@
 namespace Actions3 {
   struct ActionInterface {
     uint8_t (*getStateLength)() = nullptr;
-    void (*startExecution)(Database::EntityHandle entity, void *state) = nullptr;
-    void (*updateExecution)(Database::EntityHandle entity, void *state) = nullptr;
+    uint8_t (*getOptionsLength)() = nullptr;
+    void (*startExecution)(Database::EntityHandle entity, void *state, const void *options) = nullptr;
+    void (*updateExecution)(Database::EntityHandle entity, void *state, const void *options) = nullptr;
   };
 }
 

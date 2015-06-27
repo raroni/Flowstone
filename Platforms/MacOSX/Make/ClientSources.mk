@@ -106,9 +106,11 @@ CLIENT_CPP_SOURCES =\
   Actions3/PendingRequests.cpp\
   Actions3/Executions.cpp\
   Actions3/ExecutionList.cpp\
-  Actions3/ActionTypeMap.cpp\
+  Actions3/RequestMap.cpp\
   Actions3/Instance.cpp\
   Actions3/InstanceList.cpp\
+  Actions3/Request.cpp\
+  Actions3/ActionOptionsSet.cpp\
   Actions3/ActionSetup.cpp\
   Actions3/Action.cpp\
   Actions3/WoodAcquisitionAction.cpp\

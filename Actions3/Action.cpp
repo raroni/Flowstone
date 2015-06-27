@@ -21,22 +21,28 @@ namespace Actions3 {
       *currentInterface = *newInterface;
     }
 
-    void startExecution(ActionType type, Database::EntityHandle entity, void *state) {
+    void startExecution(ActionType type, Database::EntityHandle entity, void *state, const void *options) {
       ActionInterface *interface = getInterface(type);
       assert(interface->startExecution != nullptr);
-      interface->startExecution(entity, state);
+      interface->startExecution(entity, state, options);
     }
 
-    void updateExecution(ActionType type, Database::EntityHandle entity, void *state) {
+    void updateExecution(ActionType type, Database::EntityHandle entity, void *state, const void *options) {
       ActionInterface *interface = getInterface(type);
       assert(interface->updateExecution != nullptr);
-      interface->updateExecution(entity, state);
+      interface->updateExecution(entity, state, options);
     }
 
     uint8_t getStateLength(ActionType type) {
       ActionInterface *interface = getInterface(type);
       assert(interface->getStateLength != nullptr);
       return interface->getStateLength();
+    }
+
+    uint8_t getOptionsLength(ActionType type) {
+      ActionInterface *interface = getInterface(type);
+      assert(interface->getOptionsLength != nullptr);
+      return interface->getOptionsLength();
     }
   }
 }

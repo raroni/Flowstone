@@ -5,7 +5,7 @@ namespace Behavior {
   enum class BoardKey {
     IsThreatened,
     HasWood,
-    RequestAction,
+    PendingActionRequest,
     ActionStatus,
     ActionsHandle
   };

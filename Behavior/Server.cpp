@@ -26,11 +26,11 @@ namespace Behavior {
       response->set(&value, sizeof(bool));
     }
 
-    void getRequestAction(const void *request, const Board *board, ResponseBuffer *response) {
+    void getPendingActionRequest(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
       Actions3::InstanceHandle actionsHandle = *static_cast<const Actions3::InstanceHandle*>(board->get(keyInt));
-      const Actions3::ActionType action = Actions3::System::getRequestActionType(actionsHandle);
-      response->set(&action, sizeof(action));
+      const Actions3::Request *actionRequest = Actions3::System::getPendingRequest(actionsHandle);
+      response->set(actionRequest, sizeof(*actionRequest));
     }
 
     void getActionStatus(const void *request, const Board *board, ResponseBuffer *response) {
@@ -43,7 +43,7 @@ namespace Behavior {
     void setup() {
       setupType(BoardKey::IsThreatened, checkThreat);
       setupType(BoardKey::HasWood, checkWood);
-      setupType(BoardKey::RequestAction, getRequestAction);
+      setupType(BoardKey::PendingActionRequest, getPendingActionRequest);
       setupType(BoardKey::ActionStatus, getActionStatus);
     }
   }

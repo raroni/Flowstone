@@ -9,22 +9,24 @@ namespace Actions3 {
     namespace List = ExecutionList;
 
     void start(InstanceHandle instanceHandle) {
-      ActionType actionType = Instance::getRequestActionType(instanceHandle);
+      const Request *request = Instance::getPendingRequest(instanceHandle);
       Database::EntityHandle entity = Instance::getEntityHandle(instanceHandle);
 
-      uint8_t actionStateLength = Action::getStateLength(actionType);
+      uint8_t actionStateLength = Action::getStateLength(request->type);
       uint16_t executionIndex = List::create(instanceHandle, actionStateLength);
-      void *actionState = List::getActionState(executionIndex);
-      Action::startExecution(actionType, entity, actionState);
+      void *state = List::getActionState(executionIndex);
+      const void *options = request->getOptions();
+      Action::startExecution(request->type, entity, state, options);
     }
 
     void process() {
       for(uint16_t i=0; i<List::getCount(); ++i) {
         InstanceHandle instanceHandle = List::getInstanceHandle(i);
-        ActionType actionType = Instance::getRequestActionType(instanceHandle);
+        const Request *request = Instance::getActiveRequest(instanceHandle);
         Database::EntityHandle entity = Instance::getEntityHandle(instanceHandle);
-        void *actionState = List::getActionState(i);
-        Action::updateExecution(actionType, entity, actionState);
+        void *state = List::getActionState(i);
+        const void *options = request->getOptions();
+        Action::updateExecution(request->type, entity, state, options);
       }
     }
   }

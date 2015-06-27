@@ -6,8 +6,9 @@
 namespace Actions3 {
   namespace WoodAcquisitionAction {
     uint8_t getStateLength();
-    void startExecution(Database::EntityHandle, void *state);
-    void updateExecution(Database::EntityHandle, void *state);
+    uint8_t getOptionsLength();
+    void startExecution(Database::EntityHandle, void *state, const void *options);
+    void updateExecution(Database::EntityHandle, void *state, const void *options);
   }
 }
 

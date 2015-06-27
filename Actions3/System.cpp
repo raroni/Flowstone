@@ -22,16 +22,16 @@ namespace Actions3 {
       PendingRequests::process();
     }
 
-    ActionType getRequestActionType(InstanceHandle handle) {
-      return Instance::getRequestActionType(handle);
+    const Request* getPendingRequest(InstanceHandle handle) {
+      return Instance::getPendingRequest(handle);
     }
 
     InstanceStatus getStatus(InstanceHandle handle) {
       return Instance::getStatus(handle);
     }
 
-    void request(InstanceHandle handle, ActionType actionType) {
-      Instance::scheduleRequest(handle, actionType);
+    void request(InstanceHandle handle, const Request *request) {
+      Instance::scheduleRequest(handle, request);
     }
   }
 }

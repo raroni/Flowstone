@@ -8,8 +8,8 @@ namespace Actions3 {
     uint16_t indices[max];
     InstanceHandle handles[max];
     HandleList handleList(max, indices, handles);
-    ActionType activeActionTypes[max];
-    ActionType requestActionTypes[max];
+    Request activeRequests[max];
+    Request pendingRequests[max];
     Database::EntityHandle entityHandles[max];
     InstanceStatus statuses[max];
 
@@ -17,8 +17,8 @@ namespace Actions3 {
       uint16_t index;
       InstanceHandle handle;
       handleList.create(&index, &handle);
-      requestActionTypes[index] = ActionType::None;
-      activeActionTypes[index] = ActionType::None;
+      pendingRequests[index].type = ActionType::None;
+      activeRequests[index].type = ActionType::None;
       entityHandles[index] = entityHandle;
       statuses[index] = InstanceStatus::Initialized;
       return handle;
@@ -32,16 +32,20 @@ namespace Actions3 {
       return handleList.getIndex(handle);
     }
 
-    ActionType getRequestActionType(uint16_t index) {
-      return requestActionTypes[index];
+    const Request* getPendingRequest(uint16_t index) {
+      return &pendingRequests[index];
     }
 
-    void updateRequestActionType(uint16_t index, ActionType type) {
-      requestActionTypes[index] = type;
+    const Request* getActiveRequest(uint16_t index) {
+      return &activeRequests[index];
     }
 
-    void updateActiveActionType(uint16_t index, ActionType type) {
-      activeActionTypes[index] = type;
+    void updatePendingRequest(uint16_t index, const Request *request) {
+      pendingRequests[index] = *request;
+    }
+
+    void updateActiveRequest(uint16_t index, const Request *request) {
+      activeRequests[index] = *request;
     }
 
     InstanceStatus getStatus(uint16_t index) {

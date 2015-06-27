@@ -56,8 +56,9 @@ namespace Behavior {
           Actions3::InstanceHandle handle = *reinterpret_cast<const Actions3::InstanceHandle*>(board->get(actionHandleBoardKey));
           for(uint8_t a=0; a<actionStream->getCount(); ++a) {
             void *actionData = actionStream->get(a);
-            Actions3::ActionType action = *reinterpret_cast<Actions3::ActionType*>(actionData);
-            Actions3::System::request(handle, action);
+            Actions3::Request request;
+            request.type = *reinterpret_cast<Actions3::ActionType*>(actionData);
+            Actions3::System::request(handle, &request);
           }
         }
       }

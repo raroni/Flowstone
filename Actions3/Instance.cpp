@@ -22,12 +22,17 @@ namespace Actions3 {
     void startExecution(InstanceHandle handle) {
       Executions::start(handle);
       uint16_t index = List::getIndex(handle);
-      List::updateActiveActionType(index, getRequestActionType(handle));
+      List::updateActiveRequest(index, getPendingRequest(handle));
     }
 
-    ActionType getRequestActionType(InstanceHandle handle) {
+    const Request* getPendingRequest(InstanceHandle handle) {
       uint16_t index = List::getIndex(handle);
-      return List::getRequestActionType(index);
+      return List::getPendingRequest(index);
+    }
+
+    const Request* getActiveRequest(InstanceHandle handle) {
+      uint16_t index = List::getIndex(handle);
+      return List::getActiveRequest(index);
     }
 
     InstanceStatus getStatus(InstanceHandle handle) {
@@ -35,14 +40,14 @@ namespace Actions3 {
       return List::getStatus(index);
     }
 
-    void scheduleRequest(InstanceHandle handle, ActionType actionType) {
-      NewRequests::set(handle, actionType);
+    void scheduleRequest(InstanceHandle handle, const Request *request) {
+      NewRequests::set(handle, request);
     }
 
-    void request(InstanceHandle handle, ActionType actionType) {
+    void request(InstanceHandle handle, const Request *request) {
       uint16_t index = List::getIndex(handle);
-      List::updateRequestActionType(index, actionType);
-      PendingRequests::set(handle, actionType);
+      List::updatePendingRequest(index, request);
+      PendingRequests::set(handle, request);
     }
 
     void cancel(InstanceHandle handle) {
