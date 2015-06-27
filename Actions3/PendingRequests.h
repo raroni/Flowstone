@@ -6,7 +6,7 @@
 
 namespace Actions3 {
   namespace PendingRequests {
-    void set(InstanceHandle handle, const Request *request);
+    void set(InstanceHandle handle);
     void process();
   }
 }

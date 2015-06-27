@@ -47,7 +47,7 @@ namespace Actions3 {
     void request(InstanceHandle handle, const Request *request) {
       uint16_t index = List::getIndex(handle);
       List::updatePendingRequest(index, request);
-      PendingRequests::set(handle, request);
+      PendingRequests::set(handle);
     }
 
     void cancel(InstanceHandle handle) {

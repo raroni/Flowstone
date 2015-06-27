@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <string.h>
 #include "Actions3/RequestMap.h"
 
 namespace Actions3 {

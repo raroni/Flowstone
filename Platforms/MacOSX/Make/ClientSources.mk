@@ -107,6 +107,7 @@ CLIENT_CPP_SOURCES =\
   Actions3/Executions.cpp\
   Actions3/ExecutionList.cpp\
   Actions3/RequestMap.cpp\
+  Actions3/InstanceHandleSet.cpp\
   Actions3/Instance.cpp\
   Actions3/InstanceList.cpp\
   Actions3/Request.cpp\
