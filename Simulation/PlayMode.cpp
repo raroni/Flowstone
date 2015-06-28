@@ -19,12 +19,6 @@
 namespace Simulation {
   namespace PlayMode {
     using namespace ::Database;
-    EntityHandle monster1;
-
-    struct {
-      uint16_t x = 4;
-      uint16_t z = 4;
-    } dummyTarget;
 
     EntityHandle createMonster(Fixie::Num x, Fixie::Num z) {
       EntityHandle monster = Database::createEntity();
@@ -73,23 +67,10 @@ namespace Simulation {
 
       Trees::create(4, 0);
 
-      monster1 = createMonster(2, 3);
-
-      //Database::createSteering(monster1);
-      //Database::createPathfinder(monster1, { dummyTarget.x, dummyTarget.z });
-
-      //createMonster(3, 3);
+      createMonster(2, 3);
     }
 
     void tick(const CommandList &commands, EventList &events) {
-      Physics::Body body = Database::getBody(monster1);
-      Fixie::Vector3 positionDifference = Fixie::Vector3(dummyTarget.x, 0, dummyTarget.z) - (*body.position);
-      if(positionDifference.calcLength() < Fixie::Num::inverse(8)) {
-        if(Database::hasComponent(monster1, ComponentType::Steering)) {
-          Database::destroySteering(monster1);
-          Database::destroyPathfinder(monster1);
-        }
-      }
       Behavior::System::update();
       Actions3::System::update();
       TicketSystem::update();
