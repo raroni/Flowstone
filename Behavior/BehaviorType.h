@@ -3,7 +3,7 @@
 
 namespace Behavior {
   enum class BehaviorType : uint8_t {
-    Monster
+    Worker
   };
 }
 

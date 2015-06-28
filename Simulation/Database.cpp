@@ -110,8 +110,8 @@ namespace Simulation {
       return caster.resourceHandle;
     }
 
-    void createMonster(EntityHandle entity) {
-      linkComponent(entity, ComponentType::Monster, ComponentHandle());
+    void createWorker(EntityHandle entity) {
+      linkComponent(entity, ComponentType::Worker, ComponentHandle());
     }
 
     Physics::Body getBody(EntityHandle entity) {

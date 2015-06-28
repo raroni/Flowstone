@@ -50,7 +50,7 @@ namespace Simulation {
     SteeringHandle getSteeringHandle(::Database::EntityHandle entityHandle);
     TicketRequestHandle getTicketRequestHandle(::Database::EntityHandle entityHandle);
     DragHandle createDrag(::Database::EntityHandle entityHandle);
-    void createMonster(::Database::EntityHandle entity);
+    void createWorker(::Database::EntityHandle entity);
   }
 }
 

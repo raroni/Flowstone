@@ -7,7 +7,7 @@ namespace Simulation {
     SphereCollider,
     DynamicDriver,
     Resource,
-    Monster,
+    Worker,
     Steering,
     Drag,
     Pathfinder,

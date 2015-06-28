@@ -124,7 +124,7 @@ CLIENT_CPP_SOURCES =\
   Behavior/ThreatCheckNode.cpp\
   Behavior/WoodCheckNode.cpp\
   Behavior/WoodAcquisitionNode.cpp\
-  Behavior/MonsterTreeType.cpp\
+  Behavior/WorkerTreeType.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
   Server/Game.cpp\

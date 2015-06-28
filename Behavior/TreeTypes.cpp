@@ -1,7 +1,7 @@
 #include "Watson/TypeDefinition.h"
 #include "Watson/System.h"
 #include "Behavior/TypeDefinitionHelper.h"
-#include "Behavior/MonsterTreeType.h"
+#include "Behavior/WorkerTreeType.h"
 #include "Behavior/TreeTypes.h"
 
 namespace Behavior {
@@ -10,7 +10,7 @@ namespace Behavior {
     typedef Watson::TypeDefinition TypeDefinition;
     typedef void (*SetupFunc)(TypeDefinitionHelper *helper);
 
-    TypeIndex monsterIndex;
+    TypeIndex workerIndex;
 
     void build(TypeDefinition *definition, TypeIndex *index, SetupFunc setupFunc) {
       TypeDefinitionHelper helper(definition);
@@ -21,7 +21,7 @@ namespace Behavior {
 
     void setup() {
       TypeDefinition definition;
-      build(&definition, &monsterIndex, MonsterTreeType::build);
+      build(&definition, &workerIndex, WorkerTreeType::build);
     }
   }
 }

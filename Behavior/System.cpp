@@ -33,11 +33,11 @@ namespace Behavior {
       uint16_t index;
       Handle handle;
       handleList.create(&index, &handle);
-      instanceHandles[index] = Watson::System::createInstance(TreeTypes::monsterIndex);
+      instanceHandles[index] = Watson::System::createInstance(TreeTypes::workerIndex);
       actionsHandles[index] = actionsHandle;
       behaviorTypes[index] = behaviorType;
 
-      assert(behaviorType == BehaviorType::Monster);
+      assert(behaviorType == BehaviorType::Worker);
       // Todo:
       // We should support more types.
       // We should make some kind of "[type] list"

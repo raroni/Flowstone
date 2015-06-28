@@ -24,7 +24,7 @@ namespace Client {
     namespace SimControl = Simulation::Control;
     typedef Simulation::ComponentType SimComponentType;
 
-    DirectionGroupHandle monsterDirectionGroupHandle;
+    DirectionGroupHandle workerDirectionGroupHandle;
 
     PlayState::PlayState(PlayMode playMode) :
     playMode(playMode) { }
@@ -233,8 +233,8 @@ namespace Client {
 
       setupGround();
 
-      DirectionGroup monsterDirectionGroup = { 0, 1 };
-      monsterDirectionGroupHandle = Direction::createGroup(&monsterDirectionGroup);
+      DirectionGroup workerDirectionGroup = { 0, 1 };
+      workerDirectionGroupHandle = Direction::createGroup(&workerDirectionGroup);
 
       Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();
       CameraControl::initialize(&camera);
@@ -252,8 +252,8 @@ namespace Client {
           Physics::Body body = SimDB::getBody(entity);
           setupTree((*body.position)[0], (*body.position)[2], greenTreeMesh);
         }
-        else if(SimDB::hasComponent(entity, SimComponentType::Monster)) {
-          setupMonster(entity);
+        else if(SimDB::hasComponent(entity, SimComponentType::Worker)) {
+          setupWorker(entity);
         }
       }
 
@@ -430,7 +430,7 @@ namespace Client {
       Rendering::Renderer::createStaticMeshDraw(mesh);
     }
 
-    void PlayState::setupMonster(EntityHandle simEntityHandle) {
+    void PlayState::setupWorker(EntityHandle simEntityHandle) {
       Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
       EntityHandle clientEntityHandle = Database::createEntity();
 
@@ -438,7 +438,7 @@ namespace Client {
       Database::createInterpolation(clientEntityHandle, body);
       Database::createBoneMeshDraw(clientEntityHandle, characterMesh);
       Database::createRenderFeed(clientEntityHandle);
-      Database::createDirection(clientEntityHandle, simEntityHandle, monsterDirectionGroupHandle);
+      Database::createDirection(clientEntityHandle, simEntityHandle, workerDirectionGroupHandle);
     }
 
     void PlayState::updateSimulation(double timeDelta) {

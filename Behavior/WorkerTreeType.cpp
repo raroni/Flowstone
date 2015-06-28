@@ -1,7 +1,7 @@
-#include "Behavior/MonsterTreeType.h"
+#include "Behavior/WorkerTreeType.h"
 
 namespace Behavior {
-  namespace MonsterTreeType {
+  namespace WorkerTreeType {
     typedef Watson::NodeIndex NI;
 
     NI buildInverseWoodCheck(TypeDefinitionHelper *h) {

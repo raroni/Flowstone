@@ -46,7 +46,7 @@ namespace Client {
       void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
-      void setupMonster(::Database::EntityHandle monster);
+      void setupWorker(::Database::EntityHandle worker);
       void setupGround();
       void setupPointLight();
       void updateAtmosphereColor();

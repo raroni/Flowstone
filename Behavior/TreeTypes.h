@@ -5,7 +5,7 @@
 
 namespace Behavior {
   namespace TreeTypes {
-    extern Watson::TypeIndex monsterIndex;
+    extern Watson::TypeIndex workerIndex;
     void setup();
   }
 }

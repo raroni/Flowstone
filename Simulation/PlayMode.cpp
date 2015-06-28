@@ -20,22 +20,22 @@ namespace Simulation {
   namespace PlayMode {
     using namespace ::Database;
 
-    EntityHandle createMonster(Fixie::Num x, Fixie::Num z) {
-      EntityHandle monster = Database::createEntity();
+    EntityHandle createWorker(Fixie::Num x, Fixie::Num z) {
+      EntityHandle worker = Database::createEntity();
 
-      Database::createBody(monster);
-      Physics::Body body = Database::getBody(monster);
+      Database::createBody(worker);
+      Physics::Body body = Database::getBody(worker);
       (*body.position)[0] = x;
       (*body.position)[2] = z;
-      Database::createDynamicDriver(monster);
-      Database::createSphereCollider(monster, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
-      Database::createDrag(monster);
-      Database::createActions(monster);
-      Database::createBehavior(monster, Behavior::BehaviorType::Monster);
+      Database::createDynamicDriver(worker);
+      Database::createSphereCollider(worker, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
+      Database::createDrag(worker);
+      Database::createActions(worker);
+      Database::createBehavior(worker, Behavior::BehaviorType::Worker);
 
-      Database::createMonster(monster);
+      Database::createWorker(worker);
 
-      return monster;
+      return worker;
     }
 
     void enter() {
@@ -67,7 +67,7 @@ namespace Simulation {
 
       Trees::create(4, 0);
 
-      createMonster(2, 3);
+      createWorker(2, 3);
     }
 
     void tick(const CommandList &commands, EventList &events) {
