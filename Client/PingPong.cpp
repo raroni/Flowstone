@@ -19,7 +19,7 @@ namespace Client {
     void update(double timeDelta) {
       timeUntilPing -= timeDelta*1000;
       if(timeUntilPing <= 0) {
-        startTimes[nextPingID] = GameTime::get()/1000;
+        startTimes[nextPingID] = static_cast<SysTime::MSecond32>(GameTime::get()/1000);
 
         // todo: generalize this code, no need to do this manually on both client/server
         char message[2];
@@ -33,7 +33,7 @@ namespace Client {
 
     void handlePong(uint8_t pingID) {
       // todo: check if already received pong for pingID
-      SysTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[pingID];
+      SysTime::MSecond32S packetRTT = static_cast<SysTime::MSecond32S>(GameTime::get()/1000-startTimes[pingID]);
       SysTime::MSecond32S difference = packetRTT-rtt;
       rtt += difference/10;
     }

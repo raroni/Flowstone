@@ -22,7 +22,7 @@ namespace Server {
     void handlePong(ClientID clientID, uint8_t pingID) {
       // todo: check if already received pong for pingID
       uint8_t index = indices[clientID];
-      SysTime::MSecond32S packetRTT = GameTime::get()/1000-startTimes[index].list[pingID];
+      SysTime::MSecond32S packetRTT = static_cast<SysTime::MSecond32S>(GameTime::get()/1000-startTimes[index].list[pingID]);
       SysTime::MSecond32S difference = packetRTT-rtts[index];
       rtts[index] += difference/10;
     }
@@ -32,7 +32,7 @@ namespace Server {
         timeouts[i] -= timeDelta;
         if(timeouts[i] <= 0) {
           uint8_t nextID = nextIDs[i];
-          startTimes[i].list[nextID] = GameTime::get()/1000;
+          startTimes[i].list[nextID] = static_cast<SysTime::MSecond32>(GameTime::get()/1000);
 
           // todo: generalize this code, no need to do this manually on both client/server
           char message[2];

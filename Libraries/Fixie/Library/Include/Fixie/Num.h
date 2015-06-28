@@ -33,11 +33,12 @@ namespace Fixie {
       const int32_t sign = resultNegative*-2+1;
       int64_t temp = static_cast<int64_t>(raw) << numPrecision;
       temp += rhs.raw/2*sign;
-      raw = temp / rhs.raw;
+      raw = static_cast<int32_t>(temp / rhs.raw);
       return *this;
     }
     Num& operator*=(const Num &rhs) {
-      raw = (static_cast<int64_t>(raw) * rhs.raw) >> numPrecision;
+      int64_t int64 = (static_cast<int64_t>(raw) * rhs.raw) >> numPrecision;
+      raw = static_cast<int32_t>(int64);
       return *this;
     }
     Num operator+(const Num &other) const {

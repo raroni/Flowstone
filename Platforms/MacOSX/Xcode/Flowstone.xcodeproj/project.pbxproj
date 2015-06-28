@@ -961,6 +961,7 @@
 		3ABF04F11B3FE17C00C4D9BB /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				3ABF05101B3FE17C00C4D9BB /* MainFlow */,
 				3ABF04F21B3FE17C00C4D9BB /* AckHelper.cpp */,
 				3ABF04F31B3FE17C00C4D9BB /* AckHelper.h */,
 				3ABF04F41B3FE17C00C4D9BB /* AtmosphereColor.cpp */,
@@ -991,7 +992,6 @@
 				3ABF050D1B3FE17C00C4D9BB /* Keyboard.h */,
 				3ABF050E1B3FE17C00C4D9BB /* LocalSimulationDriver.cpp */,
 				3ABF050F1B3FE17C00C4D9BB /* LocalSimulationDriver.h */,
-				3ABF05101B3FE17C00C4D9BB /* MainFlow */,
 				3ABF05151B3FE17C00C4D9BB /* MathConversion.cpp */,
 				3ABF05161B3FE17C00C4D9BB /* MathConversion.h */,
 				3ABF05171B3FE17C00C4D9BB /* Net.cpp */,
@@ -2402,6 +2402,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2414,6 +2415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

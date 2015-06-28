@@ -10,6 +10,6 @@ namespace SysTime {
   }
 
   void sleep(USecond64 duration) {
-    usleep(duration);
+    usleep(static_cast<useconds_t>(duration));
   }
 }
