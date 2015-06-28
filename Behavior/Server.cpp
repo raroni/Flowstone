@@ -1,5 +1,5 @@
-#include "Actions3/System.h"
-#include "Actions3/InstanceStatus.h"
+#include "Actions/System.h"
+#include "Actions/InstanceStatus.h"
 #include "Watson/ServerFunction.h"
 #include "Watson/Server.h"
 #include "Behavior/BoardKey.h"
@@ -28,15 +28,15 @@ namespace Behavior {
 
     void getPendingActionRequest(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
-      Actions3::InstanceHandle actionsHandle = *static_cast<const Actions3::InstanceHandle*>(board->get(keyInt));
-      const Actions3::Request *actionRequest = Actions3::System::getPendingRequest(actionsHandle);
+      Actions::InstanceHandle actionsHandle = *static_cast<const Actions::InstanceHandle*>(board->get(keyInt));
+      const Actions::Request *actionRequest = Actions::System::getPendingRequest(actionsHandle);
       response->set(actionRequest, sizeof(*actionRequest));
     }
 
     void getActionStatus(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
-      Actions3::InstanceHandle actionsHandle = *static_cast<const Actions3::InstanceHandle*>(board->get(keyInt));
-      Actions3::InstanceStatus actionStatus = Actions3::System::getStatus(actionsHandle);
+      Actions::InstanceHandle actionsHandle = *static_cast<const Actions::InstanceHandle*>(board->get(keyInt));
+      Actions::InstanceStatus actionStatus = Actions::System::getStatus(actionsHandle);
       response->set(&actionStatus, sizeof(actionStatus));
     }
 

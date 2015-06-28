@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "Actions3/System.h"
+#include "Actions/System.h"
 #include "Misc/HandleList.h"
 #include "Watson/InstanceHandle.h"
 #include "Watson/System.h"
@@ -19,7 +19,7 @@ namespace Behavior {
     HandleList handleList(max, indices, handles);
     Watson::InstanceHandle instanceHandles[max];
     BehaviorType behaviorTypes[max];
-    Actions3::InstanceHandle actionsHandles[max];
+    Actions::InstanceHandle actionsHandles[max];
 
     void setup() {
       Watson::System::initialize();
@@ -28,7 +28,7 @@ namespace Behavior {
       TreeTypes::setup();
     }
 
-    Handle create(Actions3::InstanceHandle actionsHandle, BehaviorType behaviorType) {
+    Handle create(Actions::InstanceHandle actionsHandle, BehaviorType behaviorType) {
       assert(handleList.getCount() != max);
       uint16_t index;
       Handle handle;
@@ -53,12 +53,12 @@ namespace Behavior {
         for(uint16_t i=0; i<Watson::System::getInstanceCount(t); ++i) {
           Watson::Stream *actionStream = Watson::System::getActionStream(t, i);
           Watson::Board *board = Watson::System::getBoardByIndices(t, i);
-          Actions3::InstanceHandle handle = *reinterpret_cast<const Actions3::InstanceHandle*>(board->get(actionHandleBoardKey));
+          Actions::InstanceHandle handle = *reinterpret_cast<const Actions::InstanceHandle*>(board->get(actionHandleBoardKey));
           for(uint8_t a=0; a<actionStream->getCount(); ++a) {
             void *actionData = actionStream->get(a);
-            Actions3::Request request;
-            request.type = *reinterpret_cast<Actions3::ActionType*>(actionData);
-            Actions3::System::request(handle, &request);
+            Actions::Request request;
+            request.type = *reinterpret_cast<Actions::ActionType*>(actionData);
+            Actions::System::request(handle, &request);
           }
         }
       }

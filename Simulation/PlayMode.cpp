@@ -1,7 +1,7 @@
 #include "Simulation/Config.h"
 #include "Behavior/BehaviorType.h"
 #include "Behavior/System.h"
-#include "Actions3/System.h"
+#include "Actions/System.h"
 #include "Database/EntityHandle.h"
 #include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
@@ -39,7 +39,7 @@ namespace Simulation {
     }
 
     void enter() {
-      Actions3::System::setup();
+      Actions::System::setup();
       Behavior::System::setup();
 
       const uint16_t mapWidth = 16;
@@ -72,7 +72,7 @@ namespace Simulation {
 
     void tick(const CommandList &commands, EventList &events) {
       Behavior::System::update();
-      Actions3::System::update();
+      Actions::System::update();
       TicketSystem::update();
       TargetingSystem::update();
       PathfindingSystem::update();

@@ -78,21 +78,21 @@ CLIENT_CPP_SOURCES =\
   Physics/KinematicDriverList.cpp\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
-  Actions3/System.cpp\
-  Actions3/NewRequests.cpp\
-  Actions3/PendingRequests.cpp\
-  Actions3/Executions.cpp\
-  Actions3/ExecutionList.cpp\
-  Actions3/RequestMap.cpp\
-  Actions3/InstanceHandleSet.cpp\
-  Actions3/Instance.cpp\
-  Actions3/InstanceList.cpp\
-  Actions3/Request.cpp\
-  Actions3/ActionOptionsSet.cpp\
-  Actions3/ActionSetup.cpp\
-  Actions3/Action.cpp\
-  Actions3/WoodAcquisitionAction.cpp\
-  Actions3/ReachTargetAction.cpp\
+  Actions/System.cpp\
+  Actions/NewRequests.cpp\
+  Actions/PendingRequests.cpp\
+  Actions/Executions.cpp\
+  Actions/ExecutionList.cpp\
+  Actions/RequestMap.cpp\
+  Actions/InstanceHandleSet.cpp\
+  Actions/Instance.cpp\
+  Actions/InstanceList.cpp\
+  Actions/Request.cpp\
+  Actions/ActionOptionsSet.cpp\
+  Actions/ActionSetup.cpp\
+  Actions/Action.cpp\
+  Actions/WoodAcquisitionAction.cpp\
+  Actions/ReachTargetAction.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\

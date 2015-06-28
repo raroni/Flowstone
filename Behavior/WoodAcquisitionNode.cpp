@@ -1,5 +1,5 @@
-#include "Actions3/Request.h"
-#include "Actions3/InstanceStatus.h"
+#include "Actions/Request.h"
+#include "Actions/InstanceStatus.h"
 #include "Watson/NodeResult.h"
 #include "Behavior/BoardKey.h"
 #include "Behavior/NodeType.h"
@@ -27,19 +27,19 @@ namespace Behavior {
       uint8_t keyInt;
 
       keyInt = static_cast<uint8_t>(BoardKey::PendingActionRequest);
-      const Actions3::Request *actionRequest = reinterpret_cast<const Actions3::Request*>(flow->board->get(keyInt));
+      const Actions::Request *actionRequest = reinterpret_cast<const Actions::Request*>(flow->board->get(keyInt));
 
       keyInt = static_cast<uint8_t>(BoardKey::ActionStatus);
-      Actions3::InstanceStatus actionStatus = *reinterpret_cast<const Actions3::InstanceStatus*>(flow->board->get(keyInt));
+      Actions::InstanceStatus actionStatus = *reinterpret_cast<const Actions::InstanceStatus*>(flow->board->get(keyInt));
 
-      if(actionRequest->type == Actions3::ActionType::WoodAcquisition) {
-        if(actionStatus == Actions3::InstanceStatus::Completed) {
+      if(actionRequest->type == Actions::ActionType::WoodAcquisition) {
+        if(actionStatus == Actions::InstanceStatus::Completed) {
           flow->requestReaction(NodeResult::Succeeded);
         } else {
           flow->requestReaction(NodeResult::Running);
         }
       } else {
-        Actions3::ActionType type = Actions3::ActionType::WoodAcquisition;
+        Actions::ActionType type = Actions::ActionType::WoodAcquisition;
         flow->actionStream->write(&type, sizeof(type));
         flow->requestReaction(NodeResult::Running);
       }
