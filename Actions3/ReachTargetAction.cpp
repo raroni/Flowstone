@@ -19,12 +19,23 @@ namespace Actions3 {
       SimDB::createPathfinder(entity, options->target);
     }
 
-    void updateExecution(Database::EntityHandle, void *state, const void *options) {
-
+    void updateExecution(Database::EntityHandle entity, void *state, const void *rawOptions) {
+      const Options *options = static_cast<const Options*>(rawOptions);
+      Physics::Body body = SimDB::getBody(entity);
+      Fixie::Vector3 *position = body.position;
+      Fixie::Vector2 position2D(
+        (*position)[0],
+        (*position)[2]
+      );
+      Fixie::Vector2 difference = position2D - options->target;
+      if(difference.calcLength() <= options->tolerance) {
+        SimDB::destroySteering(entity);
+        SimDB::destroyPathfinder(entity);
+      }
     }
 
     bool isExecuted(Database::EntityHandle entity, void *state, const void *options) {
-      return false;
+      return !SimDB::hasComponent(entity, Simulation::ComponentType::Pathfinder);
     }
   }
 }

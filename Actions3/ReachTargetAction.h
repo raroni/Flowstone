@@ -8,6 +8,7 @@ namespace Actions3 {
   namespace ReachTargetAction {
     struct Options {
       Fixie::Vector2 target;
+      Fixie::Num tolerance;
     };
 
     uint8_t getStateLength();

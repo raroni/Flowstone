@@ -3,7 +3,7 @@
 
 namespace Actions3 {
   namespace ExecutionList {
-    const uint8_t actionStateLengthMax = 12;
+    const uint8_t actionStateLengthMax = 16;
     struct ActionStateChunk {
       char bytes[actionStateLengthMax];
     };

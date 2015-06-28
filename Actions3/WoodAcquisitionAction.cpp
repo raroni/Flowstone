@@ -52,14 +52,16 @@ namespace Actions3 {
       targetPosition[0] = (*targetBody.position)[0];
       targetPosition[1] = (*targetBody.position)[2];
 
-      state->reachOptions = { .target = targetPosition };
+      state->reachOptions = {
+        .target = targetPosition,
+        .tolerance = Fixie::Num::inverse(8)*Fixie::Num(6)
+      };
 
       ReachTargetAction::startExecution(entity, nullptr, &state->reachOptions);
     }
 
     void startChopping(Database::EntityHandle entity, State *state) {
       state->mode = Mode::Chopping;
-      // TODO!
     }
 
     void updateExecutionTicketing(Database::EntityHandle entity, State *state) {
@@ -80,6 +82,9 @@ namespace Actions3 {
       }
     }
 
+    void updateExecutionChopping(Database::EntityHandle entity, State *state) {
+    }
+
     void startExecution(Database::EntityHandle entity, void *rawState, const void *options) {
       State *state = reinterpret_cast<State*>(rawState);
       state->mode = Mode::Ticketing;
@@ -94,6 +99,9 @@ namespace Actions3 {
           break;
         case Mode::Moving:
           updateExecutionMoving(entity, state);
+          break;
+        case Mode::Chopping:
+          updateExecutionChopping(entity, state);
           break;
         default:
           fatalError("Unknown state.");
