@@ -45,6 +45,31 @@ CLIENT_CPP_SOURCES =\
   Libraries/Piper/Source/ServerInBuffer.cpp\
   Libraries/Piper/Source/ServerOutBuffer.cpp\
   Libraries/Piper/Source/Transmission.cpp\
+  Libraries/Watson/Source/System.cpp\
+  Libraries/Watson/Source/Board.cpp\
+  Libraries/Watson/Source/NodeTypes.cpp\
+  Libraries/Watson/Source/ResponseBuffer.cpp\
+  Libraries/Watson/Source/BoardCollection.cpp\
+  Libraries/Watson/Source/Stream.cpp\
+  Libraries/Watson/Source/ActionStreamCollection.cpp\
+  Libraries/Watson/Source/Node.cpp\
+  Libraries/Watson/Source/Update.cpp\
+  Libraries/Watson/Source/Server.cpp\
+  Libraries/Watson/Source/PriorityNode.cpp\
+  Libraries/Watson/Source/SequenceNode.cpp\
+  Libraries/Watson/Source/LoopNode.cpp\
+  Libraries/Watson/Source/InverterNode.cpp\
+  Libraries/Watson/Source/ConcurrentNode.cpp\
+  Libraries/Watson/Source/FailDummyNode.cpp\
+  Libraries/Watson/Source/RunDummyNode.cpp\
+  Libraries/Watson/Source/TraversalFlow.cpp\
+  Libraries/Watson/Source/NodeStack.cpp\
+  Libraries/Watson/Source/ResetFlow.cpp\
+  Libraries/Watson/Source/StateCollection.cpp\
+  Libraries/Watson/Source/TypeDefinition.cpp\
+  Libraries/Watson/Source/TypeList.cpp\
+  Libraries/Watson/Source/InstanceOrderingCollection.cpp\
+  Libraries/Watson/Source/InstanceList.cpp\
   Physics/Engine.cpp\
   Physics/CollisionDetector.cpp\
   Physics/Integrator.cpp\
@@ -53,6 +78,53 @@ CLIENT_CPP_SOURCES =\
   Physics/KinematicDriverList.cpp\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
+  Actions/System.cpp\
+  Actions/ActionTypes.cpp\
+  Actions/ActionList.cpp\
+  Actions/Request.cpp\
+  Actions/ActionTypeList.cpp\
+  Actions/RequestMap.cpp\
+  Actions/ActionTypeDefinition.cpp\
+  Actions/ActionTypeDefinitionHelper.cpp\
+  Actions/Node.cpp\
+  Actions/NodeFlow.cpp\
+  Actions/NodeCall.cpp\
+  Actions/NodeTypes.cpp\
+  Actions/ActionStateCollection.cpp\
+  Actions/ComponentList.cpp\
+  Actions/RequestParamSet.cpp\
+  Actions/WoodAcquisitionAction.cpp\
+  Actions/EmptyAction.cpp\
+  Actions/ParentNode.cpp\
+  Actions/SequenceNode.cpp\
+  Actions/ConcurrentNode.cpp\
+  Actions/TicketAcquisitionNode.cpp\
+  Actions/TreeChopNode.cpp\
+  Actions/TargetReachNode.cpp\
+  Actions3/System.cpp\
+  Actions3/NewRequests.cpp\
+  Actions3/PendingRequests.cpp\
+  Actions3/Executions.cpp\
+  Actions3/ExecutionList.cpp\
+  Actions3/RequestMap.cpp\
+  Actions3/InstanceHandleSet.cpp\
+  Actions3/Instance.cpp\
+  Actions3/InstanceList.cpp\
+  Actions3/Request.cpp\
+  Actions3/ActionOptionsSet.cpp\
+  Actions3/ActionSetup.cpp\
+  Actions3/Action.cpp\
+  Actions3/WoodAcquisitionAction.cpp\
+  Actions3/ReachTargetAction.cpp\
+  Behavior/System.cpp\
+  Behavior/Server.cpp\
+  Behavior/NodeTypes.cpp\
+  Behavior/TreeTypes.cpp\
+  Behavior/TypeDefinitionHelper.cpp\
+  Behavior/ThreatCheckNode.cpp\
+  Behavior/WoodCheckNode.cpp\
+  Behavior/WoodAcquisitionNode.cpp\
+  Behavior/MonsterTreeType.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
   Server/Game.cpp\
@@ -83,6 +155,9 @@ CLIENT_CPP_SOURCES =\
   Client/RenderFeed.cpp\
   Simulation/Control.cpp\
   Simulation/Steering/SteeringSystem.cpp\
+  Simulation/Steering/SteeringList.cpp\
+  Simulation/Targeting/TargetingList.cpp\
+  Simulation/Targeting/TargetingSystem.cpp\
   Simulation/Trees.cpp\
   Simulation/Pathfinding/PathfindingSystem.cpp\
   Simulation/Pathfinding/Map.cpp\
@@ -92,7 +167,9 @@ CLIENT_CPP_SOURCES =\
   Simulation/Pathfinding/AStarCostMap.cpp\
   Simulation/Pathfinding/AStarCostBucket.cpp\
   Simulation/Pathfinding/AStar.cpp\
-  Simulation/Steering/SteeringList.cpp\
+  Simulation/Ticket/TicketSystem.cpp\
+  Simulation/Ticket/TicketRequestList.cpp\
+  Simulation/Ticket/TicketTargetList.cpp\
   Simulation/Drag/DragSystem.cpp\
   Simulation/Mode.cpp\
   Simulation/PhysicsHack.cpp\

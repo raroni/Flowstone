@@ -6,6 +6,8 @@
 class HandleList {
   public:
     HandleList(uint16_t max, uint16_t *indices, uint16_t *handles);
+    HandleList();
+    void configure(uint16_t max, uint16_t *indices, uint16_t *handles);
     void create(uint16_t *index, uint16_t *handle);
     void destroy(uint16_t handle, uint16_t *sourceIndex, uint16_t *destinationIndex);
     uint16_t getIndex(uint16_t handle) const;

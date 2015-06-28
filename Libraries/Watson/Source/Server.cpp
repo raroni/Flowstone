@@ -1,0 +1,18 @@
+#include <assert.h>
+#include "Watson/Server.h"
+
+namespace Watson {
+  namespace Server {
+    ServerFunction functions[Config::boardKeyMax] = { NULL };
+
+    void configure(uint8_t boardKey, ServerFunction function) {
+      functions[boardKey] = function;
+    }
+
+    void request(uint8_t boardKey, const void *requestData, const Board *board, ResponseBuffer *responseBuffer) {
+      ServerFunction func = functions[boardKey];
+      assert(func != NULL);
+      func(requestData, board, responseBuffer);
+    }
+  }
+}

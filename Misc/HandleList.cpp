@@ -1,10 +1,17 @@
 #include <assert.h>
 #include "HandleList.h"
 
-HandleList::HandleList(uint16_t max, uint16_t *indices, uint16_t *handles) :
-max(max),
-indices(indices),
-handles(handles) { }
+HandleList::HandleList() { }
+
+HandleList::HandleList(uint16_t max, uint16_t *indices, uint16_t *handles) {
+  configure(max, indices, handles);
+}
+
+void HandleList::configure(uint16_t max, uint16_t *indices, uint16_t *handles) {
+  this->max = max;
+  this->indices = indices;
+  this->handles = handles;
+}
 
 void HandleList::create(uint16_t *index, uint16_t *handle) {
   assert(max != count);

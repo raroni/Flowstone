@@ -2,9 +2,13 @@
 #include "Database/EntityManager.h"
 #include "Database/ComponentHandle.h"
 #include "Database/ComponentManager.h"
+#include "Behavior/System.h"
+#include "Actions3/System.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
+#include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/ResourceSystem.h"
+#include "Simulation/Targeting/TargetingSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Drag/DragSystem.h"
@@ -152,6 +156,60 @@ namespace Simulation {
       return caster.pathfinderHandle;
     }
 
+    Actions3::InstanceHandle getActionsHandle(EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::Actions));
+      static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        Actions3::InstanceHandle actionsHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::Actions);
+      return caster.actionsHandle;
+    }
+
+    Behavior::Handle createBehavior(EntityHandle entity, Behavior::BehaviorType behaviorType) {
+      union {
+        Behavior::Handle aiHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.aiHandle = Behavior::System::create(getActionsHandle(entity), behaviorType);
+      linkComponent(entity, ComponentType::AI, caster.genericHandle);
+      return caster.aiHandle;
+    }
+
+    TicketRequestHandle createTicketRequest(EntityHandle entity) {
+      // todo: assert has physics body
+      union {
+        TicketRequestHandle ticketHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      Physics::BodyHandle physicsBody = getBodyHandle(entity);
+      caster.ticketHandle = TicketSystem::createRequest(physicsBody);
+      linkComponent(entity, ComponentType::TicketRequest, caster.genericHandle);
+      return caster.ticketHandle;
+    }
+
+    TicketTargetHandle createTicketTarget(EntityHandle entity) {
+      // todo: assert has physics body
+      union {
+        TicketTargetHandle ticketHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.ticketHandle = TicketSystem::createTarget(entity);
+      linkComponent(entity, ComponentType::TicketTarget, caster.genericHandle);
+      return caster.ticketHandle;
+    }
+
+    Actions3::InstanceHandle createActions(EntityHandle entity) {
+      union {
+        Behavior::Handle actionsHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.actionsHandle = Actions3::System::createInstance(entity);
+      linkComponent(entity, ComponentType::Actions, caster.genericHandle);
+      return caster.actionsHandle;
+    }
+
     PathfinderHandle getPathfinderHandle(EntityHandle entityHandle) {
       static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
@@ -178,6 +236,17 @@ namespace Simulation {
       return caster.steeringHandle;
     }
 
+    TicketRequestHandle getTicketRequestHandle(::Database::EntityHandle entityHandle) {
+      static_assert(sizeof(SteeringHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      // todo has(ComponentType::TicketRequest)
+      union {
+        TicketRequestHandle requestHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::TicketRequest);
+      return caster.requestHandle;
+    }
+
     Steering getSteering(EntityHandle entityHandle) {
       return SteeringSystem::get(getSteeringHandle(entityHandle));
     }
@@ -186,6 +255,18 @@ namespace Simulation {
       SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
       SteeringSystem::destroy(steeringHandle);
       unlinkComponent(entityHandle, ComponentType::Steering);
+    }
+
+    TargetingHandle createTargeting(EntityHandle ownerHandle, EntityHandle targetHandle) {
+      // todo !has(Targeting)
+      static_assert(sizeof(TargetingHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        TargetingHandle targetingHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.targetingHandle = TargetingSystem::create(targetHandle);
+      linkComponent(ownerHandle, ComponentType::Targeting, caster.genericHandle);
+      return caster.targetingHandle;
     }
 
     DragHandle createDrag(EntityHandle entityHandle) {

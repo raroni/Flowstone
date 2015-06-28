@@ -3,6 +3,7 @@ CLIENT_HEADER_DIRS =\
   Libraries/Quanta/Include\
   Libraries/Fixie/Library/Include\
   Libraries/Piper/Include\
+  Libraries/Watson/Include\
   Sys/File/Include\
   Sys/Net/Include\
   Sys/Key/Include\

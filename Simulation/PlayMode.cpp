@@ -1,8 +1,13 @@
 #include "Simulation/Config.h"
+#include "Behavior/BehaviorType.h"
+#include "Behavior/System.h"
+#include "Actions3/System.h"
 #include "Database/EntityHandle.h"
 #include "Simulation/Database.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
+#include "Simulation/Targeting/TargetingSystem.h"
+#include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Steering/Steering.h"
@@ -31,6 +36,8 @@ namespace Simulation {
       Database::createDynamicDriver(monster);
       Database::createSphereCollider(monster, Fixie::Num(0.3), Physics::ColliderType::Dynamic);
       Database::createDrag(monster);
+      Database::createActions(monster);
+      Database::createBehavior(monster, Behavior::BehaviorType::Monster);
 
       Database::createMonster(monster);
 
@@ -38,13 +45,16 @@ namespace Simulation {
     }
 
     void enter() {
+      Actions3::System::setup();
+      Behavior::System::setup();
+
       const uint16_t mapWidth = 16;
       const uint16_t mapHeight = 16;
       MapFieldType fields[mapWidth*mapHeight] = { MapFieldType::Grass };
       map.reset(mapWidth, mapHeight, fields);
 
-      Trees::create(0, 0);
       Trees::create(0, 1);
+      Trees::create(0, 0);
       Trees::create(0, 2);
       Trees::create(0, 3);
       Trees::create(0, 4);
@@ -64,8 +74,9 @@ namespace Simulation {
       Trees::create(4, 0);
 
       monster1 = createMonster(2, 3);
-      Database::createSteering(monster1);
-      Database::createPathfinder(monster1, { dummyTarget.x, dummyTarget.z });
+
+      //Database::createSteering(monster1);
+      //Database::createPathfinder(monster1, { dummyTarget.x, dummyTarget.z });
 
       //createMonster(3, 3);
     }
@@ -79,7 +90,10 @@ namespace Simulation {
           Database::destroyPathfinder(monster1);
         }
       }
-
+      Behavior::System::update();
+      Actions3::System::update();
+      TicketSystem::update();
+      TargetingSystem::update();
       PathfindingSystem::update();
       SteeringSystem::update();
       DragSystem::update();
