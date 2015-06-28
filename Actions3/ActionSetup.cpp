@@ -11,6 +11,7 @@ namespace Actions3 {
       interface.getOptionsLength = WoodAcquisitionAction::getOptionsLength;
       interface.startExecution = WoodAcquisitionAction::startExecution;
       interface.updateExecution = WoodAcquisitionAction::updateExecution;
+      interface.isExecuted = WoodAcquisitionAction::isExecuted;
       Action::setup(ActionType::WoodAcquisition, &interface);
     }
 

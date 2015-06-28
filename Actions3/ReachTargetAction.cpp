@@ -22,5 +22,9 @@ namespace Actions3 {
     void updateExecution(Database::EntityHandle, void *state, const void *options) {
 
     }
+
+    bool isExecuted(Database::EntityHandle entity, void *state, const void *options) {
+      return false;
+    }
   }
 }

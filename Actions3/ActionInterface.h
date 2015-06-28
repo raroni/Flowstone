@@ -8,6 +8,7 @@ namespace Actions3 {
     uint8_t (*getStateLength)() = nullptr;
     uint8_t (*getOptionsLength)() = nullptr;
     void (*startExecution)(Database::EntityHandle entity, void *state, const void *options) = nullptr;
+    bool (*isExecuted)(Database::EntityHandle entity, void *state, const void *options) = nullptr;
     void (*updateExecution)(Database::EntityHandle entity, void *state, const void *options) = nullptr;
   };
 }

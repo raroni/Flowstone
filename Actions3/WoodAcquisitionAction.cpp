@@ -14,7 +14,7 @@ namespace Actions3 {
     typedef Simulation::TicketRequestStatus TicketRequestStatus;
     typedef Simulation::TicketRequestHandle TicketRequestHandle;
 
-    enum class State : uint8_t {
+    enum class Mode : uint8_t {
       Ticketing,
       Moving,
       Chopping,
@@ -26,6 +26,11 @@ namespace Actions3 {
       Failed
     };
 
+    struct State {
+      Mode mode;
+      ReachTargetAction::Options reachOptions;
+    };
+
     uint8_t getStateLength() {
       return sizeof(State);
     }
@@ -35,7 +40,7 @@ namespace Actions3 {
     }
 
     void startMoving(Database::EntityHandle entity, State *state) {
-      *state = State::Moving;
+      state->mode = Mode::Moving;
 
       TicketRequestHandle handle = SimDB::getTicketRequestHandle(entity);
       uint16_t index = TicketRequestList::getIndex(handle);
@@ -47,9 +52,14 @@ namespace Actions3 {
       targetPosition[0] = (*targetBody.position)[0];
       targetPosition[1] = (*targetBody.position)[2];
 
-      ReachTargetAction::Options options = { .target = targetPosition };
+      state->reachOptions = { .target = targetPosition };
 
-      ReachTargetAction::startExecution(entity, nullptr, &options);
+      ReachTargetAction::startExecution(entity, nullptr, &state->reachOptions);
+    }
+
+    void startChopping(Database::EntityHandle entity, State *state) {
+      state->mode = Mode::Chopping;
+      // TODO!
     }
 
     void updateExecutionTicketing(Database::EntityHandle entity, State *state) {
@@ -62,27 +72,36 @@ namespace Actions3 {
     }
 
     void updateExecutionMoving(Database::EntityHandle entity, State *state) {
-
+      void *options = &state->reachOptions;
+      ReachTargetAction::updateExecution(entity, nullptr, options);
+      bool completed = ReachTargetAction::isExecuted(entity, nullptr, options);
+      if(completed) {
+        startChopping(entity, state);
+      }
     }
 
     void startExecution(Database::EntityHandle entity, void *rawState, const void *options) {
       State *state = reinterpret_cast<State*>(rawState);
-      *state = State::Ticketing;
+      state->mode = Mode::Ticketing;
       SimDB::createTicketRequest(entity);
     }
 
     void updateExecution(Database::EntityHandle entity, void *rawState, const void *options) {
       State *state = reinterpret_cast<State*>(rawState);
-      switch(*state) {
-        case State::Ticketing:
+      switch(state->mode) {
+        case Mode::Ticketing:
           updateExecutionTicketing(entity, state);
           break;
-        case State::Moving:
+        case Mode::Moving:
           updateExecutionMoving(entity, state);
           break;
         default:
           fatalError("Unknown state.");
       }
+    }
+
+    bool isExecuted(Database::EntityHandle entity, void *rawState, const void *options) {
+      return false;
     }
   }
 }

@@ -14,6 +14,7 @@ namespace Actions3 {
     uint8_t getOptionsLength();
     void startExecution(Database::EntityHandle entity, void *state, const void *options);
     void updateExecution(Database::EntityHandle entity, void *state, const void *options);
+    bool isExecuted(Database::EntityHandle entity, void *state, const void *options);
   }
 }
 
