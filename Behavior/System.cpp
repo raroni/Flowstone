@@ -1,7 +1,5 @@
 #include <assert.h>
-#include "Actions/Request.h"
-#include "Actions/ActionTypeIndex.h"
-#include "Actions/System.h"
+#include "Actions3/System.h"
 #include "Misc/HandleList.h"
 #include "Watson/InstanceHandle.h"
 #include "Watson/System.h"
@@ -21,7 +19,7 @@ namespace Behavior {
     HandleList handleList(max, indices, handles);
     Watson::InstanceHandle instanceHandles[max];
     BehaviorType behaviorTypes[max];
-    Actions::ComponentHandle actionsHandles[max];
+    Actions3::InstanceHandle actionsHandles[max];
 
     void setup() {
       Watson::System::initialize();
@@ -30,7 +28,7 @@ namespace Behavior {
       TreeTypes::setup();
     }
 
-    Handle create(Actions::ComponentHandle actionsHandle, BehaviorType behaviorType) {
+    Handle create(Actions3::InstanceHandle actionsHandle, BehaviorType behaviorType) {
       assert(handleList.getCount() != max);
       uint16_t index;
       Handle handle;
@@ -55,13 +53,12 @@ namespace Behavior {
         for(uint16_t i=0; i<Watson::System::getInstanceCount(t); ++i) {
           Watson::Stream *actionStream = Watson::System::getActionStream(t, i);
           Watson::Board *board = Watson::System::getBoardByIndices(t, i);
-          Actions::ComponentHandle handle = *reinterpret_cast<const Actions::ComponentHandle*>(board->get(actionHandleBoardKey));
+          Actions3::InstanceHandle handle = *reinterpret_cast<const Actions3::InstanceHandle*>(board->get(actionHandleBoardKey));
           for(uint8_t a=0; a<actionStream->getCount(); ++a) {
-            uint8_t *streamData = static_cast<uint8_t*>(actionStream->get(a));
-            Actions::Request request;
-            request.type = *reinterpret_cast<Actions::ActionTypeIndex*>(streamData);
-            request.setParams(streamData+sizeof(Actions::ActionTypeIndex));
-            Actions::System::request(handle, &request);
+            void *actionData = actionStream->get(a);
+            Actions3::Request request;
+            request.type = *reinterpret_cast<Actions3::ActionType*>(actionData);
+            Actions3::System::request(handle, &request);
           }
         }
       }

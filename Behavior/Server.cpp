@@ -1,6 +1,5 @@
-#include "Actions/Request.h"
-#include "Actions/System.h"
-#include "Actions/Status.h"
+#include "Actions3/System.h"
+#include "Actions3/InstanceStatus.h"
 #include "Watson/ServerFunction.h"
 #include "Watson/Server.h"
 #include "Behavior/BoardKey.h"
@@ -27,24 +26,24 @@ namespace Behavior {
       response->set(&value, sizeof(bool));
     }
 
-    void getActionRequest(const void *request, const Board *board, ResponseBuffer *response) {
+    void getPendingActionRequest(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
-      Actions::ComponentHandle actionsHandle = *static_cast<const Actions::ComponentHandle*>(board->get(keyInt));
-      const Actions::Request *actionRequest = Actions::System::getRequest(actionsHandle);
-      response->set(actionRequest, sizeof(Actions::Request));
+      Actions3::InstanceHandle actionsHandle = *static_cast<const Actions3::InstanceHandle*>(board->get(keyInt));
+      const Actions3::Request *actionRequest = Actions3::System::getPendingRequest(actionsHandle);
+      response->set(actionRequest, sizeof(*actionRequest));
     }
 
     void getActionStatus(const void *request, const Board *board, ResponseBuffer *response) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::ActionsHandle);
-      Actions::ComponentHandle actionsHandle = *static_cast<const Actions::ComponentHandle*>(board->get(keyInt));
-      Actions::Status actionStatus = Actions::System::getStatus(actionsHandle);
+      Actions3::InstanceHandle actionsHandle = *static_cast<const Actions3::InstanceHandle*>(board->get(keyInt));
+      Actions3::InstanceStatus actionStatus = Actions3::System::getStatus(actionsHandle);
       response->set(&actionStatus, sizeof(actionStatus));
     }
 
     void setup() {
       setupType(BoardKey::IsThreatened, checkThreat);
       setupType(BoardKey::HasWood, checkWood);
-      setupType(BoardKey::ActionRequest, getActionRequest);
+      setupType(BoardKey::PendingActionRequest, getPendingActionRequest);
       setupType(BoardKey::ActionStatus, getActionStatus);
     }
   }

@@ -3,7 +3,7 @@
 #include "Database/ComponentHandle.h"
 #include "Database/ComponentManager.h"
 #include "Behavior/System.h"
-#include "Actions/System.h"
+#include "Actions3/System.h"
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/Ticket/TicketSystem.h"
@@ -156,11 +156,11 @@ namespace Simulation {
       return caster.pathfinderHandle;
     }
 
-    Actions::ComponentHandle getActionsHandle(EntityHandle entityHandle) {
+    Actions3::InstanceHandle getActionsHandle(EntityHandle entityHandle) {
       assert(hasComponent(entityHandle, ComponentType::Actions));
       static_assert(sizeof(PathfinderHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
       union {
-        Actions::ComponentHandle actionsHandle;
+        Actions3::InstanceHandle actionsHandle;
         ComponentHandle genericHandle;
       } caster;
       caster.genericHandle = getComponent(entityHandle, ComponentType::Actions);
@@ -200,12 +200,12 @@ namespace Simulation {
       return caster.ticketHandle;
     }
 
-    Actions::ComponentHandle createActions(EntityHandle entity) {
+    Actions3::InstanceHandle createActions(EntityHandle entity) {
       union {
         Behavior::Handle actionsHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.actionsHandle = Actions::System::createComponent(entity);
+      caster.actionsHandle = Actions3::System::createInstance(entity);
       linkComponent(entity, ComponentType::Actions, caster.genericHandle);
       return caster.actionsHandle;
     }
