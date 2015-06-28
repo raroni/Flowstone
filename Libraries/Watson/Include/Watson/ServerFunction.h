@@ -5,7 +5,7 @@
 #include "Watson/Board.h"
 
 namespace Watson {
-  typedef void (*ServerFunction)(const void *requestData, ResponseBuffer *responseBuffer);
+  typedef void (*ServerFunction)(const void *requestData, const Board *board, ResponseBuffer *responseBuffer);
 }
 
 #endif

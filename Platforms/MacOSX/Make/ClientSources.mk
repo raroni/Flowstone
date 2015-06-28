@@ -78,6 +78,44 @@ CLIENT_CPP_SOURCES =\
   Physics/KinematicDriverList.cpp\
   Physics/DynamicDriverList.cpp\
   Physics/CollisionResolver.cpp\
+  Actions/System.cpp\
+  Actions/ActionTypes.cpp\
+  Actions/ActionList.cpp\
+  Actions/Request.cpp\
+  Actions/ActionTypeList.cpp\
+  Actions/RequestMap.cpp\
+  Actions/ActionTypeDefinition.cpp\
+  Actions/ActionTypeDefinitionHelper.cpp\
+  Actions/Node.cpp\
+  Actions/NodeFlow.cpp\
+  Actions/NodeCall.cpp\
+  Actions/NodeTypes.cpp\
+  Actions/ActionStateCollection.cpp\
+  Actions/ComponentList.cpp\
+  Actions/RequestParamSet.cpp\
+  Actions/WoodAcquisitionAction.cpp\
+  Actions/EmptyAction.cpp\
+  Actions/ParentNode.cpp\
+  Actions/SequenceNode.cpp\
+  Actions/ConcurrentNode.cpp\
+  Actions/TicketAcquisitionNode.cpp\
+  Actions/TreeChopNode.cpp\
+  Actions/TargetReachNode.cpp\
+  Actions3/System.cpp\
+  Actions3/NewRequests.cpp\
+  Actions3/PendingRequests.cpp\
+  Actions3/Executions.cpp\
+  Actions3/ExecutionList.cpp\
+  Actions3/RequestMap.cpp\
+  Actions3/InstanceHandleSet.cpp\
+  Actions3/Instance.cpp\
+  Actions3/InstanceList.cpp\
+  Actions3/Request.cpp\
+  Actions3/ActionOptionsSet.cpp\
+  Actions3/ActionSetup.cpp\
+  Actions3/Action.cpp\
+  Actions3/WoodAcquisitionAction.cpp\
+  Actions3/ReachTargetAction.cpp\
   Behavior/System.cpp\
   Behavior/Server.cpp\
   Behavior/NodeTypes.cpp\
@@ -85,6 +123,7 @@ CLIENT_CPP_SOURCES =\
   Behavior/TypeDefinitionHelper.cpp\
   Behavior/ThreatCheckNode.cpp\
   Behavior/WoodCheckNode.cpp\
+  Behavior/WoodAcquisitionNode.cpp\
   Behavior/MonsterTreeType.cpp\
   Database/ComponentManager.cpp\
   Database/EntityManager.cpp\
@@ -116,6 +155,9 @@ CLIENT_CPP_SOURCES =\
   Client/RenderFeed.cpp\
   Simulation/Control.cpp\
   Simulation/Steering/SteeringSystem.cpp\
+  Simulation/Steering/SteeringList.cpp\
+  Simulation/Targeting/TargetingList.cpp\
+  Simulation/Targeting/TargetingSystem.cpp\
   Simulation/Trees.cpp\
   Simulation/Pathfinding/PathfindingSystem.cpp\
   Simulation/Pathfinding/Map.cpp\
@@ -125,7 +167,9 @@ CLIENT_CPP_SOURCES =\
   Simulation/Pathfinding/AStarCostMap.cpp\
   Simulation/Pathfinding/AStarCostBucket.cpp\
   Simulation/Pathfinding/AStar.cpp\
-  Simulation/Steering/SteeringList.cpp\
+  Simulation/Ticket/TicketSystem.cpp\
+  Simulation/Ticket/TicketRequestList.cpp\
+  Simulation/Ticket/TicketTargetList.cpp\
   Simulation/Drag/DragSystem.cpp\
   Simulation/Mode.cpp\
   Simulation/PhysicsHack.cpp\

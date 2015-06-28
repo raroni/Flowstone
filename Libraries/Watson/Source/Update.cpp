@@ -62,7 +62,8 @@ namespace Watson {
     void run(TypeIndex newTypeIndex, uint16_t newInstanceIndex) {
       typeIndex = newTypeIndex;
       instanceIndex = newInstanceIndex;
-      traversalFlow.board = BoardCollection::get(typeIndex, instanceIndex);
+      Board *board = BoardCollection::get(typeIndex, instanceIndex);
+      traversalFlow.board = board;
       traversalFlow.actionStream = ActionStreamCollection::get(typeIndex, instanceIndex);
       traversalFlow.requestEntry(0);
       while(1) {
@@ -74,8 +75,8 @@ namespace Watson {
         }
         for(uint8_t i=0; i<requestStream.getCount(); ++i) {
           const uint8_t *request = static_cast<const uint8_t*>(requestStream.get(i));
-          Server::request(*request, request+1, &responseBuffer);
-          traversalFlow.board->set(*request, responseBuffer.storage, responseBuffer.length);
+          Server::request(*request, request+1, board, &responseBuffer);
+          board->set(*request, responseBuffer.storage, responseBuffer.length);
         }
         requestStream.clear();
       }

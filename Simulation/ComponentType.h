@@ -12,6 +12,10 @@ namespace Simulation {
     Drag,
     Pathfinder,
     AI,
+    Actions,
+    TicketRequest,
+    TicketTarget,
+    Targeting,
 
     Count
   };

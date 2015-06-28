@@ -5,7 +5,7 @@
 
 namespace Watson {
   struct ResponseBuffer {
-    void set(void *data, uint16_t length);
+    void set(const void *data, uint16_t length);
     char storage[Config::responseBufferCapacity];
     uint16_t length = 0;
   };

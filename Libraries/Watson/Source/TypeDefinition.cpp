@@ -5,8 +5,8 @@ namespace Watson {
     *reinterpret_cast<uint8_t*>(structure+this->structureLength) = type;
     structureOffsets[nodeCount] = this->structureLength;
     this->structureLength += structureLength;
-    stateOffsets[nodeCount] = stateLength;
-    stateLength += stateLength;
+    stateOffsets[nodeCount] = this->stateLength;
+    this->stateLength += stateLength;
     return nodeCount++;
   }
 

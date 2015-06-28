@@ -19,6 +19,8 @@ namespace Simulation {
 
       Database::createResource(tree, ResourceType::Tree);
 
+      Database::createTicketTarget(tree);
+
       MapFieldIndex fieldIndex = map.calcFieldIndex({ x, z });
       map.set(fieldIndex, MapFieldType::Tree);
     }

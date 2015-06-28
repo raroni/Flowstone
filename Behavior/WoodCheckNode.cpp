@@ -17,7 +17,7 @@ namespace Behavior {
 
     void handleResponse(Watson::TraversalFlow *flow) {
       uint8_t keyInt = static_cast<uint8_t>(BoardKey::HasWood);
-      bool hasWood = *reinterpret_cast<bool*>(flow->board->get(keyInt));
+      bool hasWood = *reinterpret_cast<const bool*>(flow->board->get(keyInt));
       if(hasWood) {
         flow->requestReaction(NodeResult::Succeeded);
       } else {

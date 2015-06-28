@@ -7,7 +7,8 @@
 namespace Behavior {
   enum class NodeType : uint8_t {
     ThreatCheck = static_cast<uint8_t>(Watson::NodeType::Count),
-    WoodCheck
+    WoodCheck,
+    WoodAcquisition
   };
 }
 

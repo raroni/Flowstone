@@ -5,6 +5,7 @@
 #include "Watson/TypeList.h"
 #include "Watson/InstanceOrderingCollection.h"
 #include "Watson/StateCollection.h"
+#include "Watson/ActionStreamCollection.h"
 #include "Watson/BoardCollection.h"
 #include "Watson/InstanceHandle.h"
 #include "Watson/TypeList.h"
@@ -22,7 +23,16 @@ namespace Watson {
       InstanceOrderingCollection::createList(index, definition->instanceMax);
       StateCollection::createList(index);
       BoardCollection::createList(index);
+      ActionStreamCollection::createList(index);
       return index;
+    }
+
+    uint8_t getTypeCount() {
+      return TypeList::getCount();
+    }
+
+    uint16_t getInstanceCount(TypeIndex typeIndex) {
+      return InstanceOrderingCollection::getCount(typeIndex);
     }
 
     InstanceHandle createInstance(TypeIndex typeIndex) {
@@ -41,11 +51,19 @@ namespace Watson {
       return treeHandle;
     }
 
-    Board* getBoard(InstanceHandle treeHandle) {
+    Board* getBoardByIndices(TypeIndex typeIndex, uint16_t instanceIndex) {
+      return BoardCollection::get(typeIndex, instanceIndex);
+    }
+
+    Board* getBoardByHandle(InstanceHandle treeHandle) {
       TypeIndex typeIndex = InstanceList::getTypeIndex(treeHandle);
       InstanceOrderingHandle instanceOrderingHandle = InstanceList::getInstanceOrderingHandle(treeHandle);
       uint16_t instanceIndex = InstanceOrderingCollection::getIndex(typeIndex, instanceOrderingHandle);
-      return BoardCollection::get(typeIndex, instanceIndex);
+      return getBoardByIndices(typeIndex, instanceIndex);
+    }
+
+    Stream* getActionStream(TypeIndex typeIndex, uint16_t instanceIndex) {
+      return ActionStreamCollection::get(typeIndex, instanceIndex);
     }
 
     void destroyTree(InstanceHandle handle) {
@@ -79,6 +97,15 @@ namespace Watson {
         uint16_t instanceCount = InstanceOrderingCollection::getCount(i);
         for(uint16_t n=0; n<instanceCount; ++n) {
           BoardCollection::get(i, n)->clear();
+        }
+      }
+    }
+
+    void clearActionStreams() {
+      for(TypeIndex i=0; i<TypeList::getCount(); ++i) {
+        uint16_t instanceCount = InstanceOrderingCollection::getCount(i);
+        for(uint16_t n=0; n<instanceCount; ++n) {
+          ActionStreamCollection::get(i, n)->clear();
         }
       }
     }

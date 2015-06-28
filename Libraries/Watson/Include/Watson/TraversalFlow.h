@@ -19,7 +19,7 @@ namespace Watson {
     void resetCommand();
     TraversalCommand getCommand() const;
     NodeResult lastResult;
-    Board* board = nullptr;
+    const Board* board = nullptr;
     Stream* actionStream = nullptr;
     const void *structure = nullptr;
     void *state = nullptr;

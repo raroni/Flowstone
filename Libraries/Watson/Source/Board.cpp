@@ -11,7 +11,7 @@ namespace Watson {
     bufferLength += length;
   }
 
-  void* Board::get(uint8_t key) {
+  const void* Board::get(uint8_t key) const {
     return buffer+offsets[key];
   }
 

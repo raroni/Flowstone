@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "Fixie/Util.h"
 #include "Simulation/Pathfinding/AStarPriorityQueue.h"
 #include "Simulation/Pathfinding/AStarCostMap.h"
@@ -28,6 +29,7 @@ namespace Simulation {
     MapFieldIndex currentIndex = destinationIndex;
     uint32_t count = 0;
     for(count=0; originIndex != currentIndex; ++count) {
+      assert(count != Config::mapSizeMax);
       buildCache[count] = currentIndex;
       currentIndex = pathParents[currentIndex];
     }
@@ -41,6 +43,7 @@ namespace Simulation {
     const Map &map,
     MapFieldCoors originCoors,
     MapFieldCoors destinationCoors,
+    Fixie::Num tolerance,
     MapSearchResult &result
   ) {
     result.success = false;
@@ -50,12 +53,16 @@ namespace Simulation {
     pathParents[originIndex] = originIndex;
     costs.set(originIndex, 0);
 
+    MapFieldCoors currentCoors;
     MapFieldIndex currentIndex;
     while(!frontier.isEmpty()) {
       currentIndex = frontier.pop();
-
-      if(currentIndex == destinationIndex) {
+      currentCoors = map.calcFieldCoors(currentIndex);
+      if(calcManhatten(currentCoors, destinationCoors) <= tolerance) {
         result.success = true;
+        if(destinationIndex != currentIndex) {
+          pathParents[destinationIndex] = currentIndex;
+        }
         buildPath(result, map, originIndex, destinationIndex);
         break;
       }

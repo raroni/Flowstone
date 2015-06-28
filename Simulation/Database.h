@@ -3,22 +3,26 @@
 
 #include "Fixie/Vector2.h"
 #include "Database/EntityHandle.h"
-#include "Simulation/EntityList.h"
-#include "Simulation/ComponentType.h"
-#include "Simulation/ResourceHandle.h"
-#include "Simulation/Steering/SteeringHandle.h"
-#include "Simulation/Steering/Steering.h"
-#include "Simulation/Drag/DragHandle.h"
-#include "Simulation/ResourceType.h"
-#include "Simulation/Pathfinding/PathfinderHandle.h"
 #include "Behavior/Handle.h"
 #include "Behavior/BehaviorType.h"
+#include "Actions3/InstanceHandle.h"
 #include "Physics/SphereColliderHandle.h"
 #include "Physics/BodyHandle.h"
 #include "Physics/DynamicDriverHandle.h"
 #include "Physics/DynamicDriver.h"
 #include "Physics/Body.h"
 #include "Physics/ColliderType.h"
+#include "Simulation/EntityList.h"
+#include "Simulation/ComponentType.h"
+#include "Simulation/ResourceHandle.h"
+#include "Simulation/Steering/SteeringHandle.h"
+#include "Simulation/Steering/Steering.h"
+#include "Simulation/Targeting/TargetingHandle.h"
+#include "Simulation/Drag/DragHandle.h"
+#include "Simulation/ResourceType.h"
+#include "Simulation/Pathfinding/PathfinderHandle.h"
+#include "Simulation/Ticket/TicketRequestHandle.h"
+#include "Simulation/Ticket/TicketTargetHandle.h"
 
 namespace Simulation {
   namespace Database {
@@ -34,12 +38,17 @@ namespace Simulation {
     Physics::SphereColliderHandle createSphereCollider(::Database::EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
     ResourceHandle createResource(::Database::EntityHandle entity, ResourceType type);
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
+    TargetingHandle createTargeting(::Database::EntityHandle ownerHandle, ::Database::EntityHandle targetHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);
-    Behavior::Handle createAI(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
+    Behavior::Handle createBehavior(::Database::EntityHandle entity, Behavior::BehaviorType behaviorType);
+    TicketRequestHandle createTicketRequest(::Database::EntityHandle entity);
+    TicketTargetHandle createTicketTarget(::Database::EntityHandle entity);
+    Actions3::InstanceHandle createActions(::Database::EntityHandle entity);
     void destroySteering(::Database::EntityHandle entityHandle);
     void destroyPathfinder(::Database::EntityHandle entityHandle);
     Steering getSteering(::Database::EntityHandle entityHandle);
     SteeringHandle getSteeringHandle(::Database::EntityHandle entityHandle);
+    TicketRequestHandle getTicketRequestHandle(::Database::EntityHandle entityHandle);
     DragHandle createDrag(::Database::EntityHandle entityHandle);
     void createMonster(::Database::EntityHandle entity);
   }

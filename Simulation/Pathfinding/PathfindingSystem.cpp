@@ -73,7 +73,10 @@ namespace Simulation {
             targets[i][0]+numHalf,
             targets[i][1]+numHalf
           };
-          aStar(map, origin, target, mapSearchResult);
+
+          Fixie::Num tolerance = 1;
+          aStar(map, origin, target, tolerance, mapSearchResult);
+
           // todo: proper handling of invalid paths
           assert(mapSearchResult.success);
 
