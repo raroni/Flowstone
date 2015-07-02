@@ -234,7 +234,11 @@ namespace Client {
       setupGround();
 
       Direction::initialize();
-      workerDirectionGroup = Direction::createGroup(4);
+      workerDirectionGroup = Direction::createGroup();
+      Direction::addSteering(workerDirectionGroup, {
+        .idle = 0,
+        .run = 1
+      });
 
       Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();
       CameraControl::initialize(&camera);

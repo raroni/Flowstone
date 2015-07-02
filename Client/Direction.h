@@ -4,14 +4,15 @@
 #include "Animation/PoseHandle.h"
 #include "Database/EntityHandle.h"
 #include "Client/DirectionInstanceHandle.h"
+#include "Client/DirectionSteeringConfig.h"
 #include "Client/DirectionGroupIndex.h"
 
 namespace Client {
   namespace Direction {
     DirectionInstanceHandle createInstance(DirectionGroupIndex group, Animation::PoseHandle poseHandle, ::Database::EntityHandle simEntityHandle);
-    DirectionGroupIndex createGroup(uint8_t instanceMax);
+    DirectionGroupIndex createGroup();
     void initialize();
-    void attachSteeringStyle(DirectionGroupIndex group, uint8_t idleAnimation, uint8_t movingAnimation);
+    void addSteering(DirectionGroupIndex group, DirectionSteeringConfig config);
     void prepare();
     void update();
   }
