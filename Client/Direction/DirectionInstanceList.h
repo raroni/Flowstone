@@ -3,8 +3,8 @@
 
 #include "Database/EntityHandle.h"
 #include "Animation/PoseHandle.h"
-#include "Client/DirectionGroupIndex.h"
-#include "Client/DirectionInstanceHandle.h"
+#include "Client/Direction/DirectionGroupIndex.h"
+#include "Client/Direction/DirectionInstanceHandle.h"
 
 namespace Client {
   namespace DirectionInstanceList {

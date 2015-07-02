@@ -3,7 +3,7 @@
 #include "Database/ComponentManager.h"
 #include "Animation/Animator.h"
 #include "Client/Interpolation.h"
-#include "Client/Direction.h"
+#include "Client/Direction/Direction.h"
 #include "Client/RenderFeed.h"
 #include "Client/ComponentType.h"
 #include "Client/Database.h"

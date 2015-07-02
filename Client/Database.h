@@ -8,8 +8,8 @@
 #include "Animation/PoseHandle.h"
 #include "Client/BoneMeshRenderFeedHandle.h"
 #include "Client/InterpolationHandle.h"
-#include "Client/DirectionInstanceHandle.h"
-#include "Client/DirectionGroupIndex.h"
+#include "Client/Direction/DirectionInstanceHandle.h"
+#include "Client/Direction/DirectionGroupIndex.h"
 #include "Animation/SkeletonHandle.h"
 
 namespace Client {

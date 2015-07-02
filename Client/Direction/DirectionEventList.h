@@ -1,7 +1,7 @@
 #ifndef CLIENT_DIRECTION_EVENT_LIST_H
 #define CLIENT_DIRECTION_EVENT_LIST_H
 
-#include "Client/DirectionEvent.h"
+#include "Client/Direction/DirectionEvent.h"
 
 namespace Client {
   namespace DirectionEventList {

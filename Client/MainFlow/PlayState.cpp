@@ -10,7 +10,7 @@
 #include "Rendering/MeshInfo.h"
 #include "Rendering/Shape.h"
 #include "Animation/JointConfig.h"
-#include "Client/Direction.h"
+#include "Client/Direction/Direction.h"
 #include "Client/RenderFeed.h"
 #include "Client/CameraControl.h"
 #include "Client/LocalSimulationDriver.h"

@@ -1,10 +1,10 @@
 #include "Animation/Animator.h"
 #include "Simulation/Steering/SteeringSystem.h"
-#include "Client/DirectionInstanceList.h"
-#include "Client/DirectionConfig.h"
-#include "Client/DirectionSteering.h"
-#include "Client/DirectionEventList.h"
-#include "Client/Direction.h"
+#include "Client/Direction/DirectionInstanceList.h"
+#include "Client/Direction/DirectionConfig.h"
+#include "Client/Direction/DirectionSteering.h"
+#include "Client/Direction/DirectionEventList.h"
+#include "Client/Direction/Direction.h"
 
 namespace Client {
   namespace Direction {

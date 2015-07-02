@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "Misc/HandleList.h"
-#include "Client/DirectionInstanceList.h"
+#include "Client/Direction/DirectionInstanceList.h"
 
 namespace Client {
   namespace DirectionInstanceList {

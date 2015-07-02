@@ -2,7 +2,7 @@
 #define CLIENT_DIRECTION_EVENT_H
 
 #include "Database/EntityHandle.h"
-#include "Client/DirectionEventType.h"
+#include "Client/Direction/DirectionEventType.h"
 
 namespace Client {
   struct DirectionEvent {

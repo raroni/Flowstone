@@ -3,9 +3,9 @@
 
 #include "Animation/PoseHandle.h"
 #include "Database/EntityHandle.h"
-#include "Client/DirectionInstanceHandle.h"
-#include "Client/DirectionSteeringConfig.h"
-#include "Client/DirectionGroupIndex.h"
+#include "Client/Direction/DirectionInstanceHandle.h"
+#include "Client/Direction/DirectionSteeringConfig.h"
+#include "Client/Direction/DirectionGroupIndex.h"
 
 namespace Client {
   namespace Direction {

@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "Client/DirectionEventList.h"
+#include "Client/Direction/DirectionEventList.h"
 
 namespace Client {
   namespace DirectionEventList {

@@ -2,9 +2,9 @@
 #define CLIENT_DIRECTION_STEERING_H
 
 #include "Simulation/Steering/SteeringEvent.h"
-#include "Client/DirectionSteeringConfig.h"
-#include "Client/DirectionGroupIndex.h"
-#include "Client/DirectionEvent.h"
+#include "Client/Direction/DirectionSteeringConfig.h"
+#include "Client/Direction/DirectionGroupIndex.h"
+#include "Client/Direction/DirectionEvent.h"
 
 namespace Client {
   namespace DirectionSteering {
