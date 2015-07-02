@@ -10,7 +10,7 @@
 namespace Animation {
   namespace Animator {
     Registry registry;
-    uint16_t instanceCount = 0;
+    uint16_t poseCount = 0;
     uint8_t skeletonIDs[32];
     float passed[32];
     float durations[32];
@@ -25,14 +25,14 @@ namespace Animation {
 
     void updateLocalPoses(double timeDelta) {
       uint8_t transformationOffset = 0;
-      for(uint8_t instanceIndex=0; instanceCount>instanceIndex; instanceIndex++) {
-        uint8_t skeletonID = skeletonIDs[instanceIndex];
+      for(uint8_t poseIndex=0; poseCount>poseIndex; poseIndex++) {
+        uint8_t skeletonID = skeletonIDs[poseIndex];
         uint8_t bonesCount = registry.getBonesCount(skeletonID);
-        passed[instanceIndex] += timeDelta;
-        float rest = passed[instanceIndex]-durations[instanceIndex];
-        float progress = passed[instanceIndex]/durations[instanceIndex];
+        passed[poseIndex] += timeDelta;
+        float rest = passed[poseIndex]-durations[poseIndex];
+        float progress = passed[poseIndex]/durations[poseIndex];
         progress = Quanta::min(progress, 1.0f);
-        Pose *pose = &localPoses[instanceIndex];
+        Pose *pose = &localPoses[poseIndex];
         for(uint8_t boneIndex=0; bonesCount>boneIndex; boneIndex++) {
           JointTransform &origin = originTransforms[transformationOffset+boneIndex];
           JointTransform &current = currentTransforms[transformationOffset+boneIndex];
@@ -45,20 +45,20 @@ namespace Animation {
         }
 
         if(rest >= 0) {
-          passed[instanceIndex] = rest;
-          uint8_t keyCount = registry.getKeyCount(skeletonID, animations[instanceIndex]);
+          passed[poseIndex] = rest;
+          uint8_t keyCount = registry.getKeyCount(skeletonID, animations[poseIndex]);
 
-          if(keyCount == targetKeys[instanceIndex]+1) {
-            durations[instanceIndex] = registry.getDuration(skeletonID, animations[instanceIndex]) - registry.getKeyTime(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
-            targetKeys[instanceIndex] = 0;
+          if(keyCount == targetKeys[poseIndex]+1) {
+            durations[poseIndex] = registry.getDuration(skeletonID, animations[poseIndex]) - registry.getKeyTime(skeletonID, animations[poseIndex], targetKeys[poseIndex]);
+            targetKeys[poseIndex] = 0;
           } else {
-            float startTime = registry.getKeyTime(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
-            float endTime = registry.getKeyTime(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]+1);
-            durations[instanceIndex] = endTime-startTime;
-            targetKeys[instanceIndex]++;
+            float startTime = registry.getKeyTime(skeletonID, animations[poseIndex], targetKeys[poseIndex]);
+            float endTime = registry.getKeyTime(skeletonID, animations[poseIndex], targetKeys[poseIndex]+1);
+            durations[poseIndex] = endTime-startTime;
+            targetKeys[poseIndex]++;
           }
 
-          const JointTransform *newTargetTransforms = registry.getJointTransforms(skeletonID, animations[instanceIndex], targetKeys[instanceIndex]);
+          const JointTransform *newTargetTransforms = registry.getJointTransforms(skeletonID, animations[poseIndex], targetKeys[poseIndex]);
           for(uint8_t i=0; bonesCount>i; i++) {
             originTransforms[transformationOffset+i] = targetTransforms[transformationOffset+i];
             targetTransforms[transformationOffset+i] = newTargetTransforms[i];
@@ -72,10 +72,10 @@ namespace Animation {
     }
 
     void updateGlobalPoses() {
-      for(uint8_t instanceIndex=0; instanceCount>instanceIndex; instanceIndex++) {
-        uint8_t skeletonID = skeletonIDs[instanceIndex];
-        Pose *worldPose = &worldPoses[instanceIndex];
-        Pose *localPose = &localPoses[instanceIndex];
+      for(uint8_t poseIndex=0; poseCount>poseIndex; poseIndex++) {
+        uint8_t skeletonID = skeletonIDs[poseIndex];
+        Pose *worldPose = &worldPoses[poseIndex];
+        Pose *localPose = &localPoses[poseIndex];
         worldPose->joints[0] = localPoses->joints[0];
         const uint8_t *parents = registry.getJointParentIndices(skeletonID);
         uint8_t bonesCount = registry.getBonesCount(skeletonID);
@@ -111,32 +111,32 @@ namespace Animation {
     }
 
     PoseHandle createPose(uint8_t skeletonID) {
-      skeletonIDs[instanceCount] = skeletonID;
-      passed[instanceCount] = 0;
-      animations[instanceCount] = 0;
-      targetKeys[instanceCount] = 1;
-      durations[instanceCount] = registry.getKeyTime(skeletonID, animations[instanceCount], 1);
+      skeletonIDs[poseCount] = skeletonID;
+      passed[poseCount] = 0;
+      animations[poseCount] = 0;
+      targetKeys[poseCount] = 1;
+      durations[poseCount] = registry.getKeyTime(skeletonID, animations[poseCount], 1);
       uint8_t bonesCount = registry.getBonesCount(skeletonID);
-      uint8_t transformationOffset = transformationOffsets[instanceCount];
-      transformationOffsets[instanceCount+1] = transformationOffset+bonesCount;
-      const JointTransform *transformations = registry.getJointTransforms(skeletonID, animations[instanceCount], 0);
+      uint8_t transformationOffset = transformationOffsets[poseCount];
+      transformationOffsets[poseCount+1] = transformationOffset+bonesCount;
+      const JointTransform *transformations = registry.getJointTransforms(skeletonID, animations[poseCount], 0);
       for(uint8_t i=0; bonesCount>i; i++) {
         originTransforms[transformationOffset+i] = transformations[i];
       }
-      transformations = registry.getJointTransforms(skeletonID, animations[instanceCount], 1);
+      transformations = registry.getJointTransforms(skeletonID, animations[poseCount], 1);
       for(uint8_t i=0; bonesCount>i; i++) {
         targetTransforms[transformationOffset+i] = transformations[i];
       }
-      return instanceCount++;
+      return poseCount++;
     }
 
-    void changeAnimation(uint8_t instanceID, uint8_t animation) {
-      passed[instanceID] = 0;
-      durations[instanceID] = 0.15f;
-      targetKeys[instanceID] = 0;
-      animations[instanceID] = animation;
-      uint8_t transformationOffset = transformationOffsets[instanceID];
-      uint8_t skeletonID = skeletonIDs[instanceID];
+    void changeAnimation(PoseHandle poseHandle, uint8_t animation) {
+      passed[poseHandle] = 0;
+      durations[poseHandle] = 0.15f;
+      targetKeys[poseHandle] = 0;
+      animations[poseHandle] = animation;
+      uint8_t transformationOffset = transformationOffsets[poseHandle];
+      uint8_t skeletonID = skeletonIDs[poseHandle];
       uint8_t bonesCount = registry.getBonesCount(skeletonID);
       const JointTransform *newTargetTransforms = registry.getJointTransforms(skeletonID, animation, 0);
       for(uint8_t i=0; bonesCount>i; i++) {

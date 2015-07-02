@@ -19,7 +19,7 @@ namespace Animation {
       JointConfig *jointConfigs
     );
     PoseHandle createPose(uint8_t skeletonID);
-    void changeAnimation(uint8_t instanceID, uint8_t animation);
+    void changeAnimation(PoseHandle instanceID, uint8_t animation);
     void update(double timeDelta);
   }
 }
