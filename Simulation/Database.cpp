@@ -7,7 +7,7 @@
 #include "Simulation/Config.h"
 #include "Simulation/PhysicsHack.h"
 #include "Simulation/Ticket/TicketSystem.h"
-#include "Simulation/ResourceSystem.h"
+#include "Simulation/Harvest/HarvestSystem.h"
 #include "Simulation/Targeting/TargetingSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
@@ -99,13 +99,13 @@ namespace Simulation {
       return caster.physicsHandle;
     }
 
-    ResourceHandle createResource(EntityHandle entity, ResourceType type) {
+    HarvestResourceHandle createHarvestResource(EntityHandle entity, HarvestResourceType type) {
       union {
-        ResourceHandle resourceHandle;
+        HarvestResourceHandle resourceHandle;
         ComponentHandle componentHandle;
       } caster;
 
-      caster.resourceHandle = ResourceSystem::create(type);
+      caster.resourceHandle = HarvestSystem::createResource(type);
       linkComponent(entity, ComponentType::Resource, caster.componentHandle);
       return caster.resourceHandle;
     }

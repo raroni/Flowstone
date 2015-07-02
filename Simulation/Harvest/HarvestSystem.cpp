@@ -1,13 +1,13 @@
 #include <assert.h>
 #include "Simulation/Config.h"
-#include "Simulation/ResourceSystem.h"
+#include "Simulation/Harvest/HarvestSystem.h"
 
 namespace Simulation {
-  namespace ResourceSystem {
+  namespace HarvestSystem {
     uint16_t count = 0;
-    ResourceType types[Config::resourceMax];
+    HarvestResourceType types[Config::resourceMax];
 
-    ResourceHandle create(ResourceType type) {
+    HarvestResourceHandle createResource(HarvestResourceType type) {
       assert(count != Config::resourceMax);
       types[count] = type;
 

@@ -14,12 +14,12 @@
 #include "Physics/ColliderType.h"
 #include "Simulation/EntityList.h"
 #include "Simulation/ComponentType.h"
-#include "Simulation/ResourceHandle.h"
+#include "Simulation/Harvest/HarvestResourceHandle.h"
+#include "Simulation/Harvest/HarvestResourceType.h"
 #include "Simulation/Steering/SteeringHandle.h"
 #include "Simulation/Steering/Steering.h"
 #include "Simulation/Targeting/TargetingHandle.h"
 #include "Simulation/Drag/DragHandle.h"
-#include "Simulation/ResourceType.h"
 #include "Simulation/Pathfinding/PathfinderHandle.h"
 #include "Simulation/Ticket/TicketRequestHandle.h"
 #include "Simulation/Ticket/TicketTargetHandle.h"
@@ -36,7 +36,7 @@ namespace Simulation {
     Physics::DynamicDriverHandle getDynamicDriverHandle(::Database::EntityHandle);
     Physics::DynamicDriverHandle createDynamicDriver(::Database::EntityHandle);
     Physics::SphereColliderHandle createSphereCollider(::Database::EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
-    ResourceHandle createResource(::Database::EntityHandle entity, ResourceType type);
+    HarvestResourceHandle createHarvestResource(::Database::EntityHandle entity, HarvestResourceType type);
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     TargetingHandle createTargeting(::Database::EntityHandle ownerHandle, ::Database::EntityHandle targetHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);

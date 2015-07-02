@@ -11,7 +11,6 @@
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/PathfindingSystem.h"
 #include "Simulation/Steering/Steering.h"
-#include "Simulation/ResourceType.h"
 #include "Simulation/PlayMode.h"
 #include "Simulation/Drag/DragSystem.h"
 #include "Simulation/PhysicsHack.h"

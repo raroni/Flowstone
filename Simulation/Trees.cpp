@@ -17,7 +17,7 @@ namespace Simulation {
 
       Database::createSphereCollider(tree, Fixie::Num(0.25), Physics::ColliderType::Static);
 
-      Database::createResource(tree, ResourceType::Tree);
+      Database::createHarvestResource(tree, HarvestResourceType::Tree);
 
       Database::createTicketTarget(tree);
 

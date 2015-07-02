@@ -154,7 +154,7 @@ CLIENT_CPP_SOURCES =\
   Simulation/Mode.cpp\
   Simulation/PhysicsHack.cpp\
   Simulation/PlayMode.cpp\
-  Simulation/ResourceSystem.cpp\
+  Simulation/Harvest/HarvestSystem.cpp\
   Simulation/CommandList.cpp\
   Simulation/EventList.cpp\
   Simulation/Database.cpp\
