@@ -137,7 +137,8 @@ namespace Simulation {
         SteeringHandle steeringHandle;
         ComponentHandle genericHandle;
       } caster;
-      caster.steeringHandle = SteeringSystem::create(getDynamicDriverHandle(entityHandle));
+      Physics::DynamicDriverHandle physicsDriverHandle = getDynamicDriverHandle(entityHandle);
+      caster.steeringHandle = SteeringSystem::create(entityHandle, physicsDriverHandle);
       linkComponent(entityHandle, ComponentType::Steering, caster.genericHandle);
       return caster.steeringHandle;
     }

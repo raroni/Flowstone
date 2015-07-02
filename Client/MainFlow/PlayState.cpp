@@ -233,6 +233,7 @@ namespace Client {
 
       setupGround();
 
+      Direction::initialize();
       workerDirectionGroup = Direction::createGroup(4);
 
       Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();

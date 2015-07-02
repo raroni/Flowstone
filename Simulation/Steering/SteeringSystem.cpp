@@ -10,7 +10,7 @@ namespace Simulation {
     using namespace Fixie;
     namespace List = SteeringList;
     Num tolerance = Num::inverse(32);
-    void emptyEventHandler() { }
+    void emptyEventHandler(const SteeringEvent *event) { }
     SteeringEventHandler eventHandler = emptyEventHandler;
 
     void update() {
@@ -37,17 +37,27 @@ namespace Simulation {
       }
     }
 
-    SteeringHandle create(Physics::DynamicDriverHandle handle) {
-
-      return List::create(handle);
+    SteeringHandle create(Database::EntityHandle entity, Physics::DynamicDriverHandle physicsDriver) {
+      const SteeringEvent event = {
+        .type = SteeringEventType::Start,
+        .entity = entity
+      };
+      eventHandler(&event);
+      return List::create(entity, physicsDriver);
     }
 
     Steering get(SteeringHandle handle) {
       return List::get(handle);
     }
 
-    void destroy(SteeringHandle handle) {
-      List::destroy(handle);
+    void destroy(SteeringHandle steeringHandle) {
+      Steering steering = List::get(steeringHandle);
+      const SteeringEvent event = {
+        .type = SteeringEventType::Stop,
+        .entity = steering.entityHandle
+      };
+      eventHandler(&event);
+      List::destroy(steeringHandle);
     }
 
     void setEventHandler(SteeringEventHandler func) {

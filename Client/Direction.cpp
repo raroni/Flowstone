@@ -11,7 +11,7 @@ namespace Client {
 
     using namespace Database;
 
-    void handleSteeringEvent() {
+    void handleSteeringEvent(const Simulation::SteeringEvent *event) {
 
     }
 

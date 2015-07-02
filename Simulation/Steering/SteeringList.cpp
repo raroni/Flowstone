@@ -8,21 +8,24 @@ namespace Simulation {
     static const uint16_t max = Config::steeringMax;
     Fixie::Vector3 targets[max];
     DynamicDriverHandle dynamicDriverHandles[max];
+    Database::EntityHandle entityHandles[max];
     uint16_t indices[max];
     uint16_t handles[max];
     HandleList handleList(max, indices, handles);
 
-    SteeringHandle create(DynamicDriverHandle dynamicDriverHandle) {
+    SteeringHandle create(Database::EntityHandle entity, Physics::DynamicDriverHandle physicsDriver) {
       uint16_t index;
       SteeringHandle steeringHandle;
       handleList.create(&index, &steeringHandle);
-      dynamicDriverHandles[index] = dynamicDriverHandle;
+      entityHandles[index] = entity;
+      dynamicDriverHandles[index] = physicsDriver;
       return steeringHandle;
     }
 
     void destroy(SteeringHandle handle) {
       uint16_t sourceIndex, destinationIndex;
       handleList.destroy(handle, &sourceIndex, &destinationIndex);
+      entityHandles[destinationIndex] = entityHandles[sourceIndex];
       dynamicDriverHandles[destinationIndex] = dynamicDriverHandles[sourceIndex];
       targets[destinationIndex] = targets[sourceIndex];
     }
@@ -33,9 +36,11 @@ namespace Simulation {
 
     Steering get(SteeringHandle handle) {
       uint16_t index = handleList.getIndex(handle);
-      Steering steering;
-      steering.target = &targets[index];
-      steering.dynamicDriverHandle = dynamicDriverHandles[index];
+      Steering steering = {
+        .target = &targets[index],
+        .dynamicDriverHandle = dynamicDriverHandles[index],
+        .entityHandle = entityHandles[index]
+      };
       return steering;
     }
   }
