@@ -1,10 +1,14 @@
 #ifndef CLIENT_DIRECTION_GROUP_LIST_H
 #define CLIENT_DIRECTION_GROUP_LIST_H
 
+#include "Database/EntityHandle.h"
+#include "Animation/PoseHandle.h"
+#include "Client/DirectionGroupIndex.h"
+
 namespace Client {
   namespace DirectionGroupList {
-    GroupIndex create();
-    void addInstance(GroupIndex group, Animation::PoseHandle pose, EntityHandle simEntity);
+    DirectionGroupIndex create(uint8_t instanceMax);
+    void addInstance(DirectionGroupIndex group, Animation::PoseHandle pose, Database::EntityHandle simEntity);
   }
 }
 

@@ -103,13 +103,13 @@ namespace Client {
       return caster.feedHandle;
     }
 
-    DirectionHandle createDirection(EntityHandle clientEntity, EntityHandle simEntity, DirectionGroupHandle group) {
+    DirectionInstanceHandle createDirection(EntityHandle clientEntity, DirectionGroupIndex group, EntityHandle simEntity) {
       union {
-        DirectionHandle directionHandle;
+        DirectionInstanceHandle directionHandle;
         ComponentHandle genericHandle;
       } caster;
       Animation::PoseHandle poseHandle = getPoseHandle(clientEntity);
-      caster.directionHandle = Direction::create(poseHandle, simEntity, group);
+      caster.directionHandle = Direction::createInstance(group, poseHandle, simEntity);
       linkComponent(clientEntity, ComponentType::Direction, caster.genericHandle);
       return caster.directionHandle;
     }

@@ -8,8 +8,8 @@
 #include "Animation/PoseHandle.h"
 #include "Client/BoneMeshRenderFeedHandle.h"
 #include "Client/InterpolationHandle.h"
-#include "Client/DirectionHandle.h"
-#include "Client/DirectionGroupHandle.h"
+#include "Client/DirectionInstanceHandle.h"
+#include "Client/DirectionGroupIndex.h"
 #include "Animation/SkeletonHandle.h"
 
 namespace Client {
@@ -19,7 +19,7 @@ namespace Client {
     InterpolationHandle createInterpolation(::Database::EntityHandle entity, Physics::BodyHandle physicsBody);
     Rendering::BoneMeshDrawHandle createBoneMeshDraw(::Database::EntityHandle entity, Rendering::BoneMeshIndex mesh);
     Rendering::StaticMeshDrawHandle createStaticMeshDraw(::Database::EntityHandle entity, Rendering::StaticMeshIndex mesh);
-    DirectionHandle createDirection(::Database::EntityHandle clientEntity, ::Database::EntityHandle simEntity, DirectionGroupHandle group);
+    DirectionInstanceHandle createDirection(::Database::EntityHandle clientEntity, DirectionGroupIndex group, ::Database::EntityHandle simEntity);
     BoneMeshRenderFeedHandle createRenderFeed(::Database::EntityHandle entity);
     InterpolationHandle getInterpolation(::Database::EntityHandle entity);
     Animation::PoseHandle getPoseHandle(::Database::EntityHandle entity);

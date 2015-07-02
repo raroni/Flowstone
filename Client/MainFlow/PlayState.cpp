@@ -24,7 +24,7 @@ namespace Client {
     namespace SimControl = Simulation::Control;
     typedef Simulation::ComponentType SimComponentType;
 
-    DirectionGroupHandle workerDirectionGroupHandle;
+    DirectionGroupIndex workerDirectionGroup;
 
     PlayState::PlayState(PlayMode playMode) :
     playMode(playMode) { }
@@ -233,8 +233,7 @@ namespace Client {
 
       setupGround();
 
-      DirectionGroup workerDirectionGroup = { 0, 1 };
-      workerDirectionGroupHandle = Direction::createGroup(&workerDirectionGroup);
+      workerDirectionGroup = Direction::createGroup(4);
 
       Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();
       CameraControl::initialize(&camera);
@@ -438,7 +437,7 @@ namespace Client {
       Database::createInterpolation(clientEntityHandle, body);
       Database::createBoneMeshDraw(clientEntityHandle, characterMesh);
       Database::createRenderFeed(clientEntityHandle);
-      Database::createDirection(clientEntityHandle, simEntityHandle, workerDirectionGroupHandle);
+      Database::createDirection(clientEntityHandle, workerDirectionGroup, simEntityHandle);
     }
 
     void PlayState::updateSimulation(double timeDelta) {

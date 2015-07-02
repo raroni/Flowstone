@@ -10,6 +10,8 @@ namespace Simulation {
     using namespace Fixie;
     namespace List = SteeringList;
     Num tolerance = Num::inverse(32);
+    void emptyEventHandler() { }
+    SteeringEventHandler eventHandler = emptyEventHandler;
 
     void update() {
       Vector3 forward(0, 0, 1);
@@ -36,6 +38,7 @@ namespace Simulation {
     }
 
     SteeringHandle create(Physics::DynamicDriverHandle handle) {
+
       return List::create(handle);
     }
 
@@ -45,6 +48,10 @@ namespace Simulation {
 
     void destroy(SteeringHandle handle) {
       List::destroy(handle);
+    }
+
+    void setEventHandler(SteeringEventHandler func) {
+      eventHandler = func;
     }
   }
 }

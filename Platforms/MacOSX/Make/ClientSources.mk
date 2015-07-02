@@ -113,6 +113,8 @@ CLIENT_CPP_SOURCES =\
   Server/Carrier.cpp\
   Client/Game.cpp\
   Client/Direction.cpp\
+  Client/DirectionInstanceList.cpp\
+  Client/DirectionGroupList.cpp\
   Client/Database.cpp\
   Client/CameraControl.cpp\
   Client/CommandList.cpp\

@@ -2,7 +2,7 @@
 
 namespace Client {
   namespace DirectionInstanceList {
-    DirectionInstanceHandle create() {
+    DirectionInstanceHandle create(DirectionGroupIndex group) {
 
     }
   }
