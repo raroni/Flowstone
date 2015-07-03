@@ -6,6 +6,10 @@ namespace Simulation {
     uint16_t count = 0;
     HarvestEvent events[max];
 
+    void add(const HarvestEvent *event) {
+      events[count++] = *event;
+    }
+
     uint16_t getCount() {
       return count;
     }

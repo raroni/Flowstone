@@ -40,7 +40,7 @@ namespace Simulation {
     HarvestResourceHandle createHarvestResource(::Database::EntityHandle entity, HarvestResourceType type);
     void destroyHarvestResource(::Database::EntityHandle entity);
     void destroyTicketTarget(::Database::EntityHandle entity);
-    HarvestWorkerHandle createHarvestWorker(::Database::EntityHandle entity, HarvestResourceHandle resource);
+    HarvestWorkerHandle createHarvestWorker(::Database::EntityHandle worker, ::Database::EntityHandle resource);
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     TargetingHandle createTargeting(::Database::EntityHandle ownerHandle, ::Database::EntityHandle targetHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);

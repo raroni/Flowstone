@@ -110,14 +110,25 @@ namespace Simulation {
       return caster.resourceHandle;
     }
 
-    HarvestWorkerHandle createHarvestWorker(::Database::EntityHandle entity, HarvestResourceHandle resource) {
+    HarvestResourceHandle getHarvestResourceHandle(::Database::EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::HarvestResource));
+      static_assert(sizeof(HarvestResourceHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        HarvestResourceHandle resourceHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::HarvestResource);
+      return caster.resourceHandle;
+    }
+
+    HarvestWorkerHandle createHarvestWorker(::Database::EntityHandle worker, ::Database::EntityHandle resource) {
       union {
         HarvestWorkerHandle workerHandle;
         ComponentHandle componentHandle;
       } caster;
-
-      caster.workerHandle = HarvestSystem::createWorker(resource);
-      linkComponent(entity, ComponentType::HarvestWorker, caster.componentHandle);
+      HarvestResourceHandle resourceHandle = getHarvestResourceHandle(resource);
+      caster.workerHandle = HarvestSystem::createWorker(worker, resource, resourceHandle);
+      linkComponent(worker, ComponentType::HarvestWorker, caster.componentHandle);
       return caster.workerHandle;
     }
 
@@ -278,17 +289,6 @@ namespace Simulation {
       } caster;
       caster.genericHandle = getComponent(entityHandle, ComponentType::TicketTarget);
       return caster.ticketHandle;
-    }
-
-    HarvestResourceHandle getHarvestResourceHandle(::Database::EntityHandle entityHandle) {
-      assert(hasComponent(entityHandle, ComponentType::HarvestResource));
-      static_assert(sizeof(HarvestResourceHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
-      union {
-        HarvestResourceHandle resourceHandle;
-        ComponentHandle genericHandle;
-      } caster;
-      caster.genericHandle = getComponent(entityHandle, ComponentType::HarvestResource);
-      return caster.resourceHandle;
     }
 
     void destroyHarvestResource(EntityHandle entityHandle) {

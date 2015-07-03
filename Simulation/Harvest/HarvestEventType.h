@@ -3,6 +3,7 @@
 
 namespace Simulation {
   enum class HarvestEventType : uint8_t {
+    WorkStart,
     Completion
   };
 }
