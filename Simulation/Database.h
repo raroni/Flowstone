@@ -15,6 +15,7 @@
 #include "Simulation/EntityList.h"
 #include "Simulation/ComponentType.h"
 #include "Simulation/Harvest/HarvestResourceHandle.h"
+#include "Simulation/Harvest/HarvestWorkerHandle.h"
 #include "Simulation/Harvest/HarvestResourceType.h"
 #include "Simulation/Steering/SteeringHandle.h"
 #include "Simulation/Steering/Steering.h"
@@ -37,6 +38,9 @@ namespace Simulation {
     Physics::DynamicDriverHandle createDynamicDriver(::Database::EntityHandle);
     Physics::SphereColliderHandle createSphereCollider(::Database::EntityHandle entity, Fixie::Num radius, Physics::ColliderType type);
     HarvestResourceHandle createHarvestResource(::Database::EntityHandle entity, HarvestResourceType type);
+    void destroyHarvestResource(::Database::EntityHandle entity);
+    void destroyTicketTarget(::Database::EntityHandle entity);
+    HarvestWorkerHandle createHarvestWorker(::Database::EntityHandle entity, HarvestResourceHandle resource);
     SteeringHandle createSteering(::Database::EntityHandle entityHandle);
     TargetingHandle createTargeting(::Database::EntityHandle ownerHandle, ::Database::EntityHandle targetHandle);
     PathfinderHandle createPathfinder(::Database::EntityHandle entityHandle, Fixie::Vector2 target);

@@ -19,6 +19,10 @@ namespace Simulation {
       return TargetList::create(handle);
     }
 
+    void destroyTarget(TicketTargetHandle handle) {
+      TargetList::destroy(handle);
+    }
+
     void update() {
       uint16_t targetCount = TargetList::getCount();
       for(uint16_t ti=0; ti<targetCount; ++ti) {

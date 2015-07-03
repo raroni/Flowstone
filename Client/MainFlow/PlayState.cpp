@@ -252,7 +252,7 @@ namespace Client {
       for(uint16_t i=0; i<entities.count; ++i) {
         EntityHandle entity = entities.values[i];
 
-        if(SimDB::hasComponent(entity, SimComponentType::Resource)) {
+        if(SimDB::hasComponent(entity, SimComponentType::HarvestResource)) {
           Physics::Body body = SimDB::getBody(entity);
           setupTree((*body.position)[0], (*body.position)[2], greenTreeMesh);
         }

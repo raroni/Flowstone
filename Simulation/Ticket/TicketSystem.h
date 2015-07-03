@@ -10,6 +10,7 @@ namespace Simulation {
   namespace TicketSystem {
     TicketRequestHandle createRequest(Physics::BodyHandle handle);
     TicketTargetHandle createTarget(::Database::EntityHandle handle);
+    void destroyTarget(TicketTargetHandle handle);
     void update();
   }
 }

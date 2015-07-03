@@ -79,6 +79,7 @@ namespace Simulation {
       DragSystem::update();
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
       physicsEngine.simulate();
+      Trees::update();
     }
 
     void exit() {

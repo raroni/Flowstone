@@ -6,6 +6,7 @@
 namespace Simulation {
   namespace Trees {
     void create(uint16_t x, uint16_t z);
+    void update();
   }
 }
 

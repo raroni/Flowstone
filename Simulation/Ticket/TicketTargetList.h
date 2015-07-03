@@ -9,6 +9,7 @@ namespace Simulation {
   namespace TicketTargetList {
     uint16_t getCount();
     TicketTargetHandle create(Database::EntityHandle handle);
+    void destroy(TicketTargetHandle handle);
     TicketTargetStatus getStatus(uint16_t index);
     Database::EntityHandle getEntityHandle(uint16_t index);
     void updateStatus(uint16_t index, TicketTargetStatus status);

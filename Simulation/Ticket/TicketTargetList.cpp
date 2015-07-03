@@ -23,6 +23,13 @@ namespace Simulation {
       return targetHandle;
     }
 
+    void destroy(TicketTargetHandle handle) {
+      uint16_t sourceIndex, destinationIndex;
+      handleList.destroy(handle, &sourceIndex, &destinationIndex);
+      entityHandles[destinationIndex] = entityHandles[sourceIndex];
+      statuses[destinationIndex] = statuses[sourceIndex];
+    }
+
     TicketTargetStatus getStatus(uint16_t index) {
       return statuses[index];
     }

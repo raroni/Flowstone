@@ -106,8 +106,19 @@ namespace Simulation {
       } caster;
 
       caster.resourceHandle = HarvestSystem::createResource(type);
-      linkComponent(entity, ComponentType::Resource, caster.componentHandle);
+      linkComponent(entity, ComponentType::HarvestResource, caster.componentHandle);
       return caster.resourceHandle;
+    }
+
+    HarvestWorkerHandle createHarvestWorker(::Database::EntityHandle entity, HarvestResourceHandle resource) {
+      union {
+        HarvestWorkerHandle workerHandle;
+        ComponentHandle componentHandle;
+      } caster;
+
+      caster.workerHandle = HarvestSystem::createWorker(resource);
+      linkComponent(entity, ComponentType::HarvestWorker, caster.componentHandle);
+      return caster.workerHandle;
     }
 
     void createWorker(EntityHandle entity) {
@@ -256,6 +267,42 @@ namespace Simulation {
       SteeringHandle steeringHandle = getSteeringHandle(entityHandle);
       SteeringSystem::destroy(steeringHandle);
       unlinkComponent(entityHandle, ComponentType::Steering);
+    }
+
+    TicketTargetHandle getTicketTargetHandle(::Database::EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::TicketTarget));
+      static_assert(sizeof(TicketTargetHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        HarvestResourceHandle ticketHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::TicketTarget);
+      return caster.ticketHandle;
+    }
+
+    HarvestResourceHandle getHarvestResourceHandle(::Database::EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::HarvestResource));
+      static_assert(sizeof(HarvestResourceHandle) == sizeof(ComponentHandle), "Handle size must be the same.");
+      union {
+        HarvestResourceHandle resourceHandle;
+        ComponentHandle genericHandle;
+      } caster;
+      caster.genericHandle = getComponent(entityHandle, ComponentType::HarvestResource);
+      return caster.resourceHandle;
+    }
+
+    void destroyHarvestResource(EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::HarvestResource));
+      HarvestResourceHandle resourceHandle = getHarvestResourceHandle(entityHandle);
+      HarvestSystem::destroyResource(resourceHandle);
+      unlinkComponent(entityHandle, ComponentType::HarvestResource);
+    }
+
+    void destroyTicketTarget(EntityHandle entityHandle) {
+      assert(hasComponent(entityHandle, ComponentType::TicketTarget));
+      TicketTargetHandle ticketHandle = getTicketTargetHandle(entityHandle);
+      TicketSystem::destroyTarget(ticketHandle);
+      unlinkComponent(entityHandle, ComponentType::TicketTarget);
     }
 
     TargetingHandle createTargeting(EntityHandle ownerHandle, EntityHandle targetHandle) {

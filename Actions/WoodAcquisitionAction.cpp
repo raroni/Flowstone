@@ -39,13 +39,16 @@ namespace Actions {
       return 0;
     }
 
+    Database::EntityHandle getTarget(Database::EntityHandle entity) {
+      TicketRequestHandle handle = SimDB::getTicketRequestHandle(entity);
+      uint16_t index = TicketRequestList::getIndex(handle);
+      return TicketRequestList::getTarget(index);
+    }
+
     void startMoving(Database::EntityHandle entity, State *state) {
       state->mode = Mode::Moving;
 
-      TicketRequestHandle handle = SimDB::getTicketRequestHandle(entity);
-      uint16_t index = TicketRequestList::getIndex(handle);
-      Database::EntityHandle targetEntity = TicketRequestList::getTarget(index);
-
+      Database::EntityHandle targetEntity = getTarget(entity);
       Physics::Body targetBody = SimDB::getBody(targetEntity);
 
       Fixie::Vector2 targetPosition;
@@ -62,6 +65,7 @@ namespace Actions {
 
     void startChopping(Database::EntityHandle entity, State *state) {
       state->mode = Mode::Chopping;
+      SimDB::createHarvestWorker(entity, getTarget(entity));
     }
 
     void updateExecutionTicketing(Database::EntityHandle entity, State *state) {
@@ -83,6 +87,7 @@ namespace Actions {
     }
 
     void updateExecutionChopping(Database::EntityHandle entity, State *state) {
+
     }
 
     void startExecution(Database::EntityHandle entity, void *rawState, const void *options) {
