@@ -23,7 +23,7 @@ namespace Simulation {
     void saveNode(uint32_t index, Node node);
     static const uint32_t max = Config::mapSizeMax;
     Node nodes[max];
-    uint16_t indices[max];
+    uint32_t indices[max];
     uint32_t count = 0;
   };
 }

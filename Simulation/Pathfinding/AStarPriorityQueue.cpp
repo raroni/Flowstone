@@ -14,21 +14,21 @@ namespace Simulation {
   }
 
   void AStarPriorityQueue::bubbleUp(uint32_t currentIndex) {
-    const Node originalNode = nodes[currentIndex];
+    const Node startNode = nodes[currentIndex];
     while(1) {
       if(currentIndex == 0) {
         break;
       }
 
       const uint32_t parentIndex = calcParentIndex(currentIndex);
-      if(originalNode.priority >= nodes[parentIndex].priority) {
+      if(startNode.priority >= nodes[parentIndex].priority) {
         break;
       }
 
       saveNode(currentIndex, nodes[parentIndex]);
       currentIndex = parentIndex;
     }
-    saveNode(currentIndex, originalNode);
+    saveNode(currentIndex, startNode);
   }
 
   void AStarPriorityQueue::saveNode(uint32_t index, Node node) {
@@ -62,26 +62,30 @@ namespace Simulation {
     count = 0;
   }
 
-  void AStarPriorityQueue::bubbleDown(uint32_t currentIndex) {
-    Node originalNode = nodes[currentIndex];
+  void AStarPriorityQueue::bubbleDown(const uint32_t startIndex) {
+    Node startNode = nodes[startIndex];
+    uint32_t currentIndex = startIndex;
     while(1) {
-      uint32_t smallest = currentIndex;
+      uint32_t smallestIndex = startIndex;
+      Fixie::Num smallestPriority = startNode.priority;
       uint32_t leftChildIndex = calcLeftChildIndex(currentIndex);
-      if(leftChildIndex < count && nodes[leftChildIndex].priority < nodes[smallest].priority) {
-        smallest = leftChildIndex;
-      }
       uint32_t rightChildIndex = calcRightChildIndex(currentIndex);
-      if(rightChildIndex < count && nodes[rightChildIndex].priority < nodes[smallest].priority) {
-        smallest = rightChildIndex;
+
+      if(leftChildIndex < count && nodes[leftChildIndex].priority <= smallestPriority) {
+        smallestPriority = nodes[leftChildIndex].priority;
+        smallestIndex = leftChildIndex;
       }
-      if(smallest != currentIndex) {
-        saveNode(currentIndex, nodes[smallest]);
-        currentIndex = smallest;
+      if(rightChildIndex < count && nodes[rightChildIndex].priority <= smallestPriority) {
+        smallestIndex = rightChildIndex;
+      }
+      if(smallestIndex != startIndex) {
+        saveNode(currentIndex, nodes[smallestIndex]);
+        currentIndex = smallestIndex;
       } else {
         break;
       }
     }
-    saveNode(currentIndex, originalNode);
+    saveNode(currentIndex, startNode);
   }
 
   MapFieldIndex AStarPriorityQueue::pop() {
