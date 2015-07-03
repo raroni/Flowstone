@@ -157,6 +157,7 @@ CLIENT_CPP_SOURCES =\
   Simulation/Harvest/HarvestSystem.cpp\
   Simulation/Harvest/HarvestEventList.cpp\
   Simulation/Harvest/HarvestResourceList.cpp\
+  Simulation/Harvest/HarvestWorkerList.cpp\
   Simulation/CommandList.cpp\
   Simulation/EventList.cpp\
   Simulation/Database.cpp\

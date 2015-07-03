@@ -4,6 +4,7 @@
 #include "Actions/System.h"
 #include "Database/EntityHandle.h"
 #include "Simulation/Database.h"
+#include "Simulation/Harvest/HarvestSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
 #include "Simulation/Targeting/TargetingSystem.h"
@@ -76,6 +77,7 @@ namespace Simulation {
       TargetingSystem::update();
       PathfindingSystem::update();
       SteeringSystem::update();
+      HarvestSystem::update();
       DragSystem::update();
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
       physicsEngine.simulate();

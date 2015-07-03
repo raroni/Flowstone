@@ -10,6 +10,7 @@ namespace Simulation {
     HarvestResourceHandle createResource(HarvestResourceType type);
     void destroyResource(HarvestResourceHandle resource);
     HarvestWorkerHandle createWorker(HarvestResourceHandle resource);
+    void update();
   }
 }
 
