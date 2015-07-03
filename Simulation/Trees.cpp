@@ -46,6 +46,8 @@ namespace Simulation {
           case HarvestEventType::Completion:
             processHarvestCompletionEvent(event);
             break;
+          default:
+            break;
         }
       }
     }
