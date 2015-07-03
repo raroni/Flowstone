@@ -14,6 +14,7 @@ namespace Simulation {
       HarvestResourceHandle handle;
       handleList.create(&index, &handle);
       types[index] = type;
+      return handle;
     }
 
     void destroy(HarvestResourceHandle handle) {

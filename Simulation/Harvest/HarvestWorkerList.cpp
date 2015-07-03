@@ -14,6 +14,7 @@ namespace Simulation {
       HarvestWorkerHandle handle;
       handleList.create(&index, &handle);
       resourceHandles[index] = resourceHandle;
+      return handle;
     }
 
     HarvestResourceHandle getResourceHandle(uint16_t index) {
