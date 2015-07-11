@@ -91,11 +91,11 @@ namespace Fixie {
       return static_cast<double>(raw) / (1 << numPrecision);
     }
     operator int32_t() const {
-      return raw / (1 << numPrecision);
+      return raw >> numPrecision;
     }
     operator uint16_t() const {
       assert(raw >= 0);
-      return raw / (1 << numPrecision);
+      return raw >> numPrecision;
     }
     static Num createByRaw(int32_t raw) {
       Num n;
