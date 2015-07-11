@@ -61,11 +61,6 @@ namespace Fixie {
       result /= other;
       return result;
     }
-    Num operator%(Num rhs) const {
-      int32_t a = *this;
-      int32_t b = rhs;
-      return a % b;
-    }
     bool operator==(const Num &other) const {
       return raw == other.raw;
     }
