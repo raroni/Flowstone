@@ -10,8 +10,7 @@ namespace Client {
       Simulation::PlayerHandle playerID,
       double timeDelta,
       const CommandList &clientCommands,
-      Simulation::CommandList &simulationCommands,
-      Simulation::EventList &simulationEvents
+      Simulation::CommandList &simulationCommands
     );
   }
 }

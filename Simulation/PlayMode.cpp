@@ -71,7 +71,7 @@ namespace Simulation {
       createWorker(2, 3);
     }
 
-    void tick(const CommandList &commands, EventList &events) {
+    void tick(const CommandList &commands) {
       EventSystem::clear();
       Behavior::System::update();
       Actions::System::update();

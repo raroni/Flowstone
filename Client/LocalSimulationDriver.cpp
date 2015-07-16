@@ -27,14 +27,13 @@ namespace Client {
       Simulation::PlayerHandle playerID,
       double timeDelta,
       const CommandList &clientCommands,
-      Simulation::CommandList &simulationCommands,
-      Simulation::EventList &simulationEvents
+      Simulation::CommandList &simulationCommands
     ) {
       convertCommands(playerID, clientCommands, simulationCommands);
 
       timeBank += timeDelta;
       do {
-        Simulation::Control::tick(simulationCommands, simulationEvents);
+        Simulation::Control::tick(simulationCommands);
         simulationCommands.clear();
         timeBank -= static_cast<double>(Simulation::Config::tickDuration)/1000;
       } while(timeBank*1000 >= Simulation::Config::tickDuration);

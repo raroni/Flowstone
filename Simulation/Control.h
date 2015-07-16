@@ -2,7 +2,6 @@
 #define SIMULATION_CONTROL_H
 
 #include "Simulation/CommandList.h"
-#include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
 
 namespace Simulation {
@@ -10,7 +9,7 @@ namespace Simulation {
     PlayerHandle createPlayer();
     void start();
     void stop();
-    void tick(const CommandList &commands, EventList &events);
+    void tick(const CommandList &commands);
     uint16_t getFrame();
   }
 }

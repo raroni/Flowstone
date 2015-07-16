@@ -447,7 +447,7 @@ namespace Client {
 
     void PlayState::updateSimulation(double timeDelta) {
       if(playMode == PlayMode::Local) {
-        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands, simulationEvents);
+        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands);
       } else {
         // NetworkSimulationDriver::update(timeDelta, commandList);
         assert(false); // not implemented yet
@@ -458,13 +458,6 @@ namespace Client {
       if(SimControl::getFrame() == 0) {
         clientCommands.writeTestCommand(playerID);
       }
-    }
-
-    void PlayState::processSimulationEvents() {
-      for(uint8_t i=0; i<simulationEvents.getCount(); ++i) {
-
-      }
-      simulationEvents.clear();
     }
 
     void PlayState::update(double timeDelta, const Keyboard &keyboard) {
@@ -478,8 +471,6 @@ namespace Client {
       clientCommands.clear();
       Interpolation::reload(Simulation::physicsEngine.getBodies());
       Interpolation::interpolate(0.5); // todo: fix this
-
-      processSimulationEvents();
 
       CameraControl::update(timeDelta, &keyboard, &Rendering::Renderer::getCameraTransform());
       updateAtmosphereColor();

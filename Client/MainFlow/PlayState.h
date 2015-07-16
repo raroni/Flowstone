@@ -4,7 +4,6 @@
 #include <stddef.h>
 #include "Animation/Animator.h"
 #include "Simulation/CommandList.h"
-#include "Simulation/EventList.h"
 #include "Simulation/PlayerHandle.h"
 #include "Database/EntityHandle.h"
 #include "Rendering/BoneMeshIndex.h"
@@ -39,11 +38,9 @@ namespace Client {
       Rendering::BoneMeshIndex characterMesh;
       TorchManager torches;
       Simulation::CommandList simulationCommands;
-      Simulation::EventList simulationEvents;
       CommandList clientCommands;
       void configureAnimation();
       void configureRenderer();
-      void processSimulationEvents();
       void writeCommands();
       void updateSimulation(double timeDelta);
       void setupWorker(::Database::EntityHandle worker);
