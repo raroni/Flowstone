@@ -1,6 +1,5 @@
 #include "Database/EntityHandle.h"
-#include "Simulation/Harvest/HarvestEvent.h"
-#include "Simulation/Harvest/HarvestEventList.h"
+#include "Simulation/Event/HarvestWorkStartEvent.h"
 #include "Simulation/Database.h"
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/MapFieldIndex.h"
@@ -27,7 +26,7 @@ namespace Simulation {
       map.set(fieldIndex, MapFieldType::Tree);
     }
 
-    void processHarvestCompletionEvent(const HarvestEvent *event) {
+    void processHarvestCompletionEvent(const HarvestWorkStartEvent *event) {
       ::Database::EntityHandle tree = event->resource;
       Database::destroyHarvestResource(tree);
       Database::destroyTicketTarget(tree);
@@ -39,6 +38,9 @@ namespace Simulation {
     }
 
     void update() {
+      /*
+      Todo: Use new EventSystem when ready
+
       uint16_t eventCount = HarvestEventList::getCount();
       for(uint16_t i=0; i<eventCount; ++i) {
         const HarvestEvent *event = HarvestEventList::get(i);
@@ -50,6 +52,7 @@ namespace Simulation {
             break;
         }
       }
+      */
     }
   }
 }

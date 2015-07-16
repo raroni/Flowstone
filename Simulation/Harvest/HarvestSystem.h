@@ -12,7 +12,6 @@ namespace Simulation {
     void destroyResource(HarvestResourceHandle resource);
     HarvestWorkerHandle createWorker(::Database::EntityHandle worker, ::Database::EntityHandle resource, HarvestResourceHandle resourceHandle);
     void update();
-    void clearEvents();
   }
 }
 

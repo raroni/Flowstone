@@ -1,6 +1,7 @@
 #include <assert.h>
+#include "Simulation/Event/HarvestWorkStartEvent.h"
+#include "Simulation/Event/EventSystem.h"
 #include "Simulation/Config.h"
-#include "Simulation/Harvest/HarvestEventList.h"
 #include "Simulation/Harvest/HarvestResourceList.h"
 #include "Simulation/Harvest/HarvestWorkerList.h"
 #include "Simulation/Harvest/HarvestSystem.h"
@@ -8,12 +9,10 @@
 namespace Simulation {
   namespace HarvestSystem {
     HarvestWorkerHandle createWorker(Database::EntityHandle worker, Database::EntityHandle resource, HarvestResourceHandle resourceHandle) {
-      HarvestEvent event = {
-        .type = HarvestEventType::WorkStart,
-        .worker = worker,
-        .resource = resource
-      };
-      HarvestEventList::add(&event);
+      HarvestWorkStartEvent event;
+      event.worker = worker;
+      event.resource = resource;
+      EventSystem::report(&event, sizeof(event));
       return HarvestWorkerList::create(worker, resource, resourceHandle);
     }
 
@@ -30,10 +29,6 @@ namespace Simulation {
       for(uint16_t i=0; i<count; ++i) {
 
       }
-    }
-
-    void clearEvents() {
-      HarvestEventList::clear();
     }
   }
 }

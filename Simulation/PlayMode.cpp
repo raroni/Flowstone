@@ -7,6 +7,7 @@
 #include "Simulation/Harvest/HarvestSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
+#include "Simulation/Event/EventSystem.h"
 #include "Simulation/Targeting/TargetingSystem.h"
 #include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/Pathfinding/Map.h"
@@ -71,6 +72,7 @@ namespace Simulation {
     }
 
     void tick(const CommandList &commands, EventList &events) {
+      EventSystem::clear();
       Behavior::System::update();
       Actions::System::update();
       TicketSystem::update();
@@ -82,7 +84,6 @@ namespace Simulation {
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
       physicsEngine.simulate();
       Trees::update();
-      HarvestSystem::clearEvents();
     }
 
     void exit() {
