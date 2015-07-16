@@ -12,6 +12,7 @@ CLIENT_OBJ_C_SOURCES =\
 CLIENT_CPP_SOURCES =\
   Misc/Error.cpp\
   Misc/LoopStream.cpp\
+  Misc/FrameAllocator.cpp\
   Misc/IntegerPool.cpp\
   Misc/HandleList.cpp\
   Misc/GameTime.cpp\
