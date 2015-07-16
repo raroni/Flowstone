@@ -9,6 +9,7 @@ public:
   void* alloc(size_t size);
   void clear();
   void terminate();
+  void free(void *chunk);
 private:
   void grow(size_t minimumCapacity);
   void *buffer = nullptr;

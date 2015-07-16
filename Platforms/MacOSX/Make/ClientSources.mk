@@ -160,6 +160,7 @@ CLIENT_CPP_SOURCES =\
   Simulation/Harvest/HarvestResourceList.cpp\
   Simulation/Harvest/HarvestWorkerList.cpp\
   Simulation/CommandList.cpp\
+  Simulation/Event/EventStreamWriter.cpp\
   Simulation/EventList.cpp\
   Simulation/Database.cpp\
   Animation/Animator.cpp\

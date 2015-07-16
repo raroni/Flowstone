@@ -39,6 +39,10 @@ void FrameAllocator::terminate() {
   bufferCapacity = 0;
 }
 
+void FrameAllocator::free(void *chunk) {
+
+}
+
 void FrameAllocator::clear() {
   bufferLength = 0;
 }
