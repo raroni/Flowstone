@@ -10,6 +10,7 @@ namespace Simulation {
     FrameAllocator *allocator = nullptr;
     void write(const void *event, uint8_t eventLength);
     const void* getStream() const;
+    void clear();
   private:
     void grow(uint16_t minimumCapacity);
     uint16_t streamLength = 0;

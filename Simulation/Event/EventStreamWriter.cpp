@@ -16,6 +16,14 @@ namespace Simulation {
     return stream;
   }
 
+  void EventStreamWriter::clear() {
+    if(streamCapacity != 0) {
+      allocator->free(stream);
+      streamCapacity = 0;
+      streamLength = 0;
+    }
+  }
+
   void EventStreamWriter::grow(uint16_t minimumCapacity) {
     static uint16_t blockSize = 1024;
     uint16_t minimumCapacityIncrease = minimumCapacity-streamCapacity;
@@ -27,7 +35,7 @@ namespace Simulation {
     void *oldStream = stream;
     void *newStream = allocator->alloc(newCapacity);
 
-    if(oldStream != nullptr) {
+    if(oldCapacity != 0) {
       memcpy(newStream, oldStream, oldCapacity);
       allocator->free(oldStream);
     }
