@@ -1,20 +1,20 @@
 #include "Misc/FrameAllocator.h"
 #include "Simulation/Event/EventSubscriptionList.h"
-#include "Simulation/Event/EventStreamWriter.h"
+#include "Simulation/Event/EventList.h"
 #include "Simulation/Event/EventSystem.h"
 
 namespace Simulation {
   namespace EventSystem {
-    EventStreamWriter mainWriter;
+    EventList mainList;
     FrameAllocator allocator;
 
     void initialize() {
-      mainWriter.allocator = &allocator;
+      mainList.setAllocator(&allocator);
       EventSubscriptionList::initialize(&allocator);
     }
 
     void report(const void *event, uint8_t length) {
-      mainWriter.write(event, length);
+      mainList.add(event, length);
     }
 
     uint8_t createSubscription(EventType *types, uint8_t typeCount) {
@@ -22,7 +22,7 @@ namespace Simulation {
     }
 
     void clear() {
-      mainWriter.clear();
+      mainList.clear();
       allocator.clear();
     }
   }
