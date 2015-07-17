@@ -7,6 +7,7 @@ namespace Simulation {
   namespace EventSystem {
     void report(const void *event, uint8_t length);
     void clear();
+    void pump();
   }
 }
 

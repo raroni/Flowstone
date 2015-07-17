@@ -9,6 +9,9 @@ namespace Simulation {
     void setAllocator(FrameAllocator *allocator);
     void add(const void *event, uint8_t eventLength);
     void clear();
+    uint16_t getCount() const;
+    uint8_t getEventLength(uint16_t index);
+    const void* getStream() const;
   private:
     void grow();
     FrameAllocator *allocator = nullptr;

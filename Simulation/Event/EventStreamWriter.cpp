@@ -16,6 +16,10 @@ namespace Simulation {
     return stream;
   }
 
+  uint16_t EventStreamWriter::getLength() const {
+    return streamLength;
+  }
+
   void EventStreamWriter::clear() {
     if(streamCapacity != 0) {
       allocator->free(stream);

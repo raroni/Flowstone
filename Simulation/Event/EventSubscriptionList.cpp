@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "Conrad/BitSet128.h"
 #include "Simulation/Event/EventConfig.h"
+#include "Simulation/Event/EventStreamWriter.h"
 #include "Simulation/Event/EventSubscriptionList.h"
 
 namespace Simulation {
@@ -17,17 +18,21 @@ namespace Simulation {
       }
     }
 
+    void clearEvents(uint8_t subscriptionID) {
+      writers[subscriptionID].clear();
+    }
+
     uint8_t create(EventType *types, uint8_t typeCount) {
       assert(count != max);
       BitSet128 *set = &typeSets[count];
       for(uint8_t i=0; i<typeCount; ++i) {
         set->set(static_cast<uint8_t>(types[i]));
       }
-      count++;
+      return count++;
     }
 
-    EventStreamWriter* getWriter(uint8_t subscriptionID) {
-      return &writers[subscriptionID];
+    void addEvent(uint8_t subscriptionID, const void *event, uint8_t length) {
+      writers[subscriptionID].write(event, length);
     }
 
     uint8_t getCount() {

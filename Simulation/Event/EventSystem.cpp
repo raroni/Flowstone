@@ -1,6 +1,8 @@
+#include <assert.h>
 #include "Misc/FrameAllocator.h"
 #include "Simulation/Event/EventSubscriptionList.h"
 #include "Simulation/Event/EventList.h"
+#include "Simulation/Event/EventListIterator.h"
 #include "Simulation/Event/EventSystem.h"
 
 namespace Simulation {
@@ -21,8 +23,31 @@ namespace Simulation {
       return EventSubscriptionList::create(types, typeCount);
     }
 
-    void clear() {
+    void pump() {
+      uint16_t eventCount = mainList.getCount();
+      uint8_t subscriptionCount = EventSubscriptionList::getCount();
+      EventListIterator iterator;
+      iterator.list = &mainList;
+
+      for(; !iterator.atEnd(); iterator.next()) {
+        const void *event = iterator.getEvent();
+        uint8_t eventLength = iterator.getEventLength();
+        EventType type = *reinterpret_cast<const EventType*>(event);
+        for(uint8_t s=0; s<subscriptionCount; ++s) {
+          if(EventSubscriptionList::hasType(s, type)) {
+            EventSubscriptionList::addEvent(s, event, eventLength);
+          }
+        }
+      }
       mainList.clear();
+    }
+
+    void clear() {
+      assert(mainList.getCount() == 0);
+      uint8_t subscriptionCount = EventSubscriptionList::getCount();
+      for(uint16_t i=0; i<subscriptionCount; ++i) {
+        EventSubscriptionList::clearEvents(i);
+      }
       allocator.clear();
     }
   }

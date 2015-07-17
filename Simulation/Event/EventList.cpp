@@ -16,6 +16,18 @@ namespace Simulation {
     count++;
   }
 
+  const void* EventList::getStream() const {
+    return streamWriter.getStream();
+  }
+
+  uint8_t EventList::getEventLength(uint16_t index) {
+    return lengths[index];
+  }
+
+  uint16_t EventList::getCount() const {
+    return count;
+  }
+
   void EventList::grow() {
     uint16_t oldMax = max;
     uint16_t newMax = oldMax+100;

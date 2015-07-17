@@ -11,6 +11,7 @@ namespace Simulation {
     void write(const void *event, uint8_t eventLength);
     const void* getStream() const;
     void clear();
+    uint16_t getLength() const;
   private:
     void grow(uint16_t minimumCapacity);
     uint16_t streamLength = 0;
