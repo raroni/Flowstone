@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A0C2DCC1B467DC30068796C /* HarvestEventList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C2DC01B467DC30068796C /* HarvestEventList.cpp */; };
 		3A0C2DCD1B467DC30068796C /* HarvestResourceList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C2DC41B467DC30068796C /* HarvestResourceList.cpp */; };
 		3A0C2DCE1B467DC30068796C /* HarvestSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C2DC71B467DC30068796C /* HarvestSystem.cpp */; };
 		3A0C2DCF1B467DC30068796C /* HarvestWorkerList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C2DCA1B467DC30068796C /* HarvestWorkerList.cpp */; };
@@ -174,7 +173,6 @@
 		3ABF099F1B3FE17E00C4D9BB /* Control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF06831B3FE17D00C4D9BB /* Control.cpp */; };
 		3ABF09A01B3FE17E00C4D9BB /* Database.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF06851B3FE17D00C4D9BB /* Database.cpp */; };
 		3ABF09A11B3FE17E00C4D9BB /* DragSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF06891B3FE17D00C4D9BB /* DragSystem.cpp */; };
-		3ABF09A21B3FE17E00C4D9BB /* EventList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF068C1B3FE17D00C4D9BB /* EventList.cpp */; };
 		3ABF09A31B3FE17E00C4D9BB /* Mode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF068E1B3FE17D00C4D9BB /* Mode.cpp */; };
 		3ABF09A41B3FE17E00C4D9BB /* AStar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF06921B3FE17D00C4D9BB /* AStar.cpp */; };
 		3ABF09A51B3FE17E00C4D9BB /* AStarCostBucket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF06941B3FE17D00C4D9BB /* AStarCostBucket.cpp */; };
@@ -221,6 +219,12 @@
 		3ACA6BF71B3F2D3200CC0D1D /* SysNet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA6BDC1B3F2D3200CC0D1D /* SysNet.cpp */; };
 		3ACA6BF81B3F2D3200CC0D1D /* SysThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA6BDD1B3F2D3200CC0D1D /* SysThread.cpp */; };
 		3ACA6BF91B3F2D3200CC0D1D /* SysTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA6BDE1B3F2D3200CC0D1D /* SysTime.cpp */; };
+		3AD10BB41B58E8A6006DF4E4 /* EventList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD10BA81B58E8A6006DF4E4 /* EventList.cpp */; };
+		3AD10BB51B58E8A6006DF4E4 /* EventListIterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD10BAA1B58E8A6006DF4E4 /* EventListIterator.cpp */; };
+		3AD10BB61B58E8A6006DF4E4 /* EventStreamWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD10BAC1B58E8A6006DF4E4 /* EventStreamWriter.cpp */; };
+		3AD10BB71B58E8A6006DF4E4 /* EventSubscriptionList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD10BAE1B58E8A6006DF4E4 /* EventSubscriptionList.cpp */; };
+		3AD10BB81B58E8A6006DF4E4 /* EventSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD10BB01B58E8A6006DF4E4 /* EventSystem.cpp */; };
+		3AD10BBB1B58E8E7006DF4E4 /* FrameAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD10BB91B58E8E7006DF4E4 /* FrameAllocator.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -250,10 +254,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3A0C2DBF1B467DC30068796C /* HarvestEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarvestEvent.h; sourceTree = "<group>"; };
-		3A0C2DC01B467DC30068796C /* HarvestEventList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HarvestEventList.cpp; sourceTree = "<group>"; };
-		3A0C2DC11B467DC30068796C /* HarvestEventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarvestEventList.h; sourceTree = "<group>"; };
-		3A0C2DC21B467DC30068796C /* HarvestEventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarvestEventType.h; sourceTree = "<group>"; };
 		3A0C2DC31B467DC30068796C /* HarvestResourceHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarvestResourceHandle.h; sourceTree = "<group>"; };
 		3A0C2DC41B467DC30068796C /* HarvestResourceList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HarvestResourceList.cpp; sourceTree = "<group>"; };
 		3A0C2DC51B467DC30068796C /* HarvestResourceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarvestResourceList.h; sourceTree = "<group>"; };
@@ -712,8 +712,6 @@
 		3ABF06891B3FE17D00C4D9BB /* DragSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DragSystem.cpp; sourceTree = "<group>"; };
 		3ABF068A1B3FE17D00C4D9BB /* DragSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragSystem.h; sourceTree = "<group>"; };
 		3ABF068B1B3FE17D00C4D9BB /* EntityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityList.h; sourceTree = "<group>"; };
-		3ABF068C1B3FE17D00C4D9BB /* EventList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventList.cpp; sourceTree = "<group>"; };
-		3ABF068D1B3FE17D00C4D9BB /* EventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventList.h; sourceTree = "<group>"; };
 		3ABF068E1B3FE17D00C4D9BB /* Mode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mode.cpp; sourceTree = "<group>"; };
 		3ABF068F1B3FE17D00C4D9BB /* Mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode.h; sourceTree = "<group>"; };
 		3ABF06901B3FE17D00C4D9BB /* ModeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeName.h; sourceTree = "<group>"; };
@@ -850,6 +848,21 @@
 		3ACA6BDD1B3F2D3200CC0D1D /* SysThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysThread.cpp; sourceTree = "<group>"; };
 		3ACA6BDE1B3F2D3200CC0D1D /* SysTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysTime.cpp; sourceTree = "<group>"; };
 		3ACA6BFD1B3F2D4A00CC0D1D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Xcode/Info.plist; sourceTree = "<group>"; };
+		3AD10BA71B58E8A6006DF4E4 /* EventConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventConfig.h; sourceTree = "<group>"; };
+		3AD10BA81B58E8A6006DF4E4 /* EventList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventList.cpp; sourceTree = "<group>"; };
+		3AD10BA91B58E8A6006DF4E4 /* EventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventList.h; sourceTree = "<group>"; };
+		3AD10BAA1B58E8A6006DF4E4 /* EventListIterator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventListIterator.cpp; sourceTree = "<group>"; };
+		3AD10BAB1B58E8A6006DF4E4 /* EventListIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventListIterator.h; sourceTree = "<group>"; };
+		3AD10BAC1B58E8A6006DF4E4 /* EventStreamWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventStreamWriter.cpp; sourceTree = "<group>"; };
+		3AD10BAD1B58E8A6006DF4E4 /* EventStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventStreamWriter.h; sourceTree = "<group>"; };
+		3AD10BAE1B58E8A6006DF4E4 /* EventSubscriptionList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSubscriptionList.cpp; sourceTree = "<group>"; };
+		3AD10BAF1B58E8A6006DF4E4 /* EventSubscriptionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSubscriptionList.h; sourceTree = "<group>"; };
+		3AD10BB01B58E8A6006DF4E4 /* EventSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSystem.cpp; sourceTree = "<group>"; };
+		3AD10BB11B58E8A6006DF4E4 /* EventSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSystem.h; sourceTree = "<group>"; };
+		3AD10BB21B58E8A6006DF4E4 /* EventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventType.h; sourceTree = "<group>"; };
+		3AD10BB31B58E8A6006DF4E4 /* HarvestWorkStartEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarvestWorkStartEvent.h; sourceTree = "<group>"; };
+		3AD10BB91B58E8E7006DF4E4 /* FrameAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameAllocator.cpp; sourceTree = "<group>"; };
+		3AD10BBA1B58E8E7006DF4E4 /* FrameAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameAllocator.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -866,10 +879,6 @@
 		3A0C2DBE1B467DC30068796C /* Harvest */ = {
 			isa = PBXGroup;
 			children = (
-				3A0C2DBF1B467DC30068796C /* HarvestEvent.h */,
-				3A0C2DC01B467DC30068796C /* HarvestEventList.cpp */,
-				3A0C2DC11B467DC30068796C /* HarvestEventList.h */,
-				3A0C2DC21B467DC30068796C /* HarvestEventType.h */,
 				3A0C2DC31B467DC30068796C /* HarvestResourceHandle.h */,
 				3A0C2DC41B467DC30068796C /* HarvestResourceList.cpp */,
 				3A0C2DC51B467DC30068796C /* HarvestResourceList.h */,
@@ -1454,6 +1463,8 @@
 				3ABF05D41B3FE17D00C4D9BB /* Error.cpp */,
 				3ABF05D51B3FE17D00C4D9BB /* Error.h */,
 				3ABF05D61B3FE17D00C4D9BB /* GameTime.cpp */,
+				3AD10BB91B58E8E7006DF4E4 /* FrameAllocator.cpp */,
+				3AD10BBA1B58E8E7006DF4E4 /* FrameAllocator.h */,
 				3ABF05D71B3FE17D00C4D9BB /* GameTime.h */,
 				3ABF05D81B3FE17D00C4D9BB /* HandleList.cpp */,
 				3ABF05D91B3FE17D00C4D9BB /* HandleList.h */,
@@ -1663,6 +1674,7 @@
 		3ABF067D1B3FE17D00C4D9BB /* Simulation */ = {
 			isa = PBXGroup;
 			children = (
+				3AD10BA61B58E8A6006DF4E4 /* Event */,
 				3ABF06871B3FE17D00C4D9BB /* Drag */,
 				3A0C2DBE1B467DC30068796C /* Harvest */,
 				3ABF06911B3FE17D00C4D9BB /* Pathfinding */,
@@ -1679,8 +1691,6 @@
 				3ABF06851B3FE17D00C4D9BB /* Database.cpp */,
 				3ABF06861B3FE17D00C4D9BB /* Database.h */,
 				3ABF068B1B3FE17D00C4D9BB /* EntityList.h */,
-				3ABF068C1B3FE17D00C4D9BB /* EventList.cpp */,
-				3ABF068D1B3FE17D00C4D9BB /* EventList.h */,
 				3ABF068E1B3FE17D00C4D9BB /* Mode.cpp */,
 				3ABF068F1B3FE17D00C4D9BB /* Mode.h */,
 				3ABF06901B3FE17D00C4D9BB /* ModeName.h */,
@@ -2108,6 +2118,26 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		3AD10BA61B58E8A6006DF4E4 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				3AD10BA71B58E8A6006DF4E4 /* EventConfig.h */,
+				3AD10BA81B58E8A6006DF4E4 /* EventList.cpp */,
+				3AD10BA91B58E8A6006DF4E4 /* EventList.h */,
+				3AD10BAA1B58E8A6006DF4E4 /* EventListIterator.cpp */,
+				3AD10BAB1B58E8A6006DF4E4 /* EventListIterator.h */,
+				3AD10BAC1B58E8A6006DF4E4 /* EventStreamWriter.cpp */,
+				3AD10BAD1B58E8A6006DF4E4 /* EventStreamWriter.h */,
+				3AD10BAE1B58E8A6006DF4E4 /* EventSubscriptionList.cpp */,
+				3AD10BAF1B58E8A6006DF4E4 /* EventSubscriptionList.h */,
+				3AD10BB01B58E8A6006DF4E4 /* EventSystem.cpp */,
+				3AD10BB11B58E8A6006DF4E4 /* EventSystem.h */,
+				3AD10BB21B58E8A6006DF4E4 /* EventType.h */,
+				3AD10BB31B58E8A6006DF4E4 /* HarvestWorkStartEvent.h */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2179,6 +2209,7 @@
 				3ABF09A31B3FE17E00C4D9BB /* Mode.cpp in Sources */,
 				3ABF09AB1B3FE17E00C4D9BB /* PathfindingSystem.cpp in Sources */,
 				3ABF09121B3FE17E00C4D9BB /* Keyboard.cpp in Sources */,
+				3AD10BBB1B58E8E7006DF4E4 /* FrameAllocator.cpp in Sources */,
 				3ABF093C1B3FE17E00C4D9BB /* Vector2.cpp in Sources */,
 				3ABF091D1B3FE17E00C4D9BB /* EntityManager.cpp in Sources */,
 				3ABF074C1B3FE17D00C4D9BB /* Registry.cpp in Sources */,
@@ -2207,6 +2238,7 @@
 				3A52AA531B400FC500F3169F /* WoodAcquisitionAction.cpp in Sources */,
 				3A52AA481B400FC500F3169F /* ExecutionList.cpp in Sources */,
 				3A52AA4B1B400FC500F3169F /* InstanceHandleSet.cpp in Sources */,
+				3AD10BB81B58E8A6006DF4E4 /* EventSystem.cpp in Sources */,
 				3ABF09151B3FE17E00C4D9BB /* MathConversion.cpp in Sources */,
 				3ABF090A1B3FE17E00C4D9BB /* AtmosphereColor.cpp in Sources */,
 				3ABF09A81B3FE17E00C4D9BB /* Map.cpp in Sources */,
@@ -2235,6 +2267,7 @@
 				3ABF09671B3FE17E00C4D9BB /* BoneDrawSet.cpp in Sources */,
 				3ACA6BF51B3F2D3200CC0D1D /* SysFile.mm in Sources */,
 				3ABF074E1B3FE17D00C4D9BB /* NodeTypes.cpp in Sources */,
+				3AD10BB61B58E8A6006DF4E4 /* EventStreamWriter.cpp in Sources */,
 				3ABF09B21B3FE17E00C4D9BB /* TargetingSystem.cpp in Sources */,
 				3ABF09101B3FE17E00C4D9BB /* Game.cpp in Sources */,
 				3ABF09781B3FE17E00C4D9BB /* PointLightPass.cpp in Sources */,
@@ -2305,10 +2338,10 @@
 				3ABF09241B3FE17E00C4D9BB /* Vector2.cpp in Sources */,
 				3ABF092C1B3FE17E00C4D9BB /* AckSet32.cpp in Sources */,
 				3ABF099E1B3FE17E00C4D9BB /* CommandList.cpp in Sources */,
+				3AD10BB51B58E8A6006DF4E4 /* EventListIterator.cpp in Sources */,
 				3ABF09181B3FE17E00C4D9BB /* RenderFeed.cpp in Sources */,
 				3ABF09351B3FE17E00C4D9BB /* Util.cpp in Sources */,
 				3ABF09451B3FE17E00C4D9BB /* FailDummyNode.cpp in Sources */,
-				3A0C2DCC1B467DC30068796C /* HarvestEventList.cpp in Sources */,
 				3ACA6BF71B3F2D3200CC0D1D /* SysNet.cpp in Sources */,
 				3ABF09551B3FE17E00C4D9BB /* System.cpp in Sources */,
 				3ABF09761B3FE17E00C4D9BB /* MeshHelper.cpp in Sources */,
@@ -2337,11 +2370,12 @@
 				3ABF09391B3FE17E00C4D9BB /* TransformFactory3D.cpp in Sources */,
 				3A52AA4A1B400FC500F3169F /* Instance.cpp in Sources */,
 				3ABF096C1B3FE17E00C4D9BB /* Culler.cpp in Sources */,
+				3AD10BB71B58E8A6006DF4E4 /* EventSubscriptionList.cpp in Sources */,
 				3ABF095C1B3FE17E00C4D9BB /* HandleList.cpp in Sources */,
 				3ABF09691B3FE17E00C4D9BB /* BoneMeshRegistry.cpp in Sources */,
 				3ABF09591B3FE17E00C4D9BB /* Update.cpp in Sources */,
+				3AD10BB41B58E8A6006DF4E4 /* EventList.cpp in Sources */,
 				3ABF098A1B3FE17E00C4D9BB /* Carrier.cpp in Sources */,
-				3ABF09A21B3FE17E00C4D9BB /* EventList.cpp in Sources */,
 				3ABF09331B3FE17E00C4D9BB /* ServerOutBuffer.cpp in Sources */,
 				3A0C2DCE1B467DC30068796C /* HarvestSystem.cpp in Sources */,
 				3ABF092D1B3FE17E00C4D9BB /* Client.cpp in Sources */,
