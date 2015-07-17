@@ -24,7 +24,6 @@ namespace Simulation {
     }
 
     void pump() {
-      uint16_t eventCount = mainList.getCount();
       uint8_t subscriptionCount = EventSubscriptionList::getCount();
       EventListIterator iterator;
       iterator.list = &mainList;
