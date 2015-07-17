@@ -118,7 +118,6 @@ CLIENT_CPP_SOURCES =\
   Client/Direction/Direction.cpp\
   Client/Direction/DirectionInstanceList.cpp\
   Client/Direction/DirectionSteering.cpp\
-  Client/Direction/DirectionEventList.cpp\
   Client/Database.cpp\
   Client/CameraControl.cpp\
   Client/CommandList.cpp\
@@ -165,6 +164,7 @@ CLIENT_CPP_SOURCES =\
   Simulation/Event/EventStreamWriter.cpp\
   Simulation/Event/EventListIterator.cpp\
   Simulation/Event/EventList.cpp\
+  Simulation/Event/EventStreamIterator.cpp\
   Simulation/Event/EventSubscriptionList.cpp\
   Simulation/Event/EventSystem.cpp\
   Simulation/Database.cpp\

@@ -1,21 +1,28 @@
+#include "Misc/Error.h"
 #include "Animation/Animator.h"
 #include "Simulation/Steering/SteeringSystem.h"
+#include "Simulation/Event/EventStreamIterator.h"
+#include "Client/EventSystem.h"
 #include "Client/Direction/DirectionInstanceList.h"
 #include "Client/Direction/DirectionConfig.h"
 #include "Client/Direction/DirectionSteering.h"
-#include "Client/Direction/DirectionEventList.h"
 #include "Client/Direction/Direction.h"
 
 namespace Client {
   namespace Direction {
     namespace InstanceList = DirectionInstanceList;
-    namespace EventList = DirectionEventList;
     using namespace Database;
-
     uint8_t groupCount = 0;
+    uint8_t eventSubscriptionID;
+    typedef Simulation::EventType EventType;
 
     void initialize() {
-      DirectionSteering::initialize();
+      EventType types[] = {
+        EventType::SteeringStart,
+        EventType::SteeringStop
+      };
+      uint8_t typeCount = sizeof(types)/sizeof(EventType);
+      eventSubscriptionID = EventSystem::createSubscription(types, typeCount);
     }
 
     DirectionGroupIndex createGroup() {
@@ -32,20 +39,28 @@ namespace Client {
     }
 
     void update() {
-      for(uint16_t i=0; i<EventList::getCount(); ++i) {
-        const DirectionEvent *event = EventList::get(i);
-        switch(event->type) {
-          case DirectionEventType::SteeringStart:
+      const void *stream = EventSystem::getStream(eventSubscriptionID);
+      uint16_t streamLength = EventSystem::getStreamLength(eventSubscriptionID);
+      Simulation::EventStreamIterator iterator;
+      iterator.stream = stream;
+      iterator.length = streamLength;
+      while(!iterator.atEnd()) {
+        EventType type = iterator.sampleType();
+        switch(type) {
+          case EventType::SteeringStart: {
+            const Simulation::SteeringStartEvent *event = iterator.readSteeringStart();
             DirectionSteering::processStartEvent(event);
             break;
-          case DirectionEventType::SteeringStop:
+          }
+          case EventType::SteeringStop: {
+            const Simulation::SteeringStopEvent *event = iterator.readSteeringStop();
             DirectionSteering::processStopEvent(event);
             break;
+          }
           default:
-            fatalError("Unknown direction event.");
+            fatalError("Unknown event.");
         }
       }
-      EventList::clear();
     }
 
     void prepare() {
