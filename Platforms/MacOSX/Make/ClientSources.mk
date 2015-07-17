@@ -134,7 +134,7 @@ CLIENT_CPP_SOURCES =\
   Client/Carrier.cpp\
   Client/Keyboard.cpp\
   Client/RenderFeed.cpp\
-  Simulation/Control.cpp\
+  Simulation/Session.cpp\
   Simulation/Steering/SteeringSystem.cpp\
   Simulation/Steering/SteeringList.cpp\
   Simulation/Targeting/TargetingList.cpp\

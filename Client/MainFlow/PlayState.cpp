@@ -1,6 +1,6 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Simulation/Control.h"
+#include "Simulation/Session.h"
 #include "Simulation/EntityList.h"
 #include "Simulation/Database.h"
 #include "Simulation/ComponentType.h"
@@ -21,7 +21,7 @@ namespace Client {
   namespace MainFlow {
     using namespace ::Database;
     namespace SimDB = Simulation::Database;
-    namespace SimControl = Simulation::Control;
+    namespace SimSession = Simulation::Session;
     typedef Simulation::ComponentType SimComponentType;
 
     DirectionGroupIndex workerDirectionGroup;
@@ -244,9 +244,9 @@ namespace Client {
       CameraControl::initialize(&camera);
 
       if(playMode == PlayMode::Local) {
-        playerID = SimControl::createPlayer();
+        playerID = SimSession::createPlayer();
       }
-      SimControl::start();
+      SimSession::start();
 
       Simulation::EntityList entities = SimDB::getEntityList();
       for(uint16_t i=0; i<entities.count; ++i) {
@@ -266,7 +266,7 @@ namespace Client {
     }
 
     void PlayState::exit() {
-      SimControl::stop();
+      SimSession::stop();
     }
 
     void PlayState::configureGreenTree() {
@@ -455,7 +455,7 @@ namespace Client {
     }
 
     void PlayState::writeCommands() {
-      if(SimControl::getFrame() == 0) {
+      if(SimSession::getFrame() == 0) {
         clientCommands.writeTestCommand(playerID);
       }
     }

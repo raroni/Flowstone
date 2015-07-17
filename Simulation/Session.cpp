@@ -1,10 +1,10 @@
 #include "Misc/Error.h"
 #include "Simulation/ModeName.h"
 #include "Simulation/Mode.h"
-#include "Simulation/Control.h"
+#include "Simulation/Session.h"
 
 namespace Simulation {
-  namespace Control {
+  namespace Session {
     uint16_t frame = 0;
     Mode mode;
 
