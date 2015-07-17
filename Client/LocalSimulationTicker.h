@@ -5,7 +5,7 @@
 #include "Simulation/CommandList.h"
 
 namespace Client {
-  namespace LocalSimulationDriver {
+  namespace LocalSimulationTicker {
     void update(
       Simulation::PlayerHandle playerID,
       double timeDelta,

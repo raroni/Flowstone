@@ -1,10 +1,10 @@
 #include "Misc/Error.h"
 #include "Simulation/Config.h"
 #include "Simulation/Session.h"
-#include "Client/LocalSimulationDriver.h"
+#include "Client/LocalSimulationTicker.h"
 
 namespace Client {
-  namespace LocalSimulationDriver {
+  namespace LocalSimulationTicker {
     static double timeBank = 0;
 
     void convertCommands(Simulation::PlayerHandle playerID, const CommandList &clientCommands, Simulation::CommandList &simulationCommands) {

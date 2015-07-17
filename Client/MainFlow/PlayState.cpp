@@ -13,7 +13,7 @@
 #include "Client/Direction/Direction.h"
 #include "Client/RenderFeed.h"
 #include "Client/CameraControl.h"
-#include "Client/LocalSimulationDriver.h"
+#include "Client/LocalSimulationTicker.h"
 #include "Client/Database.h"
 #include "Client/MainFlow/PlayState.h"
 
@@ -447,7 +447,7 @@ namespace Client {
 
     void PlayState::updateSimulation(double timeDelta) {
       if(playMode == PlayMode::Local) {
-        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands);
+        LocalSimulationTicker::update(playerID, timeDelta, clientCommands, simulationCommands);
       } else {
         // NetworkSimulationDriver::update(timeDelta, commandList);
         assert(false); // not implemented yet
