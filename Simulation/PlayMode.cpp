@@ -43,6 +43,7 @@ namespace Simulation {
       EventSystem::initialize();
       Actions::System::setup();
       Behavior::System::setup();
+      Trees::initialize();
 
       const uint16_t mapWidth = 16;
       const uint16_t mapHeight = 16;

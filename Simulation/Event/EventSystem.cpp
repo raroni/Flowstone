@@ -42,6 +42,14 @@ namespace Simulation {
       mainList.clear();
     }
 
+    const void* getEventStream(uint8_t subscriptionID) {
+      return EventSubscriptionList::getStream(subscriptionID);
+    }
+
+    uint16_t getEventStreamLength(uint8_t subscriptionID) {
+      return EventSubscriptionList::getStreamLength(subscriptionID);
+    }
+
     void clear() {
       assert(mainList.getCount() == 0);
       uint8_t subscriptionCount = EventSubscriptionList::getCount();

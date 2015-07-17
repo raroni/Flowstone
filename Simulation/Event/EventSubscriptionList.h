@@ -11,6 +11,8 @@ namespace Simulation {
     void addEvent(uint8_t subscriptionID, const void *event, uint8_t length);
     void clearEvents(uint8_t subscriptionID);
     bool hasType(uint8_t subscriptionID, EventType type);
+    const void* getStream(uint8_t subscriptionID);
+    uint16_t getStreamLength(uint8_t subscriptionID);
   }
 }
 

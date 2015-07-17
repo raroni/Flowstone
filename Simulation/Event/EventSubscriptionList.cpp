@@ -22,6 +22,14 @@ namespace Simulation {
       writers[subscriptionID].clear();
     }
 
+    const void* getStream(uint8_t subscriptionID) {
+      return writers[subscriptionID].getStream();
+    }
+
+    uint16_t getStreamLength(uint8_t subscriptionID) {
+      return writers[subscriptionID].getLength();
+    }
+
     uint8_t create(EventType *types, uint8_t typeCount) {
       assert(count != max);
       BitSet128 *set = &typeSets[count];

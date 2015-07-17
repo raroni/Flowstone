@@ -11,6 +11,8 @@ namespace Simulation {
     void clear();
     void pump();
     uint8_t createSubscription(EventType *types, uint8_t typeCount);
+    const void* getEventStream(uint8_t subscriptionID);
+    uint16_t getEventStreamLength(uint8_t subscriptionID);
   }
 }
 
