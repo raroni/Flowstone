@@ -120,6 +120,7 @@ CLIENT_CPP_SOURCES =\
   Client/Database.cpp\
   Client/CameraControl.cpp\
   Client/CommandList.cpp\
+  Client/SimulationTicker.cpp\
   Client/LocalSimulationTicker.cpp\
   Client/MathConversion.cpp\
   Client/ServerControl.cpp\
