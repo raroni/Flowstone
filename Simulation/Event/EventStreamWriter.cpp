@@ -2,13 +2,13 @@
 #include "Simulation/Event/EventStreamWriter.h"
 
 namespace Simulation {
-  void EventStreamWriter::write(const void *event, uint8_t eventLength) {
-    uint16_t newStreamLength = streamLength+eventLength;
+  void EventStreamWriter::write(const void *data, uint16_t dataLength) {
+    uint16_t newStreamLength = streamLength+dataLength;
     if(newStreamLength > streamCapacity) {
       grow(newStreamLength);
     }
     char *target = static_cast<char*>(stream)+streamLength;
-    memcpy(target, event, eventLength);
+    memcpy(target, data, dataLength);
     streamLength = newStreamLength;
   }
 

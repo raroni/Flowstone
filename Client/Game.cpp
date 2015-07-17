@@ -5,6 +5,8 @@
 #include "Misc/GameTime.h"
 #include "Misc/MessageType.h"
 #include "Rendering/Renderer.h"
+#include "Client/SimulationEventBindings.h"
+#include "Client/EventSystem.h"
 #include "Client/ServerControl.h"
 #include "Client/Keyboard.h"
 #include "Client/MainFlow/Manager.h"
@@ -87,6 +89,8 @@ namespace Client {
     void initialize() {
       ServerControl::initialize();
       GameTime::initialize();
+      EventSystem::initialize();
+      SimulationEventBindings::setup();
 
       Platform::initialize(resolution.width, resolution.height);
       SysThread::initMutex(&terminateMutex);

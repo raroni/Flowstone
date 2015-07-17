@@ -113,6 +113,8 @@ CLIENT_CPP_SOURCES =\
   Server/PingPong.cpp\
   Server/Carrier.cpp\
   Client/Game.cpp\
+  Client/EventSystem.cpp\
+  Client/SimulationEventBindings.cpp\
   Client/Direction/Direction.cpp\
   Client/Direction/DirectionInstanceList.cpp\
   Client/Direction/DirectionSteering.cpp\

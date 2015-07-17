@@ -8,7 +8,7 @@ namespace Simulation {
   class EventStreamWriter {
   public:
     FrameAllocator *allocator = nullptr;
-    void write(const void *event, uint8_t eventLength);
+    void write(const void *data, uint16_t dataLength);
     const void* getStream() const;
     void clear();
     uint16_t getLength() const;

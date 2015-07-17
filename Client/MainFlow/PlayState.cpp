@@ -12,6 +12,7 @@
 #include "Animation/JointConfig.h"
 #include "Client/Direction/Direction.h"
 #include "Client/RenderFeed.h"
+#include "Client/EventSystem.h"
 #include "Client/CameraControl.h"
 #include "Client/LocalSimulationTicker.h"
 #include "Client/Database.h"
@@ -478,6 +479,7 @@ namespace Client {
       RenderFeed::update();
       Direction::update();
       Animation::Animator::update(timeDelta);
+      EventSystem::clear();
     }
 
     State* PlayState::checkTransition() {

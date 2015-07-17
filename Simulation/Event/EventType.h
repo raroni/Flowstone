@@ -7,6 +7,8 @@ namespace Simulation {
   enum class EventType : uint8_t {
     HarvestCompletion,
     HarvestWorkStart,
+    SteeringStart,
+    SteeringStop,
 
     Count
   };

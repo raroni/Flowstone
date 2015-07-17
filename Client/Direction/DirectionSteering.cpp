@@ -42,7 +42,9 @@ namespace Client {
     }
 
     void initialize() {
-      Simulation::SteeringSystem::setEventHandler(storeEvent);
+      //This will soon be replaced by a new direction system
+      //For now, we'll just out-comment this so it doesn't interfere.
+      //Simulation::SteeringSystem::setEventHandler(storeEvent);
     }
 
     void prepareProcess(const DirectionEvent *event, Animation::PoseHandle *poseHandle, const DirectionSteeringConfig **config) {
