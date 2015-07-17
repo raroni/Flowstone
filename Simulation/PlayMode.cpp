@@ -40,6 +40,7 @@ namespace Simulation {
     }
 
     void enter() {
+      EventSystem::initialize();
       Actions::System::setup();
       Behavior::System::setup();
 

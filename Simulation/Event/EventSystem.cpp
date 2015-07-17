@@ -11,6 +11,7 @@ namespace Simulation {
     FrameAllocator allocator;
 
     void initialize() {
+      allocator.initialize();
       mainList.setAllocator(&allocator);
       EventSubscriptionList::initialize(&allocator);
     }
