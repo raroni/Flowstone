@@ -28,6 +28,7 @@
 		3A52AA511B400FC500F3169F /* RequestMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AA3F1B400FC500F3169F /* RequestMap.cpp */; };
 		3A52AA521B400FC500F3169F /* System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AA411B400FC500F3169F /* System.cpp */; };
 		3A52AA531B400FC500F3169F /* WoodAcquisitionAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AA431B400FC500F3169F /* WoodAcquisitionAction.cpp */; };
+		3A9520C71B5A719300525D73 /* DirectionHarvesting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9520C41B5A719300525D73 /* DirectionHarvesting.cpp */; };
 		3AB469851B59311700E0B3B5 /* EventSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB469831B59311700E0B3B5 /* EventSystem.cpp */; };
 		3AB469881B59311E00E0B3B5 /* LocalSimulationTicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB469861B59311E00E0B3B5 /* LocalSimulationTicker.cpp */; };
 		3AB4698D1B59312500E0B3B5 /* SimulationEventBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB469891B59312500E0B3B5 /* SimulationEventBindings.cpp */; };
@@ -310,6 +311,9 @@
 		3A52AA421B400FC500F3169F /* System.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = System.h; sourceTree = "<group>"; };
 		3A52AA431B400FC500F3169F /* WoodAcquisitionAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WoodAcquisitionAction.cpp; sourceTree = "<group>"; };
 		3A52AA441B400FC500F3169F /* WoodAcquisitionAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoodAcquisitionAction.h; sourceTree = "<group>"; };
+		3A9520C41B5A719300525D73 /* DirectionHarvesting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectionHarvesting.cpp; sourceTree = "<group>"; };
+		3A9520C51B5A719300525D73 /* DirectionHarvesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionHarvesting.h; sourceTree = "<group>"; };
+		3A9520C61B5A719300525D73 /* DirectionHarvestingConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionHarvestingConfig.h; sourceTree = "<group>"; };
 		3AA00C6A1B3F2CAF00704E4D /* Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AB469831B59311700E0B3B5 /* EventSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSystem.cpp; sourceTree = "<group>"; };
 		3AB469841B59311700E0B3B5 /* EventSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSystem.h; sourceTree = "<group>"; };
@@ -904,6 +908,9 @@
 			children = (
 				3A0C2DD11B467DF90068796C /* Direction.cpp */,
 				3A0C2DD21B467DF90068796C /* Direction.h */,
+				3A9520C41B5A719300525D73 /* DirectionHarvesting.cpp */,
+				3A9520C51B5A719300525D73 /* DirectionHarvesting.h */,
+				3A9520C61B5A719300525D73 /* DirectionHarvestingConfig.h */,
 				3A0C2DD31B467DF90068796C /* DirectionConfig.h */,
 				3A0C2DD81B467DF90068796C /* DirectionGroupIndex.h */,
 				3A0C2DD91B467DF90068796C /* DirectionInstanceHandle.h */,
@@ -2221,6 +2228,7 @@
 				3ABF09AB1B3FE17E00C4D9BB /* PathfindingSystem.cpp in Sources */,
 				3ABF09121B3FE17E00C4D9BB /* Keyboard.cpp in Sources */,
 				3AD10BBB1B58E8E7006DF4E4 /* FrameAllocator.cpp in Sources */,
+				3A9520C71B5A719300525D73 /* DirectionHarvesting.cpp in Sources */,
 				3ABF093C1B3FE17E00C4D9BB /* Vector2.cpp in Sources */,
 				3ABF091D1B3FE17E00C4D9BB /* EntityManager.cpp in Sources */,
 				3ABF074C1B3FE17D00C4D9BB /* Registry.cpp in Sources */,
