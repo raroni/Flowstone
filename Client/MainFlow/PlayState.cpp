@@ -1,6 +1,6 @@
 #include "Quanta/Geometry/Transformer.h"
 #include "Quanta/Geometry/TransformFactory3D.h"
-#include "Simulation/Control.h"
+#include "Simulation/Session.h"
 #include "Simulation/EntityList.h"
 #include "Simulation/Database.h"
 #include "Simulation/ComponentType.h"
@@ -12,8 +12,9 @@
 #include "Animation/JointConfig.h"
 #include "Client/Direction/Direction.h"
 #include "Client/RenderFeed.h"
+#include "Client/EventSystem.h"
 #include "Client/CameraControl.h"
-#include "Client/LocalSimulationDriver.h"
+#include "Client/LocalSimulationTicker.h"
 #include "Client/Database.h"
 #include "Client/MainFlow/PlayState.h"
 
@@ -21,7 +22,7 @@ namespace Client {
   namespace MainFlow {
     using namespace ::Database;
     namespace SimDB = Simulation::Database;
-    namespace SimControl = Simulation::Control;
+    namespace SimSession = Simulation::Session;
     typedef Simulation::ComponentType SimComponentType;
 
     DirectionGroupIndex workerDirectionGroup;
@@ -32,10 +33,14 @@ namespace Client {
     void PlayState::configureAnimation() {
       uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
-      float animationDurations[] = { 3.0f, 1.0f };
-      uint8_t animationKeyCounts[] = { 2, 4 };
+      float animationDurations[] = { 3.0f, 1.0f, 1.0f };
+      uint8_t animationKeyCounts[] = { 2, 4, 4 };
 
-      float keyTimes[] = { 0, 1.5f, 0, 0.25f, 0.5f, 0.75f };
+      float keyTimes[] = {
+        0, 1.5f, // idle
+        0, 0.25f, 0.5f, 0.75f, // run
+        0, 0.35f, 0.50f, 0.85f, // harvest
+      };
 
       Animation::JointConfig keyJointConfigs[] = {
         // idle standard
@@ -84,7 +89,39 @@ namespace Client {
         { 0, 0, 0.2, 1, 0, 0, 0 },
         { 0, 0, -0.2, 1, 0, 0, 0 },
         { 0, 0, 0.2, 1, 0, 0, 0 },
-        { 0, 0, -0.2, 1, 0, 0, 0 }
+        { 0, 0, -0.2, 1, 0, 0, 0 },
+
+        // harvest left punch
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+
+        // harvest left punch pause
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+
+        // harvest right punch
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+
+        // harvest right punch pause
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
       };
 
       walkAnimationSkeleton = Animation::Animator::createSkeleton(
@@ -240,13 +277,18 @@ namespace Client {
         .run = 1
       });
 
+      Direction::addHarvesting(workerDirectionGroup, {
+        .idle = 0,
+        .work = 2
+      });
+
       Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();
       CameraControl::initialize(&camera);
 
       if(playMode == PlayMode::Local) {
-        playerID = SimControl::createPlayer();
+        playerID = SimSession::createPlayer();
       }
-      SimControl::start();
+      SimSession::start();
 
       Simulation::EntityList entities = SimDB::getEntityList();
       for(uint16_t i=0; i<entities.count; ++i) {
@@ -266,7 +308,7 @@ namespace Client {
     }
 
     void PlayState::exit() {
-      SimControl::stop();
+      SimSession::stop();
     }
 
     void PlayState::configureGreenTree() {
@@ -438,16 +480,18 @@ namespace Client {
       Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
       EntityHandle clientEntityHandle = Database::createEntity();
 
-      Database::createPose(clientEntityHandle, walkAnimationSkeleton);
+      auto x = Database::createPose(clientEntityHandle, walkAnimationSkeleton);
       Database::createInterpolation(clientEntityHandle, body);
       Database::createBoneMeshDraw(clientEntityHandle, characterMesh);
       Database::createRenderFeed(clientEntityHandle);
       Database::createDirection(clientEntityHandle, workerDirectionGroup, simEntityHandle);
+
+      Animation::Animator::changeAnimation(x, 2);
     }
 
     void PlayState::updateSimulation(double timeDelta) {
       if(playMode == PlayMode::Local) {
-        LocalSimulationDriver::update(playerID, timeDelta, clientCommands, simulationCommands, simulationEvents);
+        LocalSimulationTicker::update(playerID, timeDelta, clientCommands, simulationCommands);
       } else {
         // NetworkSimulationDriver::update(timeDelta, commandList);
         assert(false); // not implemented yet
@@ -455,16 +499,9 @@ namespace Client {
     }
 
     void PlayState::writeCommands() {
-      if(SimControl::getFrame() == 0) {
+      if(SimSession::getFrame() == 0) {
         clientCommands.writeTestCommand(playerID);
       }
-    }
-
-    void PlayState::processSimulationEvents() {
-      for(uint8_t i=0; i<simulationEvents.getCount(); ++i) {
-
-      }
-      simulationEvents.clear();
     }
 
     void PlayState::update(double timeDelta, const Keyboard &keyboard) {
@@ -479,14 +516,13 @@ namespace Client {
       Interpolation::reload(Simulation::physicsEngine.getBodies());
       Interpolation::interpolate(0.5); // todo: fix this
 
-      processSimulationEvents();
-
       CameraControl::update(timeDelta, &keyboard, &Rendering::Renderer::getCameraTransform());
       updateAtmosphereColor();
       updateLightDirection();
       RenderFeed::update();
       Direction::update();
       Animation::Animator::update(timeDelta);
+      EventSystem::clear();
     }
 
     State* PlayState::checkTransition() {

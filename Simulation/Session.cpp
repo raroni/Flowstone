@@ -1,10 +1,10 @@
 #include "Misc/Error.h"
 #include "Simulation/ModeName.h"
 #include "Simulation/Mode.h"
-#include "Simulation/Control.h"
+#include "Simulation/Session.h"
 
 namespace Simulation {
-  namespace Control {
+  namespace Session {
     uint16_t frame = 0;
     Mode mode;
 
@@ -22,7 +22,7 @@ namespace Simulation {
       mode.exit();
     }
 
-    void tick(const CommandList &commands, EventList &events) {
+    void tick(const CommandList &commands) {
       if(mode.getTransition() != ModeName::None) {
         switch(mode.getTransition()) {
           // todo: handle transitions here
@@ -32,7 +32,7 @@ namespace Simulation {
           }
         }
       }
-      mode.tick(commands, events);
+      mode.tick(commands);
       frame++;
     }
 

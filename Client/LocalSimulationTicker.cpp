@@ -1,10 +1,10 @@
 #include "Misc/Error.h"
 #include "Simulation/Config.h"
-#include "Simulation/Control.h"
-#include "Client/LocalSimulationDriver.h"
+#include "Client/SimulationTicker.h"
+#include "Client/LocalSimulationTicker.h"
 
 namespace Client {
-  namespace LocalSimulationDriver {
+  namespace LocalSimulationTicker {
     static double timeBank = 0;
 
     void convertCommands(Simulation::PlayerHandle playerID, const CommandList &clientCommands, Simulation::CommandList &simulationCommands) {
@@ -27,14 +27,13 @@ namespace Client {
       Simulation::PlayerHandle playerID,
       double timeDelta,
       const CommandList &clientCommands,
-      Simulation::CommandList &simulationCommands,
-      Simulation::EventList &simulationEvents
+      Simulation::CommandList &simulationCommands
     ) {
       convertCommands(playerID, clientCommands, simulationCommands);
 
       timeBank += timeDelta;
       do {
-        Simulation::Control::tick(simulationCommands, simulationEvents);
+        SimulationTicker::tick(simulationCommands);
         simulationCommands.clear();
         timeBank -= static_cast<double>(Simulation::Config::tickDuration)/1000;
       } while(timeBank*1000 >= Simulation::Config::tickDuration);

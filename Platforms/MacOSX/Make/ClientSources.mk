@@ -12,6 +12,7 @@ CLIENT_OBJ_C_SOURCES =\
 CLIENT_CPP_SOURCES =\
   Misc/Error.cpp\
   Misc/LoopStream.cpp\
+  Misc/FrameAllocator.cpp\
   Misc/IntegerPool.cpp\
   Misc/HandleList.cpp\
   Misc/GameTime.cpp\
@@ -112,14 +113,17 @@ CLIENT_CPP_SOURCES =\
   Server/PingPong.cpp\
   Server/Carrier.cpp\
   Client/Game.cpp\
+  Client/EventSystem.cpp\
+  Client/SimulationEventBindings.cpp\
   Client/Direction/Direction.cpp\
   Client/Direction/DirectionInstanceList.cpp\
   Client/Direction/DirectionSteering.cpp\
-  Client/Direction/DirectionEventList.cpp\
+  Client/Direction/DirectionHarvesting.cpp\
   Client/Database.cpp\
   Client/CameraControl.cpp\
   Client/CommandList.cpp\
-  Client/LocalSimulationDriver.cpp\
+  Client/SimulationTicker.cpp\
+  Client/LocalSimulationTicker.cpp\
   Client/MathConversion.cpp\
   Client/ServerControl.cpp\
   Client/ServerControlQueue.cpp\
@@ -133,7 +137,7 @@ CLIENT_CPP_SOURCES =\
   Client/Carrier.cpp\
   Client/Keyboard.cpp\
   Client/RenderFeed.cpp\
-  Simulation/Control.cpp\
+  Simulation/Session.cpp\
   Simulation/Steering/SteeringSystem.cpp\
   Simulation/Steering/SteeringList.cpp\
   Simulation/Targeting/TargetingList.cpp\
@@ -155,11 +159,15 @@ CLIENT_CPP_SOURCES =\
   Simulation/PhysicsHack.cpp\
   Simulation/PlayMode.cpp\
   Simulation/Harvest/HarvestSystem.cpp\
-  Simulation/Harvest/HarvestEventList.cpp\
   Simulation/Harvest/HarvestResourceList.cpp\
   Simulation/Harvest/HarvestWorkerList.cpp\
   Simulation/CommandList.cpp\
-  Simulation/EventList.cpp\
+  Simulation/Event/EventStreamWriter.cpp\
+  Simulation/Event/EventListIterator.cpp\
+  Simulation/Event/EventList.cpp\
+  Simulation/Event/EventStreamIterator.cpp\
+  Simulation/Event/EventSubscriptionList.cpp\
+  Simulation/Event/EventSystem.cpp\
   Simulation/Database.cpp\
   Animation/Animator.cpp\
   Animation/Registry.cpp\

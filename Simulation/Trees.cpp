@@ -1,6 +1,7 @@
 #include "Database/EntityHandle.h"
-#include "Simulation/Harvest/HarvestEvent.h"
-#include "Simulation/Harvest/HarvestEventList.h"
+#include "Simulation/Event/EventSystem.h"
+#include "Simulation/Event/EventType.h"
+#include "Simulation/Event/HarvestCompletionEvent.h"
 #include "Simulation/Database.h"
 #include "Simulation/Pathfinding/Map.h"
 #include "Simulation/Pathfinding/MapFieldIndex.h"
@@ -9,6 +10,16 @@
 
 namespace Simulation {
   namespace Trees {
+    uint8_t eventSubscriptionID;
+
+    void initialize() {
+      EventType types[] = {
+        EventType::HarvestCompletion
+      };
+      uint8_t typeCount = sizeof(types)/sizeof(EventType);
+      eventSubscriptionID = EventSystem::createSubscription(types, typeCount);
+    }
+
     void create(uint16_t x, uint16_t z) {
       ::Database::EntityHandle tree = Database::createEntity();
 
@@ -27,7 +38,7 @@ namespace Simulation {
       map.set(fieldIndex, MapFieldType::Tree);
     }
 
-    void processHarvestCompletionEvent(const HarvestEvent *event) {
+    void processHarvestCompletionEvent(const HarvestCompletionEvent *event) {
       ::Database::EntityHandle tree = event->resource;
       Database::destroyHarvestResource(tree);
       Database::destroyTicketTarget(tree);
@@ -39,16 +50,13 @@ namespace Simulation {
     }
 
     void update() {
-      uint16_t eventCount = HarvestEventList::getCount();
-      for(uint16_t i=0; i<eventCount; ++i) {
-        const HarvestEvent *event = HarvestEventList::get(i);
-        switch(event->type) {
-          case HarvestEventType::Completion:
-            processHarvestCompletionEvent(event);
-            break;
-          default:
-            break;
-        }
+      const void *stream = EventSystem::getEventStream(eventSubscriptionID);
+      const HarvestCompletionEvent *events = static_cast<const HarvestCompletionEvent*>(stream);
+      uint16_t streamLength = EventSystem::getEventStreamLength(eventSubscriptionID);
+      uint16_t count = streamLength/sizeof(HarvestCompletionEvent);
+
+      for(uint16_t i=0; i<count; ++i) {
+        processHarvestCompletionEvent(events+i);
       }
     }
   }

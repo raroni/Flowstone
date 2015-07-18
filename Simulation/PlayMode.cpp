@@ -7,6 +7,7 @@
 #include "Simulation/Harvest/HarvestSystem.h"
 #include "Simulation/Steering/SteeringSystem.h"
 #include "Simulation/Trees.h"
+#include "Simulation/Event/EventSystem.h"
 #include "Simulation/Targeting/TargetingSystem.h"
 #include "Simulation/Ticket/TicketSystem.h"
 #include "Simulation/Pathfinding/Map.h"
@@ -39,8 +40,10 @@ namespace Simulation {
     }
 
     void enter() {
+      EventSystem::initialize();
       Actions::System::setup();
       Behavior::System::setup();
+      Trees::initialize();
 
       const uint16_t mapWidth = 16;
       const uint16_t mapHeight = 16;
@@ -70,7 +73,8 @@ namespace Simulation {
       createWorker(2, 3);
     }
 
-    void tick(const CommandList &commands, EventList &events) {
+    void tick(const CommandList &commands) {
+      EventSystem::clear();
       Behavior::System::update();
       Actions::System::update();
       TicketSystem::update();
@@ -81,8 +85,9 @@ namespace Simulation {
       DragSystem::update();
       static_assert(Physics::Config::stepDuration == Config::tickDuration, "Physics and simulation must agree on tick duration.");
       physicsEngine.simulate();
+      EventSystem::pump();
       Trees::update();
-      HarvestSystem::clearEvents();
+      EventSystem::pump();
     }
 
     void exit() {

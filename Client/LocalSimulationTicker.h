@@ -5,13 +5,12 @@
 #include "Simulation/CommandList.h"
 
 namespace Client {
-  namespace LocalSimulationDriver {
+  namespace LocalSimulationTicker {
     void update(
       Simulation::PlayerHandle playerID,
       double timeDelta,
       const CommandList &clientCommands,
-      Simulation::CommandList &simulationCommands,
-      Simulation::EventList &simulationEvents
+      Simulation::CommandList &simulationCommands
     );
   }
 }
