@@ -6,6 +6,7 @@
 #include "Client/Direction/DirectionInstanceList.h"
 #include "Client/Direction/DirectionConfig.h"
 #include "Client/Direction/DirectionSteering.h"
+#include "Client/Direction/DirectionHarvesting.h"
 #include "Client/Direction/Direction.h"
 
 namespace Client {
@@ -19,7 +20,8 @@ namespace Client {
     void initialize() {
       EventType types[] = {
         EventType::SteeringStart,
-        EventType::SteeringStop
+        EventType::SteeringStop,
+        EventType::HarvestWorkStart
       };
       uint8_t typeCount = sizeof(types)/sizeof(EventType);
       eventSubscriptionID = EventSystem::createSubscription(types, typeCount);
@@ -32,6 +34,10 @@ namespace Client {
 
     void addSteering(DirectionGroupIndex group, DirectionSteeringConfig config) {
       DirectionSteering::configureGroup(group, config);
+    }
+
+    void addHarvesting(DirectionGroupIndex group, DirectionHarvestingConfig config) {
+      DirectionHarvesting::configureGroup(group, config);
     }
 
     DirectionInstanceHandle createInstance(DirectionGroupIndex group, Animation::PoseHandle pose, Database::EntityHandle simEntity) {
@@ -55,6 +61,11 @@ namespace Client {
           case EventType::SteeringStop: {
             const Simulation::SteeringStopEvent *event = iterator.readSteeringStop();
             DirectionSteering::processStopEvent(event);
+            break;
+          }
+          case EventType::HarvestWorkStart: {
+            const Simulation::HarvestWorkStartEvent *event = iterator.readHarvestWorkStart();
+            DirectionHarvesting::processStartEvent(event);
             break;
           }
           default:

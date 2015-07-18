@@ -28,4 +28,10 @@ namespace Simulation {
     offset += sizeof(SteeringStopEvent);
     return event;
   }
+
+  const HarvestWorkStartEvent* EventStreamIterator::readHarvestWorkStart() {
+    const HarvestWorkStartEvent* event = static_cast<const HarvestWorkStartEvent*>(getHead());
+    offset += sizeof(HarvestWorkStartEvent);
+    return event;
+  }
 }

@@ -4,6 +4,7 @@
 #include "Simulation/Event/EventType.h"
 #include "Simulation/Event/SteeringStartEvent.h"
 #include "Simulation/Event/SteeringStopEvent.h"
+#include "Simulation/Event/HarvestWorkStartEvent.h"
 
 namespace Simulation {
   class EventStreamIterator {
@@ -13,6 +14,7 @@ namespace Simulation {
     uint16_t length;
     const SteeringStartEvent* readSteeringStart();
     const SteeringStopEvent* readSteeringStop();
+    const HarvestWorkStartEvent* readHarvestWorkStart();
     EventType sampleType() const;
   private:
     const void* getHead() const;

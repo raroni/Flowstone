@@ -118,6 +118,7 @@ CLIENT_CPP_SOURCES =\
   Client/Direction/Direction.cpp\
   Client/Direction/DirectionInstanceList.cpp\
   Client/Direction/DirectionSteering.cpp\
+  Client/Direction/DirectionHarvesting.cpp\
   Client/Database.cpp\
   Client/CameraControl.cpp\
   Client/CommandList.cpp\

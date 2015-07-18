@@ -33,10 +33,14 @@ namespace Client {
     void PlayState::configureAnimation() {
       uint8_t jointParentIndices[] = { 0, 1, 1, 0, 0 };
 
-      float animationDurations[] = { 3.0f, 1.0f };
-      uint8_t animationKeyCounts[] = { 2, 4 };
+      float animationDurations[] = { 3.0f, 1.0f, 1.0f };
+      uint8_t animationKeyCounts[] = { 2, 4, 4 };
 
-      float keyTimes[] = { 0, 1.5f, 0, 0.25f, 0.5f, 0.75f };
+      float keyTimes[] = {
+        0, 1.5f, // idle
+        0, 0.25f, 0.5f, 0.75f, // run
+        0, 0.35f, 0.50f, 0.85f, // harvest
+      };
 
       Animation::JointConfig keyJointConfigs[] = {
         // idle standard
@@ -85,7 +89,39 @@ namespace Client {
         { 0, 0, 0.2, 1, 0, 0, 0 },
         { 0, 0, -0.2, 1, 0, 0, 0 },
         { 0, 0, 0.2, 1, 0, 0, 0 },
-        { 0, 0, -0.2, 1, 0, 0, 0 }
+        { 0, 0, -0.2, 1, 0, 0, 0 },
+
+        // harvest left punch
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+
+        // harvest left punch pause
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+
+        // harvest right punch
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+
+        // harvest right punch pause
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, -0.1, 1, 0, 0, 0 },
+        { 0, 0, 0.3, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 0, 0, 0 },
       };
 
       walkAnimationSkeleton = Animation::Animator::createSkeleton(
@@ -239,6 +275,11 @@ namespace Client {
       Direction::addSteering(workerDirectionGroup, {
         .idle = 0,
         .run = 1
+      });
+
+      Direction::addHarvesting(workerDirectionGroup, {
+        .idle = 0,
+        .work = 2
       });
 
       Quanta::Transform& camera = Rendering::Renderer::getCameraTransform();
@@ -439,11 +480,13 @@ namespace Client {
       Physics::BodyHandle body = SimDB::getBodyHandle(simEntityHandle);
       EntityHandle clientEntityHandle = Database::createEntity();
 
-      Database::createPose(clientEntityHandle, walkAnimationSkeleton);
+      auto x = Database::createPose(clientEntityHandle, walkAnimationSkeleton);
       Database::createInterpolation(clientEntityHandle, body);
       Database::createBoneMeshDraw(clientEntityHandle, characterMesh);
       Database::createRenderFeed(clientEntityHandle);
       Database::createDirection(clientEntityHandle, workerDirectionGroup, simEntityHandle);
+
+      Animation::Animator::changeAnimation(x, 2);
     }
 
     void PlayState::updateSimulation(double timeDelta) {

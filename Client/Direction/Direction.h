@@ -5,6 +5,7 @@
 #include "Database/EntityHandle.h"
 #include "Client/Direction/DirectionInstanceHandle.h"
 #include "Client/Direction/DirectionSteeringConfig.h"
+#include "Client/Direction/DirectionHarvestingConfig.h"
 #include "Client/Direction/DirectionGroupIndex.h"
 
 namespace Client {
@@ -13,6 +14,7 @@ namespace Client {
     DirectionGroupIndex createGroup();
     void initialize();
     void addSteering(DirectionGroupIndex group, DirectionSteeringConfig config);
+    void addHarvesting(DirectionGroupIndex group, DirectionHarvestingConfig config);
     void prepare();
     void update();
   }
